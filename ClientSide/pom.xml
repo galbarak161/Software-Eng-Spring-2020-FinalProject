@@ -8,7 +8,7 @@
 		<version>0.0.1-FinalProject</version>
 	</parent>
 	<artifactId>ClientSide</artifactId>
-	<version>0.0.1-Client</version>
+	<version>0.0.1</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

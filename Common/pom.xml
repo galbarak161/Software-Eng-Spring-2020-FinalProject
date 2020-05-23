@@ -8,6 +8,6 @@
 		<version>0.0.1-FinalProject</version>
 	</parent>
 	<artifactId>Common</artifactId>
-	<version>0.0.1-Common</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 </project>
