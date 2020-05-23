@@ -9,7 +9,8 @@
 	</parent>
 	<artifactId>ServerSide</artifactId>
 	<version>0.0.1-Server</version>
-
+	<packaging>jar</packaging>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>13</maven.compiler.source>

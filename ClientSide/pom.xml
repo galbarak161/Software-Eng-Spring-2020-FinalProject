@@ -20,37 +20,42 @@
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-base</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-fxml</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 			<classifier>win</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 			<classifier>linux</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>14</version>
+			<version>${javafx.version}</version>
 			<classifier>mac</classifier>
-		</dependency>		
-				<dependency>
+		</dependency>
+		<dependency>
+			<groupId>org.greenrobot</groupId>
+			<artifactId>eventbus</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>Common</artifactId>
 			<version>0.0.1-Common</version>
@@ -70,7 +75,7 @@
 			<plugin>
 				<groupId>org.openjfx</groupId>
 				<artifactId>javafx-maven-plugin</artifactId>
-				<version>0.0.3</version>
+				<version>0.0.4</version>
 				<configuration>
 					<mainClass>project.Prototype.ClientMain</mainClass>
 				</configuration>
@@ -78,7 +83,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.3</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
