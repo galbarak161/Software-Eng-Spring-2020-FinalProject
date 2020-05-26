@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import CloneEntities.*;
-import CommonElements.DataElements;
+import CommonElements.*;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import OCSF.AbstractServer;
@@ -273,7 +273,7 @@ public class ServerMain extends AbstractServer {
 	 * @param args - <port>
 	 * @throws IOException
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		if (args.length != 1) {
 			System.out.println("Required argument: <port>");
 			return;
@@ -286,8 +286,11 @@ public class ServerMain extends AbstractServer {
 			return;
 		}
 
-		server.listen();
-		System.out.println("Server ready!\n");
-
+		try {
+			server.listen();
+			System.out.println("Server ready!\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

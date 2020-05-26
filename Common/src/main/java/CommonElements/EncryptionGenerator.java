@@ -1,11 +1,13 @@
 package CommonElements;
 
+import java.io.Serializable;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import javax.crypto.Cipher;
 
-public class EncryptionGenerator {
+public class EncryptionGenerator implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private final String encryptionKey = "RSA";
 	private final String cipherArgs = "RSA/ECB/PKCS1Padding";
 	private final int keySize = 512;
