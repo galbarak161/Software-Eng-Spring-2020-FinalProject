@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import CloneEntities.*;
 import CommonElements.*;
 import Hibernate.HibernateMain;
@@ -278,7 +277,7 @@ public class ServerMain extends AbstractServer {
 			System.out.println("Required argument: <port>");
 			return;
 		}
-
+	
 		ServerMain server = new ServerMain(Integer.parseInt(args[0]));
 		boolean hibernateStatus = HibernateMain.initHibernate();
 		if (hibernateStatus == false) {
