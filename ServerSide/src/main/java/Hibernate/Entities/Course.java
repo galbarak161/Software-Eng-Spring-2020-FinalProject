@@ -25,15 +25,20 @@ public class Course {
 	@JoinTable(name = "course_study", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "studyId"))
 	private List<Study> studies;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacherId")
+	private Teacher teacher;
+
 	public Course() {
 		super();
 		this.questions = new ArrayList<Question>();
 		this.studies = new ArrayList<Study>();
 	}
 
-	public Course(String courseName) {
+	public Course(String courseName, Teacher teacher) {
 		super();
 		this.courseName = courseName;
+		this.setTeacher(teacher);
 		this.questions = new ArrayList<Question>();
 		this.studies = new ArrayList<Study>();
 	}
@@ -72,6 +77,15 @@ public class Course {
 			this.studies.add(study);
 			study.getCourses().add(this);
 		}
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+		teacher.getCourses().add(this);
 	}
 
 }
