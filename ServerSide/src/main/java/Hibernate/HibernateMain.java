@@ -13,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Settings;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
 import Hibernate.Entities.*;
@@ -37,6 +39,10 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(Study.class);
 		configuration.addAnnotatedClass(Course.class);
 		configuration.addAnnotatedClass(Question.class);
+		configuration.addAnnotatedClass(User.class);
+		configuration.addAnnotatedClass(Student.class);
+		configuration.addAnnotatedClass(Teacher.class);
+		configuration.addAnnotatedClass(Director.class);
 
 		// Create new service and return it as session to DB
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -104,6 +110,23 @@ public class HibernateMain {
 		final int NUMBER_OF_COURSES = 10;
 		final int NUMBER_OF_QUESTIONS = 13;
 
+		// Generate users
+		Student s1 = new Student("GalB", "123", "Gal", "Barak");
+		session.save(s1);
+		Student s2 = new Student("abedI", "123", "Abed", "Idres");
+		session.save(s2);
+		Student s3 = new Student("OrA", "123", "Or", "Ashkenazi");
+		session.save(s3);
+		Student s4 = new Student("SadiG", "123", "Sagi", "Gvili");
+		session.save(s4);
+		Teacher t1 = new Teacher("MalkiG", "123", "Malki", "Grossman");
+		session.save(t1);
+		Teacher t2 = new Teacher("LielF", "123", "Liel", "Fridman");
+		session.save(t2);
+		Director d1 = new Director("DaniK", "123", "Dani", "Keren");
+		session.save(d1);
+		session.flush();
+
 		// Generate fields of study
 		Study[] studies = new Study[NUMBER_OF_STUDIES];
 		String[] studiesName = new String[NUMBER_OF_STUDIES];
@@ -133,12 +156,12 @@ public class HibernateMain {
 		coursesName[8] = "Digestive System";
 		coursesName[9] = "Animals";
 		for (int i = 0, j = 0; i < NUMBER_OF_COURSES && j < NUMBER_OF_STUDIES; j++) {
-			Course c1 = new Course(coursesName[i]);
+			Course c1 = new Course(coursesName[i], t1);
 			c1.addStudies(studies[j]);
 			courses[i] = c1;
 			i++;
 			session.save(c1);
-			Course c2 = new Course(coursesName[i]);
+			Course c2 = new Course(coursesName[i], t2);
 			c2.addStudies(studies[j]);
 			courses[i] = c2;
 
@@ -241,7 +264,7 @@ public class HibernateMain {
 		questionsAnswers[10][2] = "An hour and a half";
 		questionsAnswers[10][3] = "Three hours";
 		correctAnswer[10] = 3;
-		
+
 		questionsText[11] = "How long is the pregnancy of a dog?";
 		questionsSubject[11] = "Reproduction";
 		questionsAnswers[11][0] = "8 months";
@@ -263,14 +286,14 @@ public class HibernateMain {
 			if (i == 0)
 				c = courses[i];
 			else if (0 < i && i <= 7)
-				c = courses[i-1];
+				c = courses[i - 1];
 			else if (i > 7 && i < 12)
-				c = courses[i-2];
+				c = courses[i - 2];
 			else if (i >= 12)
-				c = courses[i-3];
+				c = courses[i - 3];
 
 			questions[i] = new Question(questionsSubject[i], questionsText[i], questionsAnswers[i][0],
-					questionsAnswers[i][1], questionsAnswers[i][2], questionsAnswers[i][3], correctAnswer[i], c);
+					questionsAnswers[i][1], questionsAnswers[i][2], questionsAnswers[i][3], correctAnswer[i], c, t1);
 			session.save(questions[i]);
 		}
 		session.flush();
@@ -302,14 +325,21 @@ public class HibernateMain {
 			System.out.println("Hibernate: Open session...\n");
 			session = sessionFactory.openSession();
 
-			System.out.println("Hibernate: Begin Transaction...\n");
-			session.beginTransaction();
+			System.out.println("Hibernate: Check session properties...\n");
+			SessionFactoryImpl sessionImpl = (SessionFactoryImpl) session.getSessionFactory();
+			Settings setting = sessionImpl.getSettings();
 
-			System.out.println("Hibernate: Generate and insert data to DB...\n");
-			initializeData();
+			// Insert basic data to DB only for "create" property
+			if (setting.isAutoCreateSchema()) {
+				System.out.println("Hibernate: Begin Transaction...\n");
+				session.beginTransaction();
 
-			System.out.println("Hibernate: Committing all queries before closing connection...\n");
-			session.getTransaction().commit();
+				System.out.println("Hibernate: Generate and insert data to DB...\n");
+				initializeData();
+
+				System.out.println("Hibernate: Committing all queries before closing connection...\n");
+				session.getTransaction().commit();
+			}
 
 			status = true;
 
