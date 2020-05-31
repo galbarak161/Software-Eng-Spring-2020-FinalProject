@@ -304,17 +304,6 @@ public class HibernateMain {
 	public static void main(String[] args) {
 		try {
 			initHibernate();
-
-			Login l = new Login("GalB", "123");
-			List<User> userList = getDataFromDB(User.class);
-			for (User user : userList) {
-				if ((user.getUserName().equals(l.getUserName())) && (user.getPassword().equals(l.getPassword()))) {
-					System.out.println("User found! " + user.getFirstName());
-					break;
-				}
-
-			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
