@@ -3,13 +3,13 @@ package CommonElements;
 import java.io.Serializable;
 
 public class DataElements implements Serializable {
-	
+
 	private static final long serialVersionUID = -2986035827318115652L;
 
 	// Opcodes 0-9
 	public enum ClientToServerOpcodes {
 		GetAllStudies(0), GetAllCoursesInStudy(1), GetAllQuestionInCourse(2), UpdateQuestion(3), GetAllQuestion(4),
-		Error(-1);
+		UserLogin(5), Error(-1);
 
 		public int value;
 
@@ -21,7 +21,7 @@ public class DataElements implements Serializable {
 	// Opcodes 10-19
 	public enum ServerToClientOpcodes {
 		SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-		SendAllQuestion(14), Error(-1);
+		SendAllQuestion(14), UserLoggedIn(15), Error(-1);
 
 		public int value;
 
