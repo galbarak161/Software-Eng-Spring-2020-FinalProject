@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import CloneEntities.*;
-import CommonElements.*;
+import CommonElements.DataElements;
+import CommonElements.Login;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import OCSF.AbstractServer;
@@ -41,7 +42,6 @@ public class ServerMain extends AbstractServer {
 					System.out.println("Server ready!");
 			}
 		}
-
 	}
 
 	@Override
@@ -96,6 +96,11 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateQuestionResult);
 				de.setData(dataFromDB);
 				break;
+			/*case UserLogin:
+				dataFromDB = handleLoginRequest((Login) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
+				de.setData(dataFromDB);
+				break;*/
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
 				de.setData("handleMessageFromClient: Unknown Error");
@@ -115,6 +120,17 @@ public class ServerMain extends AbstractServer {
 			System.out.println("Send result to user! opcode = " + de.getOpCodeFromServer() + "\n");
 			sendToAllClients(de);
 		}
+	}
+
+	private User handleLoginRequest(Login data) throws Exception {
+		List<User> userList = HibernateMain.getDataFromDB(User.class);
+		for (User user : userList) {
+			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))) {
+				return user;
+			}
+		}
+		
+		return null;
 	}
 
 	/**

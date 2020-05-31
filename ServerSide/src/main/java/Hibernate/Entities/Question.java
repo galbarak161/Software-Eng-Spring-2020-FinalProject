@@ -41,12 +41,17 @@ public class Question {
 	@JoinColumn(name = "courseId")
 	private Course course;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacherId")
+	private Teacher teacher;
+
 	public Question() {
 	}
 
 	public Question(String subject, String questionText, String answer_1, String answer_2, String answer_3,
-			String answer_4, int correctAnswer, Course course) {
+			String answer_4, int correctAnswer, Course course, Teacher teacher) {
 		this.setCourse(course);
+		this.setTeacher(teacher);
 		this.GenerateQuestionCode();
 		this.subject = subject;
 		this.questionText = questionText;
@@ -140,5 +145,14 @@ public class Question {
 	public void setCourse(Course c) {
 		this.course = c;
 		c.getQuestions().add(this);
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+		teacher.getQuestions().add(this);
 	}
 }
