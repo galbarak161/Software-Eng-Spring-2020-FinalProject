@@ -24,7 +24,6 @@ public abstract class User{
 	private String lastName;
 	
 	public User() {
-		super();
 	}
 	
 	public User(String userName, String password, String firstName, String lastName) {

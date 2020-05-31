@@ -17,11 +17,11 @@ import org.hibernate.cfg.Settings;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
+import CommonElements.Login;
 import Hibernate.Entities.*;
 
 public class HibernateMain {
 	static Session session;
-	static Random random = new Random();
 	static boolean hibernateSessionStatus = false;
 
 	/**
@@ -304,6 +304,17 @@ public class HibernateMain {
 	public static void main(String[] args) {
 		try {
 			initHibernate();
+
+			Login l = new Login("GalB", "123");
+			List<User> userList = getDataFromDB(User.class);
+			for (User user : userList) {
+				if ((user.getUserName().equals(l.getUserName())) && (user.getPassword().equals(l.getPassword()))) {
+					System.out.println("User found! " + user.getFirstName());
+					break;
+				}
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

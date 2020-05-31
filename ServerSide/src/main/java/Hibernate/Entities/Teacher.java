@@ -14,7 +14,6 @@ public class Teacher extends User {
 	private List<Question> questions;
 
 	public Teacher() {
-		super();
 		courses = new ArrayList<Course>();
 		questions = new ArrayList<Question>();
 	}
