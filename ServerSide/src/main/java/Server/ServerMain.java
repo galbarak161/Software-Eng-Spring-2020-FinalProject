@@ -96,16 +96,15 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateQuestionResult);
 				de.setData(dataFromDB);
 				break;
-			/*case UserLogin:
+			case UserLogin:
 				dataFromDB = handleLoginRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
 				de.setData(dataFromDB);
-				break;*/
+				break;
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
 				de.setData("handleMessageFromClient: Unknown Error");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);

@@ -5,9 +5,9 @@
 	<parent>
 		<groupId>FinalProject</groupId>
 		<artifactId>Parent</artifactId>
-		<version>0.0.1-FinalProject</version>
+		<version>0.0.2-FinalProject</version>
 	</parent>
 	<artifactId>Common</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>jar</packaging>
 </project>

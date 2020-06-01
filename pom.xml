@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>FinalProject</groupId>
 	<artifactId>Parent</artifactId>
-	<version>0.0.1-FinalProject</version>
+	<version>0.0.2-FinalProject</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>ServerSide</module>
@@ -19,15 +19,6 @@
 		<maven.assemblyPlugin.version>3.3.0</maven.assemblyPlugin.version>
 		<javafx.version>14</javafx.version>
 	</properties>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>il.cshaifasweng.OCSFMediatorExample</groupId>
-				<artifactId>entities</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
