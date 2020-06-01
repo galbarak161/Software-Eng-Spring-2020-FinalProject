@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>FinalProject</groupId>
 		<artifactId>Parent</artifactId>
-		<version>0.0.1-FinalProject</version>
+		<version>0.0.2-FinalProject</version>
 	</parent>
 	<artifactId>ClientSide</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,9 +56,9 @@
 			<version>3.2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>${groupId}</groupId>
+			<groupId>FinalProject</groupId>
 			<artifactId>Common</artifactId>
-			<version>0.0.1-Common</version>
+			<version>0.0.2</version>
 		</dependency>
 	</dependencies>
 
