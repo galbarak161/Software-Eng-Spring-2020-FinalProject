@@ -18,8 +18,8 @@ public class Teacher extends User {
 		questions = new ArrayList<Question>();
 	}
 	
-	public Teacher(String userName, String password, String firstName, String lastName) {
-		super(userName, password, firstName, lastName);
+	public Teacher(String userName, String password, String firstName, String lastName, String identityNumber) {
+		super(userName, password, firstName, lastName, identityNumber);
 		courses = new ArrayList<Course>();
 		questions = new ArrayList<Question>();
 	}
