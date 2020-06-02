@@ -17,6 +17,7 @@ import org.hibernate.cfg.Settings;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
+import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
 
@@ -42,7 +43,7 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(User.class);
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(Teacher.class);
-		configuration.addAnnotatedClass(Director.class);
+		configuration.addAnnotatedClass(Principal.class);
 
 		// Create new service and return it as session to DB
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -111,20 +112,21 @@ public class HibernateMain {
 		final int NUMBER_OF_QUESTIONS = 13;
 
 		// Generate users
-		Student s1 = new Student("GalB", "123", "Gal", "Barak");
+		Student s1 = new Student("GalB", "123", "Gal", "Barak", "1");
 		session.save(s1);
-		Student s2 = new Student("abedI", "123", "Abed", "Idres");
+		Student s2 = new Student("abedI", "123", "Abed", "Idres", "2");
 		session.save(s2);
-		Student s3 = new Student("OrA", "123", "Or", "Ashkenazi");
+		Student s3 = new Student("OrA", "123", "Or", "Ashkenazi", "3");
 		session.save(s3);
-		Student s4 = new Student("SadiG", "123", "Sagi", "Gvili");
+		Student s4 = new Student("SadiG", "123", "Sagi", "Gvili", "4");
 		session.save(s4);
-		Teacher t1 = new Teacher("MalkiG", "123", "Malki", "Grossman");
+		Teacher t1 = new Teacher("MalkiG", "123", "Malki", "Grossman", "5");
 		session.save(t1);
-		Teacher t2 = new Teacher("LielF", "123", "Liel", "Fridman");
+		Teacher t2 = new Teacher("LielF", "123", "Liel", "Fridman", "6");
 		session.save(t2);
-		Director d1 = new Director("DaniK", "123", "Dani", "Keren");
+		Principal d1 = new Principal("DaniK", "123", "Dani", "Keren", "7");
 		session.save(d1);
+		
 		session.flush();
 
 		// Generate fields of study
