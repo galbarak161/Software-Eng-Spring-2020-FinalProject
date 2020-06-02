@@ -46,25 +46,7 @@ public class ClientMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-		if (args.length != 2) {
-			System.out.println("Required arguments: <host> <port>");
-		} else {
-			String host = args[0];
-			int port = Integer.parseInt(args[1]);
+		App.main(args);
 
-			ClientService client = new ClientService(host, port);
-			try {
-				client.openConnection();
-				//App.main(args);
-				System.out.println("Client up");
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} finally {
-				client.closeConnection();
-			}
-			
-
-			
-		}
 	}
 }
