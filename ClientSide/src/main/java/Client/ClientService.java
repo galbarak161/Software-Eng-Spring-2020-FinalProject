@@ -57,12 +57,12 @@ public class ClientService extends AbstractClient {
 					} else {
 						ClientMain.setUser((CloneUser)de.getData());
 						App.changeStage("mainController", "High School Test System");
+						controllersList.remove(o);
 					}
 					return;
 				}
 					
 			}
-			//PrimaryController.recivedMessageFromServer(de.getData());
 
 		} catch (Exception e) {
 			e.printStackTrace();
