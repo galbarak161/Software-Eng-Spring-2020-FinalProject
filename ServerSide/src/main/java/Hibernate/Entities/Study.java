@@ -18,7 +18,7 @@ public class Study {
 	@Column(name = "studyName")
 	private String studyName;
 
-	@ManyToMany(mappedBy = "studies", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "study")
 	private List<Course> courses;
 
 	public Study() {
@@ -53,10 +53,7 @@ public class Study {
 		return courses;
 	}
 
-	public void addCourses(Course... courses) {
-		for (Course course : courses) {
-			this.courses.add(course);
-			course.getStudies().add(this);
-		}
+	public void addCourse(Course course) {
+		this.courses.add(course);
 	}
 }

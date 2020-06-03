@@ -14,18 +14,16 @@ public class CloneCourse implements Serializable {
 
 	private List<CloneQuestion> questions;
 
-	private List<CloneStudy> studies;
-
+	private CloneStudy study;
+	
 	public CloneCourse() {
 		this.questions = new ArrayList<CloneQuestion>();
-		this.studies = new ArrayList<CloneStudy>();
 	}
 
 	public CloneCourse(int id, String courseName) {
 		this.id = id;
 		this.courseName = courseName;
 		this.questions = new ArrayList<CloneQuestion>();
-		this.studies = new ArrayList<CloneStudy>();
 	}
 
 	@Override
@@ -57,11 +55,12 @@ public class CloneCourse implements Serializable {
 		this.questions = questions;
 	}
 
-	public List<CloneStudy> getStudies() {
-		return studies;
+	public CloneStudy getStudy() {
+		return study;
 	}
 
-	public void setStudies(List<CloneStudy> studies) {
-		this.studies = studies;
+	public void setStudy(CloneStudy study) {
+		this.study = study;
 	}
+
 }

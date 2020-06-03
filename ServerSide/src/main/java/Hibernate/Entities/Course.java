@@ -21,26 +21,26 @@ public class Course {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Question> questions;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "course_study", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "studyId"))
-	private List<Study> studies;
-
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "teacherId")
-	private Teacher teacher;
+	@JoinColumn(name = "studyId")
+	private Study study;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "course_teacher", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "userId"))
+	private List<Teacher> teachers;
 
 	public Course() {
 		super();
 		this.questions = new ArrayList<Question>();
-		this.studies = new ArrayList<Study>();
+		this.teachers = new ArrayList<Teacher>();
 	}
 
-	public Course(String courseName, Teacher teacher) {
+	public Course(String courseName, Study study) {
 		super();
 		this.courseName = courseName;
-		this.setTeacher(teacher);
+		this.setStudy(study);
 		this.questions = new ArrayList<Question>();
-		this.studies = new ArrayList<Study>();
+		this.teachers = new ArrayList<Teacher>();
 	}
 
 	public CloneCourse createClone() {
@@ -68,24 +68,26 @@ public class Course {
 		this.questions.add(question);
 	}
 
-	public List<Study> getStudies() {
-		return studies;
+	public Study getStudy() {
+		return study;
 	}
 
-	public void addStudies(Study... studies) {
-		for (Study study : studies) {
-			this.studies.add(study);
-			study.getCourses().add(this);
+	public void setStudy(Study study) {
+		this.study = study;
+		study.getCourses().add(this);
+	}
+	
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+	
+	public void addTeacher(Teacher... teachers) {
+		for (Teacher teacher : teachers) {
+			this.teachers.add(teacher);
+			teacher.getCourses().add(this);
 		}
 	}
 
-	public Teacher getTeacher() {
-		return teacher;
-	}
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-		teacher.getCourses().add(this);
-	}
 
 }

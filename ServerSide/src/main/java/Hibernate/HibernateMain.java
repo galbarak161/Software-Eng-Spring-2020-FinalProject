@@ -161,13 +161,13 @@ public class HibernateMain {
 		coursesName[8] = "Digestive System";
 		coursesName[9] = "Animals";
 		for (int i = 0, j = 0; i < NUMBER_OF_COURSES && j < NUMBER_OF_STUDIES; j++) {
-			Course c1 = new Course(coursesName[i], t1);
-			c1.addStudies(studies[j]);
+			Course c1 = new Course(coursesName[i], studies[j]);
+			c1.addTeacher(t1);
 			courses[i] = c1;
 			i++;
 			session.save(c1);
-			Course c2 = new Course(coursesName[i], t2);
-			c2.addStudies(studies[j]);
+			Course c2 = new Course(coursesName[i],studies[j]);
+			c2.addTeacher(t2);
 			courses[i] = c2;
 
 			i++;
