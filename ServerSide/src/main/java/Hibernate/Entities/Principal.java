@@ -9,7 +9,7 @@ public class Principal extends User {
 
 	}
 
-	public Principal(String userName, String password, String firstName, String lastName, String identityNumber) {
-		super(userName, password, firstName, lastName, identityNumber);
+	public Principal(String userName, String password, String firstName, String lastName, String identityNumber, String emailAddress) {
+		super(userName, password, firstName, lastName, identityNumber, emailAddress);
 	}
 }

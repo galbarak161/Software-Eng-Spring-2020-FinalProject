@@ -29,17 +29,21 @@ public abstract class User {
 
 	@Column(name = "identityNumber")
 	private String identityNumber;
-
+	
+	@Column(name = "emailAddress")
+	private String emailAddress;
+	
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String identityNumber) {
+	public User(String userName, String password, String firstName, String lastName, String identityNumber, String emailAddress) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.identityNumber = identityNumber;
+		this.emailAddress = emailAddress;
 	}
 
 	public CloneUser createClone() {
@@ -52,7 +56,7 @@ public abstract class User {
 		else if (this instanceof Principal)
 			userType = UserType.Principal;
 
-		CloneUser clone = new CloneUser(this.firstName, this.lastName, this.identityNumber, userType);
+		CloneUser clone = new CloneUser(this.firstName, this.lastName, this.identityNumber, this.emailAddress, userType);
 		return clone;
 	}
 
