@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="791.0" prefWidth="150.0" style="-fx-background-color: #03d3fc;" styleClass="sidebar-section" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.teacherNavi">
+	<children>
+		<Label alignment="CENTER" prefHeight="66.0" text="Tests List" />
+		<Label alignment="CENTER" prefHeight="66.0" text="Question Editor" />
+		<Label alignment="CENTER" prefHeight="66.0" text="Exams Editor" />
+		<Label alignment="CENTER" prefHeight="66.0" text="Test Generator" />
+      <Label alignment="CENTER" layoutX="11.0" layoutY="209.0" prefHeight="66.0" text="Logout" />
+	</children>
+</VBox>

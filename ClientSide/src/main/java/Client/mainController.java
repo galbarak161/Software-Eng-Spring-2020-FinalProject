@@ -23,16 +23,22 @@ public class mainController {
 				System.out.println("UserType is Student");
 				mainPanel.getChildren()
 						.setAll((Node) FXMLLoader.load(getClass().getResource("studentController.fxml")));
+				navigatePanel.getChildren()
+				.setAll((Node) FXMLLoader.load(getClass().getResource("studentNavi.fxml")));
 				break;
 			case Teacher:
 				System.out.println("UserType is Teacher");
 				mainPanel.getChildren()
 						.setAll((Node) FXMLLoader.load(getClass().getResource("teacherController.fxml")));
+				navigatePanel.getChildren()
+				.setAll((Node) FXMLLoader.load(getClass().getResource("teacherNavi.fxml")));
 				break;
 			case Principal:
 				System.out.println("UserType is Principal");
 				mainPanel.getChildren()
 						.setAll((Node) FXMLLoader.load(getClass().getResource("principalController.fxml")));
+				navigatePanel.getChildren()
+				.setAll((Node) FXMLLoader.load(getClass().getResource("principalNavi.fxml")));
 				break;
 			}
 		} catch (IOException e) {

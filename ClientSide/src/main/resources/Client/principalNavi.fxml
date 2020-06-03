@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="791.0" prefWidth="150.0" style="-fx-background-color: #03d3fc;" styleClass="sidebar-section" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalNavi">
+	<children>
+		<Label alignment="CENTER" prefHeight="66.0" text="Requests List" />
+		<Label alignment="CENTER" prefHeight="66.0" text="Data Display" />
+		<Label alignment="CENTER" prefHeight="66.0" text="Logout" />
+	</children>
+</VBox>

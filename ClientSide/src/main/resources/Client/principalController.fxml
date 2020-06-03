@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalController">
    <children>
-      <Label layoutX="258.0" layoutY="35.0" prefHeight="41.0" prefWidth="175.0" text="Principal Panel" textFill="#ab1818">
+      <Label layoutX="183.0" layoutY="14.0" prefHeight="41.0" prefWidth="174.0" text="Principal Panel" textFill="#ab1818">
          <font>
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
+      <TableView fx:id="testsTable" layoutX="9.0" layoutY="60.0" prefHeight="709.0" prefWidth="559.0">
+        <columns>
+          <TableColumn fx:id="nameCol" prefWidth="158.0" text="Request" />
+          <TableColumn fx:id="dateCol" prefWidth="101.0" text="Test" />
+            <TableColumn fx:id="timeCol" prefWidth="63.0" text="Test Code" />
+            <TableColumn fx:id="codeCol" prefWidth="66.0" text="Date" />
+            <TableColumn fx:id="statusCol" prefWidth="64.0" text="Time" />
+            <TableColumn fx:id="gradeCol" prefWidth="106.0" text="Status" />
+        </columns>
+      </TableView>
+      <Button fx:id="displayButton" layoutX="589.0" layoutY="567.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
+      <Button fx:id="startButton" layoutX="584.0" layoutY="189.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
    </children>
 </AnchorPane>
