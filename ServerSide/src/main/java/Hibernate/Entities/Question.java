@@ -1,7 +1,8 @@
 package Hibernate.Entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
-
 import CloneEntities.*;
 
 @Entity
@@ -45,7 +46,12 @@ public class Question {
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
 
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "question_exam", joinColumns = @JoinColumn(name = "questionId"), inverseJoinColumns = @JoinColumn(name = "examId"))
+	private List<Exam> exames; 
+	
 	public Question() {
+		this.exames = new ArrayList<Exam>();
 	}
 
 	public Question(String subject, String questionText, String answer_1, String answer_2, String answer_3,
@@ -60,6 +66,7 @@ public class Question {
 		this.answer_3 = answer_3;
 		this.answer_4 = answer_4;
 		this.correctAnswer = correctAnswer;
+		this.exames = new ArrayList<Exam>();
 	}
 
 	public CloneQuestion createClone() {
@@ -154,5 +161,16 @@ public class Question {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 		teacher.getQuestions().add(this);
+	}
+
+	public List<Exam> getExames() {
+		return exames;
+	}
+	
+	public void addExam(Exam... exames) {
+		for (Exam exam : exames) {
+			this.exames.add(exam);
+			exam.getQuestions().add(this);
+		}
 	}
 }

@@ -47,6 +47,10 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(Teacher.class);
 		configuration.addAnnotatedClass(Principal.class);
+		configuration.addAnnotatedClass(Exam.class);
+		configuration.addAnnotatedClass(StudentTest.class);
+		configuration.addAnnotatedClass(Test.class);
+		configuration.addAnnotatedClass(TimeExtensionRequest.class);
 
 		// Create new service and return it as session to DB
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -129,7 +133,7 @@ public class HibernateMain {
 		session.save(t2);
 		Principal d1 = new Principal("DaniK", "123", "Dani", "Keren", "7", "Check@Check.com");
 		session.save(d1);
-		
+
 		session.flush();
 
 		// Generate fields of study
@@ -166,7 +170,7 @@ public class HibernateMain {
 			courses[i] = c1;
 			i++;
 			session.save(c1);
-			Course c2 = new Course(coursesName[i],studies[j]);
+			Course c2 = new Course(coursesName[i], studies[j]);
 			c2.addTeacher(t2);
 			courses[i] = c2;
 
@@ -303,95 +307,89 @@ public class HibernateMain {
 		}
 		session.flush();
 
-		
-		
 		////////////////////////////////////////////////////////
 		////////////////// Tests //////////////////////////////
 		//////////////////////////////////////////////////////
-		
+
 		System.out.println("creating Exam\n");
-		//create exam
-		//Exam(List<Question> questions, Teacher creator, List<Integer> questionsPoints, int duration,
-		//Study study, Course course, String teacherComments, String studentComments)
-		List<Question> questionList = new ArrayList<>();
-		questionList.add(questions[1]);
-		questionList.add(questions[2]);
-		
+		// create exam
+		// Exam(List<Question> questions, Teacher creator, List<Integer>
+		// questionsPoints, int duration,
+		// Study study, Course course, String teacherComments, String studentComments)
+		Question[] questionList = new Question[2];
+		questionList[0] = questions[1];
+		questionList[1] = questions[2];
+
 		List<Integer> questionPoints = new ArrayList<>();
 		questionPoints.add(50);
 		questionPoints.add(50);
-		
-		int duration= 60;
-		
-		String teacherCommString = " working hard or hardly working" ;
+
+		int duration = 60;
+
+		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
+
+		Exam e1 = new Exam(t1, questionPoints, duration, studies[0], courses[0], teacherCommString, studentCommString);
+		e1.addQuestion(questionList);
+		session.save(e1);
+		session.flush();
 		
-		Exam e1 = new Exam(questionList,t1,questionPoints,duration,studies[0],courses[0],teacherCommString,studentCommString);
-		
-		
-		
+
 		System.out.println("creating Test\n");
-		//create test
-		//Test(Teacher executor, LocalDateTime testDate, LocalTime testTime, int examType, int executionCode,
-		//List<Student> students, int extraMinutes, ExamType type, List<Request> requests)
-		Test test1= new Test(questionList,t1,questionPoints,duration,studies[0],courses[0], " teacher comments"," student comments");
-		test1.setExecutor(t2);
-		
-		final int year = 2020;
-		final int month = 6;
-		final int dayOfMonth=16;
-		LocalDate dayDate= LocalDate.of(year, month, dayOfMonth);
-		test1.setTestDate(dayDate);
-		
-		final int hour= 14;
-		final int minute = 30;
-		LocalTime testTime = LocalTime.of(hour, minute);
-		test1.setTestTime(testTime);
-		
-		List<Student> studentsTakingTest = new ArrayList<>();
-		studentsTakingTest.add(s1);
-		studentsTakingTest.add(s2);
-		test1.setStudents(studentsTakingTest);
-		
-		test1.setType(Test.ExamType.Automated);
-		
-		
-		
-		
-		System.out.println("creating StudentTest\n");
-		//create student test
-		//StudentTest(Test test, Student student, integer score, List<Integer> questionsAnswers, boolean finished,
-		//String examNotes)
-		
-		
-		List<Integer> s1TestAnswers = new ArrayList<>();
-		s1TestAnswers.add(1);
-		s1TestAnswers.add(2);
-		List<Integer> s2TestAnswers = new ArrayList<>();
-		s2TestAnswers.add(1);
-		s2TestAnswers.add(3);
-		
-		final int score1=50;
-		final int score2=100;
-				
-		boolean finished=true;
-		
-		String examNotes1= "Disapointment to family";
-		String examNotes2= "Not enough";
-		
-		StudentTest s1Test= new StudentTest(test1, s1, score1, s1TestAnswers, finished, examNotes1);
-		
-		StudentTest s2Test= new StudentTest(test1, s2, score2, s2TestAnswers, finished, examNotes2);
-		
-		
-		
-		
-		System.out.println("creating request\n");
-		//create request
-		String body= "student complaining";
-		final int time= 30;
-		TimeExtensionRequest extentionRequest1 = new TimeExtensionRequest(body, test1, time);
-		
+		// create test
+		// Test(Teacher executor, LocalDateTime testDate, LocalTime testTime, int
+		// examType, int executionCode,
+		// List<Student> students, int extraMinutes, ExamType type, List<Request>
+		// requests)
+		/*
+		 * Test test1= new Test(t1,questionPoints,duration,studies[0],courses[0],
+		 * " teacher comments"," student comments"); test1.setExecutor(t2);
+		 * 
+		 * final int year = 2020; final int month = 6; final int dayOfMonth=16;
+		 * LocalDate dayDate= LocalDate.of(year, month, dayOfMonth);
+		 * test1.setTestDate(dayDate);
+		 * 
+		 * final int hour= 14; final int minute = 30; LocalTime testTime =
+		 * LocalTime.of(hour, minute); test1.setTestTime(testTime);
+		 * 
+		 * List<Student> studentsTakingTest = new ArrayList<>();
+		 * studentsTakingTest.add(s1); studentsTakingTest.add(s2);
+		 * test1.setStudents(studentsTakingTest);
+		 * 
+		 * test1.setType(Test.ExamType.Automated);
+		 * 
+		 * 
+		 * 
+		 * 
+		 * System.out.println("creating StudentTest\n"); //create student test
+		 * //StudentTest(Test test, Student student, integer score, List<Integer>
+		 * questionsAnswers, boolean finished, //String examNotes)
+		 * 
+		 * 
+		 * List<Integer> s1TestAnswers = new ArrayList<>(); s1TestAnswers.add(1);
+		 * s1TestAnswers.add(2); List<Integer> s2TestAnswers = new ArrayList<>();
+		 * s2TestAnswers.add(1); s2TestAnswers.add(3);
+		 * 
+		 * final int score1=50; final int score2=100;
+		 * 
+		 * boolean finished=true;
+		 * 
+		 * String examNotes1= "Disapointment to family"; String examNotes2=
+		 * "Not enough";
+		 * 
+		 * StudentTest s1Test= new StudentTest(test1, s1, score1, s1TestAnswers,
+		 * finished, examNotes1);
+		 * 
+		 * StudentTest s2Test= new StudentTest(test1, s2, score2, s2TestAnswers,
+		 * finished, examNotes2);
+		 * 
+		 * 
+		 * 
+		 * 
+		 * System.out.println("creating request\n"); //create request String body=
+		 * "student complaining"; final int time= 30; TimeExtensionRequest
+		 * extentionRequest1 = new TimeExtensionRequest(body, test1, time);
+		 */
 		session.clear();
 	}
 

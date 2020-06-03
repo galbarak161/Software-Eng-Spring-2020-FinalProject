@@ -4,71 +4,66 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-//@Entity
+@Entity
 @Table(name = "Exam")
 public class Exam {
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "examId")
 	private int id;
-	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "questions", joinColumns = @JoinColumn(name = "examId"), inverseJoinColumns = @JoinColumn(name = "questionId"))
-	private List<Question> questions; 
-	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "exam_teacher", joinColumns = @JoinColumn(name = "examId"), inverseJoinColumns = @JoinColumn(name = "userId"))
-	private Teacher creator;	
 
-	//@Column
-    private List<Integer> questionsPoints;   
-	
-	//@Column
-    private int duration; // Duration of exam in minutes
-    
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	//@JoinColumn(name = "studyId")
-    private Study study;
-    
-    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	//@JoinColumn(name = "courseId")
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "teacherId")
+	private Teacher creator;
+
+	@ManyToMany(mappedBy = "exames", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Question> questions;
+
+	@Column(name = "durationInMinutes")
+	private int duration;
+
+	@Column(name = "TeacherComments")
+	private String TeacherComments;
+
+	@Column(name = "StudentComments")
+	private String StudentComments;
+
+	@Column(name = "examCode")
+	private int examCode;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "courseId")
 	private Course course;
 
-    //@Column(name = "TeacherComments")
-	private String TeacherComments;
-    
-    //@Column(name = "StudentComments")
-	private String StudentComments;
-    
-    //@Column(name = "examCode")
-    private int examCode;
-
 	public Exam() {
-		super();
+		this.questions = new ArrayList<Question>();
 	}
 
-	public Exam(List<Question> questions, Teacher creator, List<Integer> questionsPoints, int duration,
-			Study study, Course course, String teacherComments, String studentComments) {
-		super();
-		this.questions = questions;
-		this.creator = creator;
-		this.questionsPoints = questionsPoints;
+	public Exam(Teacher creator, List<Integer> questionsPoints, int duration, Study study, Course course,
+			String teacherComments, String studentComments) {
 		this.duration = duration;
-		this.study = study;
-		this.course = course;
 		TeacherComments = teacherComments;
 		StudentComments = studentComments;
-		this.examCode = 1; 
+		setCreator(creator);
+		setCourse(course);
+		GenerateExamCode();
+		this.questions = new ArrayList<Question>();
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	private void GenerateExamCode() {
+		this.examCode = 5;
+		int studyID = this.course.getStudy().getId();
+		int courseID = this.course.getId();
+		this.examCode = (studyID * 10000) + (courseID * 100) + course.getExames().size();
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public int getId() {
+		return id;
+	}
+
+	public int getExamCode() {
+		return examCode;
 	}
 
 	public Teacher getCreator() {
@@ -77,30 +72,18 @@ public class Exam {
 
 	public void setCreator(Teacher creator) {
 		this.creator = creator;
+		creator.getExames().add(this);
 	}
 
-	public List<Integer> getQuestionsPoints() {
-		return questionsPoints;
+	public List<Question> getQuestions() {
+		return questions;
 	}
 
-	public void setQuestionsPoints(List<Integer> questionsPoints) {
-		this.questionsPoints = questionsPoints;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public Study getStudy() {
-		return study;
-	}
-
-	public void setStudy(Study study) {
-		this.study = study;
+	public void addQuestion(Question... questions) {
+		for (Question question : questions) {
+			this.questions.add(question);
+			question.getExames().add(this);
+		}
 	}
 
 	public Course getCourse() {
@@ -109,33 +92,6 @@ public class Exam {
 
 	public void setCourse(Course course) {
 		this.course = course;
-	}
-
-	public String getTeacherComments() {
-		return TeacherComments;
-	}
-
-	public void setTeacherComments(String teacherComments) {
-		TeacherComments = teacherComments;
-	}
-
-	public String getStudentComments() {
-		return StudentComments;
-	}
-
-	public void setStudentComments(String studentComments) {
-		StudentComments = studentComments;
-	}
-
-	public int getExamCode() {
-		return examCode;
-	}
-
-	public void setExamCode(int examCode) {
-		this.examCode = examCode;
-	}
-
-	public int getId() {
-		return id;
+		course.getExames().add(this);
 	}
 }

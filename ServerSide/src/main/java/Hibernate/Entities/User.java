@@ -2,7 +2,6 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
-import CloneEntities.CloneStudy;
 import CloneEntities.CloneUser;
 import CloneEntities.CloneUser.UserType;
 

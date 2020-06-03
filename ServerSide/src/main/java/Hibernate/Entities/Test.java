@@ -58,9 +58,9 @@ public class Test extends Exam{
 	private List<TimeExtensionRequest> requests;
 	
 
-	public Test(List<Question> questions, Teacher creator, List<Integer> questionsPoints, int duration, Study study,
+	public Test(Teacher creator, List<Integer> questionsPoints, int duration, Study study,
 			Course course, String teacherComments, String studentComments) {
-		super(questions, creator, questionsPoints, duration, study, course, teacherComments, studentComments);
+		super(creator, questionsPoints, duration, study, course, teacherComments, studentComments);
 		// TODO Auto-generated constructor stub
 	}
 	
