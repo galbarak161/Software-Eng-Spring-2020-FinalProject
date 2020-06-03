@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="588.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="588.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.loginController">
    <children>
       <Label layoutX="148.0" layoutY="20.0" prefHeight="30.0" prefWidth="305.0" text="High School Test System - HSTS">
          <font>
@@ -30,8 +30,8 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="signinButton" layoutX="210.0" layoutY="233.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="67.0" text="Sign-In" />
-      <Button fx:id="clearButton" layoutX="322.0" layoutY="233.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="67.0" text="Clear" />
+      <Button fx:id="signinButton" layoutX="210.0" layoutY="233.0" mnemonicParsing="false" onAction="#signinAction" prefHeight="30.0" prefWidth="67.0" text="Sign-In" />
+      <Button fx:id="clearButton" layoutX="322.0" layoutY="233.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="30.0" prefWidth="67.0" text="Clear" />
       <Label fx:id="errorLabel" layoutX="131.0" layoutY="191.0" prefHeight="25.0" prefWidth="360.0" text="Username or Password are incorrent., please insert again." textFill="RED" visible="false">
          <font>
             <Font size="14.0" />

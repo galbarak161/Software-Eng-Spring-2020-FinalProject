@@ -2,25 +2,15 @@ package Client;
 
 import java.io.IOException;
 
+import CloneEntities.*;
+
 public class ClientMain {
 
 	private static ClientService clientS;
-	private boolean isRunning;
-	private Thread loopThread;
+	private static CloneUser current_user;
 
 	public ClientMain(ClientService client) {
 		ClientMain.clientS = client;
-		this.isRunning = false;
-	}
-
-	public void mainLoopThread() throws IOException {
-		loopThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-			}
-		});
-		loopThread.start();
-		this.isRunning = true;
 	}
 
 	public static int sendMessageToServer(Object message) throws IOException {
@@ -33,10 +23,11 @@ public class ClientMain {
 		return 1;
 	}
 
+	public static void addController(Object con) {
+		ClientService.controllersList.add(con);
+	}
+
 	public void displayMessageOnConsole(Object message) {
-		if (isRunning) {
-			System.out.print("(Interrupted)\n");
-		}
 		System.out.println("Received message from server: " + message.toString());
 	}
 
@@ -44,9 +35,26 @@ public class ClientMain {
 		System.out.println("Connection closed.");
 		System.exit(0);
 	}
+	
+	public static CloneUser getUser() {
+		return current_user;
+	}
+	
+	public static void setUser(CloneUser user) {
+		current_user = user;
+	}
 
 	public static void main(String[] args) throws IOException {
-		App.main(args);
+		// TODO: change to args[] later (ref in ClientMain of Prototype
+		ClientService client = new ClientService("localhost", 3000);
+		try {
+			client.openConnection();
+			App.main(args);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			client.closeConnection();
+		}
 
 	}
 }

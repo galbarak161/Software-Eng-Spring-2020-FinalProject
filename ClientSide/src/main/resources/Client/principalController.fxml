@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalController">
+   <children>
+      <Label layoutX="258.0" layoutY="35.0" prefHeight="41.0" prefWidth="175.0" text="Principal Panel" textFill="#ab1818">
+         <font>
+            <Font name="Calibri" size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

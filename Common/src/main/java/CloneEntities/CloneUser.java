@@ -1,8 +1,14 @@
 package CloneEntities;
 
+import java.io.Serializable;
 
-public class CloneUser {
-	
+public class CloneUser implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3713504832702720811L;
+
 	public enum UserType {
 		Student, Teacher, Principal;
 	}
