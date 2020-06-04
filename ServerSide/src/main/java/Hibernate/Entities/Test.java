@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Table(name = "Test")
@@ -57,12 +58,12 @@ public class Test {
 		students = new ArrayList<StudentTest>();
 	}
 
-	public Test(LocalDate testDate, LocalTime testTime, String executionCode, ExamType type, Teacher executor,
+	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor,
 			Exam examToExecute) {
 		super();
 		this.testDate = testDate;
 		this.testTime = testTime;
-		this.executionCode = executionCode;
+		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
 		this.type = type;
 		setExtensionRequests(null);
@@ -143,11 +144,26 @@ public class Test {
 	public Exam getExamToExecute() {
 		return examToExecute;
 	}
-
+	
 	public void setExamToExecute(Exam examToExecute) {
 		this.examToExecute = examToExecute;
 		examToExecute.getTests().add(this);
 		testDuration = examToExecute.getDuration();
+	}
+
+	public String TestCodeGenerator() {
+	    int leftLimit = 48; // numeral '0'
+	    int rightLimit = 122; // letter 'z'
+	    int targetStringLength = 4;
+	    Random random = new Random();
+	 
+	    String generatedString = random.ints(leftLimit, rightLimit + 1)
+	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+	      .limit(targetStringLength)
+	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+	      .toString();
+	 
+	    return generatedString;
 	}
 
 }
