@@ -39,8 +39,12 @@ public class Exam {
 	@JoinColumn(name = "courseId")
 	private Course course;
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "examToExecute")
+	private List<Test> tests;
+
 	public Exam() {
 		this.questions = new ArrayList<Question>();
+		tests = new ArrayList<Test>();
 	}
 
 	public Exam(String examName,Teacher creator, List<Integer> questionsPoints, int duration, Study study, Course course,
@@ -53,6 +57,7 @@ public class Exam {
 		setCourse(course);
 		GenerateExamCode();
 		this.questions = new ArrayList<Question>();
+		tests = new ArrayList<Test>();
 	}
 
 	private void GenerateExamCode() {
@@ -99,6 +104,40 @@ public class Exam {
 		course.getExames().add(this);
 	}
 
-	
+	public List<Test> getTests() {
+		return tests;
+	}
+
+	public void addTest(Test test) {
+		this.tests.add(test);
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public String getTeacherComments() {
+		return TeacherComments;
+	}
+
+	public void setTeacherComments(String teacherComments) {
+		TeacherComments = teacherComments;
+	}
+
+	public String getStudentComments() {
+		return StudentComments;
+	}
+
+	public void setStudentComments(String studentComments) {
+		StudentComments = studentComments;
+	}
+
+	public String getExamName() {
+		return examName;
+	}
 	
 }

@@ -15,18 +15,23 @@ public class Teacher extends User {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creator")
 	private List<Exam> exames;
-	
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "executor")
+	private List<Test> tests;
+
 	public Teacher() {
 		courses = new ArrayList<Course>();
 		questions = new ArrayList<Question>();
 		exames = new ArrayList<Exam>();
+		tests = new ArrayList<Test>();
 	}
-	
+
 	public Teacher(int id, String userName, String password, String firstName, String lastName, String emailAddress) {
 		super(id, userName, password, firstName, lastName, emailAddress);
 		courses = new ArrayList<Course>();
 		questions = new ArrayList<Question>();
 		exames = new ArrayList<Exam>();
+		tests = new ArrayList<Test>();
 	}
 
 	public List<Course> getCourses() {
@@ -55,8 +60,13 @@ public class Teacher extends User {
 	public void addExame(Exam exam) {
 		this.exames.add(exam);
 	}
-	
-	
-	
+
+	public List<Test> getTests() {
+		return tests;
+	}
+
+	public void addTest(Test test) {
+		this.tests.add(test);
+	}
 
 }
