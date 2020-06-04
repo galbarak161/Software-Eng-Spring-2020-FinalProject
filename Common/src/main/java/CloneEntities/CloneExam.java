@@ -7,19 +7,18 @@ public class CloneExam implements Serializable {
 
 	private static final long serialVersionUID = 1875843740998023504L;
 
-	private int id;
 
 	// private CloneTeacher creator;
 
 	private List<CloneQuestion> questions;
 
 	private int duration;
+	
+	private String name;
 
 	private String TeacherComments;
 
 	private String StudentComments;
-
-	private int examCode;
 
 	private CloneCourse course;
 
@@ -27,19 +26,14 @@ public class CloneExam implements Serializable {
 		super();
 	}
 
-	public CloneExam(int id, int duration, String teacherComments, String studentComments, int examCode,
+	public CloneExam( String name,int duration, String teacherComments, String studentComments,
 			CloneCourse course) {
 		super();
-		this.id = id;
+		this.name= name;
 		this.duration = duration;
 		TeacherComments = teacherComments;
 		StudentComments = studentComments;
-		this.examCode = examCode;
 		this.course = course;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public List<CloneQuestion> getQuestions() {
@@ -74,13 +68,6 @@ public class CloneExam implements Serializable {
 		StudentComments = studentComments;
 	}
 
-	public int getExamCode() {
-		return examCode;
-	}
-
-	public void setExamCode(int examCode) {
-		this.examCode = examCode;
-	}
 
 	public CloneCourse getCourse() {
 		return course;

@@ -305,6 +305,8 @@ public class HibernateMain {
 					questionsAnswers[i][1], questionsAnswers[i][2], questionsAnswers[i][3], correctAnswer[i], c, t1);
 			session.save(questions[i]);
 		}
+		
+		
 		session.flush();
 
 		////////////////////////////////////////////////////////
@@ -326,10 +328,11 @@ public class HibernateMain {
 
 		int duration = 60;
 
+		String name = "exam name";
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(t1, questionPoints, duration, studies[0], courses[0], teacherCommString, studentCommString);
+		Exam e1 = new Exam(name,t1, questionPoints, duration, studies[0], courses[0], teacherCommString, studentCommString);
 		e1.addQuestion(questionList);
 		session.save(e1);
 		session.flush();

@@ -34,7 +34,7 @@ public class Question {
 
 	@Column(name = "answer_4", length = 100)
 	private String answer_4;
-
+	
 	@Column(name = "correctAnswer")
 	private int correctAnswer;
 
@@ -173,4 +173,6 @@ public class Question {
 			exam.getQuestions().add(this);
 		}
 	}
+
+	
 }
