@@ -107,10 +107,6 @@ public class questionsEditor extends AbstractController {
 
 	@FXML ComboBox<CloneStudy> study_combo;
 
-	private static boolean msgRecived = false;
-
-	private static Object dataRecived = null;
-
 
 	/**
 	 * Function called automatically when GUI is starting. We get from DB all
@@ -267,83 +263,7 @@ public class questionsEditor extends AbstractController {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Handles double-click on the qList (Like clicking on "Edit" button)
-	 * 
-	 * @param event - Contains the clicking event on the mouse
-	 */
-	@FXML
-	void onDoubleClick(MouseEvent event) {
-		if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-			onClickedEdit(new ActionEvent());
-	}
-
-	/**
-	 * Handle clicking on "Edit" button and presenting the selected question from
-	 * qList
-	 * 
-	 * @param actionEvent
-	 */
-	@FXML
-	void onClickedEdit(ActionEvent actionEvent) {
-		ObservableList<CloneQuestion> selected_q = qList.getSelectionModel().getSelectedItems();
-		if (selected_q.isEmpty()) {
-			popError(ERROR_TITLE_Client,"No question has been selected. \nPlease select a question");
-			return;
-		}
-
-		try {
-			dataRecived = null;
-
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, selected_q.get(0).getCourse());
-			if ((dbStatus == -1) || dataRecived == null) {
-				popError(ERROR_TITLE_Client,"The system cannot retrieve question data from server. \nPlease try again");
-				return;
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			popError(ERROR_TITLE_Client,"The system cannot retrieve question data from server. \nPlease try again");
-			return;
-		}
-
-		int qIndex = (selected_q.get(0).getQuestionCode() % 1000) - 1;
-		if (qIndex < 0) {
-			popError(ERROR_TITLE_Client,"The system cannot retrieve question data from server. \nPlease try again");
-			return;
-		}
-
-		EventHandler<ActionEvent> handler;
-
-		handler = study_combo.getOnAction();
-		study_combo.setOnAction(null);
-		study_combo.getSelectionModel().clearSelection();
-		study_combo.setOnAction(handler);
-
-		handler = course_combo.getOnAction();
-		course_combo.setOnAction(null);
-		course_combo.getItems().clear();
-		List<CloneCourse> tempCourse = new ArrayList<CloneCourse>();
-		tempCourse.add(selected_q.get(0).getCourse());
-		course_combo.setItems(FXCollections.observableArrayList(tempCourse));
-		course_combo.setValue(tempCourse.get(0));
-		course_combo.setDisable(false);
-		course_combo.setOnAction(handler);
-
-		handler = question_combo.getOnAction();
-		question_combo.setOnAction(null);
-		question_combo.getItems().clear();
-		ObservableList<CloneQuestion> temp = FXCollections.observableArrayList((List<CloneQuestion>) dataRecived);
-		question_combo.setItems(temp);
-		question_combo.setValue(temp.get(qIndex));
-		parseQuestionToFields(question_combo.getValue());
-		question_combo.setDisable(false);
-		question_combo.setOnAction(handler);
-
-		mainTab.getSelectionModel().select(edtiorTab);
-		ChangeSubmitColor(null);
-	}
-
+	
 	/**
 	 * Display the retrieved "Studies" from server on study_combo Reset other fields
 	 * on "Editor" tab
@@ -356,9 +276,8 @@ public class questionsEditor extends AbstractController {
 			return;
 
 		try {
-			dataRecived = null;
 			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesInStudy, study_combo.getValue());
-			if ((dbStatus == -1) || dataRecived == null) {
+			if ((dbStatus == -1)) {
 				popError(ERROR_TITLE_Client,"The system cannot retrieve courses from server \nPlease try again");
 				return;
 			}
@@ -373,7 +292,7 @@ public class questionsEditor extends AbstractController {
 		handler = course_combo.getOnAction();
 		course_combo.getItems().clear();
 		course_combo.setDisable(false);
-		course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) dataRecived));
+		//course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) dataRecived));
 		course_combo.setValue(null);
 		course_combo.setOnAction(handler);
 
@@ -400,9 +319,8 @@ public class questionsEditor extends AbstractController {
 			return;
 
 		try {
-			dataRecived = null;
 			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, course_combo.getValue());
-			if ((dbStatus == -1) || dataRecived == null) {
+			if (dbStatus == -1) {
 				throw new InterruptedException();
 			}
 		} catch (InterruptedException e) {
@@ -417,7 +335,7 @@ public class questionsEditor extends AbstractController {
 
 		handler = question_combo.getOnAction();
 		question_combo.setDisable(false);
-		question_combo.setItems(FXCollections.observableArrayList((List<CloneQuestion>) dataRecived));
+		//question_combo.setItems(FXCollections.observableArrayList((List<CloneQuestion>) dataRecived));
 		question_combo.setValue(null);
 		question_combo.setOnAction(handler);
 
@@ -514,41 +432,40 @@ public class questionsEditor extends AbstractController {
 			return;
 		}
 
-		dataRecived = null;
 		int dbStatus = GetDataFromDB(ClientToServerOpcodes.UpdateQuestion, q);
 
-		if ((dbStatus == -1) || dataRecived == null) {
+		if (dbStatus == -1) {
 			ChangeSubmitColor("#FF0000");
 			popError(ERROR_TITLE_Client, "The system could not commit your update request.\nPlease try again");
 			return;
 		}
 
-		CloneQuestion newItem = (CloneQuestion) dataRecived;
+		//CloneQuestion newItem = (CloneQuestion) dataRecived;
 
-		if (question_combo.getItems().size() >= 1) {
-			for (CloneQuestion q2 : question_combo.getItems()) {
-				if (newItem.getId() == q2.getId()) {
-					EventHandler<ActionEvent> handler = question_combo.getOnAction();
-					question_combo.setOnAction(null);
-					question_combo.getItems().remove(q2);
-					question_combo.getItems().add(newItem);
-					question_combo.setValue(newItem);
-					question_combo.setOnAction(handler);
-					break;
-				}
-			}
-		}
+//		if (question_combo.getItems().size() >= 1) {
+//			for (CloneQuestion q2 : question_combo.getItems()) {
+//				if (newItem.getId() == q2.getId()) {
+//					EventHandler<ActionEvent> handler = question_combo.getOnAction();
+//					question_combo.setOnAction(null);
+//					question_combo.getItems().remove(q2);
+//					question_combo.getItems().add(newItem);
+//					question_combo.setValue(newItem);
+//					question_combo.setOnAction(handler);
+//					break;
+//				}
+//			}
+//		}
 
-		for (CloneQuestion q2 : qList.getItems()) {
-			if (newItem.getId() == q2.getId()) {
-				int index = qList.getItems().indexOf(q2);
-				qList.getItems().remove(q2);
-				qList.getItems().add(index, newItem);
-				// qList.getItems().add(newItem);
-				dataRecived = null;
-				break;
-			}
-		}
+//		for (CloneQuestion q2 : qList.getItems()) {
+//			if (newItem.getId() == q2.getId()) {
+//				int index = qList.getItems().indexOf(q2);
+//				qList.getItems().remove(q2);
+//				qList.getItems().add(index, newItem);
+//				// qList.getItems().add(newItem);
+//				dataRecived = null;
+//				break;
+//			}
+//		}
 
 		ChangeSubmitColor("#00FF09");
 		info.setHeaderText("The question has been successfully updated!");

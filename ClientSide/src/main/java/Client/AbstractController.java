@@ -16,6 +16,12 @@ public abstract class AbstractController {
 	protected static final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
 	
 	protected static final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
+	
+	private static boolean msgRecived = false;
+	
+	static void msgRecieved() {
+		msgRecived = true;
+	}
 
 	/**
 	 * getDataFromServer(DataElements) The function calls the
@@ -48,7 +54,12 @@ public abstract class AbstractController {
 	 * @throws InterruptedException Pause the main GUI thread
 	 */
 	public int GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
-		return sendRequestForDataFromServer(new DataElements(op, data));
+		int status = sendRequestForDataFromServer(new DataElements(op, data));
+		while(!msgRecived) {
+			Thread.onSpinWait();
+		}
+		msgRecived = false;
+		return status;
 	}
 	
 	
