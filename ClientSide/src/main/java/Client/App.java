@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class App extends Application {
 		scene = new Scene(loadFXML("loginController"));
 		mainStage.setTitle("Login");
 		mainStage.setScene(scene);
-		//stage.getIcons().add(new Image(App.class.getResource("main_icon.jpeg").toExternalForm()));
+		mainStage.getIcons().add(new Image(App.class.getResource("main_icon.png").toExternalForm()));
 		mainStage.setResizable(false);
 		mainStage.show();
 	}
