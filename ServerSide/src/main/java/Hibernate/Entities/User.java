@@ -35,13 +35,13 @@ public abstract class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String identityNumber, String emailAddress) {
+	public User( int id,String userName, String password, String firstName, String lastName, String emailAddress) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.identityNumber = identityNumber;
+		this.id = id;
 		this.emailAddress = emailAddress;
 	}
 
@@ -55,7 +55,7 @@ public abstract class User {
 		else if (this instanceof Principal)
 			userType = UserType.Principal;
 
-		CloneUser clone = new CloneUser(this.firstName, this.lastName, this.identityNumber, this.emailAddress, userType);
+		CloneUser clone = new CloneUser(this.id, this.firstName, this.lastName, this.emailAddress, userType);
 		return clone;
 	}
 

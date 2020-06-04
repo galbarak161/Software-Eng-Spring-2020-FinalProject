@@ -188,7 +188,7 @@ public class ServerOperations {
 		try {
 			listFromDB = HibernateMain.getDataFromDB(Teacher.class);
 			for (Teacher teacher : listFromDB) {
-				if (teacher.getId() == cloneUser.get()) {
+				if (teacher.getId() == cloneUser.getId()) {
 					teacher.getCourses().forEach(course -> courses.add(course.createClone()));
 					break;
 				}
