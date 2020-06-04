@@ -30,7 +30,7 @@ public class Test {
 	private String executionCode;
 
 	@Column(name = "extraMinutes")
-	private int extraMinute = 0;
+	private int extraMinute;
 	
 	@Column(name = "testDuration")
 	private int testDuration;

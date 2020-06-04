@@ -7,9 +7,6 @@ public class CloneExam implements Serializable {
 
 	private static final long serialVersionUID = 1875843740998023504L;
 
-
-	// private CloneTeacher creator;
-
 	private List<CloneQuestion> questions;
 
 	private int duration;
@@ -75,5 +72,13 @@ public class CloneExam implements Serializable {
 
 	public void setCourse(CloneCourse course) {
 		this.course = course;
+	}
+
+	public String getExamName() {
+		return examName;
+	}
+
+	public void setExamName(String examName) {
+		this.examName = examName;
 	}
 }
