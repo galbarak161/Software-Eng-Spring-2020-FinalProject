@@ -80,6 +80,20 @@ public class ClientService extends AbstractClient {
 				}
 				return;
 			}
+			
+			if (!(o = getController(examCreator.class)).getClass().equals(String.class)) {
+				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
+					((examCreator) o).popError("Error", "Couldn't get info from server");
+				} else {
+//					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
+//					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
+					switch (de.getOpCodeFromServer()) {
+					case SendAllCoursesFromTeacher:
+						((examCreator) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					}
+				}
+				return;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

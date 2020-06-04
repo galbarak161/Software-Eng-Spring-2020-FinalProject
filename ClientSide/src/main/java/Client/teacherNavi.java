@@ -35,26 +35,29 @@ public class teacherNavi {
 		
 	}
 	
-
-	@FXML
-	void changeToQEdit(MouseEvent event) {
+	void switchMainPanel(String Sfxml) {
 		Object o = ClientService.getController(mainController.class);
 		if(!o.getClass().equals(String.class)) {
 	    	Platform.runLater(() -> {
-	    		((mainController)o).setMainPanel("questionsEditor.fxml");
+	    		((mainController)o).setMainPanel(Sfxml);
 	    	}); 
 		}
 	}
+
+	@FXML
+	void changeToQEdit(MouseEvent event) {
+		switchMainPanel("questionsEditor.fxml");
+	}
 	
+	@FXML
+    void changeToExamCreator(MouseEvent event) {
+		switchMainPanel("examCreator.fxml");
+
+    }
 
     @FXML
     void changeToTests(MouseEvent event) {
-		Object o = ClientService.getController(mainController.class);
-		if(!o.getClass().equals(String.class)) {
-	    	Platform.runLater(() -> {
-	    		((mainController)o).setMainPanel("teacherController.fxml");
-	    	});
-		}
+		switchMainPanel("teacherController.fxml");
     }
 
 }

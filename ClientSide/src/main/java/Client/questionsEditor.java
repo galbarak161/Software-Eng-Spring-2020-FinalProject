@@ -22,7 +22,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class questionsEditor {
+public class questionsEditor extends AbstractController {
 
 	/**************************************
 	 ************* Variables **************
@@ -111,13 +111,6 @@ public class questionsEditor {
 
 	private static Object dataRecived = null;
 
-	private Alert alert = new Alert(Alert.AlertType.ERROR);
-
-	private Alert info = new Alert(Alert.AlertType.INFORMATION);
-	
-	private static final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
-	
-	private static final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
 
 	/**
 	 * Function called automatically when GUI is starting. We get from DB all
@@ -152,49 +145,10 @@ public class questionsEditor {
 			popError(ERROR_TITLE_SERVER,initErrors);
 	}
 
-	/**
-	 * getDataFromServer(DataElements) The function calls the
-	 * ClientMain.sendMessageToServer(Object) function
-	 * 
-	 * @param DataElements with opcode and data
-	 * @return -1 for fail
-	 */
-	private int sendRequestForDataFromServer(DataElements de) {
-		int status;
-		try {
-			status = ClientMain.sendMessageToServer(de);
-		} catch (IOException e) {
-			status = -1;
-			String errorMessage = "The system could not receive data from server. please reconnect and try again";
-			popError(ERROR_TITLE_SERVER, errorMessage);
-			e.printStackTrace();
-		}
+	
 
-		return status;
-	}
-
-	/**
-	 * Creating request to get data from server
-	 * 
-	 * @param op   - what type of request do we want (Enum)
-	 * @param data - the date we want to send to server
-	 * @return
-	 * @throws InterruptedException Pause the main GUI thread
-	 */
-	public int GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
-		return sendRequestForDataFromServer(new DataElements(op, data));
-	}
-
-	/**
-	 * Activate as a respond for an unknown exception in client
-	 * 
-	 * @param object Contains the error description
-	 */
-	public void popError(String title, String errorMessage) {
-		alert.setHeaderText(title);
-		alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
-		alert.showAndWait();
-	}
+	
+	
 
 	/**
 	 * Changing Submit button color

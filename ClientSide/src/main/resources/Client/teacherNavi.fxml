@@ -11,7 +11,7 @@
          <font>
             <Font size="10.0" />
          </font></Label>
-		<Label fx:id="examsEditor" alignment="CENTER" prefHeight="66.0" text="Exams Editor" />
+		<Label fx:id="examsEditor" alignment="CENTER" onMouseClicked="#changeToExamCreator" prefHeight="66.0" text="Exams Editor" />
 		<Label fx:id="testGenerator" alignment="CENTER" prefHeight="66.0" text="Test Generator" />
       <Label fx:id="logout" alignment="CENTER" layoutX="11.0" layoutY="209.0" prefHeight="66.0" text="Logout" />
 	</children>
