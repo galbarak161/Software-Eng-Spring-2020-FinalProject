@@ -13,17 +13,17 @@ public class CloneUser implements Serializable{
 		Student, Teacher, Principal;
 	}
 	
+	private int id;
+	
 	private String firstName;
 	
 	private String lastName;
-	
-	private String identityNumber;
 	
 	private String emailAddress;
 	
 	private UserType userType;
 
-	public CloneUser(String firstName, String lastName, String identityNumber, String emailAddress, UserType userType) {
+	public CloneUser(int Id, String firstName, String lastName, String emailAddress, UserType userType) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,7 +31,7 @@ public class CloneUser implements Serializable{
 		this.emailAddress = emailAddress;
 		this.userType = userType;
 	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -50,5 +50,10 @@ public class CloneUser implements Serializable{
 	
 	public UserType getUserType() {
 		return userType;
+	}
+
+
+	public int getId() {
+		return id;
 	}
 }
