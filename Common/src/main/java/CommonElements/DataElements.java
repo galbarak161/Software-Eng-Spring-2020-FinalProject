@@ -7,15 +7,16 @@ public class DataElements implements Serializable {
 	private static final long serialVersionUID = -2986035827318115652L;
 
 	// Opcodes 0-9
-	
+
 	/**
-	 * GetAllStudies(NULL)
+	 * GetAllStudies(NULL) 
 	 * GetAllCoursesInStudy(CloneStudy)
-	 * GetAllQuestionInCourse(CloneCourse)
+	 * GetAllQuestionInCourse(CloneCourse) 
 	 * UpdateQuestion(CloneQuestion)
-	 * GetAllQuestion(NULL)
-	 * UserLogin(Login)
+	 * GetAllQuestion(NULL) 
+	 * UserLogin(Login) 
 	 * GetAllCoursesFromTeacher(CloneUser)
+	 * GetAllTestsFromTeacher(CloneUser) 
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -23,7 +24,7 @@ public class DataElements implements Serializable {
 	 */
 	public enum ClientToServerOpcodes {
 		GetAllStudies(0), GetAllCoursesInStudy(1), GetAllQuestionInCourse(2), UpdateQuestion(3), GetAllQuestion(4),
-		UserLogin(5), GetAllCoursesFromTeacher(6),Error(-1);
+		UserLogin(5), GetAllCoursesFromTeacher(6), GetAllTestsFromTeacher(7), Error(-1);
 
 		public int value;
 
@@ -34,13 +35,14 @@ public class DataElements implements Serializable {
 
 	// Opcodes 10-19
 	/**
-	 * SendAllStudies(List <CloneStudy>)
+	 * SendAllStudies(List <CloneStudy>) 
 	 * SendAllCoursesInStudy(List <CloneCourse>)
 	 * SendAllQuestionInCourse(List <CloneQuestion>)
-	 * UpdateQuestionResult(CloneQuestion)
+	 * UpdateQuestionResult(CloneQuestion) 
 	 * SendAllQuestion(List <CloneQuestion>)
-	 * UserLoggedIn(CloneUser)
+	 * UserLoggedIn(CloneUser) 
 	 * SendAllCoursesFromTeacher(List <CloneCourse>)
+	 * SendAllTestsFromTeacher(List <Test>) 
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -48,7 +50,7 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-		SendAllQuestion(14), UserLoggedIn(15),SendAllCoursesFromTeacher(16), Error(-1);
+		SendAllQuestion(14), UserLoggedIn(15), SendAllCoursesFromTeacher(16), SendAllTestsFromTeacher(17), Error(-1);
 
 		public int value;
 

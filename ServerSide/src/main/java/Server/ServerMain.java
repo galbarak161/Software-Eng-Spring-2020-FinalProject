@@ -117,6 +117,11 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllCoursesFromTeacher);
 				de.setData(dataFromDB);
 				break;
+			case GetAllTestsFromTeacher:
+				dataFromDB = serverHandler.handleSendAllTestsFromTeacher((CloneUser) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsFromTeacher);
+				de.setData(dataFromDB);
+				break;
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
 				de.setData("handleMessageFromClient: Unknown Error");

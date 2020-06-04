@@ -14,6 +14,9 @@ public class TimeExtensionRequest {
 	@Column(name = "bodyRequest")
 	private String body;
 	
+	@Column(name = "isRequestConfirmed")
+	private boolean isRequestConfirmed;
+	
 	@Column(name = "timeToExtenedInMinute")
 	private int timeToExtenedInMinute;
 	
@@ -22,6 +25,7 @@ public class TimeExtensionRequest {
 
 	public TimeExtensionRequest(String body, int timeToExtenedInMinute) {
 		super();
+		this.isRequestConfirmed = false;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
@@ -53,4 +57,18 @@ public class TimeExtensionRequest {
 	public void setTest(Test test) {
 		this.test = test;
 	}
+
+	public boolean isRequestConfirmed() {
+		return isRequestConfirmed;
+	}
+
+	public void setRequestConfirmed(boolean isRequestConfirmed) {
+		this.isRequestConfirmed = isRequestConfirmed;
+		System.out.println("setRequestConfirmed: " + isRequestConfirmed);
+		if(this.isRequestConfirmed == true) {
+			this.getTest().setExtensionRequests(this);
+		}
+	}
+	
+	
 }

@@ -1,6 +1,10 @@
 package Hibernate.Entities;
 
 import javax.persistence.*;
+
+import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.ExamType;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,10 +14,6 @@ import java.util.Random;
 @Entity
 @Table(name = "Test")
 public class Test {
-
-	public enum ExamType {
-		Automated, Manual;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Test {
 
 	@Column(name = "extraMinutes")
 	private int extraMinute;
-	
+
 	@Column(name = "testDuration")
 	private int testDuration;
 
@@ -58,18 +58,23 @@ public class Test {
 		students = new ArrayList<StudentTest>();
 	}
 
-	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor,
-			Exam examToExecute) {
+	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute) {
 		super();
 		this.testDate = testDate;
 		this.testTime = testTime;
-		this.executionCode = TestCodeGenerator();
+		TestCodeGenerator();
 		this.extraMinute = 0;
 		this.type = type;
 		setExtensionRequests(null);
 		setExecutor(executor);
 		setExamToExecute(examToExecute);
 		students = new ArrayList<StudentTest>();
+	}
+
+	public CloneTest createClone() {
+		CloneTest clone = new CloneTest(testDate, testTime, executionCode, extraMinute, testDuration, type,
+				executor.getId(), examToExecute.createClone());
+		return clone;
 	}
 
 	public int getId() {
@@ -118,9 +123,14 @@ public class Test {
 
 	public void setExtensionRequests(TimeExtensionRequest extensionRequests) {
 		if (extensionRequests != null) {
+			System.out.println("setExtensionRequests: " + extensionRequests.isRequestConfirmed());
 			this.extensionRequests = extensionRequests;
 			extensionRequests.setTest(this);
-			this.extraMinute += extensionRequests.getTimeToExtenedInMinute();
+			if (extensionRequests.isRequestConfirmed()) {
+				System.out.println("Added " + extensionRequests.getTimeToExtenedInMinute() + " Minute");
+				this.extraMinute = extensionRequests.getTimeToExtenedInMinute();
+				this.testDuration += extraMinute;
+			}
 		}
 	}
 
@@ -144,26 +154,23 @@ public class Test {
 	public Exam getExamToExecute() {
 		return examToExecute;
 	}
-	
+
 	public void setExamToExecute(Exam examToExecute) {
 		this.examToExecute = examToExecute;
 		examToExecute.getTests().add(this);
 		testDuration = examToExecute.getDuration();
 	}
 
-	public String TestCodeGenerator() {
-	    int leftLimit = 48; // numeral '0'
-	    int rightLimit = 122; // letter 'z'
-	    int targetStringLength = 4;
-	    Random random = new Random();
-	 
-	    String generatedString = random.ints(leftLimit, rightLimit + 1)
-	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-	      .limit(targetStringLength)
-	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-	      .toString();
-	 
-	    return generatedString;
-	}
+	public void TestCodeGenerator() {
+		int leftLimit = 48; // numeral '0'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 4;
+		Random random = new Random();
 
+		String generatedString = random.ints(leftLimit, rightLimit + 1)
+				.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+
+		this.executionCode = generatedString;
+	}
 }

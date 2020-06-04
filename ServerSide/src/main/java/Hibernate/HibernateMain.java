@@ -21,10 +21,10 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
 import CloneEntities.CloneCourse;
+import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
-import Hibernate.Entities.Test.ExamType;
 import Server.ServerOperations;
 
 public class HibernateMain {
@@ -347,6 +347,8 @@ public class HibernateMain {
 		
 		TimeExtensionRequest request = new TimeExtensionRequest("Bima tem odd zman", 50);
 		test1.setExtensionRequests(request);
+		
+		request.setRequestConfirmed(true);
 		session.save(request);
 		session.flush();
 		

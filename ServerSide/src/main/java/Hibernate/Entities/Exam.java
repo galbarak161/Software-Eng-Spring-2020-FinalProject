@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+import CloneEntities.CloneExam;
+
 @Entity
 @Table(name = "Exam")
 public class Exam {
@@ -22,15 +24,15 @@ public class Exam {
 
 	@Column(name = "examName")
 	private String examName;
-	
+
 	@Column(name = "durationInMinutes")
 	private int duration;
 
-	@Column(name = "TeacherComments")
-	private String TeacherComments;
+	@Column(name = "teacherComments")
+	private String teacherComments;
 
-	@Column(name = "StudentComments")
-	private String StudentComments;
+	@Column(name = "studentComments")
+	private String studentComments;
 
 	@Column(name = "examCode")
 	private int examCode;
@@ -47,12 +49,12 @@ public class Exam {
 		tests = new ArrayList<Test>();
 	}
 
-	public Exam(String examName,Teacher creator, List<Integer> questionsPoints, int duration, Study study, Course course,
-			String teacherComments, String studentComments) {
+	public Exam(String examName, Teacher creator, List<Integer> questionsPoints, int duration, Study study,
+			Course course, String teacherComments, String studentComments) {
 		this.examName = examName;
 		this.duration = duration;
-		TeacherComments = teacherComments;
-		StudentComments = studentComments;
+		this.teacherComments = teacherComments;
+		this.studentComments = studentComments;
 		setCreator(creator);
 		setCourse(course);
 		GenerateExamCode();
@@ -60,6 +62,11 @@ public class Exam {
 		tests = new ArrayList<Test>();
 	}
 
+	public CloneExam createClone() {
+		CloneExam clone = new CloneExam(examName, duration, teacherComments, studentComments, course.createClone());
+		return clone;
+	}
+	
 	private void GenerateExamCode() {
 		this.examCode = 5;
 		int studyID = this.course.getStudy().getId();
@@ -121,23 +128,22 @@ public class Exam {
 	}
 
 	public String getTeacherComments() {
-		return TeacherComments;
+		return teacherComments;
 	}
 
 	public void setTeacherComments(String teacherComments) {
-		TeacherComments = teacherComments;
+		this.teacherComments = teacherComments;
 	}
 
 	public String getStudentComments() {
-		return StudentComments;
+		return studentComments;
 	}
 
 	public void setStudentComments(String studentComments) {
-		StudentComments = studentComments;
+		this.studentComments = studentComments;
 	}
 
 	public String getExamName() {
 		return examName;
 	}
-	
 }
