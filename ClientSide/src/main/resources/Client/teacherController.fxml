@@ -21,7 +21,7 @@
          </font>
       </Label>
       <ComboBox layoutX="219.0" layoutY="74.0" prefHeight="25.0" prefWidth="185.0" />
-      <TableView layoutX="4.0" layoutY="126.0" prefHeight="610.0" prefWidth="559.0">
+      <TableView layoutX="4.0" layoutY="126.0" prefHeight="643.0" prefWidth="559.0">
         <columns>
           <TableColumn prefWidth="195.0" text="Test Name" />
           <TableColumn minWidth="5.0" prefWidth="69.0" text="Date" />

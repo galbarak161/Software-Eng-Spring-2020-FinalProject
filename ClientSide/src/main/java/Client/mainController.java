@@ -17,37 +17,43 @@ public class mainController {
 
 	public void initialize() {
 		ClientMain.addController(this);
+		switch (ClientMain.getUser().getUserType()) {
+		case Student:
+			System.out.println("UserType is Student");
+			setMainPanel("studentController.fxml");
+			setNaviPanel("studentNavi.fxml");
+			break;
+		case Teacher:
+			System.out.println("UserType is Teacher");
+			setMainPanel("teacherController.fxml");
+			setNaviPanel("teacherNavi.fxml");
+			break;
+		case Principal:
+			System.out.println("UserType is Principal");
+			setMainPanel("principalController.fxml");
+			setNaviPanel("principalNavi.fxml");
+			break;
+		}
+	}
+
+	public void setMainPanel(String fxml) {
 		try {
-			switch (ClientMain.getUser().getUserType()) {
-			case Student:
-				System.out.println("UserType is Student");
-				mainPanel.getChildren()
-						.setAll((Node) FXMLLoader.load(getClass().getResource("studentController.fxml")));
-				navigatePanel.getChildren()
-				.setAll((Node) FXMLLoader.load(getClass().getResource("studentNavi.fxml")));
-				break;
-			case Teacher:
-				System.out.println("UserType is Teacher");
-				mainPanel.getChildren()
-						.setAll((Node) FXMLLoader.load(getClass().getResource("teacherController.fxml")));
-				navigatePanel.getChildren()
-				.setAll((Node) FXMLLoader.load(getClass().getResource("teacherNavi.fxml")));
-				break;
-			case Principal:
-				System.out.println("UserType is Principal");
-				mainPanel.getChildren()
-						.setAll((Node) FXMLLoader.load(getClass().getResource("principalController.fxml")));
-				navigatePanel.getChildren()
-				.setAll((Node) FXMLLoader.load(getClass().getResource("principalNavi.fxml")));
-				break;
-			}
+			mainPanel.getChildren().clear();
+			mainPanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	void changeMain() {
+	public void setNaviPanel(String fxml) {
+		try {
+			navigatePanel.getChildren().clear();
+			navigatePanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
