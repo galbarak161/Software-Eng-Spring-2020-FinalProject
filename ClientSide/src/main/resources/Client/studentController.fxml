@@ -14,17 +14,17 @@
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <TableView fx:id="testsTable" layoutX="9.0" layoutY="60.0" prefHeight="709.0" prefWidth="559.0">
+      <TableView fx:id="testsTable" layoutX="9.0" layoutY="60.0" prefHeight="709.0" prefWidth="603.0">
         <columns>
           <TableColumn fx:id="nameCol" prefWidth="158.0" text="Test Name" />
           <TableColumn fx:id="dateCol" prefWidth="76.0" text="Date" />
             <TableColumn fx:id="timeCol" prefWidth="88.0" text="Time" />
-            <TableColumn fx:id="codeCol" prefWidth="66.0" text="Test Code" />
-            <TableColumn fx:id="statusCol" prefWidth="105.0" text="Status" />
-            <TableColumn fx:id="gradeCol" prefWidth="65.0" text="Grade" />
+            <TableColumn fx:id="codeCol" prefWidth="83.0" text="Test Code" />
+            <TableColumn fx:id="statusCol" prefWidth="147.0" text="Status" />
+            <TableColumn fx:id="gradeCol" prefWidth="50.0" text="Grade" />
         </columns>
       </TableView>
-      <Button fx:id="displayButton" layoutX="584.0" layoutY="563.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display Exam" />
-      <Button fx:id="startButton" layoutX="584.0" layoutY="189.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start Exam" />
+      <Button fx:id="displayButton" layoutX="631.0" layoutY="563.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display Exam" />
+      <Button fx:id="startButton" layoutX="631.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start Exam" />
    </children>
 </AnchorPane>

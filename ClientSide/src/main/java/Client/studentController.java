@@ -33,5 +33,9 @@ public class studentController {
 
     @FXML
     private Button startButton;
+    
+    public void initialize() {
+    	ClientService.controllersList.add(this);
+    }
 
 }
