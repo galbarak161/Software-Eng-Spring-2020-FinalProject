@@ -12,6 +12,7 @@ import Hibernate.HibernateMain;
 import Hibernate.Entities.Course;
 import Hibernate.Entities.Question;
 import Hibernate.Entities.Study;
+import Hibernate.Entities.Teacher;
 import Hibernate.Entities.User;
 
 public class ServerOperations {
@@ -161,6 +162,34 @@ public class ServerOperations {
 			for (Study study : listFromDB) {
 				if (study.getId() == cloneStudy.getId()) {
 					study.getCourses().forEach(course -> courses.add(course.createClone()));
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		// System.out.println("List of courses from study " +
+		// cloneStudy.getStudyName());
+		// courses.forEach(q -> System.out.println(q.getCourseName()));
+		return courses;
+	}
+	
+	/**
+	 * handleSendAllCoursesFromTeacher(CloneUser)
+	 * 
+	 * @param CloneUser - Teacher wants to see all courses he teaches
+	 * @return all the courses that are associated with this Teacher
+	 */
+	public List<CloneCourse> handleSendAllCoursesFromTeacher(CloneUser cloneUser) {
+		List<Teacher> listFromDB = null;
+		List<CloneCourse> courses = new ArrayList<CloneCourse>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Teacher.class);
+			for (Teacher teacher : listFromDB) {
+				if (teacher.getIdentityNumber() == cloneUser.getIdentityNumber()) {
+					teacher.getCourses().forEach(course -> courses.add(course.createClone()));
 					break;
 				}
 			}

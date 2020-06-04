@@ -14,7 +14,7 @@ public class CloneExam implements Serializable {
 
 	private int duration;
 	
-	private String name;
+	private String examName;
 
 	private String TeacherComments;
 
@@ -29,7 +29,7 @@ public class CloneExam implements Serializable {
 	public CloneExam( String name,int duration, String teacherComments, String studentComments,
 			CloneCourse course) {
 		super();
-		this.name= name;
+		this.examName= name;
 		this.duration = duration;
 		TeacherComments = teacherComments;
 		StudentComments = studentComments;

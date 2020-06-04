@@ -15,6 +15,7 @@ public class DataElements implements Serializable {
 	 * UpdateQuestion(CloneQuestion)
 	 * GetAllQuestion(NULL)
 	 * UserLogin(Login)
+	 * GetAllCoursesFromTeacher(CloneUser)
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -22,7 +23,7 @@ public class DataElements implements Serializable {
 	 */
 	public enum ClientToServerOpcodes {
 		GetAllStudies(0), GetAllCoursesInStudy(1), GetAllQuestionInCourse(2), UpdateQuestion(3), GetAllQuestion(4),
-		UserLogin(5), Error(-1);
+		UserLogin(5), GetAllCoursesFromTeacher(6),Error(-1);
 
 		public int value;
 
@@ -39,6 +40,7 @@ public class DataElements implements Serializable {
 	 * UpdateQuestionResult(CloneQuestion)
 	 * SendAllQuestion(List <CloneQuestion>)
 	 * UserLoggedIn(CloneUser)
+	 * SendAllCoursesFromTeacher(List <CloneCourse>)
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -46,7 +48,7 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-		SendAllQuestion(14), UserLoggedIn(15), Error(-1);
+		SendAllQuestion(14), UserLoggedIn(15),SendAllCoursesFromTeacher(16), Error(-1);
 
 		public int value;
 
