@@ -6,6 +6,7 @@ import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import com.jfoenix.controls.JFXTreeTableView;
 
 public abstract class AbstractController {
 
@@ -54,6 +55,7 @@ public abstract class AbstractController {
 	 * @throws InterruptedException Pause the main GUI thread
 	 */
 	public int GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
+		ClientMain.addController(this);
 		int status = sendRequestForDataFromServer(new DataElements(op, data));
 		while(!msgRecived) {
 			Thread.onSpinWait();
@@ -72,10 +74,6 @@ public abstract class AbstractController {
 		alert.setHeaderText(title);
 		alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
 		alert.showAndWait();
-	}
-	
-	public void initialize() {
-		ClientMain.addController(this);
 	}
 
 }

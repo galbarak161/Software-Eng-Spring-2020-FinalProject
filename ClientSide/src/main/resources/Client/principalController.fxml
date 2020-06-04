@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -14,17 +14,17 @@
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <TableView fx:id="testsTable" layoutX="9.0" layoutY="60.0" prefHeight="709.0" prefWidth="559.0">
-        <columns>
-          <TableColumn fx:id="nameCol" prefWidth="158.0" text="Request" />
-          <TableColumn fx:id="dateCol" prefWidth="101.0" text="Test" />
-            <TableColumn fx:id="timeCol" prefWidth="63.0" text="Test Code" />
-            <TableColumn fx:id="codeCol" prefWidth="66.0" text="Date" />
-            <TableColumn fx:id="statusCol" prefWidth="64.0" text="Time" />
-            <TableColumn fx:id="gradeCol" prefWidth="106.0" text="Status" />
-        </columns>
-      </TableView>
       <Button fx:id="displayButton" layoutX="589.0" layoutY="567.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
       <Button fx:id="startButton" layoutX="584.0" layoutY="189.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
+      <JFXTreeTableView layoutX="8.0" layoutY="69.0" prefHeight="707.0" prefWidth="548.0">
+         <columns>
+            <TreeTableColumn prefWidth="92.0" text="Request" />
+            <TreeTableColumn prefWidth="91.0" text="Test" />
+            <TreeTableColumn prefWidth="72.0" text="Test Code" />
+            <TreeTableColumn prefWidth="83.0" text="Date" />
+            <TreeTableColumn prefWidth="101.0" text="Time" />
+            <TreeTableColumn prefWidth="108.0" text="Status" />
+         </columns>
+      </JFXTreeTableView>
    </children>
 </AnchorPane>

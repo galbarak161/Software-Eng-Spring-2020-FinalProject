@@ -1,5 +1,9 @@
 package Client;
 
+
+
+import com.jfoenix.controls.JFXListView;
+
 import CloneEntities.*;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
@@ -21,7 +25,7 @@ public class examCreator extends AbstractController {
     private TextField nameText;
 
     @FXML
-    private ListView<CloneQuestion> questionsList;
+    private JFXListView<CloneQuestion> questionsList;
 
     @FXML
     private Button submit_button;
@@ -36,9 +40,7 @@ public class examCreator extends AbstractController {
 
 
 
-    @Override
     public void initialize() {
-    	ClientMain.addController(this);
     	try {
 			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {

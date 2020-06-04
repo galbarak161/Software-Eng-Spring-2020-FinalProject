@@ -58,16 +58,10 @@ public class ClientService extends AbstractClient {
 			System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 			Object o;
 			
-			for(Object o1:controllersList) {
-				System.out.println(o1.getClass().toString());
-			}
 			if (!(o = getController(loginController.class)).getClass().equals(String.class)) {
-				System.out.println("2");
 				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					System.out.println("3");
 					((loginController) o).showErrorLabel();
 				} else {
-					System.out.println("4");
 					ClientMain.setUser((CloneUser) de.getData());
 					App.changeStage("mainController", "High School Test System");
 					controllersList.remove(o);
@@ -101,6 +95,21 @@ public class ClientService extends AbstractClient {
 						((examCreator) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						System.out.println("after data");
 						examCreator.msgRecieved();
+					}
+				}
+				controllersList.remove(o);
+				return;
+			}
+			
+			if (!(o = getController(teacherController.class)).getClass().equals(String.class)) {
+				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
+					((teacherController) o).popError("Error", "Couldn't get info from server");
+				} else {
+					switch (de.getOpCodeFromServer()) {
+					case SendAllCoursesFromTeacher:
+						((teacherController) o).coursesCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+						System.out.println("after data");
+						teacherController.msgRecieved();
 					}
 				}
 				controllersList.remove(o);

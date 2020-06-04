@@ -117,7 +117,6 @@ public class questionsEditor extends AbstractController {
 	 * 
 	 */
 	public void initialize() {
-		ClientMain.addController(this);
 		String initErrors = "";
 		try {
 			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllStudies, null);
