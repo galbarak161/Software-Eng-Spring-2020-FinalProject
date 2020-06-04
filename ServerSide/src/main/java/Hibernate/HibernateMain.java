@@ -24,6 +24,7 @@ import CloneEntities.CloneCourse;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
+import Hibernate.Entities.Test.ExamType;
 import Server.ServerOperations;
 
 public class HibernateMain {
@@ -121,17 +122,17 @@ public class HibernateMain {
 		final int NUMBER_OF_QUESTIONS = 13;
 
 		// Generate users
-		Student s1 = new Student(1 ,"GalB", "123", "Gal", "Barak", "Check@Check.com");
+		Student s1 = new Student(1, "GalB", "123", "Gal", "Barak", "Check@Check.com");
 		session.save(s1);
-		Student s2 = new Student(2 ,"abedI", "123", "Abed", "Idres", "Check@Check.com");
+		Student s2 = new Student(2, "abedI", "123", "Abed", "Idres", "Check@Check.com");
 		session.save(s2);
 		Student s3 = new Student(3, "OrA", "123", "Or", "Ashkenazi", "Check@Check.com");
 		session.save(s3);
 		Student s4 = new Student(4, "SadiG", "123", "Sagi", "Gvili", "Check@Check.com");
 		session.save(s4);
-		Teacher t1 = new Teacher(5 , "MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
+		Teacher t1 = new Teacher(5, "MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
 		session.save(t1);
-		Teacher t2 = new Teacher(6 , "LielF", "123", "Liel", "Fridman", "Check@Check.com");
+		Teacher t2 = new Teacher(6, "LielF", "123", "Liel", "Fridman", "Check@Check.com");
 		session.save(t2);
 		Principal d1 = new Principal(7, "DaniK", "123", "Dani", "Keren", "Check@Check.com");
 		session.save(d1);
@@ -307,21 +308,10 @@ public class HibernateMain {
 					questionsAnswers[i][1], questionsAnswers[i][2], questionsAnswers[i][3], correctAnswer[i], c, t1);
 			session.save(questions[i]);
 		}
-		
-		
+
 		session.flush();
-		
-	
 
-		////////////////////////////////////////////////////////
-		////////////////// Tests //////////////////////////////
-		//////////////////////////////////////////////////////
-
-		System.out.println("creating Exam\n");
-		// create exam
-		// Exam(List<Question> questions, Teacher creator, List<Integer>
-		// questionsPoints, int duration,
-		// Study study, Course course, String teacherComments, String studentComments)
+		// Generate exams
 		Question[] questionList = new Question[2];
 		questionList[0] = questions[1];
 		questionList[1] = questions[2];
@@ -336,67 +326,44 @@ public class HibernateMain {
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(name,t1, questionPoints, duration, studies[0], courses[0], teacherCommString, studentCommString);
+		Exam e1 = new Exam(name, t1, questionPoints, duration, studies[0], courses[0], teacherCommString,
+				studentCommString);
 		e1.addQuestion(questionList);
 		session.save(e1);
+
+		session.flush();
+
+		// Generate tests
+
+		final int year = 2020;
+		final int month = 6;
+		final int dayOfMonth = 16;
+		final int hour = 14;
+		final int minute = 30;
+		LocalDate testDate = LocalDate.of(year, month, dayOfMonth);
+		LocalTime testTime = LocalTime.of(hour, minute);
+
+		Test test1 = new Test(testDate, testTime, "1234", ExamType.Automated, t1, e1);
+		
+		TimeExtensionRequest request = new TimeExtensionRequest("Bima tem odd zman", 50);
+		test1.setExtensionRequests(request);
+		session.save(request);
 		session.flush();
 		
+		session.save(test1);
+		Test test2 = new Test(testDate, testTime, "1234", ExamType.Automated, t1, e1);
+		session.save(test2);
+		session.flush();
 
-		System.out.println("creating Test\n");
-		// create test
-		// Test(Teacher executor, LocalDateTime testDate, LocalTime testTime, int
-		// examType, int executionCode,
-		// List<Student> students, int extraMinutes, ExamType type, List<Request>
-		// requests)
-		/*
-		 * Test test1= new Test(t1,questionPoints,duration,studies[0],courses[0],
-		 * " teacher comments"," student comments"); test1.setExecutor(t2);
-		 * 
-		 * final int year = 2020; final int month = 6; final int dayOfMonth=16;
-		 * LocalDate dayDate= LocalDate.of(year, month, dayOfMonth);
-		 * test1.setTestDate(dayDate);
-		 * 
-		 * final int hour= 14; final int minute = 30; LocalTime testTime =
-		 * LocalTime.of(hour, minute); test1.setTestTime(testTime);
-		 * 
-		 * List<Student> studentsTakingTest = new ArrayList<>();
-		 * studentsTakingTest.add(s1); studentsTakingTest.add(s2);
-		 * test1.setStudents(studentsTakingTest);
-		 * 
-		 * test1.setType(Test.ExamType.Automated);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * System.out.println("creating StudentTest\n"); //create student test
-		 * //StudentTest(Test test, Student student, integer score, List<Integer>
-		 * questionsAnswers, boolean finished, //String examNotes)
-		 * 
-		 * 
-		 * List<Integer> s1TestAnswers = new ArrayList<>(); s1TestAnswers.add(1);
-		 * s1TestAnswers.add(2); List<Integer> s2TestAnswers = new ArrayList<>();
-		 * s2TestAnswers.add(1); s2TestAnswers.add(3);
-		 * 
-		 * final int score1=50; final int score2=100;
-		 * 
-		 * boolean finished=true;
-		 * 
-		 * String examNotes1= "Disapointment to family"; String examNotes2=
-		 * "Not enough";
-		 * 
-		 * StudentTest s1Test= new StudentTest(test1, s1, score1, s1TestAnswers,
-		 * finished, examNotes1);
-		 * 
-		 * StudentTest s2Test= new StudentTest(test1, s2, score2, s2TestAnswers,
-		 * finished, examNotes2);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * System.out.println("creating request\n"); //create request String body=
-		 * "student complaining"; final int time= 30; TimeExtensionRequest
-		 * extentionRequest1 = new TimeExtensionRequest(body, test1, time);
-		 */
+		StudentTest st1 = new StudentTest(s1, test1);
+		session.save(st1);
+		StudentTest st2 = new StudentTest(s2, test1);
+		session.save(st2);
+		StudentTest st3 = new StudentTest(s2, test2);
+		session.save(st3);
+		session.flush();
+
+		
 		session.clear();
 	}
 

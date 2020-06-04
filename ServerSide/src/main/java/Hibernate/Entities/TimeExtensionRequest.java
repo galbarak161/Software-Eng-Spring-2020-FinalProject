@@ -1,48 +1,49 @@
 package Hibernate.Entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-//@Entity
-//@Table(name = "Request")
+@Entity
+@Table(name = "TimeExtensionRequest")
 public class TimeExtensionRequest {
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@Column(name = "studentTestId")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "timeExtensionRequestId")
 	private int id;
 	
-	//@Column
+	@Column(name = "bodyRequest")
 	private String body;
 	
-	//@Column
-	private int  time;
+	@Column(name = "timeToExtenedInMinute")
+	private int timeToExtenedInMinute;
 	
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	//@JoinColumn(name = "testId")
+	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 
-	public TimeExtensionRequest(String body, Test test, int time) {
+	public TimeExtensionRequest(String body, int timeToExtenedInMinute) {
 		super();
 		this.body = body;
-		this.test = test;
-		this.time = time;
+		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public String getBody() {
 		return body;
 	}
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public int getTimeToExtenedInMinute() {
+		return timeToExtenedInMinute;
+	}
+
+	public void setTimeToExtenedInMinute(int timeToExtenedInMinute) {
+		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
 
 	public Test getTest() {
@@ -52,20 +53,4 @@ public class TimeExtensionRequest {
 	public void setTest(Test test) {
 		this.test = test;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getTime() {
-		return time;
-	}
-
-	public void setTime(int time) {
-		this.time = time;
-	}
-	
-	
-	
-	
 }
