@@ -20,9 +20,11 @@ import org.hibernate.cfg.Settings;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
+import CloneEntities.CloneCourse;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
+import Server.ServerOperations;
 
 public class HibernateMain {
 	static Session session;
@@ -308,6 +310,8 @@ public class HibernateMain {
 		
 		
 		session.flush();
+		
+	
 
 		////////////////////////////////////////////////////////
 		////////////////// Tests //////////////////////////////

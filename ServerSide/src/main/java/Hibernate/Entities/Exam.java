@@ -20,8 +20,8 @@ public class Exam {
 	@ManyToMany(mappedBy = "exames", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Question> questions;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "examName")
+	private String examName;
 	
 	@Column(name = "durationInMinutes")
 	private int duration;
@@ -43,9 +43,9 @@ public class Exam {
 		this.questions = new ArrayList<Question>();
 	}
 
-	public Exam(String name,Teacher creator, List<Integer> questionsPoints, int duration, Study study, Course course,
+	public Exam(String examName,Teacher creator, List<Integer> questionsPoints, int duration, Study study, Course course,
 			String teacherComments, String studentComments) {
-		this.name = name;
+		this.examName = examName;
 		this.duration = duration;
 		TeacherComments = teacherComments;
 		StudentComments = studentComments;
