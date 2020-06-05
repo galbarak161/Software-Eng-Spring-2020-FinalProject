@@ -8,6 +8,11 @@ import java.util.List;
 public class CloneTest implements Serializable{
 
 	private static final long serialVersionUID = 308680455154663629L;
+	
+    @Override
+    public String toString() {
+        return examToExecute.getExamName();
+    }
 
 	public enum ExamType {
 		Automated, Manual;

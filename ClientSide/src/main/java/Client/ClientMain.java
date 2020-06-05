@@ -26,6 +26,10 @@ public class ClientMain {
 	public static void addController(Object con) {
 		ClientService.controllersList.add(con);
 	}
+	
+	public static void removeAllControllers() {
+		ClientService.controllersList.clear();
+	}
 
 	public void displayMessageOnConsole(Object message) {
 		System.out.println("Received message from server: " + message.toString());

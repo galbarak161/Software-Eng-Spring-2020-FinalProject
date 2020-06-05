@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalController">
    <children>
       <Label layoutX="183.0" layoutY="14.0" prefHeight="41.0" prefWidth="174.0" text="Principal Panel" textFill="#ab1818">
          <font>
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="displayButton" layoutX="589.0" layoutY="567.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
+      <Button fx:id="displayButton" layoutX="584.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
       <Button fx:id="startButton" layoutX="584.0" layoutY="189.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
-      <JFXTreeTableView layoutX="8.0" layoutY="69.0" prefHeight="707.0" prefWidth="548.0">
+      <JFXTreeTableView layoutX="8.0" layoutY="69.0" prefHeight="399.0" prefWidth="548.0">
          <columns>
             <TreeTableColumn prefWidth="92.0" text="Request" />
             <TreeTableColumn prefWidth="91.0" text="Test" />

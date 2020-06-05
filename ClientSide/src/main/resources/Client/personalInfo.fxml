@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.personalInfo">
+   <children>
+      <Label layoutX="295.0" layoutY="14.0" text="Personal Info" textFill="#9a0707">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="76.0" layoutY="70.0" text="First Name:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="76.0" layoutY="117.0" text="Last Name:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="163.0" text="Email:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="setButton" layoutX="313.0" layoutY="252.0" mnemonicParsing="false" text="Set Personal Details" />
+      <JFXTextField layoutX="154.0" layoutY="161.0" prefHeight="25.0" prefWidth="196.0" />
+      <JFXTextField layoutX="154.0" layoutY="115.0" prefHeight="25.0" prefWidth="196.0" />
+      <JFXTextField layoutX="154.0" layoutY="68.0" prefHeight="25.0" prefWidth="196.0" />
+      <JFXCheckBox layoutX="532.0" layoutY="61.0" text="Enable Edit" />
+   </children>
+</AnchorPane>

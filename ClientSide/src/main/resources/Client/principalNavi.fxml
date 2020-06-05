@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="791.0" prefWidth="150.0" style="-fx-background-color: #d5e1df;" styleClass="sidebar-section" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalNavi">
+<VBox prefHeight="567.0" prefWidth="150.0" style="-fx-background-color: #d5e1df;" styleClass="sidebar-section" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalNavi">
 	<children>
-		<Label fx:id="requestsList" alignment="CENTER" prefHeight="66.0" text="Requests List" />
-		<Label fx:id="dataDisplay" alignment="CENTER" prefHeight="66.0" text="Data Display" />
-		<Label fx:id="logout" alignment="CENTER" prefHeight="66.0" text="Logout" />
+		<Label fx:id="requestsList" alignment="CENTER" onMouseClicked="#requestsButton" prefHeight="66.0" text="Extensions List" />
+		<Label fx:id="dataDisplay" alignment="CENTER" onMouseClicked="#dataButton" prefHeight="66.0" text="Data Display" />
+		<Label fx:id="logout" alignment="CENTER" onMouseClicked="#logout" prefHeight="66.0" text="Logout" />
 	</children>
 </VBox>
