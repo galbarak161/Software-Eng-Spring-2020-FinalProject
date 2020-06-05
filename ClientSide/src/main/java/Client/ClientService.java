@@ -1,7 +1,10 @@
 package Client;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import CommonElements.DataElements;
@@ -13,7 +16,7 @@ import javafx.collections.FXCollections;
 public class ClientService extends AbstractClient {
 	private static final Logger LOGGER = Logger.getLogger(ClientService.class.getName());
 	private ClientMain clientM;
-	public static List<Object> controllersList;
+	public static Map<String, Object> controllers;
 
 	/*
 	 * Takes host and port, init. in AbstractClient, then init. local clientM init.
@@ -23,7 +26,8 @@ public class ClientService extends AbstractClient {
 	public ClientService(String host, int port) {
 		super(host, port);
 		this.clientM = new ClientMain(this);
-		controllersList = new ArrayList<>();
+		controllers = new HashMap<String, Object>();
+		controllers.keySet().add("curr");
 	}
 
 	@Override
@@ -38,101 +42,93 @@ public class ClientService extends AbstractClient {
 		clientM.closeConnection();
 	}
 
-	static Object getController(Class c) {
-		for (Object o : controllersList)
-			if (o.getClass() == c)
-				return o;
-		return new String("There is no such a Controller");
-	}
-
 	/**
 	 * The function gets new message from server Parsing the opcode and data Handle
 	 * the server results
+	 * List of OpCodes from server
+	 * 	SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
+		SendAllCoursesByTeacherId(105), SendAllTestsByTeacherId(106), SendAllExamsFromTeacherInCourse(107),
+		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
+		CreateNewTestResult(112), Error(-1);
 	 */
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		try {
-			
-			DataElements de = (DataElements) msg;
-			System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
-			Object o;
-			
-			if (!(o = getController(loginController.class)).getClass().equals(String.class)) {
-				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					((loginController) o).showErrorLabel();
-				} else {
-					ClientMain.setUser((CloneUser) de.getData());
-					App.changeStage("mainController", "High School Test System");
-					controllersList.remove(o);
-				}
-				return;
-			}
-			
-			if (!(o = getController(questionsEditor.class)).getClass().equals(String.class)) {
-				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					((questionsEditor) o).popError("Error", "Couldn't get info from server");
-				} else {
-//					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-//					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
-					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesOfTeacher:
-						((questionsEditor) o).course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-						questionsEditor.msgRecieved();
-					}
-				}
-				controllersList.remove(o);
-				return;
-			}
-			if (!(o = getController(examCreator.class)).getClass().equals(String.class)) {
-				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					((examCreator) o).popError("Error", "Couldn't get info from server");
-				} else {
-//					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-//					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
-					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesOfTeacher:
-						((examCreator) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-						System.out.println("after data");
-						examCreator.msgRecieved();
-					}
-				}
-				controllersList.remove(o);
-				return;
-			}
-			
-			if (!(o = getController(teacherController.class)).getClass().equals(String.class)) {
-				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					((teacherController) o).popError("Error", "Couldn't get info from server");
-				} else {
-					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesOfTeacher:
-						((teacherController) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-						System.out.println("after data");
-						teacherController.msgRecieved();
-					}
-				}
-				controllersList.remove(o);
-				return;
-			}
-			
-			if (!(o = getController(principalDataController.class)).getClass().equals(String.class)) {
-				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-					((principalDataController) o).popError("Error", "Couldn't get info from server");
-				} else {
-					switch (de.getOpCodeFromServer()) {
-					case SendAllQuestion:
-						((principalDataController) o).questionsList.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
-						System.out.println("after data");
-						principalDataController.msgRecieved();
-					}
-				}
-				controllersList.remove(o);
-				return;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		DataElements de = (DataElements) msg;
+		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
+		String currControlName = (String) controllers.get("curr");
+		Object o = controllers.get(currControlName);
+		if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
+			if (currControlName == "loginController")
+				((loginController) o).showErrorLabel();
+			else
+				((AbstractController) o).popError("Error",
+						"Couldn't get info from server");
+			return;
 		}
+		switch (currControlName) {
+			case "loginController":
+				ClientMain.setUser((CloneUser) de.getData());
+				try {
+					App.changeStage("mainController", "High School Test System");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			case "questionsEditor":
+				switch (de.getOpCodeFromServer()) {
+					case SendAllCoursesByTeacherId:
+						((questionsEditor) o).course_combo
+								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+						break;
+				}
+				break;
+			case "examCreator":
+				switch (de.getOpCodeFromServer()) {
+					case SendAllCoursesByTeacherId:
+						((examCreator) o).courseCombo
+								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+						break;
+					case SendAllQuestionInCourse:
+						((examCreator) o).questionsList
+						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						break;
+				}
+				break;
+			case "studentController":
+				switch (de.getOpCodeFromServer()) {
+					case SendAllStudentTests:
+						((studentController) o).testsTable
+						.getItems().setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+						break;
+				}
+				break;
+			case "teacherController":
+				switch (de.getOpCodeFromServer()) {
+					case SendAllCoursesByTeacherId:
+						((teacherController) o).courseCombo
+								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+						break;
+				}
+				break;
+			case "principalDataController":
+				switch (de.getOpCodeFromServer()) {
+					case SendAllQuestion:
+						((principalDataController) o).questionsList
+						.getItems().setAll(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						break;
+					case SendAllExams:
+						((principalDataController) o).examsList
+						.getItems().setAll(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+						break;
+					case SendAllTests:
+						((principalDataController) o).testsList
+						.getItems().setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+						break;
+				}
+				break;	
+			}
+			AbstractController.msgRecieved();
 	}
 
 }

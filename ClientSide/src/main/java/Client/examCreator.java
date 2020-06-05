@@ -25,8 +25,7 @@ public class examCreator extends AbstractController {
     @FXML
     private TextField nameText;
 
-    @FXML
-    private JFXListView<CloneQuestion> questionsList;
+    @FXML ListView<CloneQuestion> questionsList;
 
     @FXML
     private Button submit_button;
@@ -43,11 +42,11 @@ public class examCreator extends AbstractController {
 
     public void initialize() {
     	try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			  GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
     }
    /* 
     @FXML

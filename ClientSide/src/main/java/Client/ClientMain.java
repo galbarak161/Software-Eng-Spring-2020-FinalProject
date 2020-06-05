@@ -23,12 +23,16 @@ public class ClientMain {
 		return 1;
 	}
 
-	public static void addController(Object con) {
-		ClientService.controllersList.add(con);
+	public static void addController(Object con, String name) {
+		if (!ClientService.controllers.containsKey(name)) {
+			ClientService.controllers.keySet().add(name);
+			ClientService.controllers.put(con,name);
+		}
+			
 	}
 	
 	public static void removeAllControllers() {
-		ClientService.controllersList.clear();
+		ClientService.controllers.clear();
 	}
 
 	public void displayMessageOnConsole(Object message) {
