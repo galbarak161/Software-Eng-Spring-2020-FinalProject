@@ -3,73 +3,72 @@ package Server;
 import java.util.ArrayList;
 import java.util.List;
 
-import CloneEntities.CloneCourse;
-import CloneEntities.CloneQuestion;
-import CloneEntities.CloneStudy;
-import CloneEntities.CloneTest;
-import CloneEntities.CloneUser;
+import CloneEntities.*;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
-import Hibernate.Entities.Course;
-import Hibernate.Entities.Question;
-import Hibernate.Entities.Study;
-import Hibernate.Entities.Teacher;
-import Hibernate.Entities.User;
+import Hibernate.Entities.*;
 
 public class ServerOperations {
 
-	public CloneUser handleLoginRequest(Login data) throws Exception {
-		List<User> userList = HibernateMain.getDataFromDB(User.class);
-		for (User user : userList) {
-			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))) {
-				return user.createClone();
-			}
-		}
-		return null;
-	}
-
 	/**
-	 * handleUpdateQuestion(CloneQuestion) Update Question object in DB according to
-	 * CloneQuestion received from DB Get the original Question from DB Set all
-	 * properties according to CloneQustion Update Question in DB
 	 * 
-	 * @param questionToUpdate
-	 * @return
+	 * @return send all time extension requests
 	 */
-	public CloneQuestion handleUpdateQuestion(CloneQuestion questionToUpdate) {
-		Question originalQustion = null;
-		List<Question> listFromDB = null;
+	public List<CloneTimeExtensionRequest> handleSendAllRequests() {
+		List<TimeExtensionRequest> listFromDB = null;
+		List<CloneTimeExtensionRequest> cloneRequests = new ArrayList<CloneTimeExtensionRequest>();
 		try {
-			listFromDB = HibernateMain.getDataFromDB(Question.class);
-			for (Question question : listFromDB) {
-				if (question.getId() == questionToUpdate.getId()) {
-					originalQustion = question;
-					break;
-				}
+			listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
+			for (TimeExtensionRequest Tex : listFromDB) {
+				cloneRequests.add(Tex.createClone());
 			}
-
-			if (originalQustion == null)
-				throw new Exception("Question with id " + questionToUpdate.getId() + " was not found!");
-
-			originalQustion.setAnswer_1(questionToUpdate.getAnswer_1());
-			originalQustion.setAnswer_2(questionToUpdate.getAnswer_2());
-			originalQustion.setAnswer_3(questionToUpdate.getAnswer_3());
-			originalQustion.setAnswer_4(questionToUpdate.getAnswer_4());
-			originalQustion.setCorrectAnswer(questionToUpdate.getCorrectAnswer());
-			originalQustion.setQuestionText(questionToUpdate.getQuestionText());
-			originalQustion.setSubject(questionToUpdate.getSubject());
-
-			int updateResult = HibernateMain.questionToUpdate(originalQustion);
-
-			if (updateResult == -1)
-				originalQustion = null;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return originalQustion.createClone();
+		return cloneRequests;
+	}
+
+	/**
+	 * 
+	 * @return send all exams in system
+	 */
+	public List<CloneExam> handleSendAllExams() {
+		List<Exam> listFromDB = null;
+		List<CloneExam> cloneExams = new ArrayList<CloneExam>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB) {
+				cloneExams.add(exam.createClone());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cloneExams;
+	}
+
+	/**
+	 * 
+	 * @return send all tests in system
+	 */
+	public List<CloneTest> handleSendAllTests() {
+		List<Test> listFromDB = null;
+		List<CloneTest> cloneTests = new ArrayList<CloneTest>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Test.class);
+			for (Test test : listFromDB) {
+				cloneTests.add(test.createClone());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cloneTests;
+
 	}
 
 	/**
@@ -95,12 +94,12 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendQuestionsFromCourse(CloneCourse)
+	 * handleSendQuestionsInCourse(CloneCourse)
 	 * 
 	 * @param cloneCourse - User chose this course and asked for it's questions
 	 * @return all the questions that are associated with this course
 	 */
-	public List<CloneQuestion> handleSendQuestionsFromCourse(CloneCourse cloneCourse) {
+	public List<CloneQuestion> handleSendQuestionsInCourse(CloneCourse cloneCourse) {
 		List<Course> listFromDB = null;
 		List<CloneQuestion> questionsFromCourse = new ArrayList<CloneQuestion>();
 		try {
@@ -120,59 +119,12 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendStudiesToUser() The function sends back to user list of all studies
-	 * in DB
-	 * 
-	 * @return list of cloneStudy
-	 */
-	public List<CloneStudy> handleSendStudiesToUser() {
-		List<Study> listFromDB = null;
-		List<CloneStudy> cloneStudies = new ArrayList<CloneStudy>();
-		try {
-			listFromDB = HibernateMain.getDataFromDB(Study.class);
-			for (Study study : listFromDB) {
-				cloneStudies.add(study.createClone());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		return cloneStudies;
-	}
-
-	/**
-	 * handleSendCoursesFromStudy(CloneStudy)
-	 * 
-	 * @param cloneStudy - User chose this study and asked for it's courses
-	 * @return all the courses that are associated with this study
-	 */
-	public List<CloneCourse> handleSendCoursesFromStudy(CloneStudy cloneStudy) {
-		List<Study> listFromDB = null;
-		List<CloneCourse> courses = new ArrayList<CloneCourse>();
-		try {
-			listFromDB = HibernateMain.getDataFromDB(Study.class);
-			for (Study study : listFromDB) {
-				if (study.getId() == cloneStudy.getId()) {
-					study.getCourses().forEach(course -> courses.add(course.createClone()));
-					break;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		return courses;
-	}
-
-	/**
-	 * handleSendAllCoursesFromTeacher(CloneUser)
+	 * handleSendAllCoursesOfTeacher(CloneUser)
 	 * 
 	 * @param CloneUser - Teacher wants to see all courses he teaches
 	 * @return all the courses that are associated with this Teacher
 	 */
-	public List<CloneCourse> handleSendAllCoursesFromTeacher(CloneUser cloneUser) {
+	public List<CloneCourse> handleSendAllCoursesOfTeacher(CloneUser cloneUser) {
 		List<Teacher> listFromDB = null;
 		List<CloneCourse> courses = new ArrayList<CloneCourse>();
 		try {
@@ -215,4 +167,200 @@ public class ServerOperations {
 
 		return tests;
 	}
+
+	public CloneUser handleLoginRequest(Login data) throws Exception {
+		List<User> userList = HibernateMain.getDataFromDB(User.class);
+		for (User user : userList) {
+			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))) {
+				return user.createClone();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param data contains Clone Teacher and Clone Course
+	 * @return all exams that the teacher created in a specific course
+	 */
+	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data) {
+		CloneUser cloneUser = data.getTeacher();
+		CloneCourse cloneCourse = data.getCourse();
+		List<Exam> listFromDB1 = null;
+		List<CloneExam> exams = new ArrayList<CloneExam>();
+		try {
+			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB1) {
+				if (exam.getCreator().getId() == cloneUser.getId() && exam.getCourse().getId() == cloneCourse.getId()) {
+
+					exams.add(exam.createClone());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return exams;
+	}
+
+	/**
+	 * 
+	 * @param cloneUser a clone student
+	 * @return all test related to student
+	 */
+	public List<CloneStudentTest> handleSendAllStudentTests(CloneUser cloneUser) {
+		List<Student> students = null;
+		List<CloneStudentTest> studentTest = new ArrayList<CloneStudentTest>();
+		try {
+			students = HibernateMain.getDataFromDB(Student.class);
+			for (Student student : students) {
+				if (student.getId() == cloneUser.getId()) {
+					student.getTests().forEach(test -> studentTest.add(test.createClone()));
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return studentTest;
+	}
+
+	/**
+	 * 
+	 * @param newCloneQuestion
+	 * @return
+	 * @throws Exception
+	 */
+	public CloneQuestion handleCreateNewQuestion(CloneQuestion newCloneQuestion) throws Exception {
+
+		Teacher t = getTeacherByCloneId(newCloneQuestion.getTeacherId());
+		Course c = getCourseByCloneId(newCloneQuestion.getCourse().getId());
+
+		if (t == null || c == null)
+			return null;
+
+		Question newQustion = new Question(newCloneQuestion.getSubject(), newCloneQuestion.getQuestionText(),
+				newCloneQuestion.getAnswer_1(), newCloneQuestion.getAnswer_2(), newCloneQuestion.getAnswer_3(),
+				newCloneQuestion.getAnswer_4(), newCloneQuestion.getCorrectAnswer(), c, t);
+
+		HibernateMain.insertDataToDB(newQustion);
+
+		Thread.sleep(10);
+
+		List<Question> listFromDB = null;
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Question.class);
+			for (Question question : listFromDB) {
+				if (question.getId() == newQustion.getId())
+					newQustion = question;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return newQustion.createClone();
+	}
+
+	public CloneExam handleCreateNewExam(CloneExam newCloneExam) throws Exception {
+		Teacher t = getTeacherByCloneId(newCloneExam.getTeacherId());
+		Course c = getCourseByCloneId(newCloneExam.getCourseId());
+
+		if (t == null || c == null)
+			return null;
+
+		Exam newExam = new Exam(newCloneExam.getExamName(), t, null, newCloneExam.getDuration(), c,
+				newCloneExam.getTeacherComments(), newCloneExam.getStudentComments());
+
+		HibernateMain.insertDataToDB(newCloneExam);
+
+		Thread.sleep(10);
+
+		List<Exam> listFromDB = null;
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB) {
+				if (exam.getId() == newExam.getId())
+					newExam = exam;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return newExam.createClone();
+	}
+
+	private Course getCourseByCloneId(int courseId) throws Exception {
+		List<Course> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(Course.class);
+		for (Course course : listFromDB) {
+			if (course.getId() == courseId) {
+				return course;
+			}
+		}
+		return null;
+	}
+
+	public Teacher getTeacherByCloneId(int userId) throws Exception {
+		List<Teacher> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(Teacher.class);
+		for (Teacher teacher : listFromDB) {
+			if (teacher.getId() == userId) {
+				return teacher;
+			}
+		}
+		return null;
+	}
+
+//////////////////////////////
+//	Update Entity Template	//
+//////////////////////////////	
+//	/**
+//	 * handleUpdateQuestion(CloneQuestion) Update Question object in DB according to
+//	 * CloneQuestion received from DB Get the original Question from DB Set all
+//	 * properties according to CloneQustion Update Question in DB
+//	 * 
+//	 * @param questionToUpdate
+//	 * @return
+//	 */
+//	public CloneQuestion handleUpdateQuestion(CloneQuestion questionToUpdate) {
+//		Question originalQustion = null;
+//		List<Question> listFromDB = null;
+//		try {
+//			listFromDB = HibernateMain.getDataFromDB(Question.class);
+//			for (Question question : listFromDB) {
+//				if (question.getId() == questionToUpdate.getId()) {
+//					originalQustion = question;
+//					break;
+//				}
+//			}
+//
+//			if (originalQustion == null)
+//				throw new Exception("Question with id " + questionToUpdate.getId() + " was not found!");
+//
+//			originalQustion.setAnswer_1(questionToUpdate.getAnswer_1());
+//			originalQustion.setAnswer_2(questionToUpdate.getAnswer_2());
+//			originalQustion.setAnswer_3(questionToUpdate.getAnswer_3());
+//			originalQustion.setAnswer_4(questionToUpdate.getAnswer_4());
+//			originalQustion.setCorrectAnswer(questionToUpdate.getCorrectAnswer());
+//			originalQustion.setQuestionText(questionToUpdate.getQuestionText());
+//			originalQustion.setSubject(questionToUpdate.getSubject());
+//
+//			int updateResult = HibernateMain.questionToUpdate(originalQustion);
+//
+//			if (updateResult == -1)
+//				originalQustion = null;
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//
+//		return originalQustion.createClone();
+//	}
 }

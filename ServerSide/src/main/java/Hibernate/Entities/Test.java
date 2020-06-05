@@ -123,11 +123,9 @@ public class Test {
 
 	public void setExtensionRequests(TimeExtensionRequest extensionRequests) {
 		if (extensionRequests != null) {
-			System.out.println("setExtensionRequests: " + extensionRequests.isRequestConfirmed());
 			this.extensionRequests = extensionRequests;
 			extensionRequests.setTest(this);
 			if (extensionRequests.isRequestConfirmed()) {
-				System.out.println("Added " + extensionRequests.getTimeToExtenedInMinute() + " Minute");
 				this.extraMinute = extensionRequests.getTimeToExtenedInMinute();
 				this.testDuration += extraMinute;
 			}

@@ -1,21 +1,18 @@
 package Server;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import CloneEntities.*;
 import CommonElements.DataElements;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
-import Hibernate.Entities.*;
 import OCSF.AbstractServer;
 import OCSF.ConnectionToClient;
 
 public class ServerMain extends AbstractServer {
 	static int numberOfConnectedClients;
 	private ServerOperations serverHandler = null;
-	
+
 	public ServerMain(int port) {
 		super(port);
 		serverHandler = new ServerOperations();
@@ -31,21 +28,14 @@ public class ServerMain extends AbstractServer {
 
 		if (numberOfConnectedClients == 0) {
 			/*
-			System.out.print("Do you want to close the server? (Yes \\ No): ");
+			 * System.out.print("Do you want to close the server? (Yes \\ No): ");
+			 * 
+			 * try (Scanner input = new Scanner(System.in)) { String stringInput =
+			 * input.nextLine().toLowerCase(); if (stringInput.equals("yes")) { try {
+			 * this.close(); } catch (IOException e) { e.printStackTrace(); } } else
+			 * System.out.println("Server ready!"); }
+			 */
 
-			try (Scanner input = new Scanner(System.in)) {
-				String stringInput = input.nextLine().toLowerCase();
-				if (stringInput.equals("yes")) {
-					try {
-						this.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else
-					System.out.println("Server ready!");
-			}
-			*/
-			
 			try {
 				this.close();
 			} catch (IOException e) {
@@ -82,9 +72,14 @@ public class ServerMain extends AbstractServer {
 			System.out.println("Received message from client: opcode = " + de.getOpcodeFromClient());
 
 			switch (de.getOpcodeFromClient()) {
-			case GetAllQuestionInCourse:
-				dataFromDB = serverHandler.handleSendQuestionsFromCourse((CloneCourse) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInCourse);
+			case GetAllExams:
+				dataFromDB = serverHandler.handleSendAllExams();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
+				de.setData(dataFromDB);
+				break;
+			case GetAllTests:
+				dataFromDB = serverHandler.handleSendAllTests();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
 				de.setData(dataFromDB);
 				break;
 			case GetAllQuestion:
@@ -92,9 +87,29 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestion);
 				de.setData(dataFromDB);
 				break;
-			case UpdateQuestion:
-				dataFromDB = serverHandler.handleUpdateQuestion((CloneQuestion) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateQuestionResult);
+			case GetAllQuestionInCourse:
+				dataFromDB = serverHandler.handleSendQuestionsInCourse((CloneCourse) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInCourse);
+				de.setData(dataFromDB);
+				break;
+			case GetAllCoursesOfTeacher:
+				dataFromDB = serverHandler.handleSendAllCoursesOfTeacher((CloneUser) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllCoursesOfTeacher);
+				de.setData(dataFromDB);
+				break;
+			case GetAllTestsOfTeacher:
+				dataFromDB = serverHandler.handleSendAllTestsFromTeacher((CloneUser) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacher);
+				de.setData(dataFromDB);
+				break;
+			case GetAllExamsOfTeacherInCourse:
+				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((CloneTeacherCourse)de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
+				de.setData(dataFromDB);
+				break;
+			case GetAllStudentTests:
+				dataFromDB = serverHandler.handleSendAllStudentTests((CloneUser) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudentTests);
 				de.setData(dataFromDB);
 				break;
 			case UserLogin:
@@ -102,15 +117,22 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
 				de.setData(dataFromDB);
 				break;
-			case GetAllCoursesFromTeacher:
-				dataFromDB = serverHandler.handleSendAllCoursesFromTeacher((CloneUser) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllCoursesFromTeacher);
+			case CreateNewQuestion:
+				dataFromDB = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
 				de.setData(dataFromDB);
 				break;
-			case GetAllTestsFromTeacher:
-				dataFromDB = serverHandler.handleSendAllTestsFromTeacher((CloneUser) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsFromTeacher);
+			case GetAllRequests:
+				dataFromDB = serverHandler.handleSendAllRequests();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
 				de.setData(dataFromDB);
+				break;
+			case CreateNewExam:
+				dataFromDB = serverHandler.handleCreateNewExam((CloneExam) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewExamResult);
+				de.setData(dataFromDB);
+				break;
+			case CreateNewTest:
 				break;
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
@@ -138,12 +160,12 @@ public class ServerMain extends AbstractServer {
 	 * @param args - <port>
 	 * @throws IOException
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		if (args.length != 1) {
 			System.out.println("Required argument: <port>");
 			return;
 		}
-	
+
 		ServerMain server = new ServerMain(Integer.parseInt(args[0]));
 		boolean hibernateStatus = HibernateMain.initHibernate();
 		if (hibernateStatus == false) {

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
@@ -21,7 +20,11 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
 import CloneEntities.CloneCourse;
+import CloneEntities.CloneExam;
+import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
@@ -80,6 +83,36 @@ public class HibernateMain {
 	}
 
 	/**
+	 * Function to handle Errors in Hibernate
+	 * Every Bibernate exception will be handle by this function
+	 */
+	public static void hibernateRollBake() {
+		if (session != null) {
+			session.getTransaction().rollback();
+		}
+		System.err.println("Hibernate: An error occured, changes have been rolled back.");
+	}
+
+	
+	public static <T> int insertDataToDB(T newEntitiy) {
+		int status = 1;
+		try {
+			session.beginTransaction();
+			session.save(newEntitiy);
+			session.flush();
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			System.err.println("Hibernate: An error occured, changes have been rolled back.");
+			status = -1;
+		} finally {
+			session.clear();
+		}
+		return status;
+	}
+
+	/**
 	 * questionToUpdate(Question) update the question in DB
 	 * 
 	 * @param orignalQustion after updated fields
@@ -92,7 +125,7 @@ public class HibernateMain {
 			session.update(orignalQustion);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			hibernateRollBake();
 			return -1;
 		}
 		return 1;
@@ -122,19 +155,19 @@ public class HibernateMain {
 		final int NUMBER_OF_QUESTIONS = 13;
 
 		// Generate users
-		Student s1 = new Student(1, "GalB", "123", "Gal", "Barak", "Check@Check.com");
+		Student s1 = new Student("GalB", "123", "Gal", "Barak", "Check@Check.com");
 		session.save(s1);
-		Student s2 = new Student(2, "abedI", "123", "Abed", "Idres", "Check@Check.com");
+		Student s2 = new Student("abedI", "123", "Abed", "Idres", "Check@Check.com");
 		session.save(s2);
-		Student s3 = new Student(3, "OrA", "123", "Or", "Ashkenazi", "Check@Check.com");
+		Student s3 = new Student("OrA", "123", "Or", "Ashkenazi", "Check@Check.com");
 		session.save(s3);
-		Student s4 = new Student(4, "SadiG", "123", "Sagi", "Gvili", "Check@Check.com");
+		Student s4 = new Student("SadiG", "123", "Sagi", "Gvili", "Check@Check.com");
 		session.save(s4);
-		Teacher t1 = new Teacher(5, "MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
+		Teacher t1 = new Teacher("MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
 		session.save(t1);
-		Teacher t2 = new Teacher(6, "LielF", "123", "Liel", "Fridman", "Check@Check.com");
+		Teacher t2 = new Teacher("LielF", "123", "Liel", "Fridman", "Check@Check.com");
 		session.save(t2);
-		Principal d1 = new Principal(7, "DaniK", "123", "Dani", "Keren", "Check@Check.com");
+		Principal d1 = new Principal("DaniK", "123", "Dani", "Keren", "Check@Check.com");
 		session.save(d1);
 
 		session.flush();
@@ -326,7 +359,7 @@ public class HibernateMain {
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(name, t1, questionPoints, duration, studies[0], courses[0], teacherCommString,
+		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString,
 				studentCommString);
 		e1.addQuestion(questionList);
 		session.save(e1);
@@ -344,14 +377,14 @@ public class HibernateMain {
 		LocalTime testTime = LocalTime.of(hour, minute);
 
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
-		
+
 		TimeExtensionRequest request = new TimeExtensionRequest("Bima tem odd zman", 50);
 		test1.setExtensionRequests(request);
-		
+
 		request.setRequestConfirmed(true);
 		session.save(request);
 		session.flush();
-		
+
 		session.save(test1);
 		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
 		session.save(test2);
@@ -365,8 +398,15 @@ public class HibernateMain {
 		session.save(st3);
 		session.flush();
 
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		//////////////// Tests ///////////////////////
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+
 		
 		session.clear();
+		
 	}
 
 	public static void main(String[] args) {
@@ -412,10 +452,7 @@ public class HibernateMain {
 			status = true;
 
 		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("Hibernate: An error occured, changes have been rolled back.");
+			hibernateRollBake();
 			status = false;
 			exception.printStackTrace();
 		}
