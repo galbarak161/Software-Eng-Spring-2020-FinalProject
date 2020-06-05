@@ -25,6 +25,7 @@ import CloneEntities.CloneExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
