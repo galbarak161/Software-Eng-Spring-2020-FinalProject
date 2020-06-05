@@ -12,13 +12,13 @@ public abstract class AbstractController {
 	protected Alert alert = new Alert(Alert.AlertType.ERROR);
 
 	protected Alert info = new Alert(Alert.AlertType.INFORMATION);
-	
+
 	protected static final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
-	
+
 	protected static final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
-	
+
 	private static boolean msgRecived = false;
-	
+
 	static void msgRecieved() {
 		msgRecived = true;
 	}
@@ -43,8 +43,7 @@ public abstract class AbstractController {
 
 		return status;
 	}
-	
-	
+
 	/**
 	 * Creating request to get data from server
 	 * 
@@ -53,17 +52,22 @@ public abstract class AbstractController {
 	 * @return
 	 * @throws InterruptedException Pause the main GUI thread
 	 */
-	public int GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
+	public void GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
+		String initErrors = "";
 		ClientMain.addController(this);
-		int status = sendRequestForDataFromServer(new DataElements(op, data));
-		while(!msgRecived) {
+		int dbStatus = sendRequestForDataFromServer(new DataElements(op, data));
+		if ((dbStatus == -1)) {
+			initErrors += "The system cannot retrieve studies from server\n";
+		}
+
+		if (!initErrors.isEmpty())
+			popError(ERROR_TITLE_SERVER, initErrors);
+		while (!msgRecived) {
 			Thread.onSpinWait();
 		}
 		msgRecived = false;
-		return status;
 	}
-	
-	
+
 	/**
 	 * Activate as a respond for an unknown exception in client
 	 * 
@@ -74,9 +78,9 @@ public abstract class AbstractController {
 		alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
 		alert.showAndWait();
 	}
-	
-    public void initialize() {
-    	
-    }
+
+	public void initialize() {
+
+	}
 
 }
