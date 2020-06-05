@@ -75,7 +75,6 @@ public class TimeExtensionRequest {
 
 	public void setRequestConfirmed(boolean isRequestConfirmed) {
 		this.isRequestConfirmed = isRequestConfirmed;
-		System.out.println("setRequestConfirmed: " + isRequestConfirmed);
 		if (this.isRequestConfirmed == true) {
 			this.getTest().setExtensionRequests(this);
 		}
