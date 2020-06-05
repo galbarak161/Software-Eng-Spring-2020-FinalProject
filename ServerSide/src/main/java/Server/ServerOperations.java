@@ -10,14 +10,47 @@ import Hibernate.Entities.*;
 
 public class ServerOperations {
 
-	public Object handleSendAllExams() {
-		// TODO Auto-generated method stub
-		return null;
+		
+	/**
+	 * 
+	 * @return send all exams in system
+	 */
+	public static List<CloneExam> handleSendAllExams() {
+		List<Exam> listFromDB = null;
+		List<CloneExam> cloneExams = new ArrayList<CloneExam>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB) {
+				cloneExams.add(exam.createClone());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cloneExams;
 	}
 
-	public Object handleSendAllTests() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	/**
+	 * 
+	 * @return static send all tests in system
+	 */
+	public static List<CloneTest> handleSendAllTests() {
+		List<Test> listFromDB = null;
+		List<CloneTest> cloneTests = new ArrayList<CloneTest>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Test.class);
+			for (Test test : listFromDB) {
+				cloneTests.add(test.createClone());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cloneTests;
+		
 	}
 
 	/**
@@ -127,6 +160,11 @@ public class ServerOperations {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param data contains Clone Teacher and Clone Course
+	 * @return all exams that the teacher created in a specific course 
+	 */
 	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data){		
 		CloneUser cloneUser = data.getTeacher();
 		CloneCourse cloneCourse = data.getCourse();		
@@ -148,7 +186,11 @@ public class ServerOperations {
 
 		return exams;
 	}
-
+	/**
+	 * 
+	 * @param cloneUser a clone student
+	 * @return	all test related to student
+	 */
 	public List<CloneStudentTest> handleSendAllStudentTests(CloneUser cloneUser) {
 		List<Student> students = null;
 		List<CloneStudentTest> studentTest = new ArrayList<CloneStudentTest>();
