@@ -12,11 +12,11 @@ public class DataElements implements Serializable {
 	 * GetAllExams (NULL)
 	 * GetAllTests (NULL)
 	 * GetAllQuestion (NULL) 
-	 * GetAllQuestionInCourse (int CourseId)
-	 * GetAllCoursesOfTeacher (int teacherId) 
-	 * GetAllTestsOfTeacher (int teacherId)
-	 * GetAllExamsOfTeacherInCourse (int teacherId, int courseId) ---> List(0) = teacherId // List(1) = courseId
-	 * GetAllStudentTests (int studentId) 
+	 * GetAllQuestionInCourse (CloneCourse)
+	 * GetAllCoursesOfTeacher (CloneUser) 
+	 * GetAllTestsOfTeacher (CloneUser)
+	 * GetAllExamsOfTeacherInCourse (CloneTeacherCourse)
+	 * GetAllStudentTests (CloneUser) 
 	 * 
 	 * UserLogin (Login)
 	 * 

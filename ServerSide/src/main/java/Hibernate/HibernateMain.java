@@ -367,17 +367,15 @@ public class HibernateMain {
 		session.save(st3);
 		session.flush();
 
-		
-		
-		
-		List<CloneStudentTest> sTests =ServerOperations.handleSendAllStudentTest(s1.createClone());
-		
-		
-		
-		List<CloneExam> teacherExamsincourse = ServerOperations.getAllExamsFromTeahcerInCourse(t1.createClone(), courses[0].createClone());
-		
-		
 		session.clear();
+		
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		//////////////// Tests ///////////////////////
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		
+
 	}
 
 	public static void main(String[] args) {

@@ -3,24 +3,22 @@ package Server;
 import java.util.ArrayList;
 import java.util.List;
 
-import CloneEntities.CloneCourse;
-import CloneEntities.CloneExam;
-import CloneEntities.CloneQuestion;
-import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneStudy;
-import CloneEntities.CloneTest;
-import CloneEntities.CloneUser;
+import CloneEntities.*;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
-import Hibernate.Entities.Course;
-import Hibernate.Entities.Exam;
-import Hibernate.Entities.Question;
-import Hibernate.Entities.Student;
-import Hibernate.Entities.Study;
-import Hibernate.Entities.Teacher;
-import Hibernate.Entities.User;
+import Hibernate.Entities.*;
 
 public class ServerOperations {
+
+	public Object handleSendAllExams() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object handleSendAllTests() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * handleSendAllQuestions() The function sends back to user list of all
@@ -93,7 +91,7 @@ public class ServerOperations {
 
 		return courses;
 	}
-	
+
 	/**
 	 * handleSendAllTestsFromTeacher(CloneUser data)
 	 * 
@@ -118,8 +116,7 @@ public class ServerOperations {
 
 		return tests;
 	}
-	
-	
+
 	public CloneUser handleLoginRequest(Login data) throws Exception {
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
@@ -130,21 +127,51 @@ public class ServerOperations {
 		return null;
 	}
 
-	public Object handleSendAllExamsOfTeacherInCourse(Object data) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data){		
+		CloneUser cloneUser = data.getTeacher();
+		CloneCourse cloneCourse = data.getCourse();		
+		List<Exam> listFromDB1 = null;
+		List<CloneExam> exams = new ArrayList<CloneExam>();
+		try {
+			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB1) {
+				if (exam.getCreator().getId() == cloneUser.getId() && exam.getCourse().getId() == cloneCourse.getId()) {
+
+					exams.add(exam.createClone());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return exams;
 	}
 
-	public Object handleSendAllStudentTests(CloneUser data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<CloneStudentTest> handleSendAllStudentTests(CloneUser cloneUser) {
+		List<Student> students = null;
+		List<CloneStudentTest> studentTest = new ArrayList<CloneStudentTest>();
+		try {
+			students = HibernateMain.getDataFromDB(Student.class);
+			for (Student student : students) {
+				if (student.getId() == cloneUser.getId()) {
+					student.getTests().forEach(test -> studentTest.add(test.createClone()));
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
+		return studentTest;
+	}
+	
 	public Object handleCreateNewQuestion(CloneQuestion data) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	/**
 	 * handleUpdateQuestion(CloneQuestion) Update Question object in DB according to
@@ -189,57 +216,4 @@ public class ServerOperations {
 //
 //		return originalQustion.createClone();
 //	}
-	
-	/**
-	 * handleSendAllCoursesFromTeacher(CloneUser)
-	 * 
-	 * @param CloneUser - Teacher wants to see all courses he teaches
-	 * @return all the courses that are associated with this Teacher
-	 */
-	public static List<CloneExam>getAllExamsFromTeahcerInCourse(CloneUser cloneUser, CloneCourse cloneCourse) {
-		List<Exam> listFromDB1 = null;
-		List<CloneExam> exams = new ArrayList<CloneExam>();
-		try {
-			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
-			for (Exam exam : listFromDB1) {
-				if (exam.getCreator().getId() == cloneUser.getId() 
-					&& exam.getCourse().getId() == cloneCourse.getId()) {
-					
-					exams.add(exam.createClone());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		// System.out.println("List of courses from study " +
-		// cloneStudy.getStudyName());
-		// courses.forEach(q -> System.out.println(q.getCourseName()));
-		return exams;
-	}
-	
-	public static List<CloneStudentTest> handleSendAllStudentTest(CloneUser cloneUser) {
-		List<Student> students = null;
-		List<CloneStudentTest> studentTest = new ArrayList<CloneStudentTest>();
-		try {
-			students = HibernateMain.getDataFromDB(Student.class);
-			for (Student student : students) {
-				if (student.getId() == cloneUser.getId()) {
-					student.getTests().forEach(test -> studentTest.add(test.createClone()));
-					break;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		// System.out.println("List of courses from study " +
-		// cloneStudy.getStudyName());
-		// courses.forEach(q -> System.out.println(q.getCourseName()));
-		return studentTest;
-	}
-	
 }

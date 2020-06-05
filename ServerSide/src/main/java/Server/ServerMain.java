@@ -76,8 +76,14 @@ public class ServerMain extends AbstractServer {
 
 			switch (de.getOpcodeFromClient()) {
 			case GetAllExams:
+				dataFromDB = serverHandler.handleSendAllExams();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
+				de.setData(dataFromDB);
 				break;
 			case GetAllTests:
+				dataFromDB = serverHandler.handleSendAllTests();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
+				de.setData(dataFromDB);
 				break;
 			case GetAllQuestion:
 				dataFromDB = serverHandler.handleSendAllQuestions();
@@ -100,7 +106,7 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case GetAllExamsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse(de.getData());
+				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((CloneTeacherCourse)de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
