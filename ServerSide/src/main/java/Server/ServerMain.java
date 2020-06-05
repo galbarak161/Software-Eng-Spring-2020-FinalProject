@@ -82,16 +82,6 @@ public class ServerMain extends AbstractServer {
 			System.out.println("Received message from client: opcode = " + de.getOpcodeFromClient());
 
 			switch (de.getOpcodeFromClient()) {
-			case GetAllStudies:
-				dataFromDB = serverHandler.handleSendStudiesToUser();
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudies);
-				de.setData(dataFromDB);
-				break;
-			case GetAllCoursesInStudy:
-				dataFromDB = serverHandler.handleSendCoursesFromStudy((CloneStudy) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllCoursesInStudy);
-				de.setData(dataFromDB);
-				break;
 			case GetAllQuestionInCourse:
 				dataFromDB = serverHandler.handleSendQuestionsFromCourse((CloneCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInCourse);

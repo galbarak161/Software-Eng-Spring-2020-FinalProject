@@ -5,14 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public class CloneTest implements Serializable{
+public class CloneTest implements Serializable {
 
 	private static final long serialVersionUID = 308680455154663629L;
-	
-    @Override
-    public String toString() {
-        return examToExecute.getExamName();
-    }
 
 	public enum ExamType {
 		Automated, Manual;
@@ -25,16 +20,16 @@ public class CloneTest implements Serializable{
 	private String executionCode;
 
 	private int extraMinute = 0;
-	
+
 	private int testDuration;
 
 	private ExamType type;
 
-	//private TimeExtensionRequest extensionRequests;
+	// private TimeExtensionRequest extensionRequests;
 
 	private int teacherId;
 
-	//private List<StudentTest> students;
+	// private List<StudentTest> students;
 
 	private CloneExam examToExecute;
 
@@ -114,6 +109,10 @@ public class CloneTest implements Serializable{
 	public void setExamToExecute(CloneExam examToExecute) {
 		this.examToExecute = examToExecute;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return examToExecute.getExamName();
+	}
+
 }

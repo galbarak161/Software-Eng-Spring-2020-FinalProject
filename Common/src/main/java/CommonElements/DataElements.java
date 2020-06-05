@@ -6,25 +6,33 @@ public class DataElements implements Serializable {
 
 	private static final long serialVersionUID = -2986035827318115652L;
 
-	// Opcodes 0-9
+	// Opcodes 1-99
 
 	/**
-	 * GetAllStudies(NULL) 
-	 * GetAllCoursesInStudy(CloneStudy)
-	 * GetAllQuestionInCourse(CloneCourse) 
-	 * UpdateQuestion(CloneQuestion)
-	 * GetAllQuestion(NULL) 
-	 * UserLogin(Login) 
-	 * GetAllCoursesFromTeacher(CloneUser)
-	 * GetAllTestsFromTeacher(CloneUser) 
-	 * Error(NULL)
+	 * GetAllExams (NULL)
+	 * GetAllTests (NULL)
+	 * GetAllQuestion (NULL) 
+	 * GetAllQuestionInCourse (int CourseId)
+	 * GetAllCoursesByTeacherId (int teacherId) 
+	 * GetAllTestsByTeacherId (int teacherId)
+	 * GetAllExamsFromTeacherInCourse (int teacherId, int courseId) ---> List(0) = teacherId // List(1) = courseId
+	 * GetAllStudentTests (int studentId) 
+	 * 
+	 * UserLogin (Login)
+	 * 
+	 * CreateNewQuestion (CloneQuestion) 
+	 * CreateNewExam (CloneExam) 
+	 * CreateNewTest (CloneTest)
+	 * 
+	 * Error (NULL)
 	 * 
 	 * @author Gal
 	 *
 	 */
 	public enum ClientToServerOpcodes {
-		GetAllStudies(0), GetAllCoursesInStudy(1), GetAllQuestionInCourse(2), UpdateQuestion(3), GetAllQuestion(4),
-		UserLogin(5), GetAllCoursesFromTeacher(6), GetAllTestsFromTeacher(7), Error(-1);
+		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesByTeacherId(5),
+		GetAllTestsByTeacherId(6), GetAllExamsFromTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
+		CreateNewExam(11), CreateNewTest(12), Error(-1);
 
 		public int value;
 
@@ -33,24 +41,33 @@ public class DataElements implements Serializable {
 		}
 	}
 
-	// Opcodes 10-19
+	// Opcodes 101-199
 	/**
-	 * SendAllStudies(List <CloneStudy>) 
-	 * SendAllCoursesInStudy(List <CloneCourse>)
-	 * SendAllQuestionInCourse(List <CloneQuestion>)
-	 * UpdateQuestionResult(CloneQuestion) 
-	 * SendAllQuestion(List <CloneQuestion>)
-	 * UserLoggedIn(CloneUser) 
-	 * SendAllCoursesFromTeacher(List <CloneCourse>)
-	 * SendAllTestsFromTeacher(List <Test>) 
+	 * SendAllExams (List <CloneExam>) 
+	 * SendAllTests (List <CloneTest>) 
+	 * SendAllQuestion (List <CloneQuestion>) 
+	 * SendAllQuestionInCourse (List <CloneQuestion>) 
+	 * SendAllCoursesByTeacherId (List <CloneCourse>) 
+	 * SendAllTestsByTeacherId (List <CloneTest>) 
+	 * SendAllExamsFromTeacherInCourse (List <CloneExam>) 
+	 * SendAllStudentTests (List <CloneStudentTest>) 
+	 * 
+	 * UserLoggedIn  (Login)
+	 * 
+	 * CreateNewQuestionResult (CloneQuestion)  
+	 * CreateNewExamResult (CloneExam) 
+	 * CreateNewTestResult (CloneTest) 
+	 * 
 	 * Error(NULL)
 	 * 
 	 * @author Gal
 	 *
 	 */
 	public enum ServerToClientOpcodes {
-		SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
-		SendAllQuestion(14), UserLoggedIn(15), SendAllCoursesFromTeacher(16), SendAllTestsFromTeacher(17), Error(-1);
+		SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
+		SendAllCoursesByTeacherId(105), SendAllTestsByTeacherId(106), SendAllExamsFromTeacherInCourse(107),
+		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
+		CreateNewTestResult(112), Error(-1);
 
 		public int value;
 
