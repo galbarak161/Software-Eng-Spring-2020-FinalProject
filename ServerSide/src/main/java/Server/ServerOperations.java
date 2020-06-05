@@ -9,13 +9,35 @@ import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 
 public class ServerOperations {
+	
+	
+	
+	
+	/**
+	 * 
+	 * @return send all time extension requests
+	 */
+	public  List<CloneTimeExtensionRequest> handleSendAllRequests() {
+		List<TimeExtensionRequest> listFromDB = null;
+		List<CloneTimeExtensionRequest> cloneRequests= new ArrayList<CloneTimeExtensionRequest>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
+			for (TimeExtensionRequest Tex : listFromDB) {
+				cloneRequests.add(Tex.createClone());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
-		
+		return cloneRequests;
+	}
+	
 	/**
 	 * 
 	 * @return send all exams in system
 	 */
-	public static List<CloneExam> handleSendAllExams() {
+	public  List<CloneExam> handleSendAllExams() {
 		List<Exam> listFromDB = null;
 		List<CloneExam> cloneExams = new ArrayList<CloneExam>();
 		try {
@@ -34,9 +56,9 @@ public class ServerOperations {
 	
 	/**
 	 * 
-	 * @return static send all tests in system
+	 * @return  send all tests in system
 	 */
-	public static List<CloneTest> handleSendAllTests() {
+	public  List<CloneTest> handleSendAllTests() {
 		List<Test> listFromDB = null;
 		List<CloneTest> cloneTests = new ArrayList<CloneTest>();
 		try {
