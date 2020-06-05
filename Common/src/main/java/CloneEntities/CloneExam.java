@@ -9,28 +9,33 @@ public class CloneExam implements Serializable {
 
 	private List<CloneQuestion> questions;
 
+	private List<Integer> points;
+
 	private int duration;
-	
+
 	private String examName;
 
 	private String TeacherComments;
 
 	private String StudentComments;
 
-	private CloneCourse course;
+	private int courseId;
+
+	private int teacherId;
 
 	public CloneExam() {
-		super();
 	}
-
-	public CloneExam( String name,int duration, String teacherComments, String studentComments,
-			CloneCourse course) {
-		super();
-		this.examName= name;
+	
+	public CloneExam(List<CloneQuestion> questions, List<Integer> points, int duration, String examName,
+			String teacherComments, String studentComments, int courseId, int teacherId) {
+		this.questions = questions;
+		this.points = points;
 		this.duration = duration;
+		this.examName = examName;
 		TeacherComments = teacherComments;
 		StudentComments = studentComments;
-		this.course = course;
+		this.courseId = courseId;
+		this.teacherId = teacherId;
 	}
 
 	public List<CloneQuestion> getQuestions() {
@@ -41,12 +46,28 @@ public class CloneExam implements Serializable {
 		this.questions = questions;
 	}
 
+	public List<Integer> getPoints() {
+		return points;
+	}
+
+	public void setPoints(List<Integer> points) {
+		this.points = points;
+	}
+
 	public int getDuration() {
 		return duration;
 	}
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public String getExamName() {
+		return examName;
+	}
+
+	public void setExamName(String examName) {
+		this.examName = examName;
 	}
 
 	public String getTeacherComments() {
@@ -65,20 +86,19 @@ public class CloneExam implements Serializable {
 		StudentComments = studentComments;
 	}
 
-
-	public CloneCourse getCourse() {
-		return course;
+	public int getCourseId() {
+		return courseId;
 	}
 
-	public void setCourse(CloneCourse course) {
-		this.course = course;
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 
-	public String getExamName() {
-		return examName;
+	public int getTeacherId() {
+		return teacherId;
 	}
 
-	public void setExamName(String examName) {
-		this.examName = examName;
+	public void setTeacherId(int teacherId) {
+		this.teacherId = teacherId;
 	}
 }
