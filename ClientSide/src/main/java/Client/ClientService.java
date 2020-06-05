@@ -114,6 +114,21 @@ public class ClientService extends AbstractClient {
 				controllersList.remove(o);
 				return;
 			}
+			
+			if (!(o = getController(principalDataController.class)).getClass().equals(String.class)) {
+				if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
+					((principalDataController) o).popError("Error", "Couldn't get info from server");
+				} else {
+					switch (de.getOpCodeFromServer()) {
+					case SendAllQuestion:
+						((principalDataController) o).questionsList.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						System.out.println("after data");
+						principalDataController.msgRecieved();
+					}
+				}
+				controllersList.remove(o);
+				return;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
