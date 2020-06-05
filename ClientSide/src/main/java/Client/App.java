@@ -34,8 +34,6 @@ public class App extends Application {
     		mainStage.setTitle(title);
     		mainStage.show();
     	});
-		
-		
 	}
 
 	private static Parent loadFXML(String fxml) throws IOException {

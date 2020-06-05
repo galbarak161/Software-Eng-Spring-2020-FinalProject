@@ -2,6 +2,7 @@ package Client;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -37,23 +38,27 @@ public class mainController {
 	}
 
 	public void setMainPanel(String fxml) {
-		try {
+		Platform.runLater(() -> {
 			mainPanel.getChildren().clear();
-			mainPanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				mainPanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 	public void setNaviPanel(String fxml) {
-		try {
+		Platform.runLater(() -> {
 			navigatePanel.getChildren().clear();
-			navigatePanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				navigatePanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 }

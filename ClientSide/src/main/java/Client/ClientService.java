@@ -1,6 +1,5 @@
 package Client;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -76,8 +75,8 @@ public class ClientService extends AbstractClient {
 //					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
 //					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
 					switch (de.getOpCodeFromServer()) {
-					case SendAllStudies:
-						((questionsEditor) o).study_combo.setItems(FXCollections.observableArrayList((List<CloneStudy>) de.getData()));
+					case SendAllCoursesFromTeacher:
+						((questionsEditor) o).course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						questionsEditor.msgRecieved();
 					}
 				}
@@ -107,7 +106,7 @@ public class ClientService extends AbstractClient {
 				} else {
 					switch (de.getOpCodeFromServer()) {
 					case SendAllCoursesFromTeacher:
-						((teacherController) o).coursesCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+						((teacherController) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						System.out.println("after data");
 						teacherController.msgRecieved();
 					}

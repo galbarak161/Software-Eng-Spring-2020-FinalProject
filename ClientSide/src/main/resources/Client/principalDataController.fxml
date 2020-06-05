@@ -7,21 +7,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.principalDataController">
    <children>
-      <Label layoutX="183.0" layoutY="14.0" prefHeight="41.0" prefWidth="174.0" text="Principal Panel" textFill="#ab1818">
+      <Label layoutX="60.0" layoutY="14.0" prefHeight="41.0" prefWidth="133.0" text="Data Panel" textFill="#ab1818">
          <font>
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <ComboBox layoutX="78.0" layoutY="99.0" prefWidth="150.0" />
-      <ComboBox layoutX="308.0" layoutY="99.0" prefWidth="150.0" />
-      <ComboBox layoutX="538.0" layoutY="99.0" prefWidth="150.0" />
-      <ListView layoutX="53.0" layoutY="138.0" prefHeight="556.0" prefWidth="200.0" />
-      <ListView layoutX="283.0" layoutY="138.0" prefHeight="556.0" prefWidth="200.0" />
-      <ListView layoutX="513.0" layoutY="138.0" prefHeight="556.0" prefWidth="200.0" />
-      <Button layoutX="565.0" layoutY="710.0" mnemonicParsing="false" text="Show Question" />
-      <Button layoutX="345.0" layoutY="710.0" mnemonicParsing="false" text="Show Exam" />
-      <Button layoutX="118.0" layoutY="710.0" mnemonicParsing="false" text="Show Test" />
+      <ComboBox layoutX="60.0" layoutY="99.0" prefWidth="150.0" />
+      <ComboBox layoutX="300.0" layoutY="99.0" prefWidth="150.0" />
+      <ComboBox layoutX="533.0" layoutY="99.0" prefWidth="150.0" />
+      <ListView layoutX="39.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
+      <ListView layoutX="275.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
+      <ListView layoutX="508.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
+      <Button layoutX="560.0" layoutY="521.0" mnemonicParsing="false" text="Show Question" />
+      <Button layoutX="346.0" layoutY="521.0" mnemonicParsing="false" text="Show Exam" />
+      <Button layoutX="104.0" layoutY="521.0" mnemonicParsing="false" text="Show Test" />
+      <Label layoutX="106.0" layoutY="67.0" text="All Tests">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="342.0" layoutY="67.0" text="All Exams">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="561.0" layoutY="67.0" text="All Questions">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

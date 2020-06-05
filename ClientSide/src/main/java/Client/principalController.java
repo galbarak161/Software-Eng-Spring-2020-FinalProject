@@ -4,8 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
-public class principalController {
+public class principalController extends AbstractController {
 
     @FXML
     private TableView<?> testsTable;

@@ -7,7 +7,7 @@
 }
 
 .sidebar-section Label {
-    -fx-font-size: 18px;
+    -fx-font-size: 16px;
     -fx-padding: 10 15 10 15;
     -fx-border-width: 1;
     -fx-border-color: transparent transparent #E8E8E8 transparent;

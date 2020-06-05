@@ -1,27 +1,11 @@
 package Client;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import CloneEntities.*;
-import CommonElements.DataElements;
 import CommonElements.DataElements.ClientToServerOpcodes;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-
 public class questionsEditor extends AbstractController {
 
 	/**************************************
@@ -55,13 +39,7 @@ public class questionsEditor extends AbstractController {
 	private Label title;
 
 	@FXML
-	private Label question_label;
-
-	@FXML
 	private Label course_label;
-
-	@FXML
-	private Label study_label;
 
 	@FXML
 	private TextField answer_line_1;
@@ -96,16 +74,7 @@ public class questionsEditor extends AbstractController {
 	@FXML
 	private TextArea question_text;
 
-	@FXML
-	private ListView<CloneQuestion> qList;
-
-	@FXML
-	private ComboBox<CloneQuestion> question_combo;
-
-	@FXML
-	private ComboBox<CloneCourse> course_combo;
-
-	@FXML ComboBox<CloneStudy> study_combo;
+	@FXML ComboBox<CloneCourse> course_combo;
 
 
 	/**
@@ -119,10 +88,9 @@ public class questionsEditor extends AbstractController {
 	public void initialize() {
 		String initErrors = "";
 		try {
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllStudies, null);
+			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
 			if ((dbStatus == -1)) {
 				initErrors += "The system cannot retrieve studies from server\n";
-				study_combo.setDisable(true);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -139,9 +107,6 @@ public class questionsEditor extends AbstractController {
 		if (!initErrors.isEmpty())
 			popError(ERROR_TITLE_SERVER,initErrors);
 	}
-
-	
-
 	
 	
 
@@ -243,70 +208,6 @@ public class questionsEditor extends AbstractController {
 	 ***********************/
 
 	/**
-	 * Opens the Instructions window when clicked "Help" on the menubar
-	 * 
-	 * @param event- doesn't matter
-	 */
-	@FXML
-	void openInstructions(ActionEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Instructions.fxml"));
-			Parent root1 = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.setTitle("Insructions");
-			stage.getIcons().add(new Image(App.class.getResource("help_icon.jpeg").toExternalForm()));
-			stage.setScene(new Scene(root1));
-			stage.setResizable(false);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Display the retrieved "Studies" from server on study_combo Reset other fields
-	 * on "Editor" tab
-	 * 
-	 * @param event - doesn't matter
-	 */
-	@FXML
-	void onClickedStudy(ActionEvent event) {
-		if (study_combo.getValue() == null)
-			return;
-
-		try {
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesInStudy, study_combo.getValue());
-			if ((dbStatus == -1)) {
-				popError(ERROR_TITLE_Client,"The system cannot retrieve courses from server \nPlease try again");
-				return;
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			popError(ERROR_TITLE_Client,"The system cannot retrieve courses from server \nPlease try again");
-			return;
-		}
-
-		EventHandler<ActionEvent> handler;
-
-		handler = course_combo.getOnAction();
-		course_combo.getItems().clear();
-		course_combo.setDisable(false);
-		//course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) dataRecived));
-		course_combo.setValue(null);
-		course_combo.setOnAction(handler);
-
-		handler = question_combo.getOnAction();
-		question_combo.getItems().clear();
-		question_combo.setDisable(true);
-		question_combo.setValue(null);
-		disableQuestionDataFields(true);
-		question_combo.setOnAction(handler);
-
-		ClearAllFormFields();
-		ChangeSubmitColor(null);
-	}
-
-	/**
 	 * Display the retrieved "Courses" from server on course_combo Reset other
 	 * fields on "Editor" tab, except study_combo
 	 * 
@@ -330,31 +231,8 @@ public class questionsEditor extends AbstractController {
 
 		ClearAllFormFields();
 
-		EventHandler<ActionEvent> handler;
-
-		handler = question_combo.getOnAction();
-		question_combo.setDisable(false);
-		//question_combo.setItems(FXCollections.observableArrayList((List<CloneQuestion>) dataRecived));
-		question_combo.setValue(null);
-		question_combo.setOnAction(handler);
-
 		ChangeSubmitColor(null);
 		disableQuestionDataFields(true);
-	}
-
-	/**
-	 * Display the a retrieved "Question" from server on the question text fields
-	 * and radio buttons, also enable submit button.
-	 * 
-	 * @param event - doesn't matter
-	 */
-	@FXML
-	void onClickedQuestion(ActionEvent event) {
-		if (question_combo.getValue() == null)
-			return;
-
-		parseQuestionToFields(question_combo.getValue());
-		ChangeSubmitColor(null);
 	}
 
 	/**
@@ -365,7 +243,7 @@ public class questionsEditor extends AbstractController {
 	 * 
 	 * @param event - doesn't matter
 	 * @throws Exception - Used for checking all fields are filled
-	 */
+	 
 	@FXML
 	void onClickedSubmit(ActionEvent event) throws Exception {
 		CloneQuestion q = new CloneQuestion();
@@ -439,32 +317,32 @@ public class questionsEditor extends AbstractController {
 			return;
 		}
 
-		//CloneQuestion newItem = (CloneQuestion) dataRecived;
+		CloneQuestion newItem = (CloneQuestion) dataRecived;
 
-//		if (question_combo.getItems().size() >= 1) {
-//			for (CloneQuestion q2 : question_combo.getItems()) {
-//				if (newItem.getId() == q2.getId()) {
-//					EventHandler<ActionEvent> handler = question_combo.getOnAction();
-//					question_combo.setOnAction(null);
-//					question_combo.getItems().remove(q2);
-//					question_combo.getItems().add(newItem);
-//					question_combo.setValue(newItem);
-//					question_combo.setOnAction(handler);
-//					break;
-//				}
-//			}
-//		}
+		if (question_combo.getItems().size() >= 1) {
+			for (CloneQuestion q2 : question_combo.getItems()) {
+				if (newItem.getId() == q2.getId()) {
+					EventHandler<ActionEvent> handler = question_combo.getOnAction();
+					question_combo.setOnAction(null);
+					question_combo.getItems().remove(q2);
+					question_combo.getItems().add(newItem);
+					question_combo.setValue(newItem);
+					question_combo.setOnAction(handler);
+					break;
+				}
+			}
+		}
 
-//		for (CloneQuestion q2 : qList.getItems()) {
-//			if (newItem.getId() == q2.getId()) {
-//				int index = qList.getItems().indexOf(q2);
-//				qList.getItems().remove(q2);
-//				qList.getItems().add(index, newItem);
-//				// qList.getItems().add(newItem);
-//				dataRecived = null;
-//				break;
-//			}
-//		}
+		for (CloneQuestion q2 : qList.getItems()) {
+			if (newItem.getId() == q2.getId()) {
+				int index = qList.getItems().indexOf(q2);
+				qList.getItems().remove(q2);
+				qList.getItems().add(index, newItem);
+				// qList.getItems().add(newItem);
+				dataRecived = null;
+				break;
+			}
+		}
 
 		ChangeSubmitColor("#00FF09");
 		info.setHeaderText("The question has been successfully updated!");
@@ -472,7 +350,8 @@ public class questionsEditor extends AbstractController {
 		info.showAndWait();
 
 	}
-
+*/
+	
 	/**
 	 * Limits the number of chars on TextArea to 100
 	 * 
