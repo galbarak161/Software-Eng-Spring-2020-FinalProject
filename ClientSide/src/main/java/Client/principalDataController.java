@@ -17,11 +17,9 @@ import javafx.stage.Stage;
 
 public class principalDataController extends AbstractController {
 
-	@FXML
-	private ListView<CloneTest> testsList;
+	@FXML ListView<CloneTest> testsList;
 
-	@FXML
-	private ListView<CloneExam> examsList;
+	@FXML ListView<CloneExam> examsList;
 
 	@FXML
 	ListView<CloneQuestion> questionsList;
@@ -39,6 +37,8 @@ public class principalDataController extends AbstractController {
 	public void initialize() {
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestion, null);
+			GetDataFromDB(ClientToServerOpcodes.GetAllExams, null);
+			GetDataFromDB(ClientToServerOpcodes.GetAllTests, null);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

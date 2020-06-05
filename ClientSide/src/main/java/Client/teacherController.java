@@ -37,7 +37,7 @@ public class teacherController extends AbstractController {
     
 	public void initialize() {
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
+			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesByTeacherId, ClientMain.getUser());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
