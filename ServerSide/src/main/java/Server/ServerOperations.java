@@ -9,17 +9,14 @@ import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 
 public class ServerOperations {
-	
-	
-	
-	
+
 	/**
 	 * 
 	 * @return send all time extension requests
 	 */
-	public  List<CloneTimeExtensionRequest> handleSendAllRequests() {
+	public List<CloneTimeExtensionRequest> handleSendAllRequests() {
 		List<TimeExtensionRequest> listFromDB = null;
-		List<CloneTimeExtensionRequest> cloneRequests= new ArrayList<CloneTimeExtensionRequest>();
+		List<CloneTimeExtensionRequest> cloneRequests = new ArrayList<CloneTimeExtensionRequest>();
 		try {
 			listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 			for (TimeExtensionRequest Tex : listFromDB) {
@@ -32,12 +29,12 @@ public class ServerOperations {
 
 		return cloneRequests;
 	}
-	
+
 	/**
 	 * 
 	 * @return send all exams in system
 	 */
-	public  List<CloneExam> handleSendAllExams() {
+	public List<CloneExam> handleSendAllExams() {
 		List<Exam> listFromDB = null;
 		List<CloneExam> cloneExams = new ArrayList<CloneExam>();
 		try {
@@ -53,12 +50,11 @@ public class ServerOperations {
 		return cloneExams;
 	}
 
-	
 	/**
 	 * 
-	 * @return  send all tests in system
+	 * @return send all tests in system
 	 */
-	public  List<CloneTest> handleSendAllTests() {
+	public List<CloneTest> handleSendAllTests() {
 		List<Test> listFromDB = null;
 		List<CloneTest> cloneTests = new ArrayList<CloneTest>();
 		try {
@@ -72,7 +68,7 @@ public class ServerOperations {
 		}
 
 		return cloneTests;
-		
+
 	}
 
 	/**
@@ -185,9 +181,9 @@ public class ServerOperations {
 	/**
 	 * 
 	 * @param data contains Clone Teacher and Clone Course
-	 * @return all exams that the teacher created in a specific course 
+	 * @return all exams that the teacher created in a specific course
 	 */
-	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data){		
+	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data) {
 		CloneUser cloneUser = data.getTeacher();
 		CloneCourse cloneCourse = data.getCourse();
 		List<Exam> listFromDB1 = null;
@@ -208,10 +204,11 @@ public class ServerOperations {
 
 		return exams;
 	}
+
 	/**
 	 * 
 	 * @param cloneUser a clone student
-	 * @return	all test related to student
+	 * @return all test related to student
 	 */
 	public List<CloneStudentTest> handleSendAllStudentTests(CloneUser cloneUser) {
 		List<Student> students = null;
@@ -235,7 +232,7 @@ public class ServerOperations {
 	public CloneQuestion handleCreateNewQuestion(CloneQuestion newCloneQuestion) throws Exception {
 
 		Teacher t = getTeacherByCloneId(newCloneQuestion.getTeacherId());
-		Course c = getCourseByCloneId(newCloneQuestion.getCourseId());
+		Course c = getCourseByCloneId(newCloneQuestion.getCourse().getId());
 
 		if (t == null || c == null)
 			return null;
@@ -313,7 +310,6 @@ public class ServerOperations {
 		}
 		return null;
 	}
-	
 
 //////////////////////////////
 //	Update Entity Template	//

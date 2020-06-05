@@ -24,7 +24,7 @@ public class CloneQuestion implements Serializable {
 
 	private int correctAnswer;
 
-	private int courseId;
+	private CloneCourse course;
 
 	private int teacherId;
 	
@@ -32,7 +32,7 @@ public class CloneQuestion implements Serializable {
 	}
 
 	public CloneQuestion(int id, int questionCode, String subject, String questionText, String answer_1,
-			String answer_2, String answer_3, String answer_4, int correctAnswer, int courseId, int teacherId) {
+			String answer_2, String answer_3, String answer_4, int correctAnswer, CloneCourse course, int teacherId) {
 		this.id = id;
 		this.questionCode = questionCode;
 		this.subject = subject;
@@ -42,7 +42,7 @@ public class CloneQuestion implements Serializable {
 		this.answer_3 = answer_3;
 		this.answer_4 = answer_4;
 		this.correctAnswer = correctAnswer;
-		this.courseId = courseId;
+		this.course = course;
 		this.teacherId = teacherId;
 	}
 
@@ -123,8 +123,8 @@ public class CloneQuestion implements Serializable {
 		this.correctAnswer = correctAnswer;
 	}
 
-	public int getCourseId() {
-		return courseId;
+	public CloneCourse getCourse() {
+		return course;
 	}
 
 	public int getTeacherId() {
