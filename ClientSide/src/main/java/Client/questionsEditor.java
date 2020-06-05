@@ -87,7 +87,7 @@ public class questionsEditor extends AbstractController {
 	 */
 	public void initialize() {
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
+			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

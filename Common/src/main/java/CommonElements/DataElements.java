@@ -23,6 +23,7 @@ public class DataElements implements Serializable {
 	 * CreateNewQuestion (CloneQuestion) 
 	 * CreateNewExam (CloneExam) 
 	 * CreateNewTest (CloneTest)
+	 * GetAllRequests(NULL)
 	 * 
 	 * Error (NULL)
 	 * 
@@ -32,7 +33,7 @@ public class DataElements implements Serializable {
 	public enum ClientToServerOpcodes {
 		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesOfTeacher(5),
 		GetAllTestsOfTeacher(6), GetAllExamsOfTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
-		CreateNewExam(11), CreateNewTest(12), Error(-1);
+		CreateNewExam(11), CreateNewTest(12), GetAllRequests(13) ,Error(-1);
 
 		public int value;
 
@@ -57,6 +58,7 @@ public class DataElements implements Serializable {
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 
 	 * CreateNewTestResult (CloneTest) 
+	 * SendAllRequests(List <CloneTimeExtensionRequest>) 
 	 * 
 	 * Error(NULL)
 	 * 
@@ -67,7 +69,7 @@ public class DataElements implements Serializable {
 		SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
 		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllExamsOfTeacherInCourse(107),
 		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
-		CreateNewTestResult(112), Error(-1);
+		CreateNewTestResult(112), SendAllRequests(113),Error(-1);
 
 		public int value;
 

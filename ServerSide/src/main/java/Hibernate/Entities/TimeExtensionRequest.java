@@ -2,6 +2,9 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneTest;
+import CloneEntities.CloneTimeExtensionRequest;
+
 @Entity
 @Table(name = "TimeExtensionRequest")
 public class TimeExtensionRequest {
@@ -28,6 +31,14 @@ public class TimeExtensionRequest {
 		this.isRequestConfirmed = false;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
+	}
+	
+	public CloneTimeExtensionRequest createClone() {
+		
+		CloneTimeExtensionRequest clone = new CloneTimeExtensionRequest(getBody(), getTimeToExtenedInMinute());
+		clone.setTest(getTest().createClone());
+		return clone;
+	
 	}
 
 	public int getId() {
@@ -69,6 +80,7 @@ public class TimeExtensionRequest {
 			this.getTest().setExtensionRequests(this);
 		}
 	}
+	
 	
 	
 }

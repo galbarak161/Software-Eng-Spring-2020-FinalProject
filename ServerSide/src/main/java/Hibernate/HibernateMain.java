@@ -22,7 +22,9 @@ import org.hibernate.service.ServiceRegistry;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.Entities.*;
@@ -396,14 +398,15 @@ public class HibernateMain {
 		session.save(st3);
 		session.flush();
 
-		session.clear();
-
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 
+		
+		session.clear();
+		
 	}
 
 	public static void main(String[] args) {
