@@ -75,7 +75,7 @@ public class ClientService extends AbstractClient {
 //					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
 //					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
 					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesFromTeacher:
+					case SendAllCoursesOfTeacher:
 						((questionsEditor) o).course_combo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						questionsEditor.msgRecieved();
 					}
@@ -90,7 +90,7 @@ public class ClientService extends AbstractClient {
 //					SendAllStudies(10), SendAllCoursesInStudy(11), SendAllQuestionInCourse(12), UpdateQuestionResult(13),
 //					SendAllQuestion(14), UserLoggedIn(15), Error(-1);
 					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesFromTeacher:
+					case SendAllCoursesOfTeacher:
 						((examCreator) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						System.out.println("after data");
 						examCreator.msgRecieved();
@@ -105,7 +105,7 @@ public class ClientService extends AbstractClient {
 					((teacherController) o).popError("Error", "Couldn't get info from server");
 				} else {
 					switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesFromTeacher:
+					case SendAllCoursesOfTeacher:
 						((teacherController) o).courseCombo.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						System.out.println("after data");
 						teacherController.msgRecieved();
