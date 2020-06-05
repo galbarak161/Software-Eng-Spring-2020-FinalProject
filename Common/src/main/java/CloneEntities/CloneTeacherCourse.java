@@ -1,7 +1,12 @@
 package CloneEntities;
 
-public class CloneTeacherCourse {
+import java.io.Serializable;
 
+public class CloneTeacherCourse implements Serializable{
+
+
+	private static final long serialVersionUID = -6816617808206845265L;
+	
 	CloneUser teacher;
 	CloneCourse course;
 

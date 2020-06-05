@@ -34,7 +34,7 @@ public class Question {
 
 	@Column(name = "answer_4", length = 100)
 	private String answer_4;
-	
+
 	@Column(name = "correctAnswer")
 	private int correctAnswer;
 
@@ -48,8 +48,8 @@ public class Question {
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "question_exam", joinColumns = @JoinColumn(name = "questionId"), inverseJoinColumns = @JoinColumn(name = "examId"))
-	private List<Exam> exames; 
-	
+	private List<Exam> exames;
+
 	public Question() {
 		this.exames = new ArrayList<Exam>();
 	}
@@ -166,7 +166,7 @@ public class Question {
 	public List<Exam> getExames() {
 		return exames;
 	}
-	
+
 	public void addExam(Exam... exames) {
 		for (Exam exam : exames) {
 			this.exames.add(exam);
@@ -174,5 +174,4 @@ public class Question {
 		}
 	}
 
-	
 }

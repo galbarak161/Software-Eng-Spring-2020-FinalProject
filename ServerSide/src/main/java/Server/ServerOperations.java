@@ -229,6 +229,12 @@ public class ServerOperations {
 		return studentTest;
 	}
 
+	/**
+	 * 
+	 * @param newCloneQuestion
+	 * @return
+	 * @throws Exception
+	 */
 	public CloneQuestion handleCreateNewQuestion(CloneQuestion newCloneQuestion) throws Exception {
 
 		Teacher t = getTeacherByCloneId(newCloneQuestion.getTeacherId());

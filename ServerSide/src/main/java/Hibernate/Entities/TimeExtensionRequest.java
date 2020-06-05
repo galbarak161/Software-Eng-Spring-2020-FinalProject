@@ -13,16 +13,16 @@ public class TimeExtensionRequest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "timeExtensionRequestId")
 	private int id;
-	
+
 	@Column(name = "bodyRequest")
 	private String body;
-	
+
 	@Column(name = "isRequestConfirmed")
 	private boolean isRequestConfirmed;
-	
+
 	@Column(name = "timeToExtenedInMinute")
 	private int timeToExtenedInMinute;
-	
+
 	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 
@@ -32,19 +32,19 @@ public class TimeExtensionRequest {
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
-	
+
 	public CloneTimeExtensionRequest createClone() {
-		
+
 		CloneTimeExtensionRequest clone = new CloneTimeExtensionRequest(getBody(), getTimeToExtenedInMinute());
 		clone.setTest(getTest().createClone());
 		return clone;
-	
+
 	}
 
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getBody() {
 		return body;
 	}
@@ -76,11 +76,9 @@ public class TimeExtensionRequest {
 	public void setRequestConfirmed(boolean isRequestConfirmed) {
 		this.isRequestConfirmed = isRequestConfirmed;
 		System.out.println("setRequestConfirmed: " + isRequestConfirmed);
-		if(this.isRequestConfirmed == true) {
+		if (this.isRequestConfirmed == true) {
 			this.getTest().setExtensionRequests(this);
 		}
 	}
-	
-	
-	
+
 }
