@@ -13,9 +13,9 @@ public class DataElements implements Serializable {
 	 * GetAllTests (NULL)
 	 * GetAllQuestion (NULL) 
 	 * GetAllQuestionInCourse (int CourseId)
-	 * GetAllCoursesByTeacherId (int teacherId) 
-	 * GetAllTestsByTeacherId (int teacherId)
-	 * GetAllExamsFromTeacherInCourse (int teacherId, int courseId) ---> List(0) = teacherId // List(1) = courseId
+	 * GetAllCoursesOfTeacher (int teacherId) 
+	 * GetAllTestsOfTeacher (int teacherId)
+	 * GetAllExamsOfTeacherInCourse (int teacherId, int courseId) ---> List(0) = teacherId // List(1) = courseId
 	 * GetAllStudentTests (int studentId) 
 	 * 
 	 * UserLogin (Login)
@@ -30,8 +30,8 @@ public class DataElements implements Serializable {
 	 *
 	 */
 	public enum ClientToServerOpcodes {
-		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesByTeacherId(5),
-		GetAllTestsByTeacherId(6), GetAllExamsFromTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
+		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesOfTeacher(5),
+		GetAllTestsOfTeacher(6), GetAllExamsOfTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
 		CreateNewExam(11), CreateNewTest(12), Error(-1);
 
 		public int value;
@@ -47,9 +47,9 @@ public class DataElements implements Serializable {
 	 * SendAllTests (List <CloneTest>) 
 	 * SendAllQuestion (List <CloneQuestion>) 
 	 * SendAllQuestionInCourse (List <CloneQuestion>) 
-	 * SendAllCoursesByTeacherId (List <CloneCourse>) 
-	 * SendAllTestsByTeacherId (List <CloneTest>) 
-	 * SendAllExamsFromTeacherInCourse (List <CloneExam>) 
+	 * SendAllCoursesOfTeacher (List <CloneCourse>) 
+	 * SendAllTestsOfTeacher (List <CloneTest>) 
+	 * SendAllExamsOfTeacherInCourse (List <CloneExam>) 
 	 * SendAllStudentTests (List <CloneStudentTest>) 
 	 * 
 	 * UserLoggedIn  (Login)
@@ -65,7 +65,7 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
-		SendAllCoursesByTeacherId(105), SendAllTestsByTeacherId(106), SendAllExamsFromTeacherInCourse(107),
+		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllExamsOfTeacherInCourse(107),
 		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
 		CreateNewTestResult(112), Error(-1);
 
