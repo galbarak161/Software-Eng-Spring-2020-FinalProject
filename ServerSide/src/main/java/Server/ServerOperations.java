@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CloneEntities.CloneCourse;
+import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestion;
+import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudy;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.Course;
+import Hibernate.Entities.Exam;
 import Hibernate.Entities.Question;
+import Hibernate.Entities.Student;
 import Hibernate.Entities.Study;
 import Hibernate.Entities.Teacher;
 import Hibernate.Entities.User;
@@ -185,4 +189,57 @@ public class ServerOperations {
 //
 //		return originalQustion.createClone();
 //	}
+	
+	/**
+	 * handleSendAllCoursesFromTeacher(CloneUser)
+	 * 
+	 * @param CloneUser - Teacher wants to see all courses he teaches
+	 * @return all the courses that are associated with this Teacher
+	 */
+	public static List<CloneExam>getAllExamsFromTeahcerInCourse(CloneUser cloneUser, CloneCourse cloneCourse) {
+		List<Exam> listFromDB1 = null;
+		List<CloneExam> exams = new ArrayList<CloneExam>();
+		try {
+			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB1) {
+				if (exam.getCreator().getId() == cloneUser.getId() 
+					&& exam.getCourse().getId() == cloneCourse.getId()) {
+					
+					exams.add(exam.createClone());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		// System.out.println("List of courses from study " +
+		// cloneStudy.getStudyName());
+		// courses.forEach(q -> System.out.println(q.getCourseName()));
+		return exams;
+	}
+	
+	public static List<CloneStudentTest> handleSendAllStudentTest(CloneUser cloneUser) {
+		List<Student> students = null;
+		List<CloneStudentTest> studentTest = new ArrayList<CloneStudentTest>();
+		try {
+			students = HibernateMain.getDataFromDB(Student.class);
+			for (Student student : students) {
+				if (student.getId() == cloneUser.getId()) {
+					student.getTests().forEach(test -> studentTest.add(test.createClone()));
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		// System.out.println("List of courses from study " +
+		// cloneStudy.getStudyName());
+		// courses.forEach(q -> System.out.println(q.getCourseName()));
+		return studentTest;
+	}
+	
 }

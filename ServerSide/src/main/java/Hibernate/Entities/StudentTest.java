@@ -3,6 +3,8 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneStudentTest;
+
 @Entity
 @Table(name = "StudentTest")
 public class StudentTest {
@@ -62,4 +64,11 @@ public class StudentTest {
 		this.student = student;
 		student.getTests().add(this);
 	}
+
+	public CloneStudentTest createClone() {
+		
+		return new CloneStudentTest(this.getStudent().createClone(), test.createClone());
+	}
+	
+	
 }

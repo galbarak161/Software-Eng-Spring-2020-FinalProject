@@ -21,6 +21,8 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
 import CloneEntities.CloneCourse;
+import CloneEntities.CloneExam;
+import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneUser;
 import CommonElements.Login;
@@ -365,6 +367,15 @@ public class HibernateMain {
 		session.save(st3);
 		session.flush();
 
+		
+		
+		
+		List<CloneStudentTest> sTests =ServerOperations.handleSendAllStudentTest(s1.createClone());
+		
+		
+		
+		List<CloneExam> teacherExamsincourse = ServerOperations.getAllExamsFromTeahcerInCourse(t1.createClone(), courses[0].createClone());
+		
 		
 		session.clear();
 	}
