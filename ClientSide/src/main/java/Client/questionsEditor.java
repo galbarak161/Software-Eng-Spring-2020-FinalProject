@@ -86,12 +86,8 @@ public class questionsEditor extends AbstractController {
 	 * 
 	 */
 	public void initialize() {
-		String initErrors = "";
 		try {
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
-			if ((dbStatus == -1)) {
-				initErrors += "The system cannot retrieve studies from server\n";
-			}
+			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -103,9 +99,6 @@ public class questionsEditor extends AbstractController {
 		radio_4.setToggleGroup(radioGroup);
 		
 		///////////////////// Ask Liel about all questions show ///////////////////////////////
-
-		if (!initErrors.isEmpty())
-			popError(ERROR_TITLE_SERVER,initErrors);
 	}
 	
 	
@@ -206,34 +199,6 @@ public class questionsEditor extends AbstractController {
 	/***********************
 	 * Layout functions **
 	 ***********************/
-
-	/**
-	 * Display the retrieved "Courses" from server on course_combo Reset other
-	 * fields on "Editor" tab, except study_combo
-	 * 
-	 * @param event - doesn't matter
-	 */
-	@FXML
-	void onCourseClicked(ActionEvent event) {
-		if (course_combo.getValue() == null)
-			return;
-
-		try {
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, course_combo.getValue());
-			if (dbStatus == -1) {
-				throw new InterruptedException();
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			popError(ERROR_TITLE_Client, "The system cannot retrieve questions from server. \nPlease try again");
-			return;
-		}
-
-		ClearAllFormFields();
-
-		ChangeSubmitColor(null);
-		disableQuestionDataFields(true);
-	}
 
 	/**
 	 * Handles the click on "Submit" button- send an update question query to server

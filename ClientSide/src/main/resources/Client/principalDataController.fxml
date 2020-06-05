@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,15 +13,12 @@
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <ComboBox layoutX="60.0" layoutY="99.0" prefWidth="150.0" />
-      <ComboBox layoutX="300.0" layoutY="99.0" prefWidth="150.0" />
-      <ComboBox layoutX="533.0" layoutY="99.0" prefWidth="150.0" />
-      <ListView layoutX="39.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
-      <ListView layoutX="275.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
-      <ListView layoutX="508.0" layoutY="138.0" prefHeight="371.0" prefWidth="200.0" />
-      <Button layoutX="560.0" layoutY="521.0" mnemonicParsing="false" text="Show Question" />
-      <Button layoutX="346.0" layoutY="521.0" mnemonicParsing="false" text="Show Exam" />
-      <Button layoutX="104.0" layoutY="521.0" mnemonicParsing="false" text="Show Test" />
+      <ListView fx:id="testsList" layoutX="39.0" layoutY="103.0" prefHeight="406.0" prefWidth="200.0" />
+      <ListView fx:id="examsList" layoutX="275.0" layoutY="103.0" prefHeight="406.0" prefWidth="200.0" />
+      <ListView fx:id="questionsList" layoutX="508.0" layoutY="103.0" prefHeight="406.0" prefWidth="200.0" />
+      <Button fx:id="questionsButton" layoutX="560.0" layoutY="521.0" mnemonicParsing="false" onAction="#onClickedQuestion" text="Show Question" />
+      <Button fx:id="examsButton" layoutX="346.0" layoutY="521.0" mnemonicParsing="false" text="Show Exam" />
+      <Button fx:id="testsButton" layoutX="104.0" layoutY="521.0" mnemonicParsing="false" text="Show Test" />
       <Label layoutX="106.0" layoutY="67.0" text="All Tests">
          <font>
             <Font size="16.0" />

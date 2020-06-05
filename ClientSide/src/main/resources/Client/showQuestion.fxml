@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="422.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.showQuestion">
+   <children>
+      <TextField fx:id="answer_line_1" disable="true" layoutX="49.0" layoutY="229.0" prefHeight="25.0" prefWidth="686.0" />
+      <RadioButton fx:id="radio_1" disable="true" layoutX="10.0" layoutY="233.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="6.0" text="a." />
+      <TextField fx:id="answer_line_2" disable="true" layoutX="49.0" layoutY="281.0" prefHeight="25.0" prefWidth="686.0" />
+      <RadioButton fx:id="radio_2" disable="true" layoutX="9.0" layoutY="285.0" mnemonicParsing="false" text="b.">
+         <toggleGroup>
+            <ToggleGroup fx:id="radioGroup" />
+         </toggleGroup></RadioButton>
+      <TextField fx:id="answer_line_3" disable="true" layoutX="49.0" layoutY="332.0" prefHeight="25.0" prefWidth="686.0" />
+      <RadioButton fx:id="radio_3" disable="true" layoutX="10.0" layoutY="336.0" mnemonicParsing="false" text="c." toggleGroup="$radioGroup" />
+      <TextField fx:id="answer_line_4" disable="true" layoutX="49.0" layoutY="381.0" prefHeight="25.0" prefWidth="686.0" />
+      <RadioButton fx:id="radio_4" disable="true" layoutX="10.0" layoutY="385.0" mnemonicParsing="false" text="d." toggleGroup="$radioGroup" />
+      <Label layoutX="13.0" layoutY="57.0" prefHeight="18.0" prefWidth="59.0" text="Subject:" />
+      <TextField fx:id="subject_text" disable="true" layoutX="65.0" layoutY="54.0" prefHeight="26.0" prefWidth="672.0" />
+      <TextArea fx:id="question_text" disable="true" layoutX="51.0" layoutY="100.0" prefHeight="100.0" prefWidth="686.0" wrapText="true" />
+      <ImageView fitHeight="39.0" fitWidth="33.0" layoutX="13.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../bigQ.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="12.0" layoutY="16.0" prefHeight="18.0" prefWidth="59.0" text="Course" />
+      <TextField fx:id="course_text" disable="true" layoutX="65.0" layoutY="12.0" prefHeight="26.0" prefWidth="285.0" />
+   </children>
+</AnchorPane>

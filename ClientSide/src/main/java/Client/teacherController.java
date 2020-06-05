@@ -36,18 +36,11 @@ public class teacherController extends AbstractController {
     private TreeTableColumn<?, ?> statusCol;
     
 	public void initialize() {
-		String initErrors = "";
 		try {
-			int dbStatus = GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
-			if ((dbStatus == -1)) {
-				initErrors += "The system cannot retrieve studies from server\n";
-			}
+			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesFromTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		if (!initErrors.isEmpty())
-			popError(ERROR_TITLE_SERVER,initErrors);
 	}
 
     @FXML
