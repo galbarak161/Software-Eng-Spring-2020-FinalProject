@@ -25,6 +25,6 @@
         </columns>
       </TableView>
       <Button fx:id="displayButton" layoutX="631.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display Test" />
-      <Button fx:id="startButton" layoutX="631.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start Test" />
+      <Button fx:id="startButton" layoutX="631.0" layoutY="188.0" mnemonicParsing="false" onAction="#OnClickedStartTest" prefHeight="25.0" prefWidth="88.0" text="Start Test" />
    </children>
 </AnchorPane>

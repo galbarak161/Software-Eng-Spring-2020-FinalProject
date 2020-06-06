@@ -2,7 +2,6 @@ package Client;
 
 
 
-import com.jfoenix.controls.JFXListView;
 
 import CloneEntities.*;
 import CommonElements.DataElements.ClientToServerOpcodes;
@@ -26,7 +25,8 @@ public class examCreator extends AbstractController {
     private TextField nameText;
 
     @FXML
-    private JFXListView<CloneQuestion> questionsList;
+    private ListView<?> questionsList;
+
 
     @FXML
     private Button submit_button;

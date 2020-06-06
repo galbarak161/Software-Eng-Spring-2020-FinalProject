@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -29,6 +29,6 @@
       <ComboBox fx:id="courseCombo" layoutX="303.0" layoutY="56.0" prefHeight="26.0" prefWidth="244.0" />
       <Label layoutX="40.0" layoutY="425.0" text="Student's Comments:" />
       <TextField fx:id="studentsComment" layoutX="168.0" layoutY="420.0" prefHeight="78.0" prefWidth="539.0" />
-      <JFXListView fx:id="questionsList" layoutX="168.0" layoutY="173.0" prefHeight="135.0" prefWidth="194.0" />
+      <ListView fx:id="questionsList" layoutX="170.0" layoutY="176.0" prefHeight="135.0" prefWidth="164.0" />
    </children>
 </AnchorPane>
