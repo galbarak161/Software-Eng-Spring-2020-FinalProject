@@ -1,6 +1,9 @@
 package Client;
 
+import java.io.IOException;
+
 import CloneEntities.CloneTest;
+import javafx.event.ActionEvent;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,5 +48,17 @@ public class studentController extends AbstractController {
 			e.printStackTrace();
 		}
     }
+    
+    @FXML
+    void OnClickedStartTest(ActionEvent event) {
+    	try {
+			App.changeStage("TestCodeInput", "Exam Entrance Code");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    }
+
 
 }
