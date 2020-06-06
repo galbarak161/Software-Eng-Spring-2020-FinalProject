@@ -17,7 +17,7 @@
       <ListView fx:id="examsList" layoutX="275.0" layoutY="103.0" prefHeight="406.0" prefWidth="200.0" />
       <ListView fx:id="questionsList" layoutX="508.0" layoutY="103.0" prefHeight="406.0" prefWidth="200.0" />
       <Button fx:id="questionsButton" layoutX="560.0" layoutY="521.0" mnemonicParsing="false" onAction="#onClickedQuestion" text="Show Question" />
-      <Button fx:id="examsButton" layoutX="346.0" layoutY="521.0" mnemonicParsing="false" text="Show Exam" />
+      <Button fx:id="examsButton" layoutX="346.0" layoutY="521.0" mnemonicParsing="false" onAction="#OnClickedExam" text="Show Exam" />
       <Button fx:id="testsButton" layoutX="104.0" layoutY="521.0" mnemonicParsing="false" text="Show Test" />
       <Label layoutX="106.0" layoutY="67.0" text="All Tests">
          <font>

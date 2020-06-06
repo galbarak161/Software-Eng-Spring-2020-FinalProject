@@ -26,6 +26,10 @@ public class TimeExtensionRequest {
 	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 
+	
+	public TimeExtensionRequest() {
+		
+	}
 	public TimeExtensionRequest(String body, int timeToExtenedInMinute) {
 		super();
 		this.isRequestConfirmed = false;

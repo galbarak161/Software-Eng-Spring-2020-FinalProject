@@ -17,9 +17,11 @@ import javafx.stage.Stage;
 
 public class principalDataController extends AbstractController {
 
-	@FXML ListView<CloneTest> testsList;
+	@FXML
+	ListView<CloneTest> testsList;
 
-	@FXML ListView<CloneExam> examsList;
+	@FXML
+	ListView<CloneExam> examsList;
 
 	@FXML
 	ListView<CloneQuestion> questionsList;
@@ -35,7 +37,7 @@ public class principalDataController extends AbstractController {
 
 	@Override
 	public void initialize() {
-		ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
+		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestion, null);
 			GetDataFromDB(ClientToServerOpcodes.GetAllExams, null);
@@ -46,27 +48,70 @@ public class principalDataController extends AbstractController {
 		}
 	}
 
-	@FXML
-	void onClickedQuestion(ActionEvent event) {
-		if (questionsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(()->{
-			    Parent root = null;
-			    try {
-	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
-	                root = (Parent) fxmlLoader.load();
-	                showQuestion q = fxmlLoader.getController();
-	                q.setFields(questionsList.getSelectionModel().getSelectedItem());
+	
+	/*public <T> void DataDisplay(String fxml, String title) {
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml+".fxml"));
+					root = (Parent) fxmlLoader.load();
+					T q = fxmlLoader.getController();
+					((T) q).setFields(questionsList.getSelectionModel().getSelectedItem());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    Stage stage = new Stage();
-			    stage.setTitle("Question");
-			    stage.setScene(new Scene(root));  
-			    stage.show();
+				Stage stage = new Stage();
+				stage.setTitle(title);
+				stage.setScene(new Scene(root));
+				stage.show();
+			});
+	}*/
+	
+	
+	@FXML
+	void onClickedQuestion(ActionEvent event) {
+		if (questionsList.getSelectionModel().getSelectedItem() != null) {
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
+					root = (Parent) fxmlLoader.load();
+					showQuestion q = fxmlLoader.getController();
+					q.setFields(questionsList.getSelectionModel().getSelectedItem());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Stage stage = new Stage();
+				stage.setTitle("Question");
+				stage.setScene(new Scene(root));
+				stage.show();
 			});
 		}
 
+	}
+
+	@FXML
+	void OnClickedExam(ActionEvent event) {
+		if (questionsList.getSelectionModel().getSelectedItem() != null) {
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
+					root = (Parent) fxmlLoader.load();
+					showQuestion q = fxmlLoader.getController();
+					q.setFields(questionsList.getSelectionModel().getSelectedItem());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Stage stage = new Stage();
+				stage.setTitle("Question");
+				stage.setScene(new Scene(root));
+				stage.show();
+			});
+		}
 	}
 
 }

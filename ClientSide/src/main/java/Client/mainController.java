@@ -36,7 +36,9 @@ public class mainController {
 			break;
 		}
 	}
+	
 
+	
 	public void setMainPanel(String fxml) {
 		Platform.runLater(() -> {
 			mainPanel.getChildren().clear();

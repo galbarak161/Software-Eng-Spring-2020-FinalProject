@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -16,7 +17,7 @@ public class TestController extends AbstractController {
     private AnchorPane TestNameLabel;
 
     @FXML
-    private TextField questionText;
+    private TextArea questionText;
 
     @FXML
     private TextField answerAText;
@@ -63,7 +64,9 @@ public class TestController extends AbstractController {
     @FXML
     void OnClickedSubmit(ActionEvent event) {
 		try {
-			App.changeStage("studentController", "Student Panel");
+			App.changeStage("mainController", "High School Tests System");
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
