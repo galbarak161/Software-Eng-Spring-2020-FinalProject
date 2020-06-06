@@ -1,7 +1,5 @@
 package Client;
 
-import com.sun.glass.events.MouseEvent;
-
 import CloneEntities.*;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -16,8 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 public class examCreator extends AbstractController {
 
@@ -67,9 +66,13 @@ public class examCreator extends AbstractController {
 		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		questionsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		InsertedQuestions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 		questionNameCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
-		QuestionGradeCol.setEditable(true);
+		
+		QuestionGradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		
 		InsertedQuestions.getColumns().setAll(questionNameCol,QuestionGradeCol);
+		InsertedQuestions.setEditable(true);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
@@ -87,17 +90,22 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	public void OnCourseClicked(ActionEvent event) {
-		questionsList.getItems().clear();
-
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, courseCombo.getValue());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		nameText.setDisable(false);
+		minutesText.setDisable(false);
+		hoursText.setDisable(false);
+		submit_button.setDisable(false);
+		showQuestionButton.setDisable(false);
+		studentsComment.setDisable(false);
+		teachersText.setDisable(false);
 	}
 	
-/*	@FXML
+	@FXML
 	public void OnClickSubmit(ActionEvent event) {
 		CloneExam newExam = new CloneExam();
 		newExam.setQuestions(InsertedQuestions.getItems());
@@ -110,7 +118,7 @@ public class examCreator extends AbstractController {
 	}
 
 	@FXML
-	public void OnClickedInsertQuestion(MouseEvent event) {
+	public void moveQuestionRight(MouseEvent event) {
 		if(!(questionsList.getSelectionModel().getSelectedItems().isEmpty())) {
 			InsertedQuestions.getItems().addAll(questionsList.getSelectionModel().getSelectedItems());
 			questionsList.getItems().removeAll(questionsList.getSelectionModel().getSelectedItems());
@@ -119,13 +127,13 @@ public class examCreator extends AbstractController {
 	}
 
 	@FXML
-	public void OnClickedRemoveQuestion(MouseEvent event) {
+	public void moveQuestionLeft(MouseEvent event) {
 	if(!(InsertedQuestions.getSelectionModel().getSelectedItems().isEmpty())) {
 			questionsList.getItems().addAll(InsertedQuestions.getSelectionModel().getSelectedItems());
-			InsertedQuestions.getItems().removeAll(questionsList.getSelectionModel().getSelectedItems());
+			InsertedQuestions.getItems().removeAll(InsertedQuestions.getSelectionModel().getSelectedItems());
 		}
 
-	}*/
+	}
 
 	@FXML
 	public void OnClickedShowQuestion(ActionEvent event) {
