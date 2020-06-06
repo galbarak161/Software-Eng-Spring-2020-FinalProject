@@ -18,6 +18,9 @@ public class teacherNavi extends AbstractNavi {
 
 	@FXML
 	private Label testGenerator;
+	
+    @FXML
+    private Label personalLabel;
 
 	@FXML
 	private Label logout;
@@ -42,5 +45,11 @@ public class teacherNavi extends AbstractNavi {
 	void changeToTestsGen(MouseEvent event) {
 		switchMainPanel("testGenerator.fxml");
 	}
+	
+
+    @FXML
+    void changeToInfo(MouseEvent event) {
+    	switchMainPanel("personalInfo.fxml");
+    }
 
 }

@@ -126,6 +126,10 @@ public class CloneQuestion implements Serializable {
 	public CloneCourse getCourse() {
 		return course;
 	}
+	
+	public void setCourse(CloneCourse course) {
+		this.course = course;
+	}
 
 	public int getTeacherId() {
 		return teacherId;

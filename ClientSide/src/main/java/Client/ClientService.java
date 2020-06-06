@@ -10,7 +10,6 @@ import CommonElements.DataElements;
 import CommonElements.DataElements.*;
 import CloneEntities.*;
 import OCSF.AbstractClient;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 
 public class ClientService extends AbstractClient {
