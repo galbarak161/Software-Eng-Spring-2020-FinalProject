@@ -37,6 +37,7 @@ public class studentController extends AbstractController {
     
     @Override
     public void initialize() {
+    	ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
     	try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 		} catch (InterruptedException e) {

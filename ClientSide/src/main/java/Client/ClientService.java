@@ -27,7 +27,6 @@ public class ClientService extends AbstractClient {
 		super(host, port);
 		this.clientM = new ClientMain(this);
 		controllers = new HashMap<String, Object>();
-		controllers.keySet().add("curr");
 	}
 
 	@Override
@@ -41,15 +40,19 @@ public class ClientService extends AbstractClient {
 		super.connectionClosed();
 		clientM.closeConnection();
 	}
+	
+	public static Object getController(String controller) {
+		return controllers.get(controller);
+	}
 
 	/**
 	 * The function gets new message from server Parsing the opcode and data Handle
 	 * the server results
 	 * List of OpCodes from server
 	 * 	SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
-		SendAllCoursesByTeacherId(105), SendAllTestsByTeacherId(106), SendAllExamsFromTeacherInCourse(107),
+		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllExamsOfTeacherInCourse(107),
 		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
-		CreateNewTestResult(112), Error(-1);
+		CreateNewTestResult(112), SendAllRequests(113),Error(-1);
 	 */
 	@Override
 	protected void handleMessageFromServer(Object msg) {
@@ -77,7 +80,7 @@ public class ClientService extends AbstractClient {
 				break;
 			case "questionsEditor":
 				switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesByTeacherId:
+					case SendAllCoursesOfTeacher:
 						((questionsEditor) o).course_combo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
@@ -85,7 +88,7 @@ public class ClientService extends AbstractClient {
 				break;
 			case "examCreator":
 				switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesByTeacherId:
+					case SendAllCoursesOfTeacher:
 						((examCreator) o).courseCombo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
@@ -105,7 +108,7 @@ public class ClientService extends AbstractClient {
 				break;
 			case "teacherController":
 				switch (de.getOpCodeFromServer()) {
-					case SendAllCoursesByTeacherId:
+					case SendAllCoursesOfTeacher:
 						((teacherController) o).courseCombo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;

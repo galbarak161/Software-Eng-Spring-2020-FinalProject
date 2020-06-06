@@ -35,6 +35,7 @@ public class principalDataController extends AbstractController {
 
 	@Override
 	public void initialize() {
+		ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestion, null);
 			GetDataFromDB(ClientToServerOpcodes.GetAllExams, null);
