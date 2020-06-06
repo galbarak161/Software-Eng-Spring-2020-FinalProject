@@ -1,7 +1,6 @@
 package Client;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +10,7 @@ import CommonElements.DataElements;
 import CommonElements.DataElements.*;
 import CloneEntities.*;
 import OCSF.AbstractClient;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 
 public class ClientService extends AbstractClient {
@@ -60,14 +60,26 @@ public class ClientService extends AbstractClient {
 		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		String currControlName = (String) controllers.get("curr");
 		Object o = controllers.get(currControlName);
+		
+		/**
+		 * it checks if returns error from the server
+		 * if it does, we check if we are in the login form, or other form
+		 * that's because we should let the user to input wrong details in the login
+		 * if the user inputs wrong details, the system will show him "wrong details label"
+		 * 
+		 */
 		if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
-			if (currControlName == "loginController")
+			if (currControlName.equals("loginController"))
 				((loginController) o).showErrorLabel();
 			else
 				((AbstractController) o).popError("Error",
 						"Couldn't get info from server");
 			return;
 		}
+		
+		/*
+		 * 
+		 */
 		switch (currControlName) {
 			case "loginController":
 				ClientMain.setUser((CloneUser) de.getData());
@@ -86,6 +98,7 @@ public class ClientService extends AbstractClient {
 						break;
 				}
 				break;
+				
 			case "examCreator":
 				switch (de.getOpCodeFromServer()) {
 					case SendAllCoursesOfTeacher:
@@ -93,27 +106,34 @@ public class ClientService extends AbstractClient {
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
 					case SendAllQuestionInCourse:
-						((examCreator) o).questionsList
-						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						((examCreator) o).SetList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						
 						break;
+						
 				}
 				break;
+				
 			case "studentController":
 				switch (de.getOpCodeFromServer()) {
 					case SendAllStudentTests:
-						((studentController) o).testsTable
-						.getItems().setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+						((studentController) o).testsTable.setItems(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
 						break;
 				}
 				break;
+				
 			case "teacherController":
 				switch (de.getOpCodeFromServer()) {
 					case SendAllCoursesOfTeacher:
 						((teacherController) o).courseCombo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
+					case SendAllExamsOfTeacherInCourse:
+						teacherController.PraseTable((List<CloneTest>) de.getData());
+						
+						break;
 				}
 				break;
+				
 			case "principalDataController":
 				switch (de.getOpCodeFromServer()) {
 					case SendAllQuestion:

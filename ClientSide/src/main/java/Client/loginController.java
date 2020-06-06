@@ -1,6 +1,6 @@
 package Client;
 
-import java.io.IOException;
+
 
 import CommonElements.DataElements;
 import CommonElements.DataElements.*;
@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class loginController {
+public class loginController extends AbstractController {
 
     @FXML
     private TextField usernameText;
@@ -43,6 +43,13 @@ public class loginController {
     	errorLabel.setVisible(true);
     }
     
+    /**
+     * The function is called when the user is pressing "sign in"
+     * it gets the current controller name 
+     * in this case - login controller
+     * then it adds the controller to the conroller's map data structure
+     * @param event
+     */
     @FXML
     void signinAction(ActionEvent event) {
     	try {
@@ -59,15 +66,6 @@ public class loginController {
     	
     }
     
-	private int sendRequestForDataFromServer(DataElements de) {
-		int status = 0;
-		try {
-			status = ClientMain.sendMessageToServer(de);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return status;
-	}
+ 
 
 }
