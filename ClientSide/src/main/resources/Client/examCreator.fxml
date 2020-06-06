@@ -14,42 +14,42 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.examCreator">
    <children>
-      <Label layoutX="303.0" layoutY="21.0" prefHeight="30.0" prefWidth="122.0" text="Exam Creator">
+      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="122.0" text="Exam Creator" textFill="#cd1313">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="196.0" layoutY="60.0" prefHeight="18.0" prefWidth="96.0" text="Choose a course:" />
-      <Label layoutX="78.0" layoutY="96.0" text="Exam name:" />
-      <Label layoutX="78.0" layoutY="141.0" text="Enter duration:" />
-      <TextField fx:id="hoursText" layoutX="170.0" layoutY="137.0" prefHeight="26.0" prefWidth="49.0" />
-      <TextField fx:id="minutesText" layoutX="238.0" layoutY="137.0" prefHeight="26.0" prefWidth="50.0" />
-      <Label layoutX="228.0" layoutY="141.0" prefHeight="18.0" prefWidth="9.0" text=":" />
-      <TextField fx:id="nameText" layoutX="169.0" layoutY="92.0" prefHeight="26.0" prefWidth="354.0" />
-      <Label layoutX="38.0" layoutY="176.0" text="Add questions:" />
-      <Button fx:id="submit_button" layoutX="319.0" layoutY="521.0" mnemonicParsing="false" text="Submit" />
-      <Label layoutX="40.0" layoutY="338.0" text="Teacher's Comments:" />
-      <TextField fx:id="teachersText" layoutX="168.0" layoutY="331.0" prefHeight="78.0" prefWidth="539.0" />
-      <ComboBox fx:id="courseCombo" layoutX="303.0" layoutY="56.0" onAction="#OnCourseClicked" prefHeight="26.0" prefWidth="244.0" />
-      <Label layoutX="40.0" layoutY="425.0" text="Student's Comments:" />
-      <TextField fx:id="studentsComment" layoutX="168.0" layoutY="420.0" prefHeight="78.0" prefWidth="539.0" />
-      <ListView fx:id="questionsList" layoutX="120.0" layoutY="173.0" prefHeight="145.0" prefWidth="200.0" />
-      <TableView fx:id="InsertedQuestions" layoutX="394.0" layoutY="172.0" prefHeight="146.0" prefWidth="318.0">
+      <Label layoutX="22.0" layoutY="60.0" prefHeight="18.0" prefWidth="96.0" text="Choose a course:" />
+      <Label layoutX="22.0" layoutY="95.0" text="Exam name:" />
+      <Label layoutX="22.0" layoutY="140.0" text="Enter duration:" />
+      <TextField fx:id="hoursText" disable="true" layoutX="114.0" layoutY="136.0" prefHeight="26.0" prefWidth="49.0" />
+      <TextField fx:id="minutesText" disable="true" layoutX="182.0" layoutY="136.0" prefHeight="26.0" prefWidth="50.0" />
+      <Label layoutX="172.0" layoutY="140.0" prefHeight="18.0" prefWidth="9.0" text=":" />
+      <TextField fx:id="nameText" disable="true" layoutX="113.0" layoutY="91.0" prefHeight="26.0" prefWidth="354.0" />
+      <Label layoutX="22.0" layoutY="173.0" text="Add questions:" />
+      <Button fx:id="submit_button" disable="true" layoutX="337.0" layoutY="521.0" mnemonicParsing="false" text="Submit" />
+      <Label layoutX="22.0" layoutY="338.0" text="Teacher's Comments:" />
+      <TextField fx:id="teachersText" disable="true" layoutX="141.0" layoutY="331.0" prefHeight="78.0" prefWidth="535.0" />
+      <ComboBox fx:id="courseCombo" layoutX="118.0" layoutY="56.0" onAction="#OnCourseClicked" prefHeight="26.0" prefWidth="244.0" />
+      <Label layoutX="22.0" layoutY="420.0" text="Student's Comments:" />
+      <TextField fx:id="studentsComment" disable="true" layoutX="141.0" layoutY="420.0" prefHeight="78.0" prefWidth="535.0" />
+      <ListView fx:id="questionsList" layoutX="110.0" layoutY="173.0" prefHeight="145.0" prefWidth="200.0" />
+      <TableView fx:id="InsertedQuestions" layoutX="373.0" layoutY="173.0" prefHeight="146.0" prefWidth="324.0">
         <columns>
           <TableColumn fx:id="questionNameCol" prefWidth="219.199951171875" text="Question Name" />
-          <TableColumn fx:id="QuestionGradeCol" prefWidth="100.0" text="Question Grade" />
+          <TableColumn fx:id="QuestionGradeCol" prefWidth="103.0" text="Question Grade" />
         </columns>
       </TableView>
-      <ImageView fx:id="removeQuestion" fitHeight="38.0" fitWidth="31.0" layoutX="342.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeQuestion" fitHeight="38.0" fitWidth="31.0" layoutX="327.0" layoutY="190.0" onMouseClicked="#moveQuestionLeft" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../left_arrow.jpeg" />
          </image>
       </ImageView>
-      <ImageView fx:id="insertQuestion" fitHeight="38.0" fitWidth="31.0" layoutX="342.0" layoutY="287.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="insertQuestion" fitHeight="38.0" fitWidth="31.0" layoutX="327.0" layoutY="265.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#moveQuestionRight" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../right_arrow.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="showQuestionButton" layoutX="64.0" layoutY="232.0" mnemonicParsing="false" onAction="#OnClickedShowQuestion" text="Show" />
+      <Button fx:id="showQuestionButton" disable="true" layoutX="33.0" layoutY="233.0" mnemonicParsing="false" onAction="#OnClickedShowQuestion" text="Show" />
    </children>
 </AnchorPane>

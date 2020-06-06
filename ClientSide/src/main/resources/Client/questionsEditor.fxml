@@ -15,9 +15,9 @@
 <AnchorPane prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.questionsEditor">
    <children>
       <Button fx:id="submitButton" layoutX="346.0" layoutY="503.0" text="Submit" />
-      <Label fx:id="title" layoutX="296.0" layoutY="14.0" text="Questions Editor">
+      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="151.0" text="Create Question" textFill="#cd1313">
          <font>
-            <Font name="Arial Bold" size="24.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Label>
       <Label fx:id="course_label" layoutX="178.0" layoutY="64.0" prefHeight="17.0" prefWidth="93.0" text="Choose a course:" />
