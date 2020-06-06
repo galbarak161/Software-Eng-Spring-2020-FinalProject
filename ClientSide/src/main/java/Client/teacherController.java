@@ -36,6 +36,7 @@ public class teacherController extends AbstractController {
     private TreeTableColumn<?, ?> statusCol;
     
 	public void initialize() {
+		ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {

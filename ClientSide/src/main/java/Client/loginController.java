@@ -39,10 +39,6 @@ public class loginController {
     	errorLabel.setVisible(false);
     }
     
-    public void initialize() {
-    	ClientMain.addController(this);
-    }
-    
     public void showErrorLabel() {
     	errorLabel.setVisible(true);
     }
@@ -50,6 +46,9 @@ public class loginController {
     @FXML
     void signinAction(ActionEvent event) {
     	try {
+    		String controllerName = this.getClass().toString().split("Client.")[1];
+    		ClientMain.addController(controllerName,this);
+    		ClientMain.setCurrController(controllerName);
 			Login loginToServer = new Login(usernameText.getText(), passwordText.getText());
 			DataElements de =  new DataElements(ClientToServerOpcodes.UserLogin, loginToServer);
 			sendRequestForDataFromServer(de);

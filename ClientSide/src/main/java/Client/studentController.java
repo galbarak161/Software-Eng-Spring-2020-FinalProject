@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import CloneEntities.CloneTest;
 import javafx.event.ActionEvent;
+import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -11,8 +12,7 @@ import javafx.scene.control.TableView;
 
 public class studentController extends AbstractController {
 
-    @FXML
-    private TableView<CloneTest> testsTable;
+    @FXML TableView<CloneTest> testsTable;
 
     @FXML
     private TableColumn<CloneTest, String> nameCol;
@@ -40,7 +40,13 @@ public class studentController extends AbstractController {
     
     @Override
     public void initialize() {
-    	System.out.println("Hi!");
+    	ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
+    	try {
+			GetDataFromDB(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     @FXML

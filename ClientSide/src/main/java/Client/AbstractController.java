@@ -54,7 +54,7 @@ public abstract class AbstractController {
 	 */
 	public void GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
 		String initErrors = "";
-		ClientMain.addController(this);
+		ClientMain.setCurrController(this.getClass().toString().split("Client.")[1]);
 		int dbStatus = sendRequestForDataFromServer(new DataElements(op, data));
 		if ((dbStatus == -1)) {
 			initErrors += "The system cannot retrieve studies from server\n";
