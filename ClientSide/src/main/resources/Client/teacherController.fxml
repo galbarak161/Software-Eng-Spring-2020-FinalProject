@@ -3,8 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,14 +24,14 @@
       <Button fx:id="viewButton" layoutX="614.0" layoutY="177.0" mnemonicParsing="false" text="View Grades" />
       <Button layoutX="597.0" layoutY="351.0" mnemonicParsing="false" onAction="#timeRequestButton" text="Time Extension Request" />
       <Button layoutX="604.0" layoutY="513.0" mnemonicParsing="false" onAction="#approveButton" text="Approve Grades" />
-      <TreeTableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="457.0" prefWidth="566.0">
-         <columns>
-            <TreeTableColumn fx:id="nameCol" prefWidth="233.0" text="Test Name" />
-            <TreeTableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
-            <TreeTableColumn fx:id="timeCol" prefWidth="72.0" text="Time" />
-            <TreeTableColumn fx:id="codeCol" prefWidth="78.0" text="Test Code" />
-            <TreeTableColumn fx:id="statusCol" prefWidth="105.0" text="Status" />
-         </columns>
-      </TreeTableView>
+      <TableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="400.0" prefWidth="566.0">
+        <columns>
+          <TableColumn fx:id="nameCol" prefWidth="187.0" text="Test Name" />
+          <TableColumn fx:id="dateCol" prefWidth="94.0" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="77.0" text="Time" />
+            <TableColumn fx:id="codeCol" prefWidth="91.0" text="Test Code" />
+            <TableColumn fx:id="statusCol" prefWidth="116.0" text="Status" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
