@@ -72,9 +72,10 @@ public class Test {
 	}
 
 	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(testDate, testTime, executionCode, extraMinute, testDuration, type,
+		CloneTest clone = new CloneTest(testDate, testTime, extraMinute, testDuration, type,
 				executor.getId(), examToExecute.createClone());
 		clone.setId(id);
+		clone.setExecutionCode(executionCode);
 		return clone;
 	}
 

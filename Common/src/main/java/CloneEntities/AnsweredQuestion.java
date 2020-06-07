@@ -12,7 +12,7 @@ public class AnsweredQuestion extends CloneQuestion {
 			String answer_2, String answer_3, String answer_4, int correctAnswer,
 			CloneCourse course, int teacherId, int StudentAnswer)
 	{
-		super(questionCode,subject, questionText, answer_1,answer_2,answer_3,answer_4, 
+		super(subject, questionText, answer_1,answer_2,answer_3,answer_4, 
 				correctAnswer,course,teacherId);
 		this.StudentAnswer = StudentAnswer;
 	}

@@ -39,12 +39,11 @@ public class CloneTest implements Serializable {
 
 	private CloneExam examToExecute;
 
-	public CloneTest(LocalDate testDate, LocalTime testTime, String executionCode, int extraMinute, int testDuration,
+	public CloneTest(LocalDate testDate, LocalTime testTime, int extraMinute, int testDuration,
 			ExamType type, int teacherId, CloneExam examToExecute) {
 		super();
 		this.testDate = testDate;
 		this.testTime = testTime;
-		this.executionCode = executionCode;
 		this.extraMinute = extraMinute;
 		this.testDuration = testDuration;
 		this.type = type;
