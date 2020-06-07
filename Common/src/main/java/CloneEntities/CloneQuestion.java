@@ -31,9 +31,8 @@ public class CloneQuestion implements Serializable {
 	public CloneQuestion() {
 	}
 
-	public CloneQuestion(int questionCode, String subject, String questionText, String answer_1,
+	public CloneQuestion(String subject, String questionText, String answer_1,
 			String answer_2, String answer_3, String answer_4, int correctAnswer, CloneCourse course, int teacherId) {
-		this.questionCode = questionCode;
 		this.subject = subject;
 		this.questionText = questionText;
 		this.answer_1 = answer_1;
