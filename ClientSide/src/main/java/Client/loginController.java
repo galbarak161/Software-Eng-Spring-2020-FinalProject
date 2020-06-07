@@ -57,7 +57,7 @@ public class loginController extends AbstractController {
     		ClientMain.addController(controllerName,this);
     		ClientMain.setCurrController(controllerName);
 			Login loginToServer = new Login(usernameText.getText(), passwordText.getText());
-			DataElements de =  new DataElements(ClientToServerOpcodes.UserLogin, loginToServer);
+			DataElements de =  new DataElements(ClientToServerOpcodes.UserLogIn, loginToServer);
 			sendRequestForDataFromServer(de);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -41,13 +41,14 @@ public abstract class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String identityNumber, String emailAddress) {
+	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
+		//this.identityNumber = identityNumber;
 		isLoggedIn = false;
 	}
 

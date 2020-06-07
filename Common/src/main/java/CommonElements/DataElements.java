@@ -21,7 +21,8 @@ public class DataElements implements Serializable {
 	 * GetAllExamsOfTeacher(CloneUser)
 	 * GetAllExamsOfTeacherInCourse(CloneTeacherCourse)
 	 * 
-	 * UserLogin (Login)
+	 * UserLogIn (Login)
+	 * UserLogOut (int userId)
 	 * 
 	 * CreateNewQuestion (CloneQuestion) 
 	 * CreateNewExam (CloneExam) 
@@ -34,9 +35,9 @@ public class DataElements implements Serializable {
 	 */
 	public enum ClientToServerOpcodes {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
-		GetAllTestsOfTeacherInCourse, GetAllStudentTests, UserLogin, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		GetAllRequests, GetAllTestRelatedToTeacher, GetAllStudntTestRelatedToTest,GetAllExamsOfTeacher , Error, CreateNewStudentTest,
-		GetAllExamsOfTeacherInCourse;
+		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllRequests, GetAllTestRelatedToTeacher,
+		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse, UserLogIn, UserLogOut,
+		CreateNewQuestion, CreateNewExam, CreateNewTest, CreateNewStudentTest, Error;
 	}
 
 	/**
@@ -55,6 +56,7 @@ public class DataElements implements Serializable {
 	 * SendAllExamsOfTeacherInCourse (List<CloneExam>)
 	 * 
 	 * UserLoggedIn  (Login)
+	 * UserLoggedOut (NULL)
 	 * 
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 
@@ -67,9 +69,10 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
-		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, UserLoggedIn,
-		CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult, SendAllRequests, SendAllTestRelatedToTeacher,
-		SendAllStudntTestRelatedToTest, Error, CreateNewStudentTestResult , SendAllExamsOfTeacher , SendAllExamsOfTeacherInCourse;
+		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllRequests,
+		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
+		SendAllExamsOfTeacherInCourse, UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
+		CreateNewTestResult, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

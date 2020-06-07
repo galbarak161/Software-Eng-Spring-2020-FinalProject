@@ -122,7 +122,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudentTests);
 				de.setData(dataFromDB);
 				break;
-			case UserLogin:
+			case UserLogIn:
 				dataFromDB = serverHandler.handleLoginRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
 				de.setData(dataFromDB);
