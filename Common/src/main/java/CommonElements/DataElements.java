@@ -6,8 +6,6 @@ public class DataElements implements Serializable {
 
 	private static final long serialVersionUID = -2986035827318115652L;
 
-	// Opcodes 1-99
-
 	/**
 	 * GetAllExams (NULL)
 	 * GetAllTests (NULL)
@@ -15,15 +13,17 @@ public class DataElements implements Serializable {
 	 * GetAllQuestionInCourse (CloneCourse)
 	 * GetAllCoursesOfTeacher (CloneUser) 
 	 * GetAllTestsOfTeacher (CloneUser)
-	 * GetAllExamsOfTeacherInCourse (CloneTeacherCourse)
+	 * GetAllTestsOfTeacherInCourse (CloneTeacherCourse)
 	 * GetAllStudentTests (CloneUser) 
+	 * GetAllRequests (NULL)
+	 * GetAllTestRelatedToTeacher (CloneUser)
+	 * GetAllStudntTestRelatedToTest (CloneTest)
 	 * 
 	 * UserLogin (Login)
 	 * 
 	 * CreateNewQuestion (CloneQuestion) 
 	 * CreateNewExam (CloneExam) 
 	 * CreateNewTest (CloneTest)
-	 * GetAllRequests(NULL)
 	 * 
 	 * Error (NULL)
 	 * 
@@ -31,18 +31,11 @@ public class DataElements implements Serializable {
 	 *
 	 */
 	public enum ClientToServerOpcodes {
-		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesOfTeacher(5),
-		GetAllTestsOfTeacher(6), GetAllExamsOfTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
-		CreateNewExam(11), CreateNewTest(12), GetAllRequests(13) ,Error(-1);
-
-		public int value;
-
-		private ClientToServerOpcodes(int value) {
-			this.value = value;
-		}
+		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
+		GetAllTestsOfTeacherInCourse, GetAllStudentTests, UserLogin, CreateNewQuestion, CreateNewExam, CreateNewTest,
+		GetAllRequests, GetAllTestRelatedToTeacher, GetAllStudntTestRelatedToTest, Error, CreateNewStudentTest;
 	}
 
-	// Opcodes 101-199
 	/**
 	 * SendAllExams (List <CloneExam>) 
 	 * SendAllTests (List <CloneTest>) 
@@ -52,13 +45,15 @@ public class DataElements implements Serializable {
 	 * SendAllTestsOfTeacher (List <CloneTest>) 
 	 * SendAllExamsOfTeacherInCourse (List <CloneExam>) 
 	 * SendAllStudentTests (List <CloneStudentTest>) 
+	 * SendAllRequests (List <CloneTimeExtensionRequest>) 
+	 * SendAllTestRelatedToTeacher (List <CloneTest>)
+	 * SendAllStudntTestRelatedToTest (List <CloneStudentTest>)
 	 * 
 	 * UserLoggedIn  (Login)
 	 * 
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 
 	 * CreateNewTestResult (CloneTest) 
-	 * SendAllRequests(List <CloneTimeExtensionRequest>) 
 	 * 
 	 * Error(NULL)
 	 * 
@@ -66,16 +61,10 @@ public class DataElements implements Serializable {
 	 *
 	 */
 	public enum ServerToClientOpcodes {
-		SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
-		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllExamsOfTeacherInCourse(107),
-		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
-		CreateNewTestResult(112), SendAllRequests(113),Error(-1);
-
-		public int value;
-
-		private ServerToClientOpcodes(int value) {
-			this.value = value;
-		}
+		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
+		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, UserLoggedIn,
+		CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult, SendAllRequests, SendAllTestRelatedToTeacher,
+		SendAllStudntTestRelatedToTest, Error, CreateNewStudentTestResult;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

@@ -3,6 +3,8 @@ package CloneEntities;
 
 public class CloneTimeExtensionRequest {
 	
+	private int id;
+	
 	private String body;
 	
 	
@@ -21,6 +23,13 @@ public class CloneTimeExtensionRequest {
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getBody() {
 		return body;

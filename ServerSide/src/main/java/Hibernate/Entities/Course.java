@@ -47,7 +47,7 @@ public class Course {
 	}
 
 	public CloneCourse createClone() {
-		CloneCourse clone = new CloneCourse(this.id, this.courseName);
+		CloneCourse clone = new CloneCourse(this.courseName);
 		return clone;
 	}
 

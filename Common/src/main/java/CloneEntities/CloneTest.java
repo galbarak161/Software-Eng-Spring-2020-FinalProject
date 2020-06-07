@@ -12,7 +12,13 @@ public class CloneTest implements Serializable {
 	public enum ExamType {
 		Automated, Manual;
 	}
+	
+	public enum TestStatus {
+		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingApproved;
+	}
 
+	private int id;
+	
 	private LocalDate testDate;
 
 	private LocalTime testTime;
@@ -46,6 +52,13 @@ public class CloneTest implements Serializable {
 		this.examToExecute = examToExecute;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public LocalDate getTestDate() {
 		return testDate;
