@@ -7,7 +7,7 @@ import javax.mail.internet.*;
 public class SendEmail {
 	public static void main(String[] args) {
 		// from,password,to,subject,message
-		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "shirhy912@gmail.com", "Time Extension",
+		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "xxx@xxx.com", "Time Extension",
 				"Please give me more time to abuse my students");
 		// change from, password and to
 	}

@@ -56,7 +56,7 @@ public class DataElements implements Serializable {
 	 * SendAllExamsOfTeacherInCourse (List<CloneExam>)
 	 * 
 	 * UserLoggedIn  (Login)
-	 * UserLoggedOut (NULL)
+	 * UserLoggedOut (int userId)
 	 * 
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 

@@ -102,36 +102,27 @@ public class HibernateMain {
 			session.beginTransaction();
 			session.save(newEntitiy);
 			session.flush();
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("Hibernate: An error occured, changes have been rolled back.");
-			status = -1;
-		} finally {
 			session.clear();
+			session.getTransaction().commit();			
+		} catch (Exception e) {
+			hibernateRollBake();
+			status = -1;
 		}
 		return status;
 	}
 
-	/**
-	 * questionToUpdate(Question) update the question in DB
-	 * 
-	 * @param orignalQustion after updated fields
-	 * @return 1 for success and -1 for failure
-	 */
-	public static int questionToUpdate(Question orignalQustion) {
+	public static <T> int UpdateDataInDB(T entitiy) {
+		int status = 1;
 		try {
 			session.beginTransaction();
-			session.evict(orignalQustion);
-			session.update(orignalQustion);
-			session.getTransaction().commit();
+			session.evict(entitiy);
+			session.update(entitiy);
+			session.getTransaction().commit();			
 		} catch (Exception e) {
 			hibernateRollBake();
-			return -1;
+			status = -1;
 		}
-		return 1;
+		return status;
 	}
 
 	/**
@@ -365,14 +356,14 @@ public class HibernateMain {
 		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString, studentCommString);
 		session.save(e1);
 		session.flush();
-		QuestionInExam qe1 = new QuestionInExam(50,e1,questionList[0]);
-		QuestionInExam qe2 = new QuestionInExam(50,e1,questionList[1]);
-		
+		QuestionInExam qe1 = new QuestionInExam(50, e1, questionList[0]);
+		QuestionInExam qe2 = new QuestionInExam(50, e1, questionList[1]);
+
 		session.save(qe1);
 		session.save(qe2);
 		session.flush();
-		//e1.addQuestion(questionList);
-		//session.save(e1);
+		// e1.addQuestion(questionList);
+		// session.save(e1);
 
 		session.flush();
 
@@ -409,13 +400,13 @@ public class HibernateMain {
 		session.flush();
 
 		session.clear();
-		
+
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
-		
+
 //		ServerOperations sp = new ServerOperations();
 //		
 //		System.out.println("Hibernate: Committing all queries before closing connection...\n");
