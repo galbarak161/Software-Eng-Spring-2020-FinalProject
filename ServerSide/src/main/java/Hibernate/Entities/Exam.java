@@ -65,6 +65,7 @@ public class Exam {
 	public CloneExam createClone() {
 		CloneExam clone = new CloneExam(null, null, duration, examName, teacherComments, studentComments,
 				course.getId(), creator.getId());
+		clone.setId(id);
 		return clone;
 	}
 
