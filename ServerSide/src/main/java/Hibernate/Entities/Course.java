@@ -23,24 +23,22 @@ public class Course {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Exam> exames;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "studyId")
 	private Study study;
-	
+
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "course_teacher", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
 	private List<Teacher> teachers;
 
 	public Course() {
-		super();
 		this.questions = new ArrayList<Question>();
 		this.exames = new ArrayList<Exam>();
 		this.teachers = new ArrayList<Teacher>();
 	}
 
 	public Course(String courseName, Study study) {
-		super();
 		this.courseName = courseName;
 		this.setStudy(study);
 		this.questions = new ArrayList<Question>();
@@ -72,7 +70,7 @@ public class Course {
 	public void addQuestions(Question question) {
 		this.questions.add(question);
 	}
-	
+
 	public List<Exam> getExames() {
 		return exames;
 	}
@@ -89,18 +87,15 @@ public class Course {
 		this.study = study;
 		study.getCourses().add(this);
 	}
-	
+
 	public List<Teacher> getTeachers() {
 		return teachers;
 	}
-	
+
 	public void addTeacher(Teacher... teachers) {
 		for (Teacher teacher : teachers) {
 			this.teachers.add(teacher);
 			teacher.getCourses().add(this);
 		}
 	}
-
-
-
 }

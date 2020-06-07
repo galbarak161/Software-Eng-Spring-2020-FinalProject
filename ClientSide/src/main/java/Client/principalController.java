@@ -1,5 +1,6 @@
 package Client;
 
+import CloneEntities.CloneTimeExtensionRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -9,25 +10,25 @@ import javafx.stage.Stage;
 public class principalController extends AbstractController {
 
     @FXML
-    private TableView<?> testsTable;
+    private TableView<CloneTimeExtensionRequest> testsTable;
 
     @FXML
-    private TableColumn<?, ?> nameCol;
+    private TableColumn<CloneTimeExtensionRequest, String> nameCol;
 
     @FXML
-    private TableColumn<?, ?> dateCol;
+    private TableColumn<CloneTimeExtensionRequest, String> dateCol;
 
     @FXML
-    private TableColumn<?, ?> timeCol;
+    private TableColumn<CloneTimeExtensionRequest, String> timeCol;
 
     @FXML
-    private TableColumn<?, ?> codeCol;
+    private TableColumn<CloneTimeExtensionRequest, String> codeCol;
 
     @FXML
-    private TableColumn<?, ?> statusCol;
+    private TableColumn<CloneTimeExtensionRequest, String> statusCol;
 
     @FXML
-    private TableColumn<?, ?> gradeCol;
+    private TableColumn<CloneTimeExtensionRequest, String> gradeCol;
 
     @FXML
     private Button displayButton;

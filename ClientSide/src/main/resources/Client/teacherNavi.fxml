@@ -4,15 +4,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="567.0" prefWidth="150.0" style="-fx-background-color: #d5e1df;" styleClass="sidebar-section" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.teacherNavi">
+<VBox prefHeight="567.0" prefWidth="150.0"
+	style="-fx-background-color: #d5e1df;" styleClass="sidebar-section"
+	stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.teacherNavi">
 	<children>
-		<Label fx:id="testsList" alignment="CENTER" onMouseClicked="#changeToTests" prefHeight="66.0" text="Tests List" />
-		<Label fx:id="questionEdtior" alignment="CENTER" maxWidth="197.0" onMouseClicked="#changeToQEdit" prefHeight="66.0" prefWidth="197.0" text="Create Question">
-         <font>
-            <Font size="10.0" />
-         </font></Label>
-		<Label fx:id="examsEditor" alignment="CENTER" onMouseClicked="#changeToExamCreator" prefHeight="66.0" text="Create Exam" />
-		<Label fx:id="testGenerator" alignment="CENTER" onMouseClicked="#changeToTestsGen" prefHeight="66.0" text="Generate Test" />
-      <Label fx:id="logout" alignment="CENTER" layoutX="11.0" layoutY="209.0" onMouseClicked="#logout" prefHeight="66.0" text="Logout" />
+		<Label fx:id="testsList" alignment="CENTER"
+			onMouseClicked="#changeToTests" prefHeight="66.0" text="Tests List" />
+		<Label fx:id="questionEdtior" alignment="CENTER"
+			maxWidth="197.0" onMouseClicked="#changeToQEdit" prefHeight="66.0"
+			prefWidth="197.0" text="Create Question">
+			<font>
+				<Font size="10.0" />
+			</font>
+		</Label>
+		<Label fx:id="examsEditor" alignment="CENTER"
+			onMouseClicked="#changeToExamCreator" prefHeight="66.0"
+			text="Create Exam" />
+		<Label fx:id="testGenerator" alignment="CENTER"
+			onMouseClicked="#changeToTestsGen" prefHeight="66.0"
+			text="Generate Test" />
+		<Label fx:id="personalLabel" alignment="CENTER" layoutX="11.0"
+			layoutY="209.0" onMouseClicked="#changeToInfo" prefHeight="66.0"
+			text="Personal Info" />
+		<Label fx:id="logout" alignment="CENTER" layoutX="11.0"
+			layoutY="275.0" onMouseClicked="#logout" prefHeight="66.0"
+			text="Logout" />
 	</children>
 </VBox>

@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 public class Principal extends User {
 
 	public Principal() {
-
+		super();
 	}
 
-	public Principal(int id,String userName, String password, String firstName, String lastName, String emailAddress) {
-		super(id ,userName, password, firstName, lastName, emailAddress);
+	public Principal(String userName, String password, String firstName, String lastName, String emailAddress) {
+		super(userName, password, firstName, lastName, emailAddress);
 	}
 }

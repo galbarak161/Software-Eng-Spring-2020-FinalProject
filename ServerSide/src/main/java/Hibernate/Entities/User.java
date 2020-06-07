@@ -28,20 +28,19 @@ public abstract class User {
 
 	@Column(name = "identityNumber")
 	private String identityNumber;
-	
+
 	@Column(name = "emailAddress")
 	private String emailAddress;
-	
+
 	public User() {
 	}
 
-	public User( int id,String userName, String password, String firstName, String lastName, String emailAddress) {
+	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.id = id;
 		this.emailAddress = emailAddress;
 	}
 

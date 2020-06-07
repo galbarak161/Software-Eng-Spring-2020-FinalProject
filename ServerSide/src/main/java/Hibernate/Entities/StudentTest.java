@@ -1,6 +1,5 @@
 package Hibernate.Entities;
 
-
 import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
@@ -32,11 +31,9 @@ public class StudentTest {
 	private Test test;
 
 	public StudentTest() {
-		super();
 	}
 
 	public StudentTest(Student student, Test test) {
-		super();
 		this.grade = -1;
 		this.examCheckNotes = "";
 		setTest(test);
@@ -66,9 +63,8 @@ public class StudentTest {
 	}
 
 	public CloneStudentTest createClone() {
-		
+
 		return new CloneStudentTest(this.getStudent().createClone(), test.createClone());
 	}
-	
-	
+
 }

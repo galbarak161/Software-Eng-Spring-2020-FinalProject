@@ -7,6 +7,7 @@
 	<children>
 		<Label fx:id="requestsList" alignment="CENTER" onMouseClicked="#requestsButton" prefHeight="66.0" text="Extensions List" />
 		<Label fx:id="dataDisplay" alignment="CENTER" onMouseClicked="#dataButton" prefHeight="66.0" text="Data Display" />
-		<Label fx:id="logout" alignment="CENTER" onMouseClicked="#logout" prefHeight="66.0" text="Logout" />
+		<Label fx:id="personalLabel" alignment="CENTER" onMouseClicked="#changeToInfo" prefHeight="66.0" text="Personal Info" />
+      <Label fx:id="logout" alignment="CENTER" layoutX="11.0" layoutY="143.0" onMouseClicked="#logout" prefHeight="66.0" text="Logout" />
 	</children>
 </VBox>

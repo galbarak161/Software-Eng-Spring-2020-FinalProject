@@ -1,41 +1,56 @@
 package Client;
 
-import com.jfoenix.controls.JFXTreeTableView;
+import java.util.List;
 
 import CloneEntities.CloneCourse;
+import CloneEntities.CloneTeacherCourse;
+import CloneEntities.CloneTest;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 
 public class teacherController extends AbstractController {
 
-    @FXML ComboBox<CloneCourse> courseCombo;
+	@FXML
+	ComboBox<CloneCourse> courseCombo;
+
+	@FXML
+	private Button viewButton;
+    @FXML TableView<CloneTest> testsList;
 
     @FXML
-    private Button viewButton;
+    private TableColumn<CloneTest, String> nameCol;
 
     @FXML
-    private JFXTreeTableView<?> testsTable;
+    private TableColumn<CloneTest, String> dateCol;
 
     @FXML
-    private TreeTableColumn<?, ?> nameCol;
+    private TableColumn<CloneTest, String> timeCol;
 
     @FXML
-    private TreeTableColumn<?, ?> dateCol;
+    private TableColumn<CloneTest, String> codeCol;
 
     @FXML
-    private TreeTableColumn<?, ?> timeCol;
+    private TableColumn<CloneTest, String> statusCol;
 
-    @FXML
-    private TreeTableColumn<?, ?> codeCol;
+	@FXML
+	void approveButton(ActionEvent event) {
 
-    @FXML
-    private TreeTableColumn<?, ?> statusCol;
-    
+	}
+
+	@FXML
+	void timeRequestButton(ActionEvent event) {
+
+	}
+
+	@Override
 	public void initialize() {
+		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
@@ -43,14 +58,13 @@ public class teacherController extends AbstractController {
 		}
 	}
 
-    @FXML
-    void approveButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void timeRequestButton(ActionEvent event) {
-
-    }
+	@FXML
+	void OnClickedCourse(ActionEvent event) {
+		try {
+			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse,new CloneTeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

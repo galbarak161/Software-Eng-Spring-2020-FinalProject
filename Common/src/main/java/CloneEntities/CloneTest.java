@@ -45,7 +45,8 @@ public class CloneTest implements Serializable {
 		this.teacherId = teacherId;
 		this.examToExecute = examToExecute;
 	}
-
+	
+	
 	public LocalDate getTestDate() {
 		return testDate;
 	}
@@ -112,7 +113,9 @@ public class CloneTest implements Serializable {
 
 	@Override
 	public String toString() {
-		return examToExecute.getExamName();
+		return examToExecute.getExamName()+" "+executionCode;
 	}
+	
+	
 
 }

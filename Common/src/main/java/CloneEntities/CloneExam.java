@@ -5,6 +5,8 @@ import java.util.List;
 
 public class CloneExam implements Serializable {
 
+	
+
 	private static final long serialVersionUID = 1875843740998023504L;
 
 	private List<CloneQuestion> questions;
@@ -100,5 +102,10 @@ public class CloneExam implements Serializable {
 
 	public void setTeacherId(int teacherId) {
 		this.teacherId = teacherId;
+	}
+	
+	@Override
+	public String toString() {
+		return examName;
 	}
 }

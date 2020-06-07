@@ -22,12 +22,10 @@ public class Study {
 	private List<Course> courses;
 
 	public Study() {
-		super();
 		this.courses = new ArrayList<Course>();
 	}
 
 	public Study(String studyName) {
-		super();
 		this.studyName = studyName;
 		this.courses = new ArrayList<Course>();
 	}

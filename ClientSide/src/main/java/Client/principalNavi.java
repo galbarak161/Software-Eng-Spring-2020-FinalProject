@@ -13,6 +13,9 @@ public class principalNavi extends AbstractNavi {
     private Label dataDisplay;
 
     @FXML
+    private Label personalLabel;
+
+    @FXML
     private Label logout;
     
     @FXML
@@ -24,6 +27,11 @@ public class principalNavi extends AbstractNavi {
     @FXML
     void dataButton(MouseEvent event) {
     	switchMainPanel("principalDataController.fxml");
+    }
+    
+    @FXML
+    void changeToInfo(MouseEvent event) {
+    	switchMainPanel("personalInfo.fxml");
     }
 
 }

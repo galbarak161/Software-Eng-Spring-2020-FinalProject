@@ -23,12 +23,20 @@ public class ClientMain {
 		return 1;
 	}
 
-	public static void addController(Object con) {
-		ClientService.controllersList.add(con);
+	public static void addController(String name, Object con) {
+		if (!ClientService.controllers.containsKey(name)) {
+			ClientService.controllers.put(name,con);
+		}
+			
+	}
+	
+	public static void setCurrController(String name) {
+			ClientService.controllers.put("curr",name);
+			
 	}
 	
 	public static void removeAllControllers() {
-		ClientService.controllersList.clear();
+		ClientService.controllers.clear();
 	}
 
 	public void displayMessageOnConsole(Object message) {
@@ -49,7 +57,7 @@ public class ClientMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-		// TODO: change to args[] later (ref in ClientMain of Prototype
+		// TODO: change to args[] later (ref in ClientMain of Prototype)
 		ClientService client = new ClientService("localhost", 3000);
 		try {
 			client.openConnection();

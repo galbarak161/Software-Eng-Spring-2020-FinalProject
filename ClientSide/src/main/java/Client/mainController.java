@@ -17,7 +17,7 @@ public class mainController {
 	private AnchorPane navigatePanel;
 
 	public void initialize() {
-		ClientMain.addController(this);
+		ClientMain.addController(this.getClass().toString().split("Client.")[1],this);
 		switch (ClientMain.getUser().getUserType()) {
 		case Student:
 			System.out.println("UserType is Student");
@@ -36,7 +36,9 @@ public class mainController {
 			break;
 		}
 	}
+	
 
+	
 	public void setMainPanel(String fxml) {
 		Platform.runLater(() -> {
 			mainPanel.getChildren().clear();
