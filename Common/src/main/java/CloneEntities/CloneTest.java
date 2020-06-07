@@ -51,6 +51,10 @@ public class CloneTest implements Serializable {
 		this.examToExecute = examToExecute;
 	}
 	
+	public CloneTest() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}
