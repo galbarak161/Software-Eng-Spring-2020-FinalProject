@@ -79,7 +79,7 @@ public class ServerMain extends AbstractServer {
 				break;
 			case GetAllTests:
 				dataFromDB = serverHandler.handleSendAllTests();
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTests);
 				de.setData(dataFromDB);
 				break;
 			case GetAllQuestion:
