@@ -407,11 +407,14 @@ public class HibernateMain {
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		
+//		ServerOperations sp = new ServerOperations();
+//		
 //		System.out.println("Hibernate: Committing all queries before closing connection...\n");
 //		session.getTransaction().commit();
 //		System.out.println("create question");
-//		CloneQuestion cQuestion = new CloneQuestion(123456,"subject","q1","a1","a2","a3","a4",4,courses[0].createClone(),t1.getId());
-//		ServerOperations.handleCreateNewQuestion(cQuestion);
+//		
+//		CloneQuestion cQuestion = new CloneQuestion("subject","q1","a1","a2","a3","a4",4,courses[0].createClone(),t1.getId());
+//		sp.handleCreateNewQuestion(cQuestion);
 //		
 //		System.out.println("create exam");
 //		List<CloneQuestion> cqList= new ArrayList<>();
