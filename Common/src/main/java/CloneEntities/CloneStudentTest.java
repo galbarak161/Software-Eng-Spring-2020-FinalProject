@@ -11,6 +11,10 @@ public class CloneStudentTest implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1308315666481290739L;
+	
+	public enum StudentTestStatus {
+		Done, Scheduled, WaitingForResulte, Ongoing;
+	}
 
 	private int grade;
 
