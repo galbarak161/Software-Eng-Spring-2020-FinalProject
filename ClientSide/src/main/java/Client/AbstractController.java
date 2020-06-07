@@ -13,9 +13,9 @@ public abstract class AbstractController {
 
 	protected Alert info = new Alert(Alert.AlertType.INFORMATION);
 
-	protected static final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
+	protected final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
 
-	protected static final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
+	protected final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
 
 	private static boolean msgRecived = false;
 
@@ -54,6 +54,7 @@ public abstract class AbstractController {
 	 */
 	public void GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
 		String initErrors = "";
+		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		ClientMain.setCurrController(this.getClass().toString().split("Client.")[1]);
 		int dbStatus = sendRequestForDataFromServer(new DataElements(op, data));
 		if ((dbStatus == -1)) {

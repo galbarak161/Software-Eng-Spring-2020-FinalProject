@@ -116,6 +116,20 @@ public class CloneTest implements Serializable {
 		return examToExecute.getExamName()+" "+executionCode;
 	}
 	
+	public String getName() {
+		return this.examToExecute.getExamName();
+	}
 	
+	public String getDate() {
+		return this.testDate.toString();
+	}
+	
+	public String getTime() {
+		return this.testTime.toString();
+	}
+	
+	public String getStatus() {
+		return "Bad..";
+	}
 
 }
