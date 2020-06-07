@@ -61,6 +61,9 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	private Button showQuestionButton;
+	
+    @FXML
+    private ComboBox<CloneExam> examCourse;
 
 	public void initialize() {
 		questionsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -103,6 +106,25 @@ public class examCreator extends AbstractController {
 			teachersText.setDisable(false);
 		}
 	}
+	
+    @FXML
+    void onClickedExam(ActionEvent event) {
+//		if (courseCombo.getValue() != null) {
+//			try {
+//				GetDataFromDB(ClientToServerOpcodes.GetAllExa, courseCombo.getValue());
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			nameText.setDisable(false);
+//			minutesText.setDisable(false);
+//			hoursText.setDisable(false);
+//			submit_button.setDisable(false);
+//			showQuestionButton.setDisable(false);
+//			studentsComment.setDisable(false);
+//			teachersText.setDisable(false);
+//		}
+    }
 
 	@FXML
 	public void OnClickSubmit(ActionEvent event) {
