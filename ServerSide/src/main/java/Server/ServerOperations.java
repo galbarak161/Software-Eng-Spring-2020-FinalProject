@@ -25,7 +25,7 @@ public class ServerOperations {
 			for (Exam exam : listFromDB) {
 				if (exam.getCreator().getId() == cloneUser.getId()) {
 					cloneExams.add(exam.createClone());
-					break;
+					
 				}
 			}
 		} catch (Exception e) {
@@ -53,7 +53,6 @@ public class ServerOperations {
 						&& studentTest.getTest().getTestTime() == cloneTest.getTestTime()
 						&& studentTest.getTest().getExecutionCode() == cloneTest.getExecutionCode()) {
 					cloneStudentTests.add(studentTest.createClone());
-					break;
 				}
 			}
 		} catch (Exception e) {
@@ -80,7 +79,6 @@ public class ServerOperations {
 			for (Test test : listFromDB) {
 				if (test.getExamToExecute().getCreator().getId() == cloneUser.getId()) {
 					cloneTests.add(test.createClone());
-					break;
 				}
 			}
 		} catch (Exception e) {
@@ -280,7 +278,6 @@ public class ServerOperations {
 						&& test.getExamToExecute().getCourse().getId() == cloneCourse.getId()) {
 
 					tests.add(test.createClone());
-					break;
 				}
 			}
 		} catch (Exception e) {
@@ -310,7 +307,6 @@ public class ServerOperations {
 				if (exam.getCreator().getId() == cloneUser.getId() && exam.getCourse().getId() == cloneCourse.getId()) {
 
 					exams.add(exam.createClone());
-					break;
 				}
 			}
 		} catch (Exception e) {
