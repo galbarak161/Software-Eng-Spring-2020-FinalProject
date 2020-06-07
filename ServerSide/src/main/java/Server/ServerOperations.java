@@ -294,6 +294,38 @@ public class ServerOperations {
 
 		return tests;
 	}
+	
+	
+	/**
+	 * handleSendAllExamsOfTeacherInCourse returns all exams that the teacher is a
+	 * creator and the exam is in a specific course
+	 * 
+	 * @param a class working as a container to teacher and course
+	 * @return List<CloneExam> all test that the teacher is a creator and the exam
+	 *         in a specific course
+	 */
+	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data) {
+		CloneUser cloneUser = data.getTeacher();
+		CloneCourse cloneCourse = data.getCourse();
+		List<Exam> listFromDB1 = null;
+		List<CloneExam> exams = new ArrayList<CloneExam>();
+		try {
+			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB1) {
+				if (exam.getCreator().getId() == cloneUser.getId()
+						&& exam.getCourse().getId() == cloneCourse.getId()) {
+
+					exams.add(exam.createClone());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return exams;
+	}
 
 	/**
 	 * handleSendAllStudentTests return all test related to a specific student
