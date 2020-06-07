@@ -11,15 +11,11 @@ import Hibernate.Entities.*;
 
 public class ServerOperations {
 
-	
-	
-	
-	
-	
 	/**
-	 *  function send all exam the teacher created
-	 * @param cloneUser Teacher 
-	 * @return	List<CloneExam> of all the exams that the teacher created
+	 * function send all exam the teacher created
+	 * 
+	 * @param cloneUser Teacher
+	 * @return List<CloneExam> of all the exams that the teacher created
 	 */
 	public List<CloneExam> handleSendAllExamsOfTeacher(CloneUser cloneUser) {
 		List<Exam> listFromDB = null;
@@ -39,8 +35,7 @@ public class ServerOperations {
 
 		return cloneExams;
 	}
-	
-	
+
 	/**
 	 * handleSendAllTestRelatedToTeacher get all studentsTest clones that are
 	 * related to a specific test.
@@ -257,7 +252,8 @@ public class ServerOperations {
 	public CloneUser handleLoginRequest(Login data) throws Exception {
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
-			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))) {
+			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))
+					&& (user.isLoggedIn() == false)) {
 				return user.createClone();
 			}
 		}
@@ -294,8 +290,7 @@ public class ServerOperations {
 
 		return tests;
 	}
-	
-	
+
 	/**
 	 * handleSendAllExamsOfTeacherInCourse returns all exams that the teacher is a
 	 * creator and the exam is in a specific course
@@ -312,8 +307,7 @@ public class ServerOperations {
 		try {
 			listFromDB1 = HibernateMain.getDataFromDB(Exam.class);
 			for (Exam exam : listFromDB1) {
-				if (exam.getCreator().getId() == cloneUser.getId()
-						&& exam.getCourse().getId() == cloneCourse.getId()) {
+				if (exam.getCreator().getId() == cloneUser.getId() && exam.getCourse().getId() == cloneCourse.getId()) {
 
 					exams.add(exam.createClone());
 					break;
@@ -371,8 +365,9 @@ public class ServerOperations {
 				newCloneQuestion.getAnswer_4(), newCloneQuestion.getCorrectAnswer(), c, t);
 
 		HibernateMain.insertDataToDB(newQuestion);
-		
-		System.out.println("New qustion added. Qustion id = " + newQuestion.getId() + ". Question code = " + newQuestion.getQuestionCode());
+
+		System.out.println("New qustion added. Qustion id = " + newQuestion.getId() + ". Question code = "
+				+ newQuestion.getQuestionCode());
 		return newQuestion.createClone();
 	}
 
@@ -387,7 +382,7 @@ public class ServerOperations {
 				newCloneExam.getTeacherComments(), newCloneExam.getStudentComments());
 
 		HibernateMain.insertDataToDB(newCloneExam);
-		
+
 		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
 	}
@@ -403,10 +398,11 @@ public class ServerOperations {
 
 		HibernateMain.insertDataToDB(newTest);
 
-		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = " + newTest.getExecutionCode());
+		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
+				+ newTest.getExecutionCode());
 		return newTest.createClone();
 	}
-	
+
 	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
 		Student s = (Student) getUserByCloneId(newCloneStudentTest.getStudent().getId());
 		Test t = getTestByCloneId(newCloneStudentTest.getTest().getId());
@@ -414,7 +410,7 @@ public class ServerOperations {
 			return null;
 
 		StudentTest newStudentTest = new StudentTest(s, t);
-				
+
 		HibernateMain.insertDataToDB(newStudentTest);
 
 		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");

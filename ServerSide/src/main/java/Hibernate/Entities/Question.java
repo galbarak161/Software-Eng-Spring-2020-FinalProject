@@ -45,13 +45,12 @@ public class Question {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
-
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "question_exam", joinColumns = @JoinColumn(name = "questionId"), inverseJoinColumns = @JoinColumn(name = "examId"))
-	private List<Exam> exames;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "question")
+	private List<QuestionInExam> questionInExam;
 
 	public Question() {
-		this.exames = new ArrayList<Exam>();
+		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
 	public Question(String subject, String questionText, String answer_1, String answer_2, String answer_3,
@@ -66,7 +65,7 @@ public class Question {
 		this.answer_3 = answer_3;
 		this.answer_4 = answer_4;
 		this.correctAnswer = correctAnswer;
-		this.exames = new ArrayList<Exam>();
+		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
 	public CloneQuestion createClone() {
@@ -165,15 +164,11 @@ public class Question {
 		teacher.getQuestions().add(this);
 	}
 
-	public List<Exam> getExames() {
-		return exames;
+	public List<QuestionInExam> getQuestionInExam() {
+		return questionInExam;
 	}
 
-	public void addExam(Exam... exames) {
-		for (Exam exam : exames) {
-			this.exames.add(exam);
-			exam.getQuestions().add(this);
-		}
+	public void addQuestionInExam(QuestionInExam questionInExam) {
+		this.questionInExam.add(questionInExam);
 	}
-
 }

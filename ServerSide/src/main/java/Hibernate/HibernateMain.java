@@ -56,6 +56,7 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(Teacher.class);
 		configuration.addAnnotatedClass(Principal.class);
 		configuration.addAnnotatedClass(Exam.class);
+		configuration.addAnnotatedClass(QuestionInExam.class);
 		configuration.addAnnotatedClass(StudentTest.class);
 		configuration.addAnnotatedClass(Test.class);
 		configuration.addAnnotatedClass(TimeExtensionRequest.class);
@@ -362,8 +363,16 @@ public class HibernateMain {
 		String studentCommString = " help me";
 
 		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString, studentCommString);
-		e1.addQuestion(questionList);
 		session.save(e1);
+		session.flush();
+		QuestionInExam qe1 = new QuestionInExam(50,e1,questionList[0]);
+		QuestionInExam qe2 = new QuestionInExam(50,e1,questionList[1]);
+		
+		session.save(qe1);
+		session.save(qe2);
+		session.flush();
+		//e1.addQuestion(questionList);
+		//session.save(e1);
 
 		session.flush();
 

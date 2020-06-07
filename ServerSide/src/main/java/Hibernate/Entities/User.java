@@ -31,17 +31,24 @@ public abstract class User {
 
 	@Column(name = "emailAddress")
 	private String emailAddress;
-
+	
+	@Column(name = "isLoggedIn")
+	private Boolean isLoggedIn;
+	
+	@Column(name = "clientNumber")
+	private int clientNumber;
+	
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
+	public User(String userName, String password, String firstName, String lastName, String identityNumber, String emailAddress) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
+		isLoggedIn = false;
 	}
 
 	public CloneUser createClone() {
@@ -103,4 +110,29 @@ public abstract class User {
 		this.identityNumber = identityNumber;
 	}
 
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public Boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(Boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	public int getClientNumber() {
+		return clientNumber;
+	}
+
+	public void setClientNumber(int clientNumber) {
+		this.clientNumber = clientNumber;
+	}
+	
+	
 }

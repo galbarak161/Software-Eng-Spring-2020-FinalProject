@@ -19,8 +19,8 @@ public class Exam {
 	@JoinColumn(name = "teacherId")
 	private Teacher creator;
 
-	@ManyToMany(mappedBy = "exames", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Question> questions;
+//	@ManyToMany(mappedBy = "exames", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Question> questions;
 
 	@Column(name = "examName")
 	private String examName;
@@ -43,10 +43,14 @@ public class Exam {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "examToExecute")
 	private List<Test> tests;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "exam")
+	private List<QuestionInExam> questionInExam;
 
 	public Exam() {
-		this.questions = new ArrayList<Question>();
+		//this.questions = new ArrayList<Question>();
 		tests = new ArrayList<Test>();
+		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
 	public Exam(String examName, Teacher creator, List<Integer> questionsPoints, int duration, Course course,
@@ -58,8 +62,9 @@ public class Exam {
 		setCreator(creator);
 		setCourse(course);
 		GenerateExamCode();
-		this.questions = new ArrayList<Question>();
+		//this.questions = new ArrayList<Question>();
 		tests = new ArrayList<Test>();
+		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
 	public CloneExam createClone() {
@@ -93,16 +98,16 @@ public class Exam {
 		creator.getExames().add(this);
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
-	}
-
-	public void addQuestion(Question... questions) {
-		for (Question question : questions) {
-			this.questions.add(question);
-			question.getExames().add(this);
-		}
-	}
+//	public List<Question> getQuestions() {
+//		return questions;
+//	}
+//
+//	public void addQuestion(Question... questions) {
+//		for (Question question : questions) {
+//			this.questions.add(question);
+//			question.getExames().add(this);
+//		}
+//	}
 
 	public Course getCourse() {
 		return course;
@@ -119,6 +124,14 @@ public class Exam {
 
 	public void addTest(Test test) {
 		this.tests.add(test);
+	}
+
+	public List<QuestionInExam> getQuestionInExam() {
+		return questionInExam;
+	}
+
+	public void addQuestionInExam(QuestionInExam questionInExam) {
+		this.questionInExam.add(questionInExam);
 	}
 
 	public int getDuration() {
