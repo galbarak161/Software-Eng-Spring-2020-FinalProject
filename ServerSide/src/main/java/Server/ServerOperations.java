@@ -304,27 +304,14 @@ public class ServerOperations {
 		if (t == null || c == null)
 			return null;
 
-		Question newQustion = new Question(newCloneQuestion.getSubject(), newCloneQuestion.getQuestionText(),
+		Question newQuestion = new Question(newCloneQuestion.getSubject(), newCloneQuestion.getQuestionText(),
 				newCloneQuestion.getAnswer_1(), newCloneQuestion.getAnswer_2(), newCloneQuestion.getAnswer_3(),
 				newCloneQuestion.getAnswer_4(), newCloneQuestion.getCorrectAnswer(), c, t);
 
-		HibernateMain.insertDataToDB(newQustion);
-
-		Thread.sleep(10);
-
-		List<Question> listFromDB = null;
-		try {
-			listFromDB = HibernateMain.getDataFromDB(Question.class);
-			for (Question question : listFromDB) {
-				if (question.getId() == newQustion.getId())
-					newQustion = question;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		return newQustion.createClone();
+		HibernateMain.insertDataToDB(newQuestion);
+		
+		System.out.println("New qustion added. Qustion id = " + newQuestion.getId() + ". Question code = " + newQuestion.getQuestionCode());
+		return newQuestion.createClone();
 	}
 
 	public CloneExam handleCreateNewExam(CloneExam newCloneExam) throws Exception {
@@ -338,21 +325,8 @@ public class ServerOperations {
 				newCloneExam.getTeacherComments(), newCloneExam.getStudentComments());
 
 		HibernateMain.insertDataToDB(newCloneExam);
-
-		Thread.sleep(10);
-
-		List<Exam> listFromDB = null;
-		try {
-			listFromDB = HibernateMain.getDataFromDB(Exam.class);
-			for (Exam exam : listFromDB) {
-				if (exam.getId() == newExam.getId())
-					newExam = exam;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		
+		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
 	}
 
@@ -367,20 +341,7 @@ public class ServerOperations {
 
 		HibernateMain.insertDataToDB(newTest);
 
-		Thread.sleep(10);
-
-		List<Test> listFromDB = null;
-		try {
-			listFromDB = HibernateMain.getDataFromDB(Test.class);
-			for (Test test : listFromDB) {
-				if (test.getId() == newTest.getId())
-					newTest = test;
-			}
-
-		} catch (Exception exp) {
-			exp.printStackTrace();
-			return null;
-		}
+		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = " + newTest.getExecutionCode());
 		return newTest.createClone();
 	}
 	
@@ -394,20 +355,7 @@ public class ServerOperations {
 				
 		HibernateMain.insertDataToDB(newStudentTest);
 
-		Thread.sleep(10);
-
-		List<StudentTest> listFromDB = null;
-		try {
-			listFromDB = HibernateMain.getDataFromDB(StudentTest.class);
-			for (StudentTest test : listFromDB) {
-				if (test.getId() == newStudentTest.getId())
-					newStudentTest = test;
-			}
-
-		} catch (Exception exp) {
-			exp.printStackTrace();
-			return null;
-		}
+		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
 		return newStudentTest.createClone();
 	}
 
