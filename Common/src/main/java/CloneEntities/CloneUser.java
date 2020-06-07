@@ -2,25 +2,22 @@ package CloneEntities;
 
 import java.io.Serializable;
 
-public class CloneUser implements Serializable{
+public class CloneUser implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3713504832702720811L;
 
 	public enum UserType {
 		Student, Teacher, Principal;
 	}
-	
+
 	private int id;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String emailAddress;
-	
+
 	private UserType userType;
 
 	public CloneUser(int id, String firstName, String lastName, String emailAddress, UserType userType) {
@@ -31,7 +28,15 @@ public class CloneUser implements Serializable{
 		this.emailAddress = emailAddress;
 		this.userType = userType;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -42,14 +47,9 @@ public class CloneUser implements Serializable{
 
 	public String getEmailAddress() {
 		return emailAddress;
-	}	
-	
-	public UserType getUserType() {
-		return userType;
 	}
 
-
-	public int getId() {
-		return id;
+	public UserType getUserType() {
+		return userType;
 	}
 }

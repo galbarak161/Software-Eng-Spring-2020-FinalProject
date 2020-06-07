@@ -61,7 +61,7 @@ public class teacherController extends AbstractController {
 	@FXML
 	void OnClickedCourse(ActionEvent event) {
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse,new CloneTeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
+			GetDataFromDB(ClientToServerOpcodes.GetAllTestsOfTeacherInCourse,new CloneTeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

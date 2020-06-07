@@ -70,9 +70,10 @@ public class Question {
 	}
 
 	public CloneQuestion createClone() {
-		CloneQuestion clone = new CloneQuestion(this.id, this.questionCode, this.subject, this.questionText,
+		CloneQuestion clone = new CloneQuestion(this.questionCode, this.subject, this.questionText,
 				this.answer_1, this.answer_2, this.answer_3, this.answer_4, this.correctAnswer,
 				this.course.createClone(), this.teacher.getId());
+		clone.setId(this.id);
 		return clone;
 	}
 

@@ -20,8 +20,7 @@ public class CloneCourse implements Serializable {
 		this.questions = new ArrayList<CloneQuestion>();
 	}
 
-	public CloneCourse(int id, String courseName) {
-		this.id = id;
+	public CloneCourse(String courseName) {
 		this.courseName = courseName;
 		this.questions = new ArrayList<CloneQuestion>();
 	}
