@@ -54,6 +54,7 @@ public class ClientService extends AbstractClient {
 		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
 		CreateNewTestResult(112), SendAllRequests(113),Error(-1);
 	 */
+	@SuppressWarnings({ "unchecked", "incomplete-switch" })
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		DataElements de = (DataElements) msg;
@@ -146,8 +147,15 @@ public class ClientService extends AbstractClient {
 						.getItems().setAll(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
 						break;
 					case SendAllTests:
-						((principalDataController) o).testsList
-						.getItems().setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+						for (CloneTest t : (List<CloneTest>) de.getData()) {
+							System.out.println(t.getName());
+						}
+						try {
+							((principalDataController) o).testsList.getItems().setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
 						break;
 				}
 				break;	

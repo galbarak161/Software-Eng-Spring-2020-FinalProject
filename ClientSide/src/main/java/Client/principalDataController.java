@@ -1,10 +1,12 @@
 package Client;
 
 import java.io.IOException;
+import java.util.Observable;
 
 import CloneEntities.*;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,13 +39,13 @@ public class principalDataController extends AbstractController {
 
 	@Override
 	public void initialize() {
-		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestion, null);
+			Thread.sleep(50);
 			GetDataFromDB(ClientToServerOpcodes.GetAllExams, null);
+			Thread.sleep(50);
 			GetDataFromDB(ClientToServerOpcodes.GetAllTests, null);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -84,7 +86,7 @@ public class principalDataController extends AbstractController {
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();
-				stage.setTitle("Question");
+				stage.setTitle("Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
 				stage.setScene(new Scene(root));
 				stage.show();
 			});
@@ -94,20 +96,20 @@ public class principalDataController extends AbstractController {
 
 	@FXML
 	void OnClickedExam(ActionEvent event) {
-		if (questionsList.getSelectionModel().getSelectedItem() != null) {
+		if (examsList.getSelectionModel().getSelectedItem() != null) {
 			Platform.runLater(() -> {
 				Parent root = null;
 				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showExam.fxml"));
 					root = (Parent) fxmlLoader.load();
-					showQuestion q = fxmlLoader.getController();
-					q.setFields(questionsList.getSelectionModel().getSelectedItem());
+					showExam e = fxmlLoader.getController();
+					e.setFields(examsList.getSelectionModel().getSelectedItem());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();
-				stage.setTitle("Question");
+				stage.setTitle("Exam " + examsList.getSelectionModel().getSelectedItem().getExamName());
 				stage.setScene(new Scene(root));
 				stage.show();
 			});
