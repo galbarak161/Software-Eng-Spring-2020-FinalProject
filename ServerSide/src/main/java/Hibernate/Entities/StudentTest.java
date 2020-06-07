@@ -63,8 +63,9 @@ public class StudentTest {
 	}
 
 	public CloneStudentTest createClone() {
-
-		return new CloneStudentTest(this.getStudent().createClone(), test.createClone());
+		CloneStudentTest clone = new CloneStudentTest(this.getStudent().createClone(), test.createClone());
+		clone.setId(id);
+		return clone;
 	}
 
 }

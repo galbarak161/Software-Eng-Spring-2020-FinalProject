@@ -55,6 +55,7 @@ public abstract class User {
 			userType = UserType.Principal;
 
 		CloneUser clone = new CloneUser(this.id, this.firstName, this.lastName, this.emailAddress, userType);
+		clone.setId(id);
 		return clone;
 	}
 

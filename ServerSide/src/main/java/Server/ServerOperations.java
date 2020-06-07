@@ -242,7 +242,7 @@ public class ServerOperations {
 	 * @return List<CloneTest> all test that the teacher is an executor and the test
 	 *         in a specific course
 	 */
-	public static List<CloneTest> handleSendAllTestsOfTeacherInCourse(CloneTeacherCourse data) {
+	public List<CloneTest> handleSendAllTestsOfTeacherInCourse(CloneTeacherCourse data) {
 		CloneUser cloneUser = data.getTeacher();
 		CloneCourse cloneCourse = data.getCourse();
 		List<Test> listFromDB1 = null;

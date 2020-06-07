@@ -21,6 +21,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
+import CloneEntities.CloneQuestion;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
@@ -84,8 +85,8 @@ public class HibernateMain {
 	}
 
 	/**
-	 * Function to handle Errors in Hibernate
-	 * Every Bibernate exception will be handle by this function
+	 * Function to handle Errors in Hibernate Every Bibernate exception will be
+	 * handle by this function
 	 */
 	public static void hibernateRollBake() {
 		if (session != null) {
@@ -94,13 +95,13 @@ public class HibernateMain {
 		System.err.println("Hibernate: An error occured, changes have been rolled back.");
 	}
 
-	
 	public static <T> int insertDataToDB(T newEntitiy) {
 		int status = 1;
 		try {
 			session.beginTransaction();
 			session.save(newEntitiy);
 			session.flush();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			if (session != null) {
 				session.getTransaction().rollback();
@@ -360,8 +361,7 @@ public class HibernateMain {
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString,
-				studentCommString);
+		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString, studentCommString);
 		e1.addQuestion(questionList);
 		session.save(e1);
 
@@ -398,16 +398,36 @@ public class HibernateMain {
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
 		session.flush();
+
+		session.clear();
 		
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
-
 		
-		session.clear();
-		
+//		System.out.println("Hibernate: Committing all queries before closing connection...\n");
+//		session.getTransaction().commit();
+//		System.out.println("create question");
+//		CloneQuestion cQuestion = new CloneQuestion(123456,"subject","q1","a1","a2","a3","a4",4,courses[0].createClone(),t1.getId());
+//		ServerOperations.handleCreateNewQuestion(cQuestion);
+//		
+//		System.out.println("create exam");
+//		List<CloneQuestion> cqList= new ArrayList<>();
+//		cqList.add(questions[0].createClone());
+//		List<Integer> cqpList= new ArrayList<>();
+//		cqpList.add(100);
+//		CloneExam cExam = new CloneExam(cqList, cqpList, 60, "exam name" , "", "", 10, t1.getId());
+//		ServerOperations.handleCreateNewExam(cExam);
+//		
+//		System.out.println("create test");
+//		CloneTest cTest = new CloneTest(testDate, testTime, "idfk", 0, 60, ExamType.Automated, t1.getId(), e1.createClone());
+//		ServerOperations.handleCreateNewTest(cTest);
+//		
+//		System.out.println("create studentTest");
+//		CloneStudentTest cStudentTest = new CloneStudentTest(s1.createClone(), cTest);
+//		ServerOperations.handleCreateNewStudentTest(cStudentTest);
 	}
 
 	public static void main(String[] args) {

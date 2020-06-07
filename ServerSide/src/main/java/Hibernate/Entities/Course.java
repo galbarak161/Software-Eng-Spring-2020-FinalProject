@@ -48,6 +48,7 @@ public class Course {
 
 	public CloneCourse createClone() {
 		CloneCourse clone = new CloneCourse(this.courseName);
+		clone.setId(id);
 		return clone;
 	}
 
