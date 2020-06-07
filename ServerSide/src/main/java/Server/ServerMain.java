@@ -112,6 +112,11 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
+			case GetAllExamsOfTeacherInCourse:
+				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((CloneTeacherCourse) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
+				de.setData(dataFromDB);
+				break;
 			case GetAllStudentTests:
 				dataFromDB = serverHandler.handleSendAllStudentTests((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudentTests);

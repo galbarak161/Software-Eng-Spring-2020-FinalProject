@@ -19,6 +19,7 @@ public class DataElements implements Serializable {
 	 * GetAllTestRelatedToTeacher (CloneUser)
 	 * GetAllStudntTestRelatedToTest (CloneTest)
 	 * GetAllExamsOfTeacher(CloneUser)
+	 * GetAllExamsOfTeacherInCourse(CloneTeacherCourse)
 	 * 
 	 * UserLogin (Login)
 	 * 
@@ -34,7 +35,8 @@ public class DataElements implements Serializable {
 	public enum ClientToServerOpcodes {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
 		GetAllTestsOfTeacherInCourse, GetAllStudentTests, UserLogin, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		GetAllRequests, GetAllTestRelatedToTeacher, GetAllStudntTestRelatedToTest,GetAllExamsOfTeacher , Error, CreateNewStudentTest;
+		GetAllRequests, GetAllTestRelatedToTeacher, GetAllStudntTestRelatedToTest,GetAllExamsOfTeacher , Error, CreateNewStudentTest,
+		GetAllExamsOfTeacherInCourse;
 	}
 
 	/**
@@ -50,6 +52,7 @@ public class DataElements implements Serializable {
 	 * SendAllTestRelatedToTeacher (List <CloneTest>)
 	 * SendAllStudntTestRelatedToTest (List <CloneStudentTest>)
 	 * SendAllExamsOfTeacher(List<CloneExam>)
+	 * SendAllExamsOfTeacherInCourse (List<CloneExam>)
 	 * 
 	 * UserLoggedIn  (Login)
 	 * 
@@ -66,7 +69,7 @@ public class DataElements implements Serializable {
 		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, UserLoggedIn,
 		CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult, SendAllRequests, SendAllTestRelatedToTeacher,
-		SendAllStudntTestRelatedToTest, Error, CreateNewStudentTestResult , SendAllExamsOfTeacher;
+		SendAllStudntTestRelatedToTest, Error, CreateNewStudentTestResult , SendAllExamsOfTeacher , SendAllExamsOfTeacherInCourse;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;
