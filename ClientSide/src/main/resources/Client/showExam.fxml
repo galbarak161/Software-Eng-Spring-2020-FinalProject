@@ -3,25 +3,26 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="courseText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.showExam">
+<AnchorPane fx:id="courseText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.showExam">
    <children>
-      <Label layoutX="76.0" layoutY="60.0" prefHeight="18.0" prefWidth="96.0" text="Choose a course:" />
-      <Label layoutX="78.0" layoutY="96.0" text="Exam name:" />
-      <Label layoutX="78.0" layoutY="141.0" text="Enter duration:" />
-      <TextField fx:id="hoursText" disable="true" layoutX="170.0" layoutY="137.0" prefHeight="26.0" prefWidth="49.0" />
-      <TextField fx:id="minutesText" disable="true" layoutX="238.0" layoutY="137.0" prefHeight="26.0" prefWidth="50.0" />
-      <Label layoutX="228.0" layoutY="141.0" prefHeight="18.0" prefWidth="9.0" text=":" />
-      <TextField fx:id="ExamNameText" disable="true" layoutX="169.0" layoutY="92.0" prefHeight="26.0" prefWidth="354.0" />
-      <Label layoutX="76.0" layoutY="176.0" text="Add questions:" />
-      <Label layoutX="40.0" layoutY="338.0" text="Teacher's Comments:" />
-      <TextField fx:id="teachersText" editable="false" layoutX="168.0" layoutY="331.0" prefHeight="78.0" prefWidth="539.0" />
-      <Label layoutX="40.0" layoutY="425.0" text="Student's Comments:" />
-      <TextField fx:id="studentsComment" editable="false" layoutX="168.0" layoutY="420.0" prefHeight="78.0" prefWidth="539.0" />
-      <ListView fx:id="questionsList" layoutX="169.0" layoutY="176.0" prefHeight="146.0" prefWidth="242.0" />
-      <TextField fx:id="courseNameText" disable="true" layoutX="169.0" layoutY="56.0" prefHeight="26.0" prefWidth="354.0" />
-      <Button fx:id="QuestionButton" layoutX="461.0" layoutY="224.0" mnemonicParsing="false" onAction="#OnClickedQuestion" text="Show Question" />
+      <Label layoutX="40.0" layoutY="17.0" prefHeight="18.0" prefWidth="96.0" text="Course Name:" />
+      <Label layoutX="40.0" layoutY="55.0" text="Exam Name:" />
+      <Label layoutX="40.0" layoutY="93.0" text="Enter Duration:" />
+      <TextField fx:id="hoursText" disable="true" layoutX="142.0" layoutY="89.0" prefHeight="26.0" prefWidth="49.0" />
+      <TextField fx:id="minutesText" disable="true" layoutX="206.0" layoutY="89.0" prefHeight="26.0" prefWidth="50.0" />
+      <Label layoutX="197.0" layoutY="93.0" prefHeight="18.0" prefWidth="9.0" text=":" />
+      <TextField fx:id="ExamNameText" disable="true" layoutX="142.0" layoutY="51.0" prefHeight="26.0" prefWidth="354.0" />
+      <Label layoutX="40.0" layoutY="130.0" text="Add questions:" />
+      <Label layoutX="23.0" layoutY="340.0" text="Teacher's Comments:" />
+      <Label layoutX="23.0" layoutY="426.0" text="Student's Comments:" />
+      <ListView fx:id="questionsList" layoutX="142.0" layoutY="130.0" prefHeight="196.0" prefWidth="242.0" />
+      <TextField fx:id="courseNameText" disable="true" layoutX="142.0" layoutY="13.0" prefHeight="26.0" prefWidth="354.0" />
+      <Button fx:id="QuestionButton" layoutX="399.0" layoutY="216.0" mnemonicParsing="false" onAction="#OnClickedQuestion" text="Show Question" />
+      <TextArea fx:id="teachersText" disable="true" layoutX="142.0" layoutY="340.0" prefHeight="73.0" prefWidth="473.0" />
+      <TextArea fx:id="studentsComment" disable="true" layoutX="142.0" layoutY="420.0" prefHeight="73.0" prefWidth="473.0" />
    </children>
 </AnchorPane>
