@@ -16,9 +16,11 @@ public class CloneStudentTest implements Serializable {
 		Done, Scheduled, WaitingForResulte, Ongoing;
 	}
 
+	private int id;
+	
 	private int grade;
 
-	 private Map<Integer, AnsweredQuestion> AnsweredQuestions; // each integer is between 1..4
+	private Map<Integer, AnsweredQuestion> AnsweredQuestions; // each integer is between 1..4
 
 	private String examCheckNotes;
 
@@ -87,6 +89,13 @@ public class CloneStudentTest implements Serializable {
 		setStudent(student);
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public CloneTest getTest() {
 		return test;

@@ -6,9 +6,10 @@ import java.util.List;
 public class CloneExam implements Serializable {
 
 	
-
 	private static final long serialVersionUID = 1875843740998023504L;
 
+	private int id;
+	
 	private List<CloneQuestion> questions;
 
 	private List<Integer> points;
@@ -27,7 +28,7 @@ public class CloneExam implements Serializable {
 
 	public CloneExam() {
 	}
-	
+
 	public CloneExam(List<CloneQuestion> questions, List<Integer> points, int duration, String examName,
 			String teacherComments, String studentComments, int courseId, int teacherId) {
 		this.questions = questions;
@@ -40,6 +41,14 @@ public class CloneExam implements Serializable {
 		this.teacherId = teacherId;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public List<CloneQuestion> getQuestions() {
 		return questions;
 	}
@@ -108,4 +117,5 @@ public class CloneExam implements Serializable {
 	public String toString() {
 		return examName;
 	}
+
 }

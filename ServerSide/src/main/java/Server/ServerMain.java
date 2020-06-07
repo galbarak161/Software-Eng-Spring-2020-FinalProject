@@ -103,7 +103,7 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case GetAllTestsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((CloneTeacherCourse)de.getData());
+				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((CloneTeacherCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
@@ -143,6 +143,14 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case CreateNewTest:
+				dataFromDB = serverHandler.handleCreateNewTest((CloneTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTestResult);
+				de.setData(dataFromDB);
+				break;
+			case CreateNewStudentTest:
+				dataFromDB = serverHandler.handleCreateNewStudentTest((CloneStudentTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewStudentTestResult);
+				de.setData(dataFromDB);
 				break;
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);

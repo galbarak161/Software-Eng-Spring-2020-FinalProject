@@ -7,6 +7,8 @@ public class CloneTeacherCourse implements Serializable{
 
 	private static final long serialVersionUID = -6816617808206845265L;
 	
+	private int id;
+	
 	CloneUser teacher;
 	CloneCourse course;
 
@@ -15,6 +17,14 @@ public class CloneTeacherCourse implements Serializable{
 		this.course = course;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public CloneUser getTeacher() {
 		return teacher;
 	}

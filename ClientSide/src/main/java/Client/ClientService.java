@@ -127,7 +127,7 @@ public class ClientService extends AbstractClient {
 						((teacherController) o).courseCombo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
-					case SendAllExamsOfTeacherInCourse:
+					case SendAllTestsOfTeacherInCourse:
 						((teacherController) o).testsList
 						.setItems(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
 				}
