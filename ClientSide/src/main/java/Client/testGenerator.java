@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
+import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CommonElements.DataElements.ClientToServerOpcodes;
@@ -28,8 +29,7 @@ public class testGenerator extends AbstractController {
 	@FXML
 	ComboBox<CloneCourse> courseCombo;
 
-	@FXML
-	private ComboBox<CloneExam> examCombo;
+	@FXML ComboBox<CloneExam> examCombo;
 
 	@FXML
 	private DatePicker datePicker;
@@ -65,8 +65,9 @@ public class testGenerator extends AbstractController {
 
 	@FXML
 	void onClickedCourse(ActionEvent event) {
+		if (courseCombo.getValue() != null)
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacher, ClientMain.getUser());
+			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse, new CloneTeacherCourse(ClientMain.getUser(),courseCombo.getValue()));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
