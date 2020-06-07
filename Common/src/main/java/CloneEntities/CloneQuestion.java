@@ -133,6 +133,10 @@ public class CloneQuestion implements Serializable {
 	public int getTeacherId() {
 		return teacherId;
 	}
+	
+	public void setTeacherId(int id) {
+		this.teacherId = id;
+	}
 
 	
 }

@@ -76,6 +76,12 @@ public class questionsEditor extends AbstractController {
 	private TextArea question_text;
 
 	@FXML
+	private Label question_label;
+
+	@FXML
+	ComboBox<CloneQuestion> question_combo;
+
+	@FXML
 	ComboBox<CloneCourse> course_combo;
 
 	/**
@@ -129,7 +135,7 @@ public class questionsEditor extends AbstractController {
 	 * @throws Exception - Used for checking all fields are filled
 	 **/
 	@FXML
-	void onClickedSubmit(ActionEvent event) throws Exception {
+	public void onClickedSubmit(ActionEvent event) throws Exception {
 		CloneQuestion q = new CloneQuestion();
 
 		try {
@@ -139,7 +145,7 @@ public class questionsEditor extends AbstractController {
 				errorsList.append("No course has been chosen\n");
 			else
 				q.setCourse(course_combo.getValue());
-			
+
 			if (subject_text.getText().isEmpty())
 				errorsList.append("Subject is empty\n");
 			else
@@ -187,6 +193,8 @@ public class questionsEditor extends AbstractController {
 			default:
 				errorsList.append("No correct answer\n");
 			}
+			
+			q.setTeacherId(ClientMain.getUser().getId());
 
 			if (errorsList.length() != 0) {
 				throw new Exception(errorsList.toString());
@@ -228,6 +236,44 @@ public class questionsEditor extends AbstractController {
 		TextArea n = (TextArea) event.getSource();
 		n.setTextFormatter(
 				new TextFormatter<String>(change -> change.getControlNewText().length() <= 180 ? change : null));
+	}
+
+	@FXML
+	void onClickedCourse(ActionEvent event) {
+		if (course_combo.getValue() != null) {
+			try {
+				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, course_combo.getValue());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	void onClickedQuestion(ActionEvent event) {
+		if (question_combo.getValue() != null) {
+			CloneQuestion q = question_combo.getValue();
+			subject_text.setText(q.getSubject());
+			question_text.setText(q.getQuestionText());
+			answer_line_1.setText(q.getAnswer_1());
+			answer_line_2.setText(q.getAnswer_2());
+			answer_line_3.setText(q.getAnswer_3());
+			answer_line_4.setText(q.getAnswer_4());
+			switch (q.getCorrectAnswer()) {
+			case 1:
+				radio_1.setSelected(true);
+				break;
+			case 2:
+				radio_2.setSelected(true);
+				break;
+			case 3:
+				radio_3.setSelected(true);
+				break;
+			case 4:
+				radio_4.setSelected(true);
+				break;
+			}
+		}
 	}
 
 }

@@ -96,6 +96,10 @@ public class ClientService extends AbstractClient {
 						((questionsEditor) o).course_combo
 								.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 						break;
+					case SendAllQuestionInCourse:
+						((questionsEditor) o).question_combo
+						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+						break;		
 				}
 				break;
 				
