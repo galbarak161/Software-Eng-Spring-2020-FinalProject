@@ -70,7 +70,6 @@ public class studentController extends AbstractController {
 		
 		testsTable.getColumns().setAll(nameCol,dateCol , timeCol, codeCol, statusCol, gradeCol);
 		
-		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 		} catch (InterruptedException e) {

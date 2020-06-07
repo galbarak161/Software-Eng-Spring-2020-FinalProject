@@ -63,7 +63,6 @@ public class examCreator extends AbstractController {
 	private Button showQuestionButton;
 
 	public void initialize() {
-		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		questionsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		InsertedQuestions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
@@ -90,19 +89,21 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	public void OnCourseClicked(ActionEvent event) {
-		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, courseCombo.getValue());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (courseCombo.getValue() != null) {
+			try {
+				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, courseCombo.getValue());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			nameText.setDisable(false);
+			minutesText.setDisable(false);
+			hoursText.setDisable(false);
+			submit_button.setDisable(false);
+			showQuestionButton.setDisable(false);
+			studentsComment.setDisable(false);
+			teachersText.setDisable(false);
 		}
-		nameText.setDisable(false);
-		minutesText.setDisable(false);
-		hoursText.setDisable(false);
-		submit_button.setDisable(false);
-		showQuestionButton.setDisable(false);
-		studentsComment.setDisable(false);
-		teachersText.setDisable(false);
 	}
 	
 	@FXML
