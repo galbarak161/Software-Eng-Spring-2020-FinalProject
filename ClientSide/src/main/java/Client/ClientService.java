@@ -11,6 +11,7 @@ import CommonElements.DataElements.*;
 import CloneEntities.*;
 import OCSF.AbstractClient;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
 
 public class ClientService extends AbstractClient {
 	private static final Logger LOGGER = Logger.getLogger(ClientService.class.getName());
@@ -100,6 +101,9 @@ public class ClientService extends AbstractClient {
 				((questionsEditor) o).question_combo
 						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 				break;
+			case CreateNewQuestionResult:
+				showMsg("Success","The question has been successfully created!");
+				break;
 			}
 			break;
 
@@ -113,6 +117,9 @@ public class ClientService extends AbstractClient {
 				((examCreator) o).SetList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 
 				break;
+			case CreateNewExamResult:
+				showMsg("Success","The exam has been successfully created!");
+				break;
 
 			}
 			break;
@@ -122,7 +129,12 @@ public class ClientService extends AbstractClient {
 			case SendAllCoursesOfTeacher:
 				((testGenerator) o).courseCombo
 						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+				break;
+			case CreateNewTestResult:
+				showMsg("Success","The question has been successfully created!");
+				break;
 			}
+			break;
 
 		case "studentController":
 			switch (de.getOpCodeFromServer()) {
@@ -165,6 +177,13 @@ public class ClientService extends AbstractClient {
 		}
 		controllers.remove(currControlName);
 		AbstractController.msgRecieved();
+	}
+	
+	private void showMsg(String title, String content){
+		Alert info = new Alert(Alert.AlertType.INFORMATION);
+		info.setTitle(title);
+		info.setHeaderText(content);
+		info.showAndWait();
 	}
 
 }

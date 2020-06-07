@@ -11,8 +11,6 @@ public abstract class AbstractController {
 
 	protected Alert alert = new Alert(Alert.AlertType.ERROR);
 
-	protected Alert info = new Alert(Alert.AlertType.INFORMATION);
-
 	protected final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
 
 	protected final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";

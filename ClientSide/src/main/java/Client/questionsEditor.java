@@ -109,18 +109,6 @@ public class questionsEditor extends AbstractController {
 		///////////////////// ///////////////////////////////
 	}
 
-	/**
-	 * Changing Submit button color
-	 * 
-	 * @param color- color Submit would be changed to, #FFFFFF for example.
-	 */
-	void ChangeSubmitColor(String color) {
-		if (color == null)
-			submitButton.setStyle(color);
-		else
-			submitButton.setStyle(String.format("-fx-background-color: " + color + ";"));
-	}
-
 	/***********************
 	 * Layout functions **
 	 ***********************/
@@ -200,17 +188,11 @@ public class questionsEditor extends AbstractController {
 				throw new Exception(errorsList.toString());
 			}
 		} catch (Exception e) {
-			ChangeSubmitColor("#FF0000");
 			popError("Please fill all question fields", e.getMessage());
 			return;
 		}
 
 		GetDataFromDB(ClientToServerOpcodes.CreateNewQuestion, q);
-
-		ChangeSubmitColor("#00FF09");
-		info.setHeaderText("The question has been successfully created!");
-		info.setTitle("Success");
-		info.showAndWait();
 
 	}
 

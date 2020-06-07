@@ -65,7 +65,11 @@ public class testGenerator extends AbstractController {
 
 	@FXML
 	void onClickedCourse(ActionEvent event) {
-
+		try {
+			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacher, ClientMain.getUser());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
