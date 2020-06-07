@@ -3,6 +3,7 @@ package Client;
 import java.io.IOException;
 import CommonElements.DataElements;
 import CommonElements.DataElements.ClientToServerOpcodes;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -82,4 +83,12 @@ public abstract class AbstractController {
 
 	}
 
+	void showMsg(String title, String content){
+		Platform.runLater(() -> {
+			Alert info = new Alert(Alert.AlertType.INFORMATION);
+			info.setTitle(title);
+			info.setHeaderText(content);
+			info.showAndWait();
+		});
+	}
 }

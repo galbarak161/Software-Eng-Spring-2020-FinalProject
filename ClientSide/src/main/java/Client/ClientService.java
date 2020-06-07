@@ -102,7 +102,7 @@ public class ClientService extends AbstractClient {
 						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 				break;
 			case CreateNewQuestionResult:
-				showMsg("Success","The question has been successfully created!");
+				((questionsEditor) o).showMsg("Success","The question has been successfully created!");
 				break;
 			}
 			break;
@@ -118,7 +118,7 @@ public class ClientService extends AbstractClient {
 
 				break;
 			case CreateNewExamResult:
-				showMsg("Success","The exam has been successfully created!");
+				((examCreator) o).showMsg("Success","The exam has been successfully created!");
 				break;
 
 			}
@@ -130,8 +130,12 @@ public class ClientService extends AbstractClient {
 				((testGenerator) o).courseCombo
 						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 				break;
+			case SendAllExamsOfTeacherInCourse:
+				((testGenerator) o).examCombo
+						.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+				break;
 			case CreateNewTestResult:
-				showMsg("Success","The question has been successfully created!");
+				((testGenerator) o).showMsg("Success","The test has been successfully created!");
 				break;
 			}
 			break;
@@ -177,13 +181,6 @@ public class ClientService extends AbstractClient {
 		}
 		controllers.remove(currControlName);
 		AbstractController.msgRecieved();
-	}
-	
-	private void showMsg(String title, String content){
-		Alert info = new Alert(Alert.AlertType.INFORMATION);
-		info.setTitle(title);
-		info.setHeaderText(content);
-		info.showAndWait();
 	}
 
 }
