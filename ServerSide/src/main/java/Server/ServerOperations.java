@@ -11,6 +11,36 @@ import Hibernate.Entities.*;
 
 public class ServerOperations {
 
+	
+	
+	
+	
+	
+	/**
+	 *  function send all exam the teacher created
+	 * @param cloneUser Teacher 
+	 * @return	List<CloneExam> of all the exams that the teacher created
+	 */
+	public List<CloneExam> handleSendAllExamsOfTeacher(CloneUser cloneUser) {
+		List<Exam> listFromDB = null;
+		List<CloneExam> cloneExams = new ArrayList<CloneExam>();
+		try {
+			listFromDB = HibernateMain.getDataFromDB(Exam.class);
+			for (Exam exam : listFromDB) {
+				if (exam.getCreator().getId() == cloneUser.getId()) {
+					cloneExams.add(exam.createClone());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cloneExams;
+	}
+	
+	
 	/**
 	 * handleSendAllTestRelatedToTeacher get all studentsTest clones that are
 	 * related to a specific test.
