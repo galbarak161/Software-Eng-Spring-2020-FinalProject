@@ -65,12 +65,12 @@ public class examCreator extends AbstractController {
 	public void initialize() {
 		questionsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		InsertedQuestions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
+
 		questionNameCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
-		
+
 		QuestionGradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		
-		InsertedQuestions.getColumns().setAll(questionNameCol,QuestionGradeCol);
+
+		InsertedQuestions.getColumns().setAll(questionNameCol, QuestionGradeCol);
 		InsertedQuestions.setEditable(true);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
@@ -82,9 +82,7 @@ public class examCreator extends AbstractController {
 	}
 
 	public void SetList(ObservableList<CloneQuestion> questions) {
-		Platform.runLater(() -> {
-			this.questionsList.setItems(questions);
-		});
+		this.questionsList.setItems(questions);
 	}
 
 	@FXML
@@ -105,31 +103,31 @@ public class examCreator extends AbstractController {
 			teachersText.setDisable(false);
 		}
 	}
-	
+
 	@FXML
 	public void OnClickSubmit(ActionEvent event) {
 		CloneExam newExam = new CloneExam();
 		newExam.setQuestions(InsertedQuestions.getItems());
-		//newExam.setCourseId(courseId);
+		// newExam.setCourseId(courseId);
 		newExam.setExamName(nameText.getText());
 		newExam.setStudentComments(studentsComment.getText());
 		newExam.setTeacherComments(teachersText.getText());
 		newExam.setTeacherId(ClientMain.getUser().getId());
-		//newExam.setPoints();
+		// newExam.setPoints();
 	}
 
 	@FXML
 	public void moveQuestionRight(MouseEvent event) {
-		if(!(questionsList.getSelectionModel().getSelectedItems().isEmpty())) {
+		if (!(questionsList.getSelectionModel().getSelectedItems().isEmpty())) {
 			InsertedQuestions.getItems().addAll(questionsList.getSelectionModel().getSelectedItems());
 			questionsList.getItems().removeAll(questionsList.getSelectionModel().getSelectedItems());
 		}
-		
+
 	}
 
 	@FXML
 	public void moveQuestionLeft(MouseEvent event) {
-	if(!(InsertedQuestions.getSelectionModel().getSelectedItems().isEmpty())) {
+		if (!(InsertedQuestions.getSelectionModel().getSelectedItems().isEmpty())) {
 			questionsList.getItems().addAll(InsertedQuestions.getSelectionModel().getSelectedItems());
 			InsertedQuestions.getItems().removeAll(InsertedQuestions.getSelectionModel().getSelectedItems());
 		}

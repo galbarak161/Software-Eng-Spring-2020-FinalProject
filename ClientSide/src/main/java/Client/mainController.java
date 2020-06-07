@@ -22,6 +22,7 @@ public class mainController {
 	private BorderPane borderPane;
 
 	public void initialize() {
+		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		switch (ClientMain.getUser().getUserType()) {
 		case Student:
 			setMainPanel("studentController.fxml");
@@ -42,7 +43,6 @@ public class mainController {
 		Platform.runLater(() -> {
 			try {
 				mainPanel.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxml)));
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

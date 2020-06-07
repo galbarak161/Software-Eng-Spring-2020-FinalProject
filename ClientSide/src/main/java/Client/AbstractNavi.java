@@ -8,9 +8,7 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class AbstractNavi {
 	void switchMainPanel(String Sfxml) {
-		//Platform.runLater(() -> {
 		((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
-		//});
 	}
 
 	@FXML
