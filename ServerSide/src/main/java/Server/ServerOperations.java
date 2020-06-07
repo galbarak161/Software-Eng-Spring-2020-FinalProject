@@ -25,7 +25,7 @@ public class ServerOperations {
 			for (Exam exam : listFromDB) {
 				if (exam.getCreator().getId() == cloneUser.getId()) {
 					cloneExams.add(exam.createClone());
-					
+
 				}
 			}
 		} catch (Exception e) {
@@ -247,15 +247,28 @@ public class ServerOperations {
 		return tests;
 	}
 
-	public CloneUser handleLoginRequest(Login data) throws Exception {
+	public CloneUser handleLogInRequest(Login data) throws Exception {
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
 			if ((user.getUserName().equals(data.getUserName())) && (user.getPassword().equals(data.getPassword()))
 					&& (user.isLoggedIn() == false)) {
-				return user.createClone();
+				user.setLoggedIn(true);
+				if (HibernateMain.UpdateDataInDB(user) == 1)
+					return user.createClone();
 			}
 		}
 		return null;
+	}
+
+	public int handleLogOutRequest(int userId) throws Exception{
+		List<User> userList = HibernateMain.getDataFromDB(User.class);
+		for (User user : userList) {
+			if (user.getId() == userId) {
+				user.setLoggedIn(false);
+				return HibernateMain.UpdateDataInDB(user);
+			}
+		}
+		return -1;
 	}
 
 	/**

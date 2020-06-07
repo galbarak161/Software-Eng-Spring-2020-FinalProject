@@ -33,12 +33,10 @@ public abstract class User {
 	private String emailAddress;
 	
 	@Column(name = "isLoggedIn")
-	private Boolean isLoggedIn;
-	
-	@Column(name = "clientNumber")
-	private int clientNumber;
+	private boolean isLoggedIn;
 	
 	public User() {
+		super();
 	}
 
 	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
@@ -119,21 +117,11 @@ public abstract class User {
 		this.emailAddress = emailAddress;
 	}
 
-	public Boolean isLoggedIn() {
+	public boolean isLoggedIn() {
 		return isLoggedIn;
 	}
 
-	public void setLoggedIn(Boolean isLoggedIn) {
+	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
-
-	public int getClientNumber() {
-		return clientNumber;
-	}
-
-	public void setClientNumber(int clientNumber) {
-		this.clientNumber = clientNumber;
-	}
-	
-	
 }

@@ -39,7 +39,6 @@ public class ServerMain extends AbstractServer {
 			try {
 				this.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -123,8 +122,13 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case UserLogIn:
-				dataFromDB = serverHandler.handleLoginRequest((Login) de.getData());
+				dataFromDB = serverHandler.handleLogInRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
+				de.setData(dataFromDB);
+				break;
+			case UserLogOut:
+				dataFromDB = serverHandler.handleLogOutRequest((int) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
 				de.setData(dataFromDB);
 				break;
 			case CreateNewQuestion:
