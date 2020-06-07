@@ -22,6 +22,7 @@ import org.hibernate.service.ServiceRegistry;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTimeExtensionRequest;
@@ -397,7 +398,7 @@ public class HibernateMain {
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
 		session.flush();
-
+		
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////

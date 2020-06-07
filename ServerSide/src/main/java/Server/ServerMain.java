@@ -102,9 +102,9 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacher);
 				de.setData(dataFromDB);
 				break;
-			case GetAllExamsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((CloneTeacherCourse)de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
+			case GetAllTestsOfTeacherInCourse:
+				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((CloneTeacherCourse)de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
 			case GetAllStudentTests:
@@ -124,7 +124,17 @@ public class ServerMain extends AbstractServer {
 				break;
 			case GetAllRequests:
 				dataFromDB = serverHandler.handleSendAllRequests();
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllRequests);
+				de.setData(dataFromDB);
+				break;
+			case GetAllTestRelatedToTeacher:
+				dataFromDB = serverHandler.handleSendAllTestRelatedToTeacher((CloneUser) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestRelatedToTeacher);
+				de.setData(dataFromDB);
+				break;
+			case GetAllStudntTestRelatedToTest:
+				dataFromDB = serverHandler.handleSendAllStudntTestRelatedToTest((CloneTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudntTestRelatedToTest);
 				de.setData(dataFromDB);
 				break;
 			case CreateNewExam:

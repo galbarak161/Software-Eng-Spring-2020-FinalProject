@@ -12,6 +12,10 @@ public class CloneTest implements Serializable {
 	public enum ExamType {
 		Automated, Manual;
 	}
+	
+	public enum TestStatus {
+		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingApproved;
+	}
 
 	private LocalDate testDate;
 

@@ -15,7 +15,7 @@ public class DataElements implements Serializable {
 	 * GetAllQuestionInCourse (CloneCourse)
 	 * GetAllCoursesOfTeacher (CloneUser) 
 	 * GetAllTestsOfTeacher (CloneUser)
-	 * GetAllExamsOfTeacherInCourse (CloneTeacherCourse)
+	 * GetAllTestsOfTeacherInCourse (CloneTeacherCourse)
 	 * GetAllStudentTests (CloneUser) 
 	 * 
 	 * UserLogin (Login)
@@ -24,6 +24,8 @@ public class DataElements implements Serializable {
 	 * CreateNewExam (CloneExam) 
 	 * CreateNewTest (CloneTest)
 	 * GetAllRequests(NULL)
+	 * GetAllTestRelatedToTeacher(CloneUser)
+	 * GetAllStudntTestRelatedToTest(CloneTest)
 	 * 
 	 * Error (NULL)
 	 * 
@@ -32,8 +34,8 @@ public class DataElements implements Serializable {
 	 */
 	public enum ClientToServerOpcodes {
 		GetAllExams(1), GetAllTests(2), GetAllQuestion(3), GetAllQuestionInCourse(4), GetAllCoursesOfTeacher(5),
-		GetAllTestsOfTeacher(6), GetAllExamsOfTeacherInCourse(7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
-		CreateNewExam(11), CreateNewTest(12), GetAllRequests(13) ,Error(-1);
+		GetAllTestsOfTeacher(6), GetAllTestsOfTeacherInCourse (7), GetAllStudentTests(8), UserLogin(9), CreateNewQuestion(10),
+		CreateNewExam(11), CreateNewTest(12), GetAllRequests(13) , GetAllTestRelatedToTeacher(14), GetAllStudntTestRelatedToTest(15),Error(-1);
 
 		public int value;
 
@@ -59,6 +61,8 @@ public class DataElements implements Serializable {
 	 * CreateNewExamResult (CloneExam) 
 	 * CreateNewTestResult (CloneTest) 
 	 * SendAllRequests(List <CloneTimeExtensionRequest>) 
+	 * SendAllTestRelatedToTeacher(List <CloneTest>)
+	 * SendAllStudntTestRelatedToTest(List <CloneStudentTest>)
 	 * 
 	 * Error(NULL)
 	 * 
@@ -67,9 +71,9 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllExams(101), SendAllTests(102), SendAllQuestion(103), SendAllQuestionInCourse(104),
-		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllExamsOfTeacherInCourse(107),
+		SendAllCoursesOfTeacher(105), SendAllTestsOfTeacher(106), SendAllTestsOfTeacherInCourse(107),
 		SendAllStudentTests(108), UserLoggedIn(109), CreateNewQuestionResult(110), CreateNewExamResult(111),
-		CreateNewTestResult(112), SendAllRequests(113),Error(-1);
+		CreateNewTestResult(112), SendAllRequests(113), SendAllTestRelatedToTeacher(114),SendAllStudntTestRelatedToTest (115),Error(-1);
 
 		public int value;
 
