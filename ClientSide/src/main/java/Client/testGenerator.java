@@ -9,6 +9,7 @@ import CloneEntities.CloneExam;
 import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTest.TestStatus;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,12 +43,6 @@ public class testGenerator extends AbstractController {
 
 	@FXML
 	private TextField beginText;
-
-	@FXML
-	private TextField endText;
-
-	@FXML
-	private TextField codeText;
 
 	private ToggleGroup radioGroup;
 
@@ -94,12 +89,6 @@ public class testGenerator extends AbstractController {
 			if (beginText.getText().isEmpty() || !Pattern.compile(reg).matcher(beginText.getText()).matches())
 				errorsList.append("Begin time is empty or incorrect\n");
 
-			if (endText.getText().isEmpty() || !Pattern.compile(reg).matcher(endText.getText()).matches())
-				errorsList.append("End time is empty or incorrect\n");
-
-			if (codeText.getText().isEmpty())
-				errorsList.append("Code is empty\n");
-
 			if (errorsList.length() != 0) {
 				throw new Exception(errorsList.toString());
 			}
@@ -110,9 +99,7 @@ public class testGenerator extends AbstractController {
 		LocalDate startDate = datePicker.getValue();
 		LocalTime startTime = LocalTime.of(Integer.valueOf(beginText.getText().split(":")[0]),
 				Integer.valueOf(beginText.getText().split(":")[1]));
-		int dur = Math.abs(HOUR_TO_MINUTE * Integer.valueOf(beginText.getText().split(":")[0])
-				- HOUR_TO_MINUTE * Integer.valueOf(beginText.getText().split(":")[1]));
-
+		
 		ExamType type;
 
 		if (radioGroup.getSelectedToggle().toString() == "Automated")
@@ -120,7 +107,7 @@ public class testGenerator extends AbstractController {
 		else
 			type = CloneTest.ExamType.Manual;
 
-		CloneTest newTest = new CloneTest(startDate, startTime, 0, dur, type, ClientMain.getUser().getId(),
+		CloneTest newTest = new CloneTest(startDate, startTime, 0, 0, type, ClientMain.getUser().getId(),
 				examCombo.getValue());
 		
 		try {
