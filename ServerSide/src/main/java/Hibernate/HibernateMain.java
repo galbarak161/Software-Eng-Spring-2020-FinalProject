@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
@@ -84,6 +83,36 @@ public class HibernateMain {
 	}
 
 	/**
+	 * Function to handle Errors in Hibernate
+	 * Every Bibernate exception will be handle by this function
+	 */
+	public static void hibernateRollBake() {
+		if (session != null) {
+			session.getTransaction().rollback();
+		}
+		System.err.println("Hibernate: An error occured, changes have been rolled back.");
+	}
+
+	
+	public static <T> int insertDataToDB(T newEntitiy) {
+		int status = 1;
+		try {
+			session.beginTransaction();
+			session.save(newEntitiy);
+			session.flush();
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			System.err.println("Hibernate: An error occured, changes have been rolled back.");
+			status = -1;
+		} finally {
+			session.clear();
+		}
+		return status;
+	}
+
+	/**
 	 * questionToUpdate(Question) update the question in DB
 	 * 
 	 * @param orignalQustion after updated fields
@@ -96,7 +125,7 @@ public class HibernateMain {
 			session.update(orignalQustion);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			hibernateRollBake();
 			return -1;
 		}
 		return 1;
@@ -330,7 +359,7 @@ public class HibernateMain {
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(name, t1, questionPoints, duration, studies[0], courses[0], teacherCommString,
+		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString,
 				studentCommString);
 		e1.addQuestion(questionList);
 		session.save(e1);
@@ -348,14 +377,14 @@ public class HibernateMain {
 		LocalTime testTime = LocalTime.of(hour, minute);
 
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
-		
+
 		TimeExtensionRequest request = new TimeExtensionRequest("Bima tem odd zman", 50);
 		test1.setExtensionRequests(request);
-		
+
 		request.setRequestConfirmed(true);
 		session.save(request);
 		session.flush();
-		
+
 		session.save(test1);
 		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
 		session.save(test2);
@@ -368,8 +397,7 @@ public class HibernateMain {
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
 		session.flush();
-		
-		
+
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////
@@ -424,10 +452,7 @@ public class HibernateMain {
 			status = true;
 
 		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("Hibernate: An error occured, changes have been rolled back.");
+			hibernateRollBake();
 			status = false;
 			exception.printStackTrace();
 		}

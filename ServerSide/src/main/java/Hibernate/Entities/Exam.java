@@ -49,7 +49,7 @@ public class Exam {
 		tests = new ArrayList<Test>();
 	}
 
-	public Exam(String examName, Teacher creator, List<Integer> questionsPoints, int duration, Study study,
+	public Exam(String examName, Teacher creator, List<Integer> questionsPoints, int duration,
 			Course course, String teacherComments, String studentComments) {
 		this.examName = examName;
 		this.duration = duration;
@@ -63,7 +63,7 @@ public class Exam {
 	}
 
 	public CloneExam createClone() {
-		CloneExam clone = new CloneExam(examName, duration, teacherComments, studentComments, course.createClone());
+		CloneExam clone = new CloneExam(null, null, duration, examName, teacherComments, studentComments, course.getId(), creator.getId());
 		return clone;
 	}
 	

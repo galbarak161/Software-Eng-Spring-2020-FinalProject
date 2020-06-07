@@ -26,11 +26,13 @@ public class CloneQuestion implements Serializable {
 
 	private CloneCourse course;
 
+	private int teacherId;
+	
 	public CloneQuestion() {
 	}
 
 	public CloneQuestion(int id, int questionCode, String subject, String questionText, String answer_1,
-			String answer_2, String answer_3, String answer_4, int correctAnswer, CloneCourse course) {
+			String answer_2, String answer_3, String answer_4, int correctAnswer, CloneCourse course, int teacherId) {
 		this.id = id;
 		this.questionCode = questionCode;
 		this.subject = subject;
@@ -41,19 +43,7 @@ public class CloneQuestion implements Serializable {
 		this.answer_4 = answer_4;
 		this.correctAnswer = correctAnswer;
 		this.course = course;
-	}
-
-	public void clone(CloneQuestion copyFrom) {
-		this.id = copyFrom.getId();
-		this.questionCode = copyFrom.getQuestionCode();
-		this.subject = copyFrom.getSubject();
-		this.questionText = copyFrom.getQuestionText();
-		this.answer_1 = copyFrom.getAnswer_1();
-		this.answer_2 = copyFrom.getAnswer_2();
-		this.answer_3 = copyFrom.getAnswer_3();
-		this.answer_4 = copyFrom.getAnswer_4();
-		this.correctAnswer = copyFrom.getCorrectAnswer();
-		this.course = copyFrom.getCourse();
+		this.teacherId = teacherId;
 	}
 
 	@Override
@@ -137,7 +127,9 @@ public class CloneQuestion implements Serializable {
 		return course;
 	}
 
-	public void setCourse(CloneCourse course) {
-		this.course = course;
+	public int getTeacherId() {
+		return teacherId;
 	}
+
+	
 }

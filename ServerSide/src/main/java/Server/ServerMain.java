@@ -1,14 +1,11 @@
 package Server;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import CloneEntities.*;
 import CommonElements.DataElements;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
-import Hibernate.Entities.*;
 import OCSF.AbstractServer;
 import OCSF.ConnectionToClient;
 
@@ -131,6 +128,9 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case CreateNewExam:
+				dataFromDB = serverHandler.handleCreateNewExam((CloneExam) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewExamResult);
+				de.setData(dataFromDB);
 				break;
 			case CreateNewTest:
 				break;
