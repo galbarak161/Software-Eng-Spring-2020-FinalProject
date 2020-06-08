@@ -5,15 +5,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
 
-public class principalController extends AbstractController {
+public class principalController {
 
     @FXML
-    private TableView<CloneTimeExtensionRequest> testsTable;
+    private Button displayButton;
+
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private TableView<CloneTimeExtensionRequest> requestsList;
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> nameCol;
+
+    @FXML
+    private TableColumn<CloneTimeExtensionRequest, String> testName;
+
+    @FXML
+    private TableColumn<CloneTimeExtensionRequest, String> codeCol;
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> dateCol;
@@ -22,18 +33,6 @@ public class principalController extends AbstractController {
     private TableColumn<CloneTimeExtensionRequest, String> timeCol;
 
     @FXML
-    private TableColumn<CloneTimeExtensionRequest, String> codeCol;
-
-    @FXML
     private TableColumn<CloneTimeExtensionRequest, String> statusCol;
-
-    @FXML
-    private TableColumn<CloneTimeExtensionRequest, String> gradeCol;
-
-    @FXML
-    private Button displayButton;
-
-    @FXML
-    private Button startButton;
 
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthListUI;
+
 import CloneEntities.*;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
@@ -418,14 +420,22 @@ public class ServerOperations {
 				newCloneExam.getTeacherComments(), newCloneExam.getStudentComments());
 
 		HibernateMain.insertDataToDB(newCloneExam);
-
+		
+		List<Course> courses = HibernateMain.getDataFromDB(Course.class);
+		for (Course course : courses) {
+			if(course.getId()== newCloneExam.getCourseId()) {
+				course.addExames(newExam);
+			}
+		}
+		
+		
 		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
 	}
 
 	
 	/**
-	 * handleCreateNewTest(CloneTest newCloneTest) creates new Exam based on CloneTest
+	 * handleCreateNewTest(CloneTest newCloneTest) creates new Test based on CloneTest
 	 * 
 	 * @param newCloneTest a Clone exam entity that has all exam details.
 	 * @return null if information is not complete , otherwise it updates the DB with new test
@@ -444,6 +454,14 @@ public class ServerOperations {
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
 				+ newTest.getExecutionCode());
+		
+		Course course =getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
+		
+		
+		List<Student> students = course.getStudents();
+		for (Student student : students) {
+				student.addTests(new StudentTest(student, newTest));
+		}
 		return newTest.createClone();
 	}
 

@@ -10,6 +10,9 @@ public class Student extends User {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
 	private List<StudentTest> tests;
+	
+	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Course> courses;
 
 	public Student() {
 		super();
@@ -28,5 +31,15 @@ public class Student extends User {
 	public void addTests(StudentTest test) {
 		this.tests.add(test);
 	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+	
+	public void addcourses(Course course) {
+		this.courses.add(course);
+	}
+	
+	
 
 }

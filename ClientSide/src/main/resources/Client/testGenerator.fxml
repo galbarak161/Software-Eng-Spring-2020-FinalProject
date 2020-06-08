@@ -32,7 +32,7 @@
       <TextField fx:id="beginText" layoutX="176.0" layoutY="430.0" promptText="&quot;HH:MM&quot;" />
       <ImageView fitHeight="323.0" fitWidth="354.0" layoutX="373.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/school-test.png" />
+            <Image url="@../school-test.png" />
          </image>
       </ImageView>
    </children>

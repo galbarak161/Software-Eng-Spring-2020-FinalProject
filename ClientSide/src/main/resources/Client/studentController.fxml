@@ -9,21 +9,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.studentController">
    <children>
-      <Label layoutX="183.0" layoutY="14.0" prefHeight="41.0" prefWidth="161.0" text="Student Panel" textFill="#ab1818">
+      <Label layoutX="17.0" layoutY="14.0" prefHeight="41.0" prefWidth="125.0" text="Student Panel" textFill="#ab1818">
          <font>
-            <Font name="Calibri" size="28.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="displayButton" layoutX="644.0" layoutY="385.0" mnemonicParsing="false" onAction="#OnClickedDisplay" prefHeight="25.0" prefWidth="88.0" text="Display Test" />
-      <Button fx:id="startButton" layoutX="644.0" layoutY="185.0" mnemonicParsing="false" onAction="#OnClickedStartTest" prefHeight="25.0" prefWidth="88.0" text="Start Test" />
-      <TableView fx:id="testsTable" layoutX="17.0" layoutY="61.0" prefHeight="382.0" prefWidth="622.0">
+      <Button fx:id="displayButton" layoutX="487.0" layoutY="385.0" mnemonicParsing="false" onAction="#OnClickedDisplay" prefHeight="25.0" prefWidth="88.0" text="Display Test" />
+      <Button fx:id="startButton" layoutX="127.0" layoutY="385.0" mnemonicParsing="false" onAction="#OnClickedStartTest" prefHeight="25.0" prefWidth="88.0" text="Start Test" />
+      <TableView fx:id="testsTable" layoutX="17.0" layoutY="61.0" prefHeight="291.0" prefWidth="710.0">
         <columns>
-          <TableColumn fx:id="nameCol" prefWidth="108.80005264282227" text="Test Name" />
-          <TableColumn fx:id="dateCol" prefWidth="147.99998474121094" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="112.0" text="Time" />
-            <TableColumn fx:id="codeCol" prefWidth="107.20001220703125" text="Test Code" />
-            <TableColumn fx:id="statusCol" prefWidth="73.5999755859375" text="Status" />
-            <TableColumn fx:id="gradeCol" prefWidth="72.7999267578125" text="Grade" />
+          <TableColumn fx:id="nameCol" prefWidth="175.19995498657227" text="Test Name" />
+          <TableColumn fx:id="dateCol" prefWidth="121.60002136230469" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="104.79998779296875" text="Time" />
+            <TableColumn fx:id="codeCol" prefWidth="125.60003662109375" text="Test Code" />
+            <TableColumn fx:id="statusCol" prefWidth="104.00006103515625" text="Status" />
+            <TableColumn fx:id="gradeCol" prefWidth="79.99993896484375" text="Grade" />
         </columns>
       </TableView>
    </children>

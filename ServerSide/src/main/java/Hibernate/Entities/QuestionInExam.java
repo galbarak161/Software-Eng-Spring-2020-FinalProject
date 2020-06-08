@@ -2,6 +2,8 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneQuestionInExam;
+
 @Entity
 @Table(name = "QuestionInExam")
 public class QuestionInExam {
@@ -31,6 +33,12 @@ public class QuestionInExam {
 		setQuestion(question);
 	}
 
+	public CloneQuestionInExam createClone() {
+		CloneQuestionInExam cloneQuestionInExam = new CloneQuestionInExam(getPointsForQuestion(), getExam().createClone(), getQuestion().createClone());
+		cloneQuestionInExam.setId(id);
+		return cloneQuestionInExam;
+		
+	}
 	public int getId() {
 		return id;
 	}

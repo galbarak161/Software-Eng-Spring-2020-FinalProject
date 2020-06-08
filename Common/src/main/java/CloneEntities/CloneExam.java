@@ -10,9 +10,8 @@ public class CloneExam implements Serializable {
 
 	private int id;
 	
-	private List<CloneQuestion> questions;
+	private List<CloneQuestionInExam> questions;
 
-	private List<Integer> points;
 
 	private int duration;
 
@@ -31,10 +30,10 @@ public class CloneExam implements Serializable {
 	public CloneExam() {
 	}
 
-	public CloneExam(List<CloneQuestion> questions, List<Integer> points, int duration, String examName,
+	public CloneExam(List<CloneQuestionInExam> questions, int duration, String examName,
 			String teacherComments, String studentComments, int courseId, String courseName, int teacherId) {
 		this.questions = questions;
-		this.points = points;
+
 		this.duration = duration;
 		this.examName = examName;
 		TeacherComments = teacherComments;
@@ -52,21 +51,14 @@ public class CloneExam implements Serializable {
 		this.id = id;
 	}
 	
-	public List<CloneQuestion> getQuestions() {
+	public List<CloneQuestionInExam> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(List<CloneQuestion> questions) {
+	public void setQuestions(List<CloneQuestionInExam> questions) {
 		this.questions = questions;
 	}
 
-	public List<Integer> getPoints() {
-		return points;
-	}
-
-	public void setPoints(List<Integer> points) {
-		this.points = points;
-	}
 
 	public int getDuration() {
 		return duration;
