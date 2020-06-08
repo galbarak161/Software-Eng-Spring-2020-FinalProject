@@ -41,6 +41,8 @@ public class teacherController extends AbstractController {
 
 	@FXML
 	private TableColumn<CloneTest, String> statusCol;
+	
+	public Thread refreshThread;
 
 	@FXML
 	void approveButton(ActionEvent event) {
@@ -66,12 +68,24 @@ public class teacherController extends AbstractController {
 		
 		testsList.getColumns().setAll(nameCol,dateCol , timeCol, codeCol, statusCol);
 	
-		
-		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        new Thread() {
+
+            public void run() {
+        		try {
+        			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
+        		} catch (InterruptedException e) {
+        			e.printStackTrace();
+        		}
+        		try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        }.start();
+        
+
 	}
 
 	public void setCourses(ObservableList<CloneCourse> c) {

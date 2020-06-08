@@ -9,30 +9,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.personalInfo">
    <children>
-      <Label layoutX="295.0" layoutY="14.0" text="Personal Info" textFill="#9a0707">
+      <Label layoutX="26.0" layoutY="20.0" text="Personal Info" textFill="#9a0707">
          <font>
-            <Font name="System Bold" size="25.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="76.0" layoutY="70.0" text="First Name:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="76.0" layoutY="117.0" text="Last Name:">
+      <Label layoutX="26.0" layoutY="71.0" text="First Name:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="84.0" layoutY="163.0" text="Email:">
+      <Label layoutX="26.0" layoutY="116.0" text="Last Name:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="163.0" text="Email:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button fx:id="setButton" disable="true" layoutX="313.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnClickedSetDetails" text="Set Personal Details" />
-      <TextField fx:id="firstField" disable="true" layoutX="177.0" layoutY="67.0" prefHeight="26.0" prefWidth="207.0" />
-      <TextField fx:id="lastField" disable="true" layoutX="177.0" layoutY="115.0" prefHeight="26.0" prefWidth="207.0" />
-      <TextField fx:id="emailField" disable="true" layoutX="177.0" layoutY="161.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="firstField" disable="true" layoutX="127.0" layoutY="68.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="lastField" disable="true" layoutX="127.0" layoutY="114.0" prefHeight="26.0" prefWidth="207.0" />
+      <TextField fx:id="emailField" disable="true" layoutX="127.0" layoutY="160.0" prefHeight="26.0" prefWidth="207.0" />
       <CheckBox fx:id="editCheck" layoutX="451.0" layoutY="118.0" mnemonicParsing="false" onAction="#OnClickedEdit" text="Enable Edit" />
    </children>
 </AnchorPane>

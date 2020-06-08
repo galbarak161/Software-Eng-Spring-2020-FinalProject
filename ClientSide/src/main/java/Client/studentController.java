@@ -81,20 +81,12 @@ public class studentController extends AbstractController {
 		
 
 	}
-
-	void switchMainPanel(String Sfxml) {
-		Platform.runLater(() -> {
-			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
-		});
-	}
 	
 	@FXML
 	void OnClickedStartTest(ActionEvent event) {
 			switchMainPanel("TestCodeInput.fxml");
 
-	}
-
-	
+	}	
 	
 	@FXML
     void OnClickedDisplay(ActionEvent event) {

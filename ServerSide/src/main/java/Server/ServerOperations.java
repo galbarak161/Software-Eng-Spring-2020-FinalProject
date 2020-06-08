@@ -90,8 +90,9 @@ public class ServerOperations {
 	}
 
 	/**
+	 * 	sends all time extension requests
 	 * 
-	 * @return send all time extension requests
+	 * @return List<CloneTimeExtensionRequest> send all time extension requests
 	 */
 	public List<CloneTimeExtensionRequest> handleSendAllRequests() {
 		List<TimeExtensionRequest> listFromDB = null;
@@ -110,8 +111,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * 
-	 * @return send all exams in system
+	 * 	sends all exams in DB
+	 * @return List<CloneExam> send all exams in system
 	 */
 	public List<CloneExam> handleSendAllExams() {
 		List<Exam> listFromDB = null;
@@ -130,8 +131,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * 
-	 * @return send all tests in system
+	 * send all test in DB
+	 * @return List<CloneTest> send all tests in system
 	 */
 	public List<CloneTest> handleSendAllTests() {
 		List<Test> listFromDB = null;
@@ -173,7 +174,7 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendQuestionsInCourse(CloneCourse)
+	 * handleSendQuestionsInCourse(CloneCourse) send all the question related to a specific course
 	 * 
 	 * @param cloneCourse - User chose this course and asked for it's questions
 	 * @return all the questions that are associated with this course
@@ -198,7 +199,7 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllCoursesOfTeacher(CloneUser)
+	 * handleSendAllCoursesOfTeacher(CloneUser) send all courses who are taught by teachers
 	 * 
 	 * @param CloneUser - Teacher wants to see all courses he teaches
 	 * @return all the courses that are associated with this Teacher
@@ -223,7 +224,7 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestsFromTeacher(CloneUser data)
+	 * handleSendAllTestsFromTeacher(CloneUser data) send all test related to teacher, he was the (executor)
 	 * 
 	 * @param CloneUser - Teacher wants to see all the tests that he was executed
 	 * @return list of Tests
@@ -247,6 +248,15 @@ public class ServerOperations {
 		return tests;
 	}
 
+	
+	/**
+	 * handleLogInRequest(Login data)  function check users's username and passwords and keeps user from login while account is till logged 
+	 * from another place, and updates log status in DB.
+	 * 
+	 * @param data	 contains username and password entered
+	 * @return	if the information is correct and he is not logged in the system returns new CloneUsert
+	 * @throws Exception
+	 */
 	public CloneUser handleLogInRequest(Login data) throws Exception {
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
@@ -260,6 +270,13 @@ public class ServerOperations {
 		return null;
 	}
 
+	/**
+	 * 	handleLogOutRequest(int userId) function checkis user is log in and if he is the function update login status in DB
+	 * 
+	 * @param userId the users id , who want to log out
+	 * @return -1 if user is not found to be logged in , otherwise it found the user and updates status.
+	 * @throws Exception
+	 */
 	public int handleLogOutRequest(int userId) throws Exception{
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
@@ -356,9 +373,11 @@ public class ServerOperations {
 	}
 
 	/**
+	 * handleCreateNewQuestion(CloneQuestion newCloneQuestion)  created new question , based on constructor in CloneQuestion and
+	 * adds it to DB
 	 * 
-	 * @param newCloneQuestion
-	 * @return
+	 * @param newCloneQuestion the question we want to create
+	 * @return null if information is not complete , otherwise it updates the Db with new question
 	 * @throws Exception
 	 */
 	public CloneQuestion handleCreateNewQuestion(CloneQuestion newCloneQuestion) throws Exception {
@@ -380,6 +399,14 @@ public class ServerOperations {
 		return newQuestion.createClone();
 	}
 
+	
+	/**
+	 *  handleCreateNewExam(CloneExam newCloneExam) creates new Exam based on CloneExam
+	 *  
+	 * @param newCloneExam a Clone exam entity that has all exam details.
+	 * @return null if information is not complete , otherwise it updates the DB with new exam
+	 * @throws Exception
+	 */
 	public CloneExam handleCreateNewExam(CloneExam newCloneExam) throws Exception {
 		Teacher t = (Teacher) getUserByCloneId(newCloneExam.getTeacherId());
 		Course c = getCourseByCloneId(newCloneExam.getCourseId());
@@ -396,6 +423,14 @@ public class ServerOperations {
 		return newExam.createClone();
 	}
 
+	
+	/**
+	 * handleCreateNewTest(CloneTest newCloneTest) creates new Exam based on CloneTest
+	 * 
+	 * @param newCloneTest a Clone exam entity that has all exam details.
+	 * @return null if information is not complete , otherwise it updates the DB with new test
+	 * @throws Exception
+	 */
 	public CloneTest handleCreateNewTest(CloneTest newCloneTest) throws Exception {
 		Teacher t = (Teacher) getUserByCloneId(newCloneTest.getTeacherId());
 		Exam e = getExmaByCloneId(newCloneTest.getExamToExecute().getId());
@@ -412,6 +447,14 @@ public class ServerOperations {
 		return newTest.createClone();
 	}
 
+	
+	/**
+	 * hhandleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) creates new Exam based on CloneTest
+	 * 
+	 * @param newCloneStudentTest a Clone exam entity that has all StudentTest  details.
+	 * @return null if information is not complete , otherwise it updates the DB with new StudentTest
+	 * @throws Exception
+	 */
 	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
 		Student s = (Student) getUserByCloneId(newCloneStudentTest.getStudent().getId());
 		Test t = getTestByCloneId(newCloneStudentTest.getTest().getId());
@@ -426,6 +469,14 @@ public class ServerOperations {
 		return newStudentTest.createClone();
 	}
 
+	
+	/**
+	 *  function receives CloneTest  returns  Test from DB that match the CloneTest.
+	 *  
+	 * @param testid 	
+	 * @return	null if not found otherwise it return Test object
+	 * @throws Exception
+	 */
 	private Test getTestByCloneId(int testid) throws Exception {
 		List<Test> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(Test.class);
@@ -437,6 +488,13 @@ public class ServerOperations {
 		return null;
 	}
 
+	/**
+	 *  function receives CloneExam  return  Exam from DB that match the CloneExam.
+	 *  
+	 * @param examId 	
+	 * @return	null if not found otherwise it return Exam object
+	 * @throws Exception
+	 */
 	private Exam getExmaByCloneId(int examId) throws Exception {
 		List<Exam> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(Exam.class);
@@ -448,6 +506,14 @@ public class ServerOperations {
 		return null;
 	}
 
+	
+	/**
+	 *  function receives CloneCourse  returns  Course from DB that match the CloneCourse.
+	 *  
+	 * @param courseId 	
+	 * @return	null if not found otherwise it return Course object
+	 * @throws Exception
+	 */
 	private Course getCourseByCloneId(int courseId) throws Exception {
 		List<Course> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(Course.class);
@@ -459,6 +525,14 @@ public class ServerOperations {
 		return null;
 	}
 
+	
+	/**
+	 *  function receives userId  returns  User from DB that match the CloneUser.
+	 *  
+	 * @param userId 	
+	 * @return	null if not found otherwise it return User object
+	 * @throws Exception
+	 */
 	public User getUserByCloneId(int userId) throws Exception {
 		List<User> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(User.class);

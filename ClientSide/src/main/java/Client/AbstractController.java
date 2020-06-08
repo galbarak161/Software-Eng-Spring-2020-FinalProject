@@ -67,6 +67,12 @@ public abstract class AbstractController {
 		}
 		msgRecived = false;
 	}
+	
+	void switchMainPanel(String Sfxml) {
+		Platform.runLater(() -> {
+			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
+		});
+	}
 
 	/**
 	 * Activate as a respond for an unknown exception in client
