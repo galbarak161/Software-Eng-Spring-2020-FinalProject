@@ -3,10 +3,10 @@ package Server;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.plaf.synth.SynthListUI;
 
 import CloneEntities.*;
+import CommonElements.DataElements;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
@@ -476,8 +476,6 @@ public class ServerOperations {
 	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
 		Student s = (Student) getUserByCloneId(newCloneStudentTest.getStudent().getId());
 		Test t = getTestByCloneId(newCloneStudentTest.getTest().getId());
-		if (t == null || s == null)
-			return null;
 
 		StudentTest newStudentTest = new StudentTest(s, t);
 
@@ -485,6 +483,53 @@ public class ServerOperations {
 
 		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
 		return newStudentTest.createClone();
+	}
+	
+	/**
+	 * handleCreateNewTimeExtensionRequest creates new TimeExtensionRequest based on CloneTimeExtensionRequest
+	 * 
+	 * @param newCloneTimeExtensionRequest a Clone TimeExtensionRequest entity that has all TimeExtensionRequest  details.
+	 * @return null if information is not complete , otherwise it updates the DB with new TimeExtensionRequest
+	 * @throws Exception
+	 * 
+	 */
+	public CloneTimeExtensionRequest handleCreateNewTimeExtensionRequest(CloneTimeExtensionRequest newCloneTimeExtensionRequest) throws Exception {
+		TimeExtensionRequest timeExtensionRequest= new TimeExtensionRequest(newCloneTimeExtensionRequest.getBody(),
+																			newCloneTimeExtensionRequest.getTimeToExtenedInMinute());
+		if (newCloneTimeExtensionRequest.getTest() == null ) {
+			return null;
+		}
+		Test test = getTestByCloneId(newCloneTimeExtensionRequest.getTest().getId());
+		timeExtensionRequest.setTest(test);
+		
+		HibernateMain.insertDataToDB(timeExtensionRequest);
+		
+		return timeExtensionRequest.createClone();
+		
+	}
+	
+	/**
+	 * handleUpdateTimeExtensionRequest function receives answer on time extension request  from client and updates Test entity in DB
+	 * @param cloneTimeExtensionRequest the time request with answer
+	 * @return	CloneTest with updates time
+	 * @throws Exception
+	 */
+	public CloneTest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest) throws Exception {
+		List<TimeExtensionRequest> timeExtensionRequests = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
+		TimeExtensionRequest request =null;
+		for (TimeExtensionRequest timeExtensionRequest : timeExtensionRequests) {
+			if(timeExtensionRequest.getId() == cloneTimeExtensionRequest.getId()) {
+				request = timeExtensionRequest;
+			}
+		}
+		if(request==null) {
+			return null;
+		}
+		request.setRequestConfirmed(cloneTimeExtensionRequest.isRequestConfirmed());
+		if(cloneTimeExtensionRequest.isRequestConfirmed()) {
+			request.getTest().setExtensionRequests(request);
+		}
+		return request.getTest().createClone();
 	}
 
 	

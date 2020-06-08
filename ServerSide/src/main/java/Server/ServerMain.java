@@ -161,6 +161,16 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTestResult);
 				de.setData(dataFromDB);
 				break;
+			case CreateNewTimeExtensionRequest:
+				dataFromDB = serverHandler.handleCreateNewTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
+				de.setData(dataFromDB);
+				break;
+			case GetAnswerToTimeExtensionRequest:
+				dataFromDB = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
+				de.setData(dataFromDB);
+				break;
 			case CreateNewStudentTest:
 				dataFromDB = serverHandler.handleCreateNewStudentTest((CloneStudentTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewStudentTestResult);
