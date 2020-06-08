@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import CloneEntities.CloneExam;
-import CloneEntities.CloneQuestionInExam;
 
 @Entity
 @Table(name = "Exam")
@@ -19,9 +18,6 @@ public class Exam {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "teacherId")
 	private Teacher creator;
-
-//	@ManyToMany(mappedBy = "exames", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private List<Question> questions;
 
 	@Column(name = "examName")
 	private String examName;
@@ -44,18 +40,17 @@ public class Exam {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "examToExecute")
 	private List<Test> tests;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "exam")
 	private List<QuestionInExam> questionInExam;
 
 	public Exam() {
-		//this.questions = new ArrayList<Question>();
 		tests = new ArrayList<Test>();
 		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
-	public Exam(String examName, Teacher creator, List<Integer> questionsPoints, int duration, Course course,
-			String teacherComments, String studentComments) {
+	public Exam(String examName, Teacher creator, int duration, Course course, String teacherComments,
+			String studentComments) {
 		this.examName = examName;
 		this.duration = duration;
 		this.teacherComments = teacherComments;
@@ -63,19 +58,13 @@ public class Exam {
 		setCreator(creator);
 		setCourse(course);
 		GenerateExamCode();
-		//this.questions = new ArrayList<Question>();
 		tests = new ArrayList<Test>();
 		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
 	public CloneExam createClone() {
-		List<CloneQuestionInExam> qInExams = new ArrayList<CloneQuestionInExam>();
-		for (QuestionInExam questionInExam : getQuestionInExam()) {
-			qInExams.add(questionInExam.createClone());
-		}
-		CloneExam clone = new CloneExam(qInExams, duration, examName, teacherComments, studentComments,
-				course.getId(), course.getCourseName() ,creator.getId());
-		clone.setId(id);
+		CloneExam clone = new CloneExam(id, duration, examName, teacherComments, studentComments, course.getId(),
+				course.getCourseName(), creator.getId());
 		return clone;
 	}
 
@@ -102,17 +91,6 @@ public class Exam {
 		this.creator = creator;
 		creator.getExames().add(this);
 	}
-
-//	public List<Question> getQuestions() {
-//		return questions;
-//	}
-//
-//	public void addQuestion(Question... questions) {
-//		for (Question question : questions) {
-//			this.questions.add(question);
-//			question.getExames().add(this);
-//		}
-//	}
 
 	public Course getCourse() {
 		return course;

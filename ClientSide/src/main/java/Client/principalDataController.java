@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Observable;
 
 import CloneEntities.*;
-import CommonElements.DataElements.ClientToServerOpcodes;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

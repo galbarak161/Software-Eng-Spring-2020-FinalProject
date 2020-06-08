@@ -26,27 +26,21 @@ public abstract class User {
 	@Column(name = "lastName")
 	private String lastName;
 
-	@Column(name = "identityNumber")
-	private String identityNumber;
-
 	@Column(name = "emailAddress")
 	private String emailAddress;
-	
+
 	@Column(name = "isLoggedIn")
 	private boolean isLoggedIn;
-	
+
 	public User() {
-		super();
 	}
 
 	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
-		super();
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
-		//this.identityNumber = identityNumber;
 		isLoggedIn = false;
 	}
 
@@ -60,8 +54,7 @@ public abstract class User {
 		else if (this instanceof Principal)
 			userType = UserType.Principal;
 
-		CloneUser clone = new CloneUser(this.id, this.firstName, this.lastName, this.emailAddress, userType);
-		clone.setId(id);
+		CloneUser clone = new CloneUser(id, firstName, lastName, emailAddress, userType);
 		return clone;
 	}
 
@@ -99,14 +92,6 @@ public abstract class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getIdentityNumber() {
-		return identityNumber;
-	}
-
-	public void setIdentityNumber(String identityNumber) {
-		this.identityNumber = identityNumber;
 	}
 
 	public String getEmailAddress() {

@@ -3,11 +3,13 @@ package Server;
 import java.io.IOException;
 import java.util.Scanner;
 import CloneEntities.*;
-import CommonElements.DataElements;
-import CommonElements.Login;
 import Hibernate.HibernateMain;
 import OCSF.AbstractServer;
 import OCSF.ConnectionToClient;
+import UtilClasses.DataElements;
+import UtilClasses.ExamGenerator;
+import UtilClasses.Login;
+import UtilClasses.TeacherCourse;
 
 public class ServerMain extends AbstractServer {
 	static int numberOfConnectedClients;
@@ -107,33 +109,18 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case GetAllTestsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((CloneTeacherCourse) de.getData());
+				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((TeacherCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
 			case GetAllExamsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((CloneTeacherCourse) de.getData());
+				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((TeacherCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
 				de.setData(dataFromDB);
 				break;
 			case GetAllStudentTests:
 				dataFromDB = serverHandler.handleSendAllStudentTests((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudentTests);
-				de.setData(dataFromDB);
-				break;
-			case UserLogIn:
-				dataFromDB = serverHandler.handleLogInRequest((Login) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
-				de.setData(dataFromDB);
-				break;
-			case UserLogOut:
-				dataFromDB = serverHandler.handleLogOutRequest((int) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
-				de.setData(dataFromDB);
-				break;
-			case CreateNewQuestion:
-				dataFromDB = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
 				de.setData(dataFromDB);
 				break;
 			case GetAllRequests:
@@ -151,8 +138,28 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudntTestRelatedToTest);
 				de.setData(dataFromDB);
 				break;
+			case GetAnswerToTimeExtensionRequest:
+				dataFromDB = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
+				de.setData(dataFromDB);
+				break;
+			case UserLogIn:
+				dataFromDB = serverHandler.handleLogInRequest((Login) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
+				de.setData(dataFromDB);
+				break;
+			case UserLogOut:
+				dataFromDB = serverHandler.handleLogOutRequest((int) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
+				de.setData(dataFromDB);
+				break;
+			case CreateNewQuestion:
+				dataFromDB = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
+				de.setData(dataFromDB);
+				break;
 			case CreateNewExam:
-				dataFromDB = serverHandler.handleCreateNewExam((CloneExam) de.getData());
+				dataFromDB = serverHandler.handleCreateNewExam((ExamGenerator) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewExamResult);
 				de.setData(dataFromDB);
 				break;
@@ -162,13 +169,9 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataFromDB);
 				break;
 			case CreateNewTimeExtensionRequest:
-				dataFromDB = serverHandler.handleCreateNewTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				dataFromDB = serverHandler
+						.handleCreateNewTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
-				de.setData(dataFromDB);
-				break;
-			case GetAnswerToTimeExtensionRequest:
-				dataFromDB = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
 				de.setData(dataFromDB);
 				break;
 			case CreateNewStudentTest:

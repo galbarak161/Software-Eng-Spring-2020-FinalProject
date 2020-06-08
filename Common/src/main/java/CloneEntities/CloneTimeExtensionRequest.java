@@ -7,36 +7,35 @@ public class CloneTimeExtensionRequest {
 	
 	private String body;
 	
-	
 	private boolean isRequestConfirmed;
-	
 	
 	private int timeToExtenedInMinute;
 	
-	
 	private CloneTest test;
 
-	public CloneTimeExtensionRequest(String body, int timeToExtenedInMinute) {
+	public CloneTimeExtensionRequest(int id, String body, int timeToExtenedInMinute, CloneTest test) {
 		super();
-		this.isRequestConfirmed = false;
+		this.id = id;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
+		this.test = test;
+		this.isRequestConfirmed = false;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
+	public CloneTimeExtensionRequest(String body, int timeToExtenedInMinute, CloneTest test) {
+		super();
 		this.body = body;
+		this.timeToExtenedInMinute = timeToExtenedInMinute;
+		this.test = test;
+		this.isRequestConfirmed = false;
+	}
+
+	public boolean isRequestConfirmed() {
+		return isRequestConfirmed;
+	}
+
+	public void setRequestConfirmed(boolean isRequestConfirmed) {
+		this.isRequestConfirmed = isRequestConfirmed;
 	}
 
 	public int getTimeToExtenedInMinute() {
@@ -47,15 +46,17 @@ public class CloneTimeExtensionRequest {
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
 	public CloneTest getTest() {
 		return test;
 	}
 
-	public void setTest(CloneTest test) {
-		this.test = test;
-	}
-
-	public boolean isRequestConfirmed() {
-		return isRequestConfirmed;
-	}
+	
 }

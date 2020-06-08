@@ -14,81 +14,55 @@ public class CloneTest implements Serializable {
 	public enum ExamType {
 		Automated, Manual;
 	}
-	
+
 	public enum TestStatus {
-		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingApproved;
+		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingAnswerd;
 	}
 
 	private int id;
-	
+
 	private LocalDate testDate;
 
 	private LocalTime testTime;
 
 	private String executionCode;
 
-	private int extraMinute = 0;
+	private int extraMinute;
 
 	private int testDuration;
 
 	private ExamType type;
-	
-	private TestStatus status;
 
-	// private TimeExtensionRequest extensionRequests;
+	private TestStatus status;
 
 	private int teacherId;
 
-	// private List<StudentTest> students;
-
 	private CloneExam examToExecute;
 
-	public CloneTest(LocalDate testDate, LocalTime testTime, int extraMinute, int testDuration,
+	public CloneTest(int id, LocalDate testDate, LocalTime testTime, String executionCode, int testDuration,
 			ExamType type, int teacherId, CloneExam examToExecute) {
-		super();
+		this.id = id;
 		this.testDate = testDate;
 		this.testTime = testTime;
-		this.extraMinute = extraMinute;
+		this.executionCode = executionCode;
+		this.extraMinute = 0;
+		this.testDuration = testDuration;
+		this.type = type;
+		this.status = TestStatus.Scheduled;
+		this.teacherId = teacherId;
+		this.examToExecute = examToExecute;
+	}
+
+	public CloneTest(LocalDate testDate, LocalTime testTime, int testDuration, ExamType type, int teacherId,
+			CloneExam examToExecute) {
+		this.testDate = testDate;
+		this.testTime = testTime;
 		this.testDuration = testDuration;
 		this.type = type;
 		this.teacherId = teacherId;
 		this.examToExecute = examToExecute;
-	}
-	
-	public CloneTest() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public LocalDate getTestDate() {
-		return testDate;
-	}
-
-	public void setTestDate(LocalDate testDate) {
-		this.testDate = testDate;
-	}
-
-	public LocalTime getTestTime() {
-		return testTime;
-	}
-
-	public void setTestTime(LocalTime testTime) {
-		this.testTime = testTime;
-	}
-
-	public String getExecutionCode() {
-		return executionCode;
-	}
-
-	public void setExecutionCode(String executionCode) {
-		this.executionCode = executionCode;
+		this.extraMinute = 0;
+		this.status = TestStatus.Scheduled;
 	}
 
 	public int getExtraMinute() {
@@ -99,55 +73,6 @@ public class CloneTest implements Serializable {
 		this.extraMinute = extraMinute;
 	}
 
-	public int getTestDuration() {
-		return testDuration;
-	}
-
-	public void setTestDuration(int testDuration) {
-		this.testDuration = testDuration;
-	}
-
-	public ExamType getType() {
-		return type;
-	}
-
-	public void setType(ExamType type) {
-		this.type = type;
-	}
-
-	public int getTeacherId() {
-		return teacherId;
-	}
-
-	public void setTeacherId(int teacherId) {
-		this.teacherId = teacherId;
-	}
-
-	public CloneExam getExamToExecute() {
-		return examToExecute;
-	}
-
-	public void setExamToExecute(CloneExam examToExecute) {
-		this.examToExecute = examToExecute;
-	}
-
-	@Override
-	public String toString() {
-		return examToExecute.getExamName()+" "+executionCode;
-	}
-	
-	public String getName() {
-		return this.examToExecute.getExamName();
-	}
-	
-	public String getDate() {
-		return this.testDate.toString();
-	}
-	
-	public String getTime() {
-		return this.testTime.toString();
-	}
-
 	public TestStatus getStatus() {
 		return status;
 	}
@@ -155,7 +80,41 @@ public class CloneTest implements Serializable {
 	public void setStatus(TestStatus status) {
 		this.status = status;
 	}
-	
-	
 
+	public int getId() {
+		return id;
+	}
+
+	public LocalDate getTestDate() {
+		return testDate;
+	}
+
+	public LocalTime getTestTime() {
+		return testTime;
+	}
+
+	public String getExecutionCode() {
+		return executionCode;
+	}
+
+	public int getTestDuration() {
+		return testDuration;
+	}
+
+	public ExamType getType() {
+		return type;
+	}
+
+	public int getTeacherId() {
+		return teacherId;
+	}
+
+	public CloneExam getExamToExecute() {
+		return examToExecute;
+	}
+
+	@Override
+	public String toString() {
+		return examToExecute.getExamName() + " " + executionCode;
+	}
 }

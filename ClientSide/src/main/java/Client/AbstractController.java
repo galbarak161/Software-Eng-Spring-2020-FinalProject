@@ -1,8 +1,9 @@
 package Client;
 
 import java.io.IOException;
-import CommonElements.DataElements;
-import CommonElements.DataElements.ClientToServerOpcodes;
+
+import UtilClasses.DataElements;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;

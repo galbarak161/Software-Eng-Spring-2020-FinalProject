@@ -31,10 +31,9 @@ public class StudentTest {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "testId")
 	private Test test;
-	
+
 	@Column(name = "status")
 	private StudentTestStatus status;
-
 
 	public StudentTest() {
 	}
@@ -42,9 +41,9 @@ public class StudentTest {
 	public StudentTest(Student student, Test test) {
 		this.grade = -1;
 		this.examCheckNotes = "";
+		this.status = StudentTestStatus.Scheduled;
 		setTest(test);
 		setStudent(student);
-		this.status = StudentTestStatus.Scheduled;
 	}
 
 	public int getId() {
@@ -70,8 +69,7 @@ public class StudentTest {
 	}
 
 	public CloneStudentTest createClone() {
-		CloneStudentTest clone = new CloneStudentTest(this.getStudent().createClone(), test.createClone());
-		clone.setId(id);
+		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone());
 		return clone;
 	}
 
@@ -82,7 +80,5 @@ public class StudentTest {
 	public void setStatus(StudentTestStatus status) {
 		this.status = status;
 	}
-	
-	
 
 }

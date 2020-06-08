@@ -45,7 +45,7 @@ public class Question {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "question")
 	private List<QuestionInExam> questionInExam;
 
@@ -69,11 +69,8 @@ public class Question {
 	}
 
 	public CloneQuestion createClone() {
-		CloneQuestion clone = new CloneQuestion(this.subject, this.questionText,
-				this.answer_1, this.answer_2, this.answer_3, this.answer_4, this.correctAnswer,
-				this.course.createClone(), this.teacher.getId());
-		clone.setId(this.id);
-		clone.setQuestionCode(this.questionCode);
+		CloneQuestion clone = new CloneQuestion(id, questionCode, subject, questionText, answer_1, answer_2,
+				answer_3, answer_4, correctAnswer, course.createClone(), teacher.getId());
 		return clone;
 	}
 

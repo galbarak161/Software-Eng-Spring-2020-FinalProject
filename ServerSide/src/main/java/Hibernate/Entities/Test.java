@@ -2,6 +2,7 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneExam;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
@@ -38,10 +39,10 @@ public class Test {
 
 	@Column(name = "examType")
 	private ExamType type;
-	
+
 	@Column(name = "status")
 	private TestStatus status;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "timeExtensionRequestId")
 	private TimeExtensionRequest extensionRequests;
@@ -58,29 +59,26 @@ public class Test {
 	private Exam examToExecute;
 
 	public Test() {
-		super();
 		students = new ArrayList<StudentTest>();
 	}
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute) {
-		super();
 		this.testDate = testDate;
 		this.testTime = testTime;
 		TestCodeGenerator();
 		this.extraMinute = 0;
 		this.type = type;
+		this.status = TestStatus.Scheduled;
 		setExtensionRequests(null);
 		setExecutor(executor);
 		setExamToExecute(examToExecute);
 		students = new ArrayList<StudentTest>();
-		 this.status = TestStatus.Scheduled;
+
 	}
 
 	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(testDate, testTime, extraMinute, testDuration, type,
-				executor.getId(), examToExecute.createClone());
-		clone.setId(id);
-		clone.setExecutionCode(executionCode);
+		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
+				examToExecute.createClone());
 		return clone;
 	}
 
@@ -165,8 +163,6 @@ public class Test {
 		examToExecute.getTests().add(this);
 		testDuration = examToExecute.getDuration();
 	}
-	
-	
 
 	public TestStatus getStatus() {
 		return status;

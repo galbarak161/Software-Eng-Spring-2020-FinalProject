@@ -5,7 +5,7 @@ import java.util.List;
 
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
-import CommonElements.DataElements.ClientToServerOpcodes;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

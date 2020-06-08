@@ -2,20 +2,18 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
-import CloneEntities.CloneQuestionInExam;
-
 @Entity
 @Table(name = "QuestionInExam")
 public class QuestionInExam {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "QuestionInExamId")
 	private int id;
-	
+
 	@Column(name = "pointsForQuestion")
 	private int pointsForQuestion;
-	
+
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "examId")
 	private Exam exam;
@@ -23,7 +21,7 @@ public class QuestionInExam {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "questionId")
 	private Question question;
-	
+
 	public QuestionInExam() {
 	}
 
@@ -33,12 +31,6 @@ public class QuestionInExam {
 		setQuestion(question);
 	}
 
-	public CloneQuestionInExam createClone() {
-		CloneQuestionInExam cloneQuestionInExam = new CloneQuestionInExam(getPointsForQuestion(), getExam().createClone(), getQuestion().createClone());
-		cloneQuestionInExam.setId(id);
-		return cloneQuestionInExam;
-		
-	}
 	public int getId() {
 		return id;
 	}
@@ -68,10 +60,4 @@ public class QuestionInExam {
 		this.question = question;
 		question.getQuestionInExam().add(this);
 	}
-	
-	
-	
-	
-	
-	
 }

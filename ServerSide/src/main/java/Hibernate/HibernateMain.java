@@ -19,18 +19,11 @@ import org.hibernate.cfg.Settings;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
-import CloneEntities.CloneCourse;
-import CloneEntities.CloneExam;
-import CloneEntities.CloneQuestion;
-import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTeacherCourse;
-import CloneEntities.CloneTest;
+import CloneEntities.*;
 import CloneEntities.CloneTest.ExamType;
-import CloneEntities.CloneTimeExtensionRequest;
-import CloneEntities.CloneUser;
-import CommonElements.Login;
 import Hibernate.Entities.*;
 import Server.ServerOperations;
+import UtilClasses.Login;
 
 public class HibernateMain {
 	static Session session;
@@ -197,11 +190,15 @@ public class HibernateMain {
 		for (int i = 0, j = 0; i < NUMBER_OF_COURSES && j < NUMBER_OF_STUDIES; j++) {
 			Course c1 = new Course(coursesName[i], studies[j]);
 			c1.addTeacher(t1);
+			c1.addStudent(s1);
+			c1.addStudent(s2);
 			courses[i] = c1;
 			i++;
 			session.save(c1);
 			Course c2 = new Course(coursesName[i], studies[j]);
 			c2.addTeacher(t2);
+			c2.addStudent(s1);
+			c2.addStudent(s3);
 			courses[i] = c2;
 
 			i++;
@@ -353,7 +350,7 @@ public class HibernateMain {
 		String teacherCommString = " working hard or hardly working";
 		String studentCommString = " help me";
 
-		Exam e1 = new Exam(name, t1, questionPoints, duration, courses[0], teacherCommString, studentCommString);
+		Exam e1 = new Exam(name, t1, duration, courses[0], teacherCommString, studentCommString);
 		session.save(e1);
 		session.flush();
 		QuestionInExam qe1 = new QuestionInExam(50, e1, questionList[0]);

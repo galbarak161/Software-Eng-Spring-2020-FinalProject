@@ -6,15 +6,19 @@ import java.util.List;
 import javax.swing.plaf.synth.SynthListUI;
 
 import CloneEntities.*;
-import CommonElements.DataElements;
-import CommonElements.Login;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
+import UtilClasses.DataElements;
+import UtilClasses.ExamGenerator;
+import UtilClasses.Login;
+import UtilClasses.TeacherCourse;
 
 public class ServerOperations {
 
 	/**
-	 * function send all exam the teacher created
+	 * handleSendAllExamsOfTeacher(CloneUser)
+	 * 
+	 * Function sends all the exams that the teacher has created
 	 * 
 	 * @param cloneUser Teacher
 	 * @return List<CloneExam> of all the exams that the teacher created
@@ -27,7 +31,6 @@ public class ServerOperations {
 			for (Exam exam : listFromDB) {
 				if (exam.getCreator().getId() == cloneUser.getId()) {
 					cloneExams.add(exam.createClone());
-
 				}
 			}
 		} catch (Exception e) {
@@ -39,8 +42,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestRelatedToTeacher get all studentsTest clones that are
-	 * related to a specific test.
+	 * handleSendAllTestRelatedToTeacher (CloneTest)
+	 * 
+	 * Get all studentsTest clones that are related to a specific test.
 	 * 
 	 * @param cloneTest test clone
 	 * @return List<CloneStudentTest> all student test based upon cloneTest
@@ -66,8 +70,10 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestRelatedToTeacher function returns all tests related to
-	 * teacher, (if teacher created the exam the test relay upon)
+	 * handleSendAllTestRelatedToTeacher (CloneUser)
+	 * 
+	 * Function returns all tests related to teacher, (if teacher created the exam
+	 * the test relay upon)
 	 * 
 	 * @param cloneUser teacher
 	 * @return List<CloneTest> that has all the test that are based upon an exam the
@@ -87,12 +93,11 @@ public class ServerOperations {
 			e.printStackTrace();
 			return null;
 		}
-
 		return cloneTests;
 	}
 
 	/**
-	 * 	sends all time extension requests
+	 * sends all time extension requests
 	 * 
 	 * @return List<CloneTimeExtensionRequest> send all time extension requests
 	 */
@@ -113,7 +118,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * 	sends all exams in DB
+	 * sends all exams in DB
+	 * 
 	 * @return List<CloneExam> send all exams in system
 	 */
 	public List<CloneExam> handleSendAllExams() {
@@ -134,6 +140,7 @@ public class ServerOperations {
 
 	/**
 	 * send all test in DB
+	 * 
 	 * @return List<CloneTest> send all tests in system
 	 */
 	public List<CloneTest> handleSendAllTests() {
@@ -154,8 +161,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllQuestions() The function sends back to user list of all
-	 * questions in DB
+	 * handleSendAllQuestions()
+	 * 
+	 * The function sends back to user list of all questions in DB
 	 * 
 	 * @return list of CloneQuestion
 	 */
@@ -171,12 +179,13 @@ public class ServerOperations {
 			e.printStackTrace();
 			return null;
 		}
-
 		return cloneQuestion;
 	}
 
 	/**
-	 * handleSendQuestionsInCourse(CloneCourse) send all the question related to a specific course
+	 * handleSendQuestionsInCourse (CloneCourse)
+	 * 
+	 * Send all the question related to a specific course
 	 * 
 	 * @param cloneCourse - User chose this course and asked for it's questions
 	 * @return all the questions that are associated with this course
@@ -201,7 +210,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllCoursesOfTeacher(CloneUser) send all courses who are taught by teachers
+	 * handleSendAllCoursesOfTeacher(CloneUser) Send all courses who are taught by
+	 * teachers
 	 * 
 	 * @param CloneUser - Teacher wants to see all courses he teaches
 	 * @return all the courses that are associated with this Teacher
@@ -226,7 +236,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestsFromTeacher(CloneUser data) send all test related to teacher, he was the (executor)
+	 * handleSendAllTestsFromTeacher(CloneUser data) Send all test related to
+	 * teacher, he was the (executor)
 	 * 
 	 * @param CloneUser - Teacher wants to see all the tests that he was executed
 	 * @return list of Tests
@@ -250,13 +261,14 @@ public class ServerOperations {
 		return tests;
 	}
 
-	
 	/**
-	 * handleLogInRequest(Login data)  function check users's username and passwords and keeps user from login while account is till logged 
-	 * from another place, and updates log status in DB.
+	 * handleLogInRequest(Login data) function check users's username and passwords
+	 * and keeps user from login while account is till logged from another place,
+	 * and updates log status in DB.
 	 * 
-	 * @param data	 contains username and password entered
-	 * @return	if the information is correct and he is not logged in the system returns new CloneUsert
+	 * @param data contains username and password entered
+	 * @return if the information is correct and he is not logged in the system
+	 *         returns new CloneUsert
 	 * @throws Exception
 	 */
 	public CloneUser handleLogInRequest(Login data) throws Exception {
@@ -273,13 +285,15 @@ public class ServerOperations {
 	}
 
 	/**
-	 * 	handleLogOutRequest(int userId) function checkis user is log in and if he is the function update login status in DB
+	 * handleLogOutRequest(int userId) function checkis user is log in and if he is
+	 * the function update login status in DB
 	 * 
 	 * @param userId the users id , who want to log out
-	 * @return -1 if user is not found to be logged in , otherwise it found the user and updates status.
+	 * @return -1 if user is not found to be logged in , otherwise it found the user
+	 *         and updates status.
 	 * @throws Exception
 	 */
-	public int handleLogOutRequest(int userId) throws Exception{
+	public int handleLogOutRequest(int userId) throws Exception {
 		List<User> userList = HibernateMain.getDataFromDB(User.class);
 		for (User user : userList) {
 			if (user.getId() == userId) {
@@ -291,14 +305,14 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestsOfTeacherInCourse returns all test that the teacher is an
-	 * executor and the test in a specific course
+	 * handleSendAllTestsOfTeacherInCourse (TeacherCourse) send all test that the
+	 * teacher is an executor and the test in a specific course
 	 * 
 	 * @param a class working as a container to teacher and course
 	 * @return List<CloneTest> all test that the teacher is an executor and the test
 	 *         in a specific course
 	 */
-	public List<CloneTest> handleSendAllTestsOfTeacherInCourse(CloneTeacherCourse data) {
+	public List<CloneTest> handleSendAllTestsOfTeacherInCourse(TeacherCourse data) {
 		CloneUser cloneUser = data.getTeacher();
 		CloneCourse cloneCourse = data.getCourse();
 		List<Test> listFromDB1 = null;
@@ -321,14 +335,14 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllExamsOfTeacherInCourse returns all exams that the teacher is a
-	 * creator and the exam is in a specific course
+	 * handleSendAllExamsOfTeacherInCourse(TeacherCourse) returns all exams that the
+	 * teacher is a creator and the exam is in a specific course
 	 * 
 	 * @param a class working as a container to teacher and course
 	 * @return List<CloneExam> all test that the teacher is a creator and the exam
 	 *         in a specific course
 	 */
-	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(CloneTeacherCourse data) {
+	public List<CloneExam> handleSendAllExamsOfTeacherInCourse(TeacherCourse data) {
 		CloneUser cloneUser = data.getTeacher();
 		CloneCourse cloneCourse = data.getCourse();
 		List<Exam> listFromDB1 = null;
@@ -350,7 +364,8 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllStudentTests return all test related to a specific student
+	 * handleSendAllStudentTests (CloneUser) send all test related to a specific
+	 * student
 	 * 
 	 * @param cloneUser a clone student
 	 * @return all test related to student
@@ -375,11 +390,12 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewQuestion(CloneQuestion newCloneQuestion)  created new question , based on constructor in CloneQuestion and
-	 * adds it to DB
+	 * handleCreateNewQuestion(CloneQuestion newCloneQuestion) created new question
+	 * , based on constructor in CloneQuestion and adds it to DB
 	 * 
 	 * @param newCloneQuestion the question we want to create
-	 * @return null if information is not complete , otherwise it updates the Db with new question
+	 * @return null if information is not complete , otherwise it updates the Db
+	 *         with new question
 	 * @throws Exception
 	 */
 	public CloneQuestion handleCreateNewQuestion(CloneQuestion newCloneQuestion) throws Exception {
@@ -401,44 +417,39 @@ public class ServerOperations {
 		return newQuestion.createClone();
 	}
 
-	
 	/**
-	 *  handleCreateNewExam(CloneExam newCloneExam) creates new Exam based on CloneExam
-	 *  
-	 * @param newCloneExam a Clone exam entity that has all exam details.
-	 * @return null if information is not complete , otherwise it updates the DB with new exam
+	 * handleCreateNewExam(CloneExam newCloneExam) creates new Exam based on
+	 * CloneExam
+	 * 
+	 * @param newExam a Clone exam entity that has all exam details.
+	 * @return null if information is not complete , otherwise it updates the DB
+	 *         with new exam
 	 * @throws Exception
 	 */
-	public CloneExam handleCreateNewExam(CloneExam newCloneExam) throws Exception {
-		Teacher t = (Teacher) getUserByCloneId(newCloneExam.getTeacherId());
-		Course c = getCourseByCloneId(newCloneExam.getCourseId());
+	public CloneExam handleCreateNewExam(ExamGenerator newGeneratedExam) throws Exception {
+		CloneExam exam = newGeneratedExam.getExam();
+		Teacher t = (Teacher) getUserByCloneId(exam.getTeacherId());
+		Course c = getCourseByCloneId(exam.getCourseId());
 
 		if (t == null || c == null)
 			return null;
 
-		Exam newExam = new Exam(newCloneExam.getExamName(), t, null, newCloneExam.getDuration(), c,
-				newCloneExam.getTeacherComments(), newCloneExam.getStudentComments());
+		Exam newExam = new Exam(exam.getExamName(), t, exam.getDuration(), c, exam.getTeacherComments(),
+				exam.getStudentComments());
 
-		HibernateMain.insertDataToDB(newCloneExam);
-		
-		List<Course> courses = HibernateMain.getDataFromDB(Course.class);
-		for (Course course : courses) {
-			if(course.getId()== newCloneExam.getCourseId()) {
-				course.addExames(newExam);
-			}
-		}
-		
-		
+		HibernateMain.insertDataToDB(newExam);
+
 		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
 	}
 
-	
 	/**
-	 * handleCreateNewTest(CloneTest newCloneTest) creates new Test based on CloneTest
+	 * handleCreateNewTest(CloneTest newCloneTest) creates new Test based on
+	 * CloneTest
 	 * 
 	 * @param newCloneTest a Clone exam entity that has all exam details.
-	 * @return null if information is not complete , otherwise it updates the DB with new test
+	 * @return null if information is not complete , otherwise it updates the DB
+	 *         with new test
 	 * @throws Exception
 	 */
 	public CloneTest handleCreateNewTest(CloneTest newCloneTest) throws Exception {
@@ -454,23 +465,27 @@ public class ServerOperations {
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
 				+ newTest.getExecutionCode());
-		
-		Course course =getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
-		
-		
+
+		Course course = getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
+
+		//// TODO Create StudentTest object
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
-				student.addTests(new StudentTest(student, newTest));
+			student.addTests(new StudentTest(student, newTest));
+
 		}
+
 		return newTest.createClone();
 	}
 
-	
 	/**
-	 * hhandleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) creates new Exam based on CloneTest
+	 * hhandleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) creates new
+	 * Exam based on CloneTest
 	 * 
-	 * @param newCloneStudentTest a Clone exam entity that has all StudentTest  details.
-	 * @return null if information is not complete , otherwise it updates the DB with new StudentTest
+	 * @param newCloneStudentTest a Clone exam entity that has all StudentTest
+	 *                            details.
+	 * @return null if information is not complete , otherwise it updates the DB
+	 *         with new StudentTest
 	 * @throws Exception
 	 */
 	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
@@ -484,60 +499,74 @@ public class ServerOperations {
 		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
 		return newStudentTest.createClone();
 	}
-	
+
 	/**
-	 * handleCreateNewTimeExtensionRequest creates new TimeExtensionRequest based on CloneTimeExtensionRequest
+	 * handleCreateNewTimeExtensionRequest creates new TimeExtensionRequest based on
+	 * CloneTimeExtensionRequest
 	 * 
-	 * @param newCloneTimeExtensionRequest a Clone TimeExtensionRequest entity that has all TimeExtensionRequest  details.
-	 * @return null if information is not complete , otherwise it updates the DB with new TimeExtensionRequest
+	 * @param newCloneTimeExtensionRequest a Clone TimeExtensionRequest entity that
+	 *                                     has all TimeExtensionRequest details.
+	 * @return null if information is not complete , otherwise it updates the DB
+	 *         with new TimeExtensionRequest
 	 * @throws Exception
 	 * 
 	 */
-	public CloneTimeExtensionRequest handleCreateNewTimeExtensionRequest(CloneTimeExtensionRequest newCloneTimeExtensionRequest) throws Exception {
-		TimeExtensionRequest timeExtensionRequest= new TimeExtensionRequest(newCloneTimeExtensionRequest.getBody(),
-																			newCloneTimeExtensionRequest.getTimeToExtenedInMinute());
-		if (newCloneTimeExtensionRequest.getTest() == null ) {
+	public CloneTimeExtensionRequest handleCreateNewTimeExtensionRequest(
+			CloneTimeExtensionRequest newCloneTimeExtensionRequest) throws Exception {
+		TimeExtensionRequest timeExtensionRequest = new TimeExtensionRequest(newCloneTimeExtensionRequest.getBody(),
+				newCloneTimeExtensionRequest.getTimeToExtenedInMinute());
+		if (newCloneTimeExtensionRequest.getTest() == null) {
 			return null;
 		}
 		Test test = getTestByCloneId(newCloneTimeExtensionRequest.getTest().getId());
 		timeExtensionRequest.setTest(test);
-		
+
 		HibernateMain.insertDataToDB(timeExtensionRequest);
-		
+
 		return timeExtensionRequest.createClone();
-		
+
 	}
-	
+
 	/**
-	 * handleUpdateTimeExtensionRequest function receives answer on time extension request  from client and updates Test entity in DB
+	 * handleUpdateTimeExtensionRequest function receives answer on time extension
+	 * request from client and updates Test entity in DB
+	 * 
 	 * @param cloneTimeExtensionRequest the time request with answer
-	 * @return	CloneTest with updates time
+	 * @return CloneTest with updates time
 	 * @throws Exception
 	 */
-	public CloneTest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest) throws Exception {
+	public CloneTest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest)
+			throws Exception {
+
+		if (cloneTimeExtensionRequest.isRequestConfirmed() == false)
+			return cloneTimeExtensionRequest.getTest();
+
 		List<TimeExtensionRequest> timeExtensionRequests = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
-		TimeExtensionRequest request =null;
+		TimeExtensionRequest request = null;
 		for (TimeExtensionRequest timeExtensionRequest : timeExtensionRequests) {
-			if(timeExtensionRequest.getId() == cloneTimeExtensionRequest.getId()) {
+			if (timeExtensionRequest.getId() == cloneTimeExtensionRequest.getId()) {
 				request = timeExtensionRequest;
 			}
 		}
-		if(request==null) {
+
+		if (request == null)
 			return null;
-		}
-		request.setRequestConfirmed(cloneTimeExtensionRequest.isRequestConfirmed());
-		if(cloneTimeExtensionRequest.isRequestConfirmed()) {
-			request.getTest().setExtensionRequests(request);
-		}
+
+		request.setRequestConfirmed(true);
+
+		HibernateMain.UpdateDataInDB(request);
+		Thread.sleep(100);
+		HibernateMain.UpdateDataInDB(request.getTest());
+
 		return request.getTest().createClone();
 	}
 
-	
 	/**
-	 *  function receives CloneTest  returns  Test from DB that match the CloneTest.
-	 *  
-	 * @param testid 	
-	 * @return	null if not found otherwise it return Test object
+	 * getTestByCloneId (int) function receives CloneTest returns Test from DB that
+	 * match the CloneTest.
+	 * 
+	 * @param testid
+	 * @return null if not found otherwise it return Test object
 	 * @throws Exception
 	 */
 	private Test getTestByCloneId(int testid) throws Exception {
@@ -552,10 +581,11 @@ public class ServerOperations {
 	}
 
 	/**
-	 *  function receives CloneExam  return  Exam from DB that match the CloneExam.
-	 *  
-	 * @param examId 	
-	 * @return	null if not found otherwise it return Exam object
+	 * getExmaByCloneId (int) Function receives CloneExam return Exam from DB that
+	 * match the CloneExam.
+	 * 
+	 * @param examId
+	 * @return null if not found otherwise it return Exam object
 	 * @throws Exception
 	 */
 	private Exam getExmaByCloneId(int examId) throws Exception {
@@ -569,12 +599,12 @@ public class ServerOperations {
 		return null;
 	}
 
-	
 	/**
-	 *  function receives CloneCourse  returns  Course from DB that match the CloneCourse.
-	 *  
-	 * @param courseId 	
-	 * @return	null if not found otherwise it return Course object
+	 * getCourseByCloneId (int) Function receives CloneCourse returns Course from DB
+	 * that match the CloneCourse.
+	 * 
+	 * @param courseId
+	 * @return null if not found otherwise it return Course object
 	 * @throws Exception
 	 */
 	private Course getCourseByCloneId(int courseId) throws Exception {
@@ -588,12 +618,12 @@ public class ServerOperations {
 		return null;
 	}
 
-	
 	/**
-	 *  function receives userId  returns  User from DB that match the CloneUser.
-	 *  
-	 * @param userId 	
-	 * @return	null if not found otherwise it return User object
+	 * getUserByCloneId (int) Function receives userId returns User from DB that
+	 * match the CloneUser.
+	 * 
+	 * @param userId
+	 * @return null if not found otherwise it return User object
 	 * @throws Exception
 	 */
 	public User getUserByCloneId(int userId) throws Exception {
@@ -606,51 +636,4 @@ public class ServerOperations {
 		}
 		return null;
 	}
-
-//////////////////////////////
-//	Update Entity Template	//
-//////////////////////////////	
-//	/**
-//	 * handleUpdateQuestion(CloneQuestion) Update Question object in DB according to
-//	 * CloneQuestion received from DB Get the original Question from DB Set all
-//	 * properties according to CloneQustion Update Question in DB
-//	 * 
-//	 * @param questionToUpdate
-//	 * @return
-//	 */
-//	public CloneQuestion handleUpdateQuestion(CloneQuestion questionToUpdate) {
-//		Question originalQustion = null;
-//		List<Question> listFromDB = null;
-//		try {
-//			listFromDB = HibernateMain.getDataFromDB(Question.class);
-//			for (Question question : listFromDB) {
-//				if (question.getId() == questionToUpdate.getId()) {
-//					originalQustion = question;
-//					break;
-//				}
-//			}
-//
-//			if (originalQustion == null)
-//				throw new Exception("Question with id " + questionToUpdate.getId() + " was not found!");
-//
-//			originalQustion.setAnswer_1(questionToUpdate.getAnswer_1());
-//			originalQustion.setAnswer_2(questionToUpdate.getAnswer_2());
-//			originalQustion.setAnswer_3(questionToUpdate.getAnswer_3());
-//			originalQustion.setAnswer_4(questionToUpdate.getAnswer_4());
-//			originalQustion.setCorrectAnswer(questionToUpdate.getCorrectAnswer());
-//			originalQustion.setQuestionText(questionToUpdate.getQuestionText());
-//			originalQustion.setSubject(questionToUpdate.getSubject());
-//
-//			int updateResult = HibernateMain.questionToUpdate(originalQustion);
-//
-//			if (updateResult == -1)
-//				originalQustion = null;
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//
-//		return originalQustion.createClone();
-//	}
 }
