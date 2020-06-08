@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthListUI;
+
 import CloneEntities.*;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
@@ -444,6 +446,14 @@ public class ServerOperations {
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
 				+ newTest.getExecutionCode());
+		
+//		Course course =getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
+//		
+//		List<Student> students = HibernateMain.getDataFromDB(Student.class);
+//		for (Student student : students) {
+//			List<Course> courses = student.get
+//		}
+		
 		return newTest.createClone();
 	}
 
