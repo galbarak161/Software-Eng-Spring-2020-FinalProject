@@ -151,14 +151,14 @@ public class CloneStudentTest implements Serializable {
 		return test.getTestTime().toString();
 	}
 	
-	public String getStatus() {
-		return "i";
-	}
 	
 	public String getExecutionCode() {
 		return test.getExecutionCode();
 	}
 
+	public StudentTestStatus getStatus() {
+		return this.status;
+	}
 	public void setStatus(StudentTestStatus status) {
 		this.status = status;
 	}
