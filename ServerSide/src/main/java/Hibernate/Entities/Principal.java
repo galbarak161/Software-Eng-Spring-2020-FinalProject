@@ -14,9 +14,6 @@ public class Principal extends User {
 		super();
 	}
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "principle")
-	private List<TimeExtensionRequest> requests;
-	
 	public Principal(String userName, String password, String firstName, String lastName, String emailAddress) {
 		super(userName, password, firstName, lastName, emailAddress);
 		
@@ -24,14 +21,6 @@ public class Principal extends User {
 		
 	}
 
-	public List<TimeExtensionRequest> getRequests() {
-		return requests;
-	}
-
-	public void addRequests(TimeExtensionRequest request) {
-		requests.add(request);
-	}
-	
 	
 	
 }

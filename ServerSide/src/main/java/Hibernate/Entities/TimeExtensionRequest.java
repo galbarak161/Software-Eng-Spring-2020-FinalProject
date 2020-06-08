@@ -26,13 +26,6 @@ public class TimeExtensionRequest {
 	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "courseId")
-	private Course course;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "principalId")
-	private Principal principal ;
 	
 	public TimeExtensionRequest() {
 		
@@ -91,10 +84,5 @@ public class TimeExtensionRequest {
 			this.getTest().setExtensionRequests(this);
 		}
 	}
-	public Principal getPrincipal() {
-		return principal;
-	}
-	
-	
 
 }

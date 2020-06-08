@@ -24,7 +24,8 @@ public class DataElements implements Serializable {
 	 * UserLogIn (Login)
 	 * UserLogOut (int userId)
 	 * 
-	 * ReplayToExtensionRequest (CloneTimeExtensionRequest)
+	 * GetAnswerToTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * 
 	 * 
 	 * CreateNewQuestion (CloneQuestion) 
 	 * CreateNewExam (CloneExam) 
@@ -39,7 +40,7 @@ public class DataElements implements Serializable {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
 		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllRequests, GetAllTestRelatedToTeacher,
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse, UserLogIn, UserLogOut,
-		CreateNewQuestion, CreateNewExam, CreateNewTest, CreateNewStudentTest,CreateNewTimeExtensionRequest ,ReplayToExtensionRequest,
+		CreateNewQuestion, CreateNewExam, CreateNewTest, CreateNewStudentTest,CreateNewTimeExtensionRequest ,GetAnswerToTimeExtensionRequest,
 		Error;
 	}
 
@@ -61,7 +62,7 @@ public class DataElements implements Serializable {
 	 * UserLoggedIn  (Login)
 	 * UserLoggedOut (int userId)
 	 * 
-	 * UpdateTimeExtensionRequest
+	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 
@@ -78,7 +79,7 @@ public class DataElements implements Serializable {
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllRequests,
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
-		CreateNewTestResult,CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, Error;
+		CreateNewTestResult,CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, AddTimeToTest , Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

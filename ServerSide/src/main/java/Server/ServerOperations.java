@@ -3,10 +3,10 @@ package Server;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.plaf.synth.SynthListUI;
 
 import CloneEntities.*;
+import CommonElements.DataElements;
 import CommonElements.Login;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
@@ -503,14 +503,34 @@ public class ServerOperations {
 		timeExtensionRequest.setTest(test);
 		
 		HibernateMain.insertDataToDB(timeExtensionRequest);
-		HibernateMain.getDataFromDB(Principal.class).get(0).getRequests().add(timeExtensionRequest);
 		
 		return timeExtensionRequest.createClone();
 		
 	}
 	
-	
-	
+	/**
+	 * handleUpdateTimeExtensionRequest function receives answer on time extension request  from client and updates Test entity in DB
+	 * @param cloneTimeExtensionRequest the time request with answer
+	 * @return	CloneTest with updates time
+	 * @throws Exception
+	 */
+	public CloneTest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest) throws Exception {
+		List<TimeExtensionRequest> timeExtensionRequests = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
+		TimeExtensionRequest request =null;
+		for (TimeExtensionRequest timeExtensionRequest : timeExtensionRequests) {
+			if(timeExtensionRequest.getId() == cloneTimeExtensionRequest.getId()) {
+				request = timeExtensionRequest;
+			}
+		}
+		if(request==null) {
+			return null;
+		}
+		request.setRequestConfirmed(cloneTimeExtensionRequest.isRequestConfirmed());
+		if(cloneTimeExtensionRequest.isRequestConfirmed()) {
+			request.getTest().setExtensionRequests(request);
+		}
+		return request.getTest().createClone();
+	}
 
 	
 	/**
