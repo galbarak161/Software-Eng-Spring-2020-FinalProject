@@ -32,6 +32,11 @@ public class Course {
 	@JoinTable(name = "course_teacher", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
 	private List<Teacher> teachers;
 
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "Students_in_course", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "studentId"))
+	private List<Student> students;
+
+	
 	public Course() {
 		this.questions = new ArrayList<Question>();
 		this.exames = new ArrayList<Exam>();
@@ -98,5 +103,13 @@ public class Course {
 			this.teachers.add(teacher);
 			teacher.getCourses().add(this);
 		}
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+	
+	public void addStudent(Student student) {
+		this.students.add(student);
 	}
 }
