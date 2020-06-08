@@ -2,9 +2,9 @@ package Client;
 
 import java.util.List;
 
-import CloneEntities.AnsweredQuestion;
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneStudentTest;
+import UtilClasses.AnsweredQuestion;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

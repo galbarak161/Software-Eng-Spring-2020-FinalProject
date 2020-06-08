@@ -14,7 +14,6 @@ public abstract class AbstractNavi {
 	@FXML
 	void logout(MouseEvent event) {
 		ClientMain.removeAllControllers();
-		mainController.loggedOut();
 		try {
 			App.changeStage("loginController", "login");
 		} catch (IOException e) {

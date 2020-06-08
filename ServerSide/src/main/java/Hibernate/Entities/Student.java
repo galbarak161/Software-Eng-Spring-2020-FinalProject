@@ -10,17 +10,18 @@ public class Student extends User {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
 	private List<StudentTest> tests;
-	
+
 	@ManyToMany(mappedBy = "students", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Course> courses;
 
 	public Student() {
-		super();
+		courses = new ArrayList<Course>();
 		tests = new ArrayList<StudentTest>();
 	}
 
 	public Student(String userName, String password, String firstName, String lastName, String emailAddress) {
 		super(userName, password, firstName, lastName, emailAddress);
+		courses = new ArrayList<Course>();
 		tests = new ArrayList<StudentTest>();
 	}
 
@@ -35,11 +36,12 @@ public class Student extends User {
 	public List<Course> getCourses() {
 		return courses;
 	}
-	
-	public void addcourses(Course course) {
-		this.courses.add(course);
+
+	public void addCourses(Course... courses) {
+		for (Course course : courses) {
+			this.courses.add(course);
+			course.getStudents().add(this);
+		}
 	}
-	
-	
 
 }

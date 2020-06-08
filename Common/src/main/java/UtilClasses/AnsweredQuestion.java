@@ -1,4 +1,7 @@
-package CloneEntities;
+package UtilClasses;
+
+import CloneEntities.CloneCourse;
+import CloneEntities.CloneQuestion;
 
 public class AnsweredQuestion extends CloneQuestion {
 	/**

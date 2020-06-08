@@ -2,9 +2,9 @@ package Client;
 
 
 
-import CommonElements.DataElements;
-import CommonElements.DataElements.*;
-import CommonElements.Login;
+import UtilClasses.DataElements;
+import UtilClasses.Login;
+import UtilClasses.DataElements.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -30,12 +30,6 @@ public class Study {
 		this.courses = new ArrayList<Course>();
 	}
 
-	public CloneStudy createClone() {
-		CloneStudy clone = new CloneStudy(this.studyName);
-		clone.setId(this.id);
-		return clone;
-	}
-
 	public int getId() {
 		return id;
 	}

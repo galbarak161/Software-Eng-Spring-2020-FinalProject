@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
-import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
-import CommonElements.DataElements.ClientToServerOpcodes;
+import UtilClasses.TeacherCourse;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,7 +62,7 @@ public class testGenerator extends AbstractController {
 	void onClickedCourse(ActionEvent event) {
 		if (courseCombo.getValue() != null)
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse, new CloneTeacherCourse(ClientMain.getUser(),courseCombo.getValue()));
+			GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse, new TeacherCourse(ClientMain.getUser(),courseCombo.getValue()));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -107,9 +107,7 @@ public class testGenerator extends AbstractController {
 		else
 			type = CloneTest.ExamType.Manual;
 
-		CloneTest newTest = new CloneTest(startDate, startTime, 0, 0, type, ClientMain.getUser().getId(),
-				examCombo.getValue());
-		
+		CloneTest newTest = new CloneTest(startDate, startTime,0,type,ClientMain.getUser().getId(),examCombo.getValue());	
 		try {
 			GetDataFromDB(ClientToServerOpcodes.CreateNewTest, newTest);
 		} catch (InterruptedException e) {

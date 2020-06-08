@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import CommonElements.DataElements;
-import CommonElements.DataElements.*;
 import CloneEntities.*;
 import OCSF.AbstractClient;
+import UtilClasses.DataElements;
+import UtilClasses.DataElements.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 

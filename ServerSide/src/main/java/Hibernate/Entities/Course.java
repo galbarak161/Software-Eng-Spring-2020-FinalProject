@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import CloneEntities.*;
+import net.bytebuddy.asm.Advice.OffsetMapping.ForStubValue;
 
 @Entity
 @Table(name = "Course")
@@ -36,11 +37,11 @@ public class Course {
 	@JoinTable(name = "Students_in_course", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "studentId"))
 	private List<Student> students;
 
-	
 	public Course() {
 		this.questions = new ArrayList<Question>();
 		this.exames = new ArrayList<Exam>();
 		this.teachers = new ArrayList<Teacher>();
+		this.students = new ArrayList<Student>();
 	}
 
 	public Course(String courseName, Study study) {
@@ -49,11 +50,11 @@ public class Course {
 		this.questions = new ArrayList<Question>();
 		this.exames = new ArrayList<Exam>();
 		this.teachers = new ArrayList<Teacher>();
+		this.students = new ArrayList<Student>();
 	}
 
 	public CloneCourse createClone() {
-		CloneCourse clone = new CloneCourse(this.courseName);
-		clone.setId(id);
+		CloneCourse clone = new CloneCourse(id, courseName);
 		return clone;
 	}
 
@@ -108,8 +109,11 @@ public class Course {
 	public List<Student> getStudents() {
 		return students;
 	}
-	
-	public void addStudent(Student student) {
-		this.students.add(student);
+
+	public void addStudent(Student... students) {
+		for (Student student : students) {
+			this.students.add(student);
+			student.getCourses().add(this);
+		}
 	}
 }

@@ -26,24 +26,19 @@ public class TimeExtensionRequest {
 	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 
-	
 	public TimeExtensionRequest() {
-		
 	}
+
 	public TimeExtensionRequest(String body, int timeToExtenedInMinute) {
-		super();
 		this.isRequestConfirmed = false;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 	}
 
 	public CloneTimeExtensionRequest createClone() {
-
-		CloneTimeExtensionRequest clone = new CloneTimeExtensionRequest(getBody(), getTimeToExtenedInMinute());
-		clone.setTest(getTest().createClone());
-		clone.setId(id);
+		CloneTimeExtensionRequest clone = new CloneTimeExtensionRequest(id, body, timeToExtenedInMinute,
+				getTest().createClone());
 		return clone;
-
 	}
 
 	public int getId() {

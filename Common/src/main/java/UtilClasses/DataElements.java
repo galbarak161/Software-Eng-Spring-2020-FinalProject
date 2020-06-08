@@ -1,4 +1,4 @@
-package CommonElements;
+package UtilClasses;
 
 import java.io.Serializable;
 
@@ -20,17 +20,16 @@ public class DataElements implements Serializable {
 	 * GetAllStudntTestRelatedToTest (CloneTest)
 	 * GetAllExamsOfTeacher(CloneUser)
 	 * GetAllExamsOfTeacherInCourse(CloneTeacherCourse)
+	 * GetAnswerToTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
 	 * UserLogIn (Login)
 	 * UserLogOut (int userId)
-	 * 
-	 * GetAnswerToTimeExtensionRequest (CloneTimeExtensionRequest)
-	 * 
 	 * 
 	 * CreateNewQuestion (CloneQuestion) 
 	 * CreateNewExam (CloneExam) 
 	 * CreateNewTest (CloneTest)
 	 * CreateNewTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * 
 	 * Error (NULL)
 	 * 
 	 * @author Gal
@@ -39,9 +38,9 @@ public class DataElements implements Serializable {
 	public enum ClientToServerOpcodes {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
 		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllRequests, GetAllTestRelatedToTeacher,
-		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse, UserLogIn, UserLogOut,
-		CreateNewQuestion, CreateNewExam, CreateNewTest, CreateNewStudentTest,CreateNewTimeExtensionRequest ,GetAnswerToTimeExtensionRequest,
-		Error;
+		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
+		GetAnswerToTimeExtensionRequest, UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
+		CreateNewStudentTest, CreateNewTimeExtensionRequest, Error;
 	}
 
 	/**
@@ -62,13 +61,12 @@ public class DataElements implements Serializable {
 	 * UserLoggedIn  (Login)
 	 * UserLoggedOut (int userId)
 	 * 
-	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
-	 * 
 	 * CreateNewQuestionResult (CloneQuestion)  
 	 * CreateNewExamResult (CloneExam) 
 	 * CreateNewTestResult (CloneTest) 
 	 * CreateNewTimeExtensionRequestResult (CloneTimeExtensionRequest)
 	 * 
+	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -79,7 +77,7 @@ public class DataElements implements Serializable {
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllRequests,
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
-		CreateNewTestResult,CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, AddTimeToTest , Error;
+		CreateNewTestResult, CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

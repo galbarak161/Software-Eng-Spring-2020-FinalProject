@@ -4,9 +4,9 @@ import java.util.List;
 
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTeacherCourse;
 import CloneEntities.CloneTest;
-import CommonElements.DataElements.ClientToServerOpcodes;
+import UtilClasses.TeacherCourse;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,7 +95,7 @@ public class teacherController extends AbstractController {
 	@FXML
 	void OnClickedCourse(ActionEvent event) {
 		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllTestsOfTeacherInCourse,new CloneTeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
+			GetDataFromDB(ClientToServerOpcodes.GetAllTestsOfTeacherInCourse,new TeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

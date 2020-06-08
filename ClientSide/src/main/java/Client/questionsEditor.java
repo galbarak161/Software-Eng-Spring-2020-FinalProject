@@ -1,7 +1,7 @@
 package Client;
 
 import CloneEntities.*;
-import CommonElements.DataElements.ClientToServerOpcodes;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
