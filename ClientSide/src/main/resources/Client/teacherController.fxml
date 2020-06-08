@@ -21,16 +21,16 @@
          </font>
       </Label>
       <ComboBox fx:id="courseCombo" layoutX="143.0" layoutY="74.0" onAction="#OnClickedCourse" prefHeight="25.0" prefWidth="185.0" />
-      <Button fx:id="viewButton" layoutX="627.0" layoutY="179.0" mnemonicParsing="false" text="View Grades" />
-      <Button layoutX="597.0" layoutY="351.0" mnemonicParsing="false" onAction="#timeRequestButton" text="Time Extension Request" />
-      <Button layoutX="617.0" layoutY="513.0" mnemonicParsing="false" onAction="#approveButton" text="Approve Grades" />
-      <TableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="422.0" prefWidth="566.0">
+      <Button fx:id="viewButton" layoutX="90.0" layoutY="475.0" mnemonicParsing="false" text="View Grades" />
+      <Button layoutX="307.0" layoutY="475.0" mnemonicParsing="false" onAction="#timeRequestButton" text="Time Extension Request" />
+      <Button layoutX="588.0" layoutY="475.0" mnemonicParsing="false" onAction="#approveButton" text="Approve Grades" />
+      <TableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="306.0" prefWidth="716.0">
         <columns>
-          <TableColumn fx:id="nameCol" prefWidth="187.0" text="Test Name" />
-          <TableColumn fx:id="dateCol" prefWidth="94.0" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="77.0" text="Time" />
-            <TableColumn fx:id="codeCol" prefWidth="91.0" text="Test Code" />
-            <TableColumn fx:id="statusCol" prefWidth="116.0" text="Status" />
+          <TableColumn fx:id="nameCol" prefWidth="196.79999160766602" text="Test Name" />
+          <TableColumn fx:id="dateCol" prefWidth="147.1999969482422" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="89.5999755859375" text="Time" />
+            <TableColumn fx:id="codeCol" prefWidth="159.20001220703125" text="Test Code" />
+            <TableColumn fx:id="statusCol" prefWidth="125.59991455078125" text="Status" />
         </columns>
       </TableView>
    </children>
