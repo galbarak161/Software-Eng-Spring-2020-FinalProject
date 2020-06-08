@@ -1,11 +1,16 @@
 package Client;
 
+import java.io.IOException;
+
 import CloneEntities.*;
 import CommonElements.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -17,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class examCreator extends AbstractController {
 
@@ -158,7 +164,24 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	public void OnClickedShowQuestion(ActionEvent event) {
-
+		if (questionsList.getSelectionModel().getSelectedItem() != null) {
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
+					root = (Parent) fxmlLoader.load();
+					showQuestion q = fxmlLoader.getController();
+					q.setFields(questionsList.getSelectionModel().getSelectedItem());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Stage stage = new Stage();
+				stage.setTitle("Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
+				stage.setScene(new Scene(root));
+				stage.show();
+			});
+		}
 	}
 
 }

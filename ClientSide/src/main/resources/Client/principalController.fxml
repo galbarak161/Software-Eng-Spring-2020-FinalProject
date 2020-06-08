@@ -14,16 +14,16 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="displayButton" layoutX="584.0" layoutY="472.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
-      <Button fx:id="startButton" layoutX="580.0" layoutY="110.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
-      <TableView fx:id="requestsList" layoutX="8.0" layoutY="69.0" prefHeight="475.0" prefWidth="548.0">
+      <Button fx:id="displayButton" layoutX="100.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
+      <Button fx:id="startButton" layoutX="508.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
+      <TableView fx:id="requestsList" layoutX="8.0" layoutY="69.0" prefHeight="372.0" prefWidth="727.0">
          <columns>
-            <TableColumn fx:id="nameCol" prefWidth="92.0" text="Request" />
-            <TableColumn fx:id="testName" prefWidth="91.0" text="Test" />
-            <TableColumn fx:id="codeCol" prefWidth="72.0" text="Test Code" />
-            <TableColumn fx:id="dateCol" prefWidth="96.0" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="88.0" text="Time" />
-            <TableColumn fx:id="statusCol" prefWidth="108.0" text="Status" />
+            <TableColumn fx:id="nameCol" prefWidth="102.39999675750732" text="Request" />
+            <TableColumn fx:id="testName" prefWidth="128.80001831054688" text="Test" />
+            <TableColumn fx:id="codeCol" prefWidth="99.19999694824219" text="Test Code" />
+            <TableColumn fx:id="dateCol" prefWidth="134.39996337890625" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="96.0" text="Time" />
+            <TableColumn fx:id="statusCol" prefWidth="170.39990234375" text="Status" />
          </columns>
       </TableView>
    </children>
