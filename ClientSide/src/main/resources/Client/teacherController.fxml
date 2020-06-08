@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.teacherController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.teacherController">
    <children>
-      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="118.0" text="Teacher Panel" textFill="#cd1313">
+      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="129.0" text="Teacher Panel" textFill="#cd1313">
          <font>
-            <Font name="Calibri" size="20.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="25.0" layoutY="76.0" prefHeight="21.0" prefWidth="118.0" text="Choose a course:">
@@ -24,7 +24,7 @@
       <Button fx:id="viewButton" layoutX="627.0" layoutY="179.0" mnemonicParsing="false" text="View Grades" />
       <Button layoutX="597.0" layoutY="351.0" mnemonicParsing="false" onAction="#timeRequestButton" text="Time Extension Request" />
       <Button layoutX="617.0" layoutY="513.0" mnemonicParsing="false" onAction="#approveButton" text="Approve Grades" />
-      <TableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="428.0" prefWidth="566.0">
+      <TableView fx:id="testsList" layoutX="21.0" layoutY="129.0" prefHeight="422.0" prefWidth="566.0">
         <columns>
           <TableColumn fx:id="nameCol" prefWidth="187.0" text="Test Name" />
           <TableColumn fx:id="dateCol" prefWidth="94.0" text="Date" />

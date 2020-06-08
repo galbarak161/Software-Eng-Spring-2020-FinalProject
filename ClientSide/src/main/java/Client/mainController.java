@@ -20,6 +20,7 @@ public class mainController {
 
 	@FXML
 	private BorderPane borderPane;
+	
 
 	public void initialize() {
 		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
