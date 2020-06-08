@@ -468,11 +468,9 @@ public class ServerOperations {
 
 		Course course = getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
 
-		//// TODO Create StudentTest object
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
-			student.addTests(new StudentTest(student, newTest));
-
+			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
 		}
 
 		return newTest.createClone();
