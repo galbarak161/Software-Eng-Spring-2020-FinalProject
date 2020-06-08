@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import CloneEntities.CloneExam;
+import CloneEntities.CloneQuestionInExam;
 
 @Entity
 @Table(name = "Exam")
@@ -68,7 +69,11 @@ public class Exam {
 	}
 
 	public CloneExam createClone() {
-		CloneExam clone = new CloneExam(null, null, duration, examName, teacherComments, studentComments,
+		List<CloneQuestionInExam> qInExams = new ArrayList<CloneQuestionInExam>();
+		for (QuestionInExam questionInExam : getQuestionInExam()) {
+			qInExams.add(questionInExam.createClone());
+		}
+		CloneExam clone = new CloneExam(qInExams, duration, examName, teacherComments, studentComments,
 				course.getId(), course.getCourseName() ,creator.getId());
 		clone.setId(id);
 		return clone;
