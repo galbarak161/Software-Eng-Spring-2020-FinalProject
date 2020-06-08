@@ -458,8 +458,6 @@ public class ServerOperations {
 	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
 		Student s = (Student) getUserByCloneId(newCloneStudentTest.getStudent().getId());
 		Test t = getTestByCloneId(newCloneStudentTest.getTest().getId());
-		if (t == null || s == null)
-			return null;
 
 		StudentTest newStudentTest = new StudentTest(s, t);
 
@@ -468,6 +466,33 @@ public class ServerOperations {
 		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
 		return newStudentTest.createClone();
 	}
+	
+	/**
+	 * handleCreateNewTimeExtensionRequest creates new TimeExtensionRequest based on CloneTimeExtensionRequest
+	 * 
+	 * @param newCloneTimeExtensionRequest a Clone TimeExtensionRequest entity that has all TimeExtensionRequest  details.
+	 * @return null if information is not complete , otherwise it updates the DB with new TimeExtensionRequest
+	 * @throws Exception
+	 * 
+	 */
+	public CloneTimeExtensionRequest handleCreateNewTimeExtensionRequest(CloneTimeExtensionRequest newCloneTimeExtensionRequest) throws Exception {
+		TimeExtensionRequest timeExtensionRequest= new TimeExtensionRequest(newCloneTimeExtensionRequest.getBody(),
+																			newCloneTimeExtensionRequest.getTimeToExtenedInMinute());
+		if (newCloneTimeExtensionRequest.getTest() == null ) {
+			return null;
+		}
+		Test test = getTestByCloneId(newCloneTimeExtensionRequest.getTest().getId());
+		timeExtensionRequest.setTest(test);
+		
+		HibernateMain.insertDataToDB(timeExtensionRequest);
+		HibernateMain.getDataFromDB(Principal.class).get(0).getRequests().add(timeExtensionRequest);
+		
+		return timeExtensionRequest.createClone();
+		
+	}
+	
+	
+	
 
 	
 	/**
