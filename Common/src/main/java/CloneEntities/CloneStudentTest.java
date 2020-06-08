@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
+import CloneEntities.CloneStudentTest.StudentTestStatus;
+
 public class CloneStudentTest implements Serializable {
 
 	/**
@@ -31,6 +33,8 @@ public class CloneStudentTest implements Serializable {
 	private LocalTime startTime; // the time when the student goes into the test
 	
 	private LocalTime endTime; // the time when the student goes out of the test
+	
+	private StudentTestStatus status;
 	
 	
 	private double StudentDuration;
@@ -154,4 +158,10 @@ public class CloneStudentTest implements Serializable {
 	public String getExecutionCode() {
 		return test.getExecutionCode();
 	}
+
+	public void setStatus(StudentTestStatus status) {
+		this.status = status;
+	}
+	
+	
 }

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import CloneEntities.CloneTest.TestStatus;
+
 public class CloneTest implements Serializable {
 
 	private static final long serialVersionUID = 308680455154663629L;
@@ -30,6 +32,8 @@ public class CloneTest implements Serializable {
 	private int testDuration;
 
 	private ExamType type;
+	
+	private TestStatus status;
 
 	// private TimeExtensionRequest extensionRequests;
 
@@ -143,9 +147,15 @@ public class CloneTest implements Serializable {
 	public String getTime() {
 		return this.testTime.toString();
 	}
-	
-	public String getStatus() {
-		return "Bad..";
+
+	public TestStatus getStatus() {
+		return status;
 	}
+
+	public void setStatus(TestStatus status) {
+		this.status = status;
+	}
+	
+	
 
 }

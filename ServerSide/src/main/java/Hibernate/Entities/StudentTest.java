@@ -3,6 +3,8 @@ package Hibernate.Entities;
 import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneTest.TestStatus;
 
 @Entity
 @Table(name = "StudentTest")
@@ -29,6 +31,10 @@ public class StudentTest {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "testId")
 	private Test test;
+	
+	@Column(name = "status")
+	private StudentTestStatus status;
+
 
 	public StudentTest() {
 	}
@@ -38,6 +44,7 @@ public class StudentTest {
 		this.examCheckNotes = "";
 		setTest(test);
 		setStudent(student);
+		this.status = StudentTestStatus.Scheduled;
 	}
 
 	public int getId() {
@@ -67,5 +74,15 @@ public class StudentTest {
 		clone.setId(id);
 		return clone;
 	}
+
+	public StudentTestStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(StudentTestStatus status) {
+		this.status = status;
+	}
+	
+	
 
 }

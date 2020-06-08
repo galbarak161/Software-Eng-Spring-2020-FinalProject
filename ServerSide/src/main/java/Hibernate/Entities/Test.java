@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTest.TestStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -37,7 +38,10 @@ public class Test {
 
 	@Column(name = "examType")
 	private ExamType type;
-
+	
+	@Column(name = "status")
+	private TestStatus status;
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "timeExtensionRequestId")
 	private TimeExtensionRequest extensionRequests;
@@ -69,6 +73,7 @@ public class Test {
 		setExecutor(executor);
 		setExamToExecute(examToExecute);
 		students = new ArrayList<StudentTest>();
+		 this.status = TestStatus.Scheduled;
 	}
 
 	public CloneTest createClone() {
@@ -159,6 +164,16 @@ public class Test {
 		this.examToExecute = examToExecute;
 		examToExecute.getTests().add(this);
 		testDuration = examToExecute.getDuration();
+	}
+	
+	
+
+	public TestStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TestStatus status) {
+		this.status = status;
 	}
 
 	public void TestCodeGenerator() {
