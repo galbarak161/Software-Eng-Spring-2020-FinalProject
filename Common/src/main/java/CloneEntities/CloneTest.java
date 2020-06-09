@@ -73,7 +73,11 @@ public class CloneTest implements Serializable {
 		this.extraMinute = extraMinute;
 	}
 
-	public TestStatus getStatus() {
+	public String getStatus() {
+		return status.toString();
+	}
+	
+	public TestStatus getStatusEnum() {
 		return status;
 	}
 
@@ -95,6 +99,14 @@ public class CloneTest implements Serializable {
 
 	public String getExecutionCode() {
 		return executionCode;
+	}
+	
+	public String getCourseName() {
+		return examToExecute.getCourseName();
+	}
+	
+	public String getName() {
+		return examToExecute.getExamName();
 	}
 
 	public int getTestDuration() {

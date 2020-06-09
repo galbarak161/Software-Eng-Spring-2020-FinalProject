@@ -5,6 +5,7 @@ import java.io.IOException;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestion;
+import CloneEntities.CloneTest;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,8 +15,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -47,6 +51,25 @@ public class showExam {
 
     @FXML
     private Button QuestionButton;
+    
+    @FXML
+    private TableView<CloneQuestion> questionsTable;
+
+    @FXML
+    private TableColumn<CloneQuestion, String> SubjectCol;
+
+    @FXML
+    private TableColumn<CloneQuestion, String> SubjectGrade;
+    
+    public void initialize() {
+    	SubjectCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
+
+    	SubjectGrade.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Grade"));
+
+
+		questionsTable.getColumns().setAll(SubjectCol, SubjectGrade);
+    }
+
     
 	void setFields(CloneExam exam) {
 		this.ExamNameText.setText(exam.getExamName());

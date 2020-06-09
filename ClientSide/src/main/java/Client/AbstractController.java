@@ -52,7 +52,7 @@ public abstract class AbstractController {
 	 * @return
 	 * @throws InterruptedException Pause the main GUI thread
 	 */
-	public void GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
+	public synchronized void GetDataFromDB(ClientToServerOpcodes op, Object data) throws InterruptedException {
 		String initErrors = "";
 		ClientMain.addController(this.getClass().toString().split("Client.")[1], this);
 		ClientMain.setCurrController(this.getClass().toString().split("Client.")[1]);
@@ -68,7 +68,7 @@ public abstract class AbstractController {
 		}
 		msgRecived = false;
 	}
-	
+
 	void switchMainPanel(String Sfxml) {
 		Platform.runLater(() -> {
 			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
@@ -81,16 +81,39 @@ public abstract class AbstractController {
 	 * @param object Contains the error description
 	 */
 	public void popError(String title, String errorMessage) {
-		alert.setHeaderText(title);
-		alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
-		alert.showAndWait();
+		Platform.runLater(() -> {
+			alert.setHeaderText(title);
+			alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
+			alert.showAndWait();
+		});
 	}
 
 	public void initialize() {
 
 	}
 
-	void showMsg(String title, String content){
+	protected void sendRequest(ClientToServerOpcodes op, Object data) {
+		new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						GetDataFromDB(op, data);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+	}
+
+	void showMsg(String title, String content) {
 		Platform.runLater(() -> {
 			Alert info = new Alert(Alert.AlertType.INFORMATION);
 			info.setTitle(title);

@@ -70,7 +70,7 @@ public class ClientService extends AbstractClient {
 		 * show him "wrong details label"
 		 * 
 		 */
-		if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error) {
+		if (de.getOpCodeFromServer() == ServerToClientOpcodes.Error || de.getOpCodeFromServer() == null) {
 			if (currControlName.equals("loginController"))
 				((loginController) o).showErrorLabel();
 			else
@@ -151,13 +151,10 @@ public class ClientService extends AbstractClient {
 
 		case "teacherController":
 			switch (de.getOpCodeFromServer()) {
-			case SendAllCoursesOfTeacher:
-				((teacherController) o).courseCombo
-						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-				break;
-			case SendAllTestsOfTeacherInCourse:
+			case SendAllTestsOfTeacher:
 				((teacherController) o).testsList
 						.setItems(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+				break;
 			}
 			break;
 

@@ -19,7 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -27,10 +26,7 @@ import javafx.stage.Stage;
 public class examCreator extends AbstractController {
 
 	@FXML
-	private TextField hoursText;
-
-	@FXML
-	private TextField minutesText;
+	private TextField durText;
 
 	@FXML
 	private TextField nameText;
@@ -51,13 +47,13 @@ public class examCreator extends AbstractController {
 	private TextField studentsComment;
 
 	@FXML
-	private TableView<CloneQuestion> InsertedQuestions;
+	private TableView<CloneQuestion> insertedQuestions;
 
 	@FXML
 	private TableColumn<CloneQuestion, String> questionNameCol;
 
 	@FXML
-	private TableColumn<CloneQuestion, String> QuestionGradeCol;
+	private TableColumn<CloneQuestion, String> questionGradeCol;
 
 	@FXML
 	private ImageView removeQuestion;
@@ -73,14 +69,14 @@ public class examCreator extends AbstractController {
 
 	public void initialize() {
 		questionsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		InsertedQuestions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		insertedQuestions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		questionNameCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
 
-		QuestionGradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		//questionGradeCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Grade"));
 
-		InsertedQuestions.getColumns().setAll(questionNameCol, QuestionGradeCol);
-		InsertedQuestions.setEditable(true);
+		insertedQuestions.getColumns().setAll(questionNameCol);
+		insertedQuestions.setEditable(true);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
@@ -104,8 +100,7 @@ public class examCreator extends AbstractController {
 				e.printStackTrace();
 			}
 			nameText.setDisable(false);
-			minutesText.setDisable(false);
-			hoursText.setDisable(false);
+			durText.setDisable(false);
 			submit_button.setDisable(false);
 			showQuestionButton.setDisable(false);
 			studentsComment.setDisable(false);
@@ -113,6 +108,11 @@ public class examCreator extends AbstractController {
 		}
 	}
 	
+	/**
+	 * Used to take an existing exam and show to the teacher
+	 * WE DO NOT UPDATE IT, just using it as a base to new one.
+	 * @param event
+	 */
     @FXML
     void onClickedExam(ActionEvent event) {
 //		if (courseCombo.getValue() != null) {
@@ -134,20 +134,36 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	public void OnClickSubmit(ActionEvent event) {
-		CloneExam newExam = new CloneExam();
-		newExam.setQuestions(InsertedQuestions.getItems());
-		// newExam.setCourseId(courseId);
-		newExam.setExamName(nameText.getText());
-		newExam.setStudentComments(studentsComment.getText());
-		newExam.setTeacherComments(teachersText.getText());
-		newExam.setTeacherId(ClientMain.getUser().getId());
-		// newExam.setPoints();
+		try {
+			StringBuilder errorsList = new StringBuilder();
+
+			if (nameText.getText().isEmpty())
+				errorsList.append("Exam name is empty\n");
+
+			if (durText.getText().isEmpty() || !durText.getText().matches("[0-9]+"))
+				errorsList.append("Please choose test type\n");
+
+			if (errorsList.length() != 0) {
+				throw new Exception(errorsList.toString());
+			}
+		} catch (Exception e) {
+			popError("Please fill all question fields", e.getMessage());
+			return;
+		}
+		CloneExam newExam = null;
+
+		
+		try {
+			GetDataFromDB(ClientToServerOpcodes.CreateNewExam, newExam);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	public void moveQuestionRight(MouseEvent event) {
 		if (!(questionsList.getSelectionModel().getSelectedItems().isEmpty())) {
-			InsertedQuestions.getItems().addAll(questionsList.getSelectionModel().getSelectedItems());
+			insertedQuestions.getItems().addAll(questionsList.getSelectionModel().getSelectedItems());
 			questionsList.getItems().removeAll(questionsList.getSelectionModel().getSelectedItems());
 		}
 
@@ -155,9 +171,9 @@ public class examCreator extends AbstractController {
 
 	@FXML
 	public void moveQuestionLeft(MouseEvent event) {
-		if (!(InsertedQuestions.getSelectionModel().getSelectedItems().isEmpty())) {
-			questionsList.getItems().addAll(InsertedQuestions.getSelectionModel().getSelectedItems());
-			InsertedQuestions.getItems().removeAll(InsertedQuestions.getSelectionModel().getSelectedItems());
+		if (!(insertedQuestions.getSelectionModel().getSelectedItems().isEmpty())) {
+			questionsList.getItems().addAll(insertedQuestions.getSelectionModel().getSelectedItems());
+			insertedQuestions.getItems().removeAll(insertedQuestions.getSelectionModel().getSelectedItems());
 		}
 
 	}

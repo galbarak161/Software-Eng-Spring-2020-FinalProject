@@ -1,10 +1,8 @@
 package Client;
 
 import java.io.IOException;
-import java.util.List;
 
 import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTest;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,10 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
 
 public class studentController extends AbstractController {
@@ -70,12 +65,8 @@ public class studentController extends AbstractController {
 		
 		testsTable.getColumns().setAll(nameCol,dateCol , timeCol, codeCol, statusCol, gradeCol);
 		
-		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 
 		
 		
@@ -84,7 +75,7 @@ public class studentController extends AbstractController {
 	
 	@FXML
 	void OnClickedStartTest(ActionEvent event) {
-			switchMainPanel("TestCodeInput.fxml");
+			//switchMainPanel("TestCodeInput.fxml");
 
 	}	
 	
@@ -96,7 +87,7 @@ public class studentController extends AbstractController {
 			    try {
 	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayStudentTest.fxml"));
 	                root = (Parent) fxmlLoader.load();
-	                DisplayStudentTest q = fxmlLoader.getController();
+	                showStudentTest q = fxmlLoader.getController();
 	              //  q.setFields(testsTable.getSelectionModel().getSelectedItem().getValue());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
