@@ -1,12 +1,15 @@
 package Client;
 
+import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class principalController {
+public class principalController extends AbstractController{
 
     @FXML
     private Button displayButton;
@@ -14,17 +17,13 @@ public class principalController {
     @FXML
     private Button startButton;
 
-    @FXML
-    private TableView<CloneTimeExtensionRequest> requestsList;
+    @FXML TableView<CloneTimeExtensionRequest> requestsList;
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> nameCol;
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> testName;
-
-    @FXML
-    private TableColumn<CloneTimeExtensionRequest, String> codeCol;
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> dateCol;
@@ -34,5 +33,22 @@ public class principalController {
 
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> statusCol;
+    
+    public void initialize() {
+    	
+    	testName.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("TestName"));
+
+		nameCol.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("Body"));
+
+		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("TestDate"));
+
+		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("TestTime"));
+
+		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("Status"));
+
+		requestsList.getColumns().setAll(testName, nameCol, dateCol, timeCol, statusCol);
+		
+    	sendRequest(ClientToServerOpcodes.GetAllRequests, null);
+    }
 
 }

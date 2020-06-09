@@ -109,6 +109,7 @@ public abstract class AbstractController {
 						e.printStackTrace();
 					}
 				}
+				
 			}
 		}.start();
 	}
