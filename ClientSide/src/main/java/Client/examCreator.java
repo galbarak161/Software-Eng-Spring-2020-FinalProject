@@ -1,9 +1,12 @@
 package Client;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import CloneEntities.*;
 import UtilClasses.DataElements.ClientToServerOpcodes;
+import UtilClasses.ExamGenerator;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -73,9 +77,9 @@ public class examCreator extends AbstractController {
 
 		questionNameCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
 
-		//questionGradeCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Grade"));
+		questionGradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		insertedQuestions.getColumns().setAll(questionNameCol);
+		insertedQuestions.getColumns().setAll(questionNameCol, questionGradeCol);
 		insertedQuestions.setEditable(true);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
@@ -87,7 +91,9 @@ public class examCreator extends AbstractController {
 	}
 
 	public void SetList(ObservableList<CloneQuestion> questions) {
-		this.questionsList.setItems(questions);
+		Platform.runLater(()-> {
+			this.questionsList.setItems(questions);
+		});
 	}
 
 	@FXML
@@ -142,7 +148,18 @@ public class examCreator extends AbstractController {
 
 			if (durText.getText().isEmpty() || !durText.getText().matches("[0-9]+"))
 				errorsList.append("Please choose test type\n");
-
+			
+			if(insertedQuestions.getItems().isEmpty())
+				errorsList.append("Please choose at least one question\n");
+			
+			for (CloneQuestion item : insertedQuestions.getItems()) {
+				String data = (String) questionGradeCol.getCellObservableValue(item).getValue();
+			    if (data == null || data.isEmpty() || !data.matches("[0-9]+")) {
+			    	errorsList.append("Please add grades to all questions in the exam\n");
+			    	break;
+			    }
+			}
+			
 			if (errorsList.length() != 0) {
 				throw new Exception(errorsList.toString());
 			}
@@ -150,14 +167,20 @@ public class examCreator extends AbstractController {
 			popError("Please fill all question fields", e.getMessage());
 			return;
 		}
-		CloneExam newExam = null;
-
-		
-		try {
-			GetDataFromDB(ClientToServerOpcodes.CreateNewExam, newExam);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		System.out.print("Good job!");
+//		CloneExam newExam = new CloneExam(Integer.valueOf(durText.getText()), nameText.getText(), teachersText.getText(), studentsComment.getText(),
+//				courseCombo.getValue().getId(), courseCombo.getValue().getCourseName(), ClientMain.getUser().getId());
+//
+//		List<Integer> columnData = new ArrayList<>();
+//		for (CloneQuestion item : insertedQuestions.getItems()) {
+//		    columnData.add(Integer.valueOf(questionGradeCol.getCellObservableValue(item).getValue()));
+//		}
+//		
+//		try {
+//			GetDataFromDB(ClientToServerOpcodes.CreateNewExam, new ExamGenerator(newExam, insertedQuestions.getItems(), columnData));
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@FXML
