@@ -5,16 +5,50 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.synth.SynthListUI;
 
+import org.hibernate.Hibernate;
+
 import CloneEntities.*;
+import CloneEntities.CloneStudentTest.StudentTestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import UtilClasses.DataElements;
 import UtilClasses.ExamGenerator;
 import UtilClasses.Login;
+import UtilClasses.StudentExamCode;
 import UtilClasses.TeacherCourse;
 
 public class ServerOperations {
 
+	
+	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentExamCode studentExamCode) throws Exception{
+		CloneUser user = studentExamCode.getUser();
+		String Testcode = studentExamCode.getExamCode();
+		
+		
+		List<Student> students  = HibernateMain.getDataFromDB(Student.class);
+		Student s1 = null;
+		 for (Student student : students) {
+			if(student.getId() == user.getId()) {
+				s1 = student;
+				break;
+			}
+		}
+		 if(s1==null) {
+			 return null;
+		 }
+		 
+		List<StudentTest> studentTests = s1.getTests();
+		for (StudentTest studentTest : studentTests) {
+			if(studentTest.getTest().getExecutionCode() == Testcode) {
+				return studentTest.createClone();
+			};
+		}
+		return null;
+		
+	}
+	
+	
+	
 	/**
 	 * handleSendAllExamsOfTeacher(CloneUser)
 	 * 
