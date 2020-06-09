@@ -21,6 +21,7 @@ public class DataElements implements Serializable {
 	 * GetAllExamsOfTeacher(CloneUser)
 	 * GetAllExamsOfTeacherInCourse(CloneTeacherCourse)
 	 * GetAnswerToTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * GetStudentTestRelatedToStudentInExam (StudentExamCode)
 	 * 
 	 * UserLogIn (Login)
 	 * UserLogOut (int userId)
@@ -39,7 +40,8 @@ public class DataElements implements Serializable {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
 		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllRequests, GetAllTestRelatedToTeacher,
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
-		GetAnswerToTimeExtensionRequest, UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
+		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, 
+		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
 		CreateNewStudentTest, CreateNewTimeExtensionRequest, Error;
 	}
 
@@ -57,6 +59,7 @@ public class DataElements implements Serializable {
 	 * SendAllStudntTestRelatedToTest (List <CloneStudentTest>)
 	 * SendAllExamsOfTeacher(List<CloneExam>)
 	 * SendAllExamsOfTeacherInCourse (List<CloneExam>)
+	 * SendStudentTestRelatedToStudentInExam (CloneStudentTest)
 	 * 
 	 * UserLoggedIn  (Login)
 	 * UserLoggedOut (int userId)
@@ -67,6 +70,7 @@ public class DataElements implements Serializable {
 	 * CreateNewTimeExtensionRequestResult (CloneTimeExtensionRequest)
 	 * 
 	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * ErrorExamUnavailable
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -76,8 +80,9 @@ public class DataElements implements Serializable {
 		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllRequests,
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
-		SendAllExamsOfTeacherInCourse, UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
-		CreateNewTestResult, CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, Error;
+		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam,
+		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
+		CreateNewTestResult, CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, Error ,ErrorExamUnavailable;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

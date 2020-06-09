@@ -3,6 +3,7 @@ package Hibernate.Entities;
 import javax.persistence.*;
 
 import CloneEntities.CloneExam;
+import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
@@ -74,13 +75,17 @@ public class Test {
 		setExamToExecute(examToExecute);
 		students = new ArrayList<StudentTest>();
 
-	}
+		}
 
-	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
-				examToExecute.createClone());
-		return clone;
-	}
+		public CloneTest createClone() {
+			List<CloneStudentTest>  cloneStudentTests= new ArrayList<CloneStudentTest>();
+			for (StudentTest studentTest : students) {
+				cloneStudentTests.add(studentTest.createClone());
+			}
+			CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
+					examToExecute.createClone(), cloneStudentTests);
+			return clone;
+		}
 
 	public int getId() {
 		return id;

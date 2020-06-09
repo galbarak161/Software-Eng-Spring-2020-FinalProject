@@ -9,6 +9,7 @@ import OCSF.ConnectionToClient;
 import UtilClasses.DataElements;
 import UtilClasses.ExamGenerator;
 import UtilClasses.Login;
+import UtilClasses.StudentExamCode;
 import UtilClasses.TeacherCourse;
 
 public class ServerMain extends AbstractServer {
@@ -141,6 +142,11 @@ public class ServerMain extends AbstractServer {
 			case GetAnswerToTimeExtensionRequest:
 				dataFromDB = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
+				de.setData(dataFromDB);
+				break;
+			case GetStudentTestRelatedToStudentInExam:
+				dataFromDB = serverHandler.handleSendStudentTestRelatedToStudentInExam((StudentExamCode) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendStudentTestRelatedToStudentInExam);
 				de.setData(dataFromDB);
 				break;
 			case UserLogIn:
