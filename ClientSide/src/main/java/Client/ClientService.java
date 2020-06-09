@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 
 import CloneEntities.*;
 import OCSF.AbstractClient;
-import UtilClasses.DataElements;
-import UtilClasses.DataElements.*;
+import UtilClasses.*;
+import UtilClasses.DataElements.ServerToClientOpcodes;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 
