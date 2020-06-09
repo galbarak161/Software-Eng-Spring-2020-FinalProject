@@ -1,30 +1,31 @@
 package CloneEntities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CloneStudentTest implements Serializable {
 
 	private static final long serialVersionUID = -1308315666481290739L;
-	
+
 	public enum StudentTestStatus {
 		Done, Scheduled, WaitingForResult, Ongoing;
 	}
 
 	private int id;
-	
-	private int grade;
 
-	//private Map<Integer, AnsweredQuestion> AnsweredQuestions; // each integer is between 1..4
+	private int grade;
 
 	private String examCheckNotes;
 
 	private CloneUser student;
 
 	private CloneTest test;
-	
+
 	private StudentTestStatus status;
 
-	
+	private CloneAnswerToQuestion[] answers;
+
 	public CloneStudentTest(int id, CloneUser student, CloneTest test) {
 		this.id = id;
 		this.grade = -1;
@@ -32,6 +33,7 @@ public class CloneStudentTest implements Serializable {
 		this.status = StudentTestStatus.Scheduled;
 		this.student = student;
 		this.test = test;
+		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
 	}
 
 	public CloneStudentTest(CloneUser student, CloneTest test) {
@@ -40,6 +42,7 @@ public class CloneStudentTest implements Serializable {
 		this.status = StudentTestStatus.Scheduled;
 		this.student = student;
 		this.test = test;
+		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
 	}
 
 	public int getId() {
@@ -49,7 +52,7 @@ public class CloneStudentTest implements Serializable {
 	public int getGrade() {
 		return grade;
 	}
-	
+
 	public String getStringGrade() {
 		if (grade == -1)
 			return "";
@@ -67,7 +70,7 @@ public class CloneStudentTest implements Serializable {
 	public void setExamCheckNotes(String examCheckNotes) {
 		this.examCheckNotes = examCheckNotes;
 	}
-	
+
 	public CloneUser getStudent() {
 		return student;
 	}
@@ -79,7 +82,7 @@ public class CloneStudentTest implements Serializable {
 	public StudentTestStatus getStatus() {
 		return status;
 	}
-	
+
 	public String getStringStatus() {
 		return status.toString();
 	}
@@ -87,21 +90,29 @@ public class CloneStudentTest implements Serializable {
 	public void setStatus(StudentTestStatus status) {
 		this.status = status;
 	}
+
+	public String getTestName() {
+		return test.getName();
+	}
+
+	public String getTestDate() {
+		return test.getTestDate().toString();
+	}
+
+	public String getTestTime() {
+		return test.getTestTime().toString();
+	}
+
+	public CloneAnswerToQuestion[] getAnswers() {
+		return answers;
+	}
+
+	public void addAnswers(int index, CloneAnswerToQuestion answer) {
+		this.answers[index] = answer;
+	}
 	
 	@Override
 	public String toString() {
 		return getTest().getExamToExecute().getExamName();
-	}
-	
-	public String getTestName() {
-		return test.getName();
-	}
-	
-	public String getTestDate() {
-		return test.getTestDate().toString();
-	}
-	
-	public String getTestTime() {
-		return test.getTestTime().toString();
 	}
 }

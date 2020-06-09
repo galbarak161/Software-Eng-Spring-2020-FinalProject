@@ -15,16 +15,15 @@ public class CloneExam implements Serializable {
 	private String teacherComments;
 
 	private String studentComments;
-
+	
 	private int courseId;
 
 	private String courseName;
 	
 	private int teacherId;
 	
-
 	public CloneExam(int id, int duration, String examName, String teacherComments, String studentComments,
-			int courseId, String courseName, int teacherId ) {
+			int courseId, String courseName, int teacherId) {
 		this.id = id;
 		this.duration = duration;
 		this.examName = examName;
@@ -32,7 +31,7 @@ public class CloneExam implements Serializable {
 		this.studentComments = studentComments;
 		this.courseId = courseId;
 		this.courseName = courseName;
-		this.teacherId = teacherId;
+		this.teacherId = teacherId;	
 	}
 
 	public CloneExam(int duration, String examName, String teacherComments, String studentComments,
@@ -82,10 +81,4 @@ public class CloneExam implements Serializable {
 	public String toString() {
 		return this.getExamName();
 	}
-
-
-	
-
-
-
 }

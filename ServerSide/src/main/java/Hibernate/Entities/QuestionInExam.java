@@ -2,7 +2,7 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
-import UtilClasses.CloneQuestionInExam;
+import CloneEntities.CloneQuestionInExam;
 
 @Entity
 @Table(name = "Question_In_Exam")

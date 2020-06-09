@@ -70,125 +70,136 @@ public class ServerMain extends AbstractServer {
 		DataElements de = null;
 		try {
 			de = (DataElements) msg;
-			Object dataFromDB = null;
+			Object dataToClient = null;
 			System.out.println("Received message from client: opcode = " + de.getOpcodeFromClient());
 
 			switch (de.getOpcodeFromClient()) {
 			case GetAllExams:
-				dataFromDB = serverHandler.handleSendAllExams();
+				dataToClient = serverHandler.handleSendAllExams();
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExams);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllTests:
-				dataFromDB = serverHandler.handleSendAllTests();
+				dataToClient = serverHandler.handleSendAllTests();
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTests);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllQuestion:
-				dataFromDB = serverHandler.handleSendAllQuestions();
+				dataToClient = serverHandler.handleSendAllQuestions();
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestion);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllQuestionInCourse:
-				dataFromDB = serverHandler.handleSendQuestionsInCourse((CloneCourse) de.getData());
+				dataToClient = serverHandler.handleSendQuestionsInCourse((CloneCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInCourse);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllCoursesOfTeacher:
-				dataFromDB = serverHandler.handleSendAllCoursesOfTeacher((CloneUser) de.getData());
+				dataToClient = serverHandler.handleSendAllCoursesOfTeacher((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllCoursesOfTeacher);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllTestsOfTeacher:
-				dataFromDB = serverHandler.handleSendAllTestsFromTeacher((CloneUser) de.getData());
+				dataToClient = serverHandler.handleSendAllTestsFromTeacher((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacher);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllExamsOfTeacher:
-				dataFromDB = serverHandler.handleSendAllExamsOfTeacher((CloneUser) de.getData());
+				dataToClient = serverHandler.handleSendAllExamsOfTeacher((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacher);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllTestsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllTestsOfTeacherInCourse((TeacherCourse) de.getData());
+				dataToClient = serverHandler.handleSendAllTestsOfTeacherInCourse((TeacherCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestsOfTeacherInCourse);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllExamsOfTeacherInCourse:
-				dataFromDB = serverHandler.handleSendAllExamsOfTeacherInCourse((TeacherCourse) de.getData());
+				dataToClient = serverHandler.handleSendAllExamsOfTeacherInCourse((TeacherCourse) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllExamsOfTeacherInCourse);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllStudentTests:
-				dataFromDB = serverHandler.handleSendAllStudentTests((CloneUser) de.getData());
+				dataToClient = serverHandler.handleSendAllStudentTests((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudentTests);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
-			case GetAllRequests:
-				dataFromDB = serverHandler.handleSendAllRequests();
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllRequests);
-				de.setData(dataFromDB);
+			case GetAllTimeExtensionRequestRequests:
+				dataToClient = serverHandler.handleSendAllTimeExtensionRequestRequests();
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTimeExtensionRequestRequests);
+				de.setData(dataToClient);
 				break;
 			case GetAllTestRelatedToTeacher:
-				dataFromDB = serverHandler.handleSendAllTestRelatedToTeacher((CloneUser) de.getData());
+				dataToClient = serverHandler.handleSendAllTestRelatedToTeacher((CloneUser) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTestRelatedToTeacher);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllStudntTestRelatedToTest:
-				dataFromDB = serverHandler.handleSendAllStudntTestRelatedToTest((CloneTest) de.getData());
+				dataToClient = serverHandler.handleSendAllStudntTestRelatedToTest((CloneTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudntTestRelatedToTest);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAnswerToTimeExtensionRequest:
-				dataFromDB = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				dataToClient = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetStudentTestRelatedToStudentInExam:
-				dataFromDB = serverHandler.handleSendStudentTestRelatedToStudentInExam((StudentExamCode) de.getData());
+				dataToClient = serverHandler
+						.handleSendStudentTestRelatedToStudentInExam((StudentExamCode) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendStudentTestRelatedToStudentInExam);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case GetAllQuestionInExamRelatedToExam:
-				dataFromDB = serverHandler.handleSendAllQuestionInExamRelatedToExam((CloneExam) de.getData());
+				dataToClient = serverHandler.handleSendAllQuestionInExamRelatedToExam((CloneExam) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInExamRelatedToExam);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case UserLogIn:
-				dataFromDB = serverHandler.handleLogInRequest((Login) de.getData());
+				dataToClient = serverHandler.handleLogInRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case UserLogOut:
-				dataFromDB = serverHandler.handleLogOutRequest((int) de.getData());
+				dataToClient = serverHandler.handleLogOutRequest((int) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case CreateNewQuestion:
-				dataFromDB = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
+				dataToClient = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case CreateNewExam:
-				dataFromDB = serverHandler.handleCreateNewExam((ExamGenerator) de.getData());
+				dataToClient = serverHandler.handleCreateNewExam((ExamGenerator) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewExamResult);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case CreateNewTest:
-				dataFromDB = serverHandler.handleCreateNewTest((CloneTest) de.getData());
+				dataToClient = serverHandler.handleCreateNewTest((CloneTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTestResult);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case CreateNewTimeExtensionRequest:
-				dataFromDB = serverHandler
+				dataToClient = serverHandler
 						.handleCreateNewTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
 				break;
 			case CreateNewStudentTest:
-				dataFromDB = serverHandler.handleCreateNewStudentTest((CloneStudentTest) de.getData());
+				dataToClient = serverHandler.handleCreateNewStudentTest((CloneStudentTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewStudentTestResult);
-				de.setData(dataFromDB);
+				de.setData(dataToClient);
+				break;
+			case StudntStartsTest:
+				dataToClient = serverHandler.handleStudentStartsTest((CloneStudentTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntStartsTestResult);
+				de.setData(dataToClient);
+				break;
+			case StudntFinshedTest:
+				dataToClient = serverHandler.handleStudntFinshedTest((CloneStudentTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntFinshedTestResult);
+				de.setData(dataToClient);
 				break;
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);

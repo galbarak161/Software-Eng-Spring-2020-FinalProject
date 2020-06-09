@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import CloneEntities.CloneExam;
-import UtilClasses.CloneQuestionInExam;
+import CloneEntities.CloneQuestionInExam;
 
 @Entity
 @Table(name = "Exam")

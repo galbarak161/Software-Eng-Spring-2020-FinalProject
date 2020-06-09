@@ -59,6 +59,9 @@ public class Test {
 	@JoinColumn(name = "examId")
 	private Exam examToExecute;
 
+	@OneToOne(mappedBy = "test", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private TestStatistics statistics;
+	
 	public Test() {
 		students = new ArrayList<StudentTest>();
 	}
@@ -79,7 +82,7 @@ public class Test {
 
 		public CloneTest createClone() {
 			CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
-					examToExecute.createClone());
+					examToExecute.createClone(),examToExecute.getQuestionInExam().size());
 			return clone;
 		}
 
@@ -171,6 +174,15 @@ public class Test {
 
 	public void setStatus(TestStatus status) {
 		this.status = status;
+	}
+
+	
+	public TestStatistics getStatistics() {
+		return statistics;
+	}
+
+	public void setStatistics(TestStatistics statistics) {
+		this.statistics = statistics;
 	}
 
 	public void TestCodeGenerator() {

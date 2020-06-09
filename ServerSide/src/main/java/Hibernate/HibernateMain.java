@@ -23,7 +23,6 @@ import CloneEntities.*;
 import CloneEntities.CloneTest.ExamType;
 import Hibernate.Entities.*;
 import Server.ServerOperations;
-import UtilClasses.CloneQuestionInExam;
 import UtilClasses.Login;
 
 public class HibernateMain {
@@ -55,6 +54,7 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(Test.class);
 		configuration.addAnnotatedClass(TimeExtensionRequest.class);
 		configuration.addAnnotatedClass(AnswerToQuestion.class);
+		configuration.addAnnotatedClass(TestStatistics.class);
 
 		// Create new service and return it as session to DB
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

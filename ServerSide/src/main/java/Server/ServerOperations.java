@@ -2,10 +2,14 @@ package Server;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.mail.Session;
+
 import CloneEntities.*;
+import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneTest.TestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
-import UtilClasses.CloneQuestionInExam;
 import UtilClasses.ExamGenerator;
 import UtilClasses.Login;
 import UtilClasses.StudentExamCode;
@@ -129,6 +133,97 @@ public class ServerOperations {
 
 		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
 		return newStudentTest.createClone();
+	}
+
+	/**
+	 * handleStudentStartsTest (CloneStudentTest)
+	 * 
+	 * The function update StudentTest status and test statistics
+	 * 
+	 * @param studentTest
+	 * @return 1 If succeeded (Others -1)
+	 * @throws Exception
+	 */
+	public int handleStudentStartsTest(CloneStudentTest studentTest) {
+		int status = 1;
+		try {
+			StudentTest st = getStudntTestByCloneId(studentTest.getId());
+			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
+			st.setStatus(StudentTestStatus.Ongoing);
+			statistics.increaseNumberOfStudentsInTest();
+
+			HibernateMain.UpdateDataInDB(st);
+			Thread.sleep(100);
+			HibernateMain.UpdateDataInDB(statistics);
+
+		} catch (Exception e) {
+			status = 1;
+		}
+		return status;
+	}
+
+	/**
+	 * handleStudntFinshedTest (CloneStudentTest)
+	 * 
+	 * The function update StudentTest status after student finished
+	 * 
+	 * @param studentTest
+	 * @return 1 If succeeded (Others -1)
+	 * @throws Exception
+	 */
+	public int handleStudntFinshedTest(CloneStudentTest studentTest) {
+		int status = 1;
+		try {
+			StudentTest st = getStudntTestByCloneId(studentTest.getId());
+			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
+			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
+			st.setStatus(StudentTestStatus.WaitingForResult);
+
+			if (st.getTest().getStatus() == TestStatus.Ongoing)
+				statistics.increaseNumberOfStudentsThatFinishedInTime();
+
+			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
+			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
+				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st, answers[i].getQuestionId());
+				HibernateMain.insertDataToDB(answer);
+			}
+			
+			CheckAutomaticTest(st);
+
+			HibernateMain.UpdateDataInDB(statistics);
+
+		} catch (Exception e) {
+			status = 1;
+		}
+		return status;
+	}
+
+	private void CheckAutomaticTest(StudentTest st) {
+		HibernateMain.UpdateDataInDB(st);
+		// TODO Auto-generated method stub
+		
+	}
+
+	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
+		List<TestStatistics> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(TestStatistics.class);
+		for (TestStatistics ts : listFromDB) {
+			if (ts.getId() == id) {
+				return ts;
+			}
+		}
+		return null;
+	}
+
+	private StudentTest getStudntTestByCloneId(int id) throws Exception {
+		List<StudentTest> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(StudentTest.class);
+		for (StudentTest st : listFromDB) {
+			if (st.getId() == id) {
+				return st;
+			}
+		}
+		return null;
 	}
 
 	//////////////////////////////////////////////
@@ -398,8 +493,11 @@ public class ServerOperations {
 			return null;
 
 		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e);
+		TestStatistics statisitcs = new TestStatistics(newTest);
 
 		HibernateMain.insertDataToDB(newTest);
+		Thread.sleep(100);
+		HibernateMain.insertDataToDB(statisitcs);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
 				+ newTest.getExecutionCode());
@@ -483,7 +581,7 @@ public class ServerOperations {
 	 * 
 	 * @return List<CloneTimeExtensionRequest> send all time extension requests
 	 */
-	public List<CloneTimeExtensionRequest> handleSendAllRequests() {
+	public List<CloneTimeExtensionRequest> handleSendAllTimeExtensionRequestRequests() {
 		List<TimeExtensionRequest> listFromDB = null;
 		List<CloneTimeExtensionRequest> cloneRequests = new ArrayList<CloneTimeExtensionRequest>();
 		try {
@@ -770,5 +868,4 @@ public class ServerOperations {
 		}
 		return null;
 	}
-
 }

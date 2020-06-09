@@ -15,7 +15,7 @@ public class DataElements implements Serializable {
 	 * GetAllTestsOfTeacher (CloneUser)
 	 * GetAllTestsOfTeacherInCourse (CloneTeacherCourse)
 	 * GetAllStudentTests (CloneUser) 
-	 * GetAllRequests (NULL)
+	 * GetAllTimeExtensionRequestRequests (NULL)
 	 * GetAllTestRelatedToTeacher (CloneUser)
 	 * GetAllStudntTestRelatedToTest (CloneTest)
 	 * GetAllExamsOfTeacher(CloneUser)
@@ -32,18 +32,22 @@ public class DataElements implements Serializable {
 	 * CreateNewTest (CloneTest)
 	 * CreateNewTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
+	 * StudntStartsTest (CloneStudentTest)
+	 * StudntFinshedTest (CloneStudentTest)
+	 * 
 	 * Error (NULL)
 	 * 
 	 * @author Gal
 	 *
 	 */
+	
 	public enum ClientToServerOpcodes {
 		GetAllExams, GetAllTests, GetAllQuestion, GetAllQuestionInCourse, GetAllCoursesOfTeacher, GetAllTestsOfTeacher,
-		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllRequests, GetAllTestRelatedToTeacher,
+		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllTimeExtensionRequestRequests, GetAllTestRelatedToTeacher,
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
 		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, GetAllQuestionInExamRelatedToExam,
 		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		CreateNewStudentTest, CreateNewTimeExtensionRequest, Error;
+		CreateNewStudentTest, CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, Error;
 	}
 
 	/**
@@ -55,7 +59,7 @@ public class DataElements implements Serializable {
 	 * SendAllTestsOfTeacher (List <CloneTest>) 
 	 * SendAllExamsOfTeacherInCourse (List <CloneExam>) 
 	 * SendAllStudentTests (List <CloneStudentTest>) 
-	 * SendAllRequests (List <CloneTimeExtensionRequest>) 
+	 * SendAllTimeExtensionRequestRequests (List <CloneTimeExtensionRequest>) 
 	 * SendAllTestRelatedToTeacher (List <CloneTest>)
 	 * SendAllStudntTestRelatedToTest (List <CloneStudentTest>)
 	 * SendAllExamsOfTeacher(List<CloneExam>)
@@ -72,6 +76,10 @@ public class DataElements implements Serializable {
 	 * CreateNewTimeExtensionRequestResult (CloneTimeExtensionRequest)
 	 * 
 	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * 
+	 * StudntStartsTestResult (int)
+	 * StudntFinshedTestResult (int)
+	 * 
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -79,11 +87,11 @@ public class DataElements implements Serializable {
 	 */
 	public enum ServerToClientOpcodes {
 		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
-		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllRequests,
+		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllTimeExtensionRequestRequests,
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
-		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam,SendAllQuestionInExamRelatedToExam,
-		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult,
-		CreateNewTestResult, CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, Error ;
+		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
+		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
+		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudntStartsTestResult, StudntFinshedTestResult, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

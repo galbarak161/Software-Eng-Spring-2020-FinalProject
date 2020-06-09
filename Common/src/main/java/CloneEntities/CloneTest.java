@@ -35,10 +35,11 @@ public class CloneTest implements Serializable {
 	private int teacherId;
 
 	private CloneExam examToExecute;
-	
+
+	private int numberOfQuestions;
 
 	public CloneTest(int id, LocalDate testDate, LocalTime testTime, String executionCode, int testDuration,
-			ExamType type, int teacherId, CloneExam examToExecute) {
+			ExamType type, int teacherId, CloneExam examToExecute, int numberOfQuestions) {
 		this.id = id;
 		this.testDate = testDate;
 		this.testTime = testTime;
@@ -49,6 +50,7 @@ public class CloneTest implements Serializable {
 		this.status = TestStatus.Scheduled;
 		this.teacherId = teacherId;
 		this.examToExecute = examToExecute;
+		this.numberOfQuestions = numberOfQuestions;
 	}
 
 	public CloneTest(LocalDate testDate, LocalTime testTime, int testDuration, ExamType type, int teacherId,
@@ -74,7 +76,7 @@ public class CloneTest implements Serializable {
 	public String getStatus() {
 		return status.toString();
 	}
-	
+
 	public TestStatus getStatusEnum() {
 		return status;
 	}
@@ -98,11 +100,11 @@ public class CloneTest implements Serializable {
 	public String getExecutionCode() {
 		return executionCode;
 	}
-	
+
 	public String getCourseName() {
 		return examToExecute.getCourseName();
 	}
-	
+
 	public String getName() {
 		return examToExecute.getExamName();
 	}
@@ -123,7 +125,9 @@ public class CloneTest implements Serializable {
 		return examToExecute;
 	}
 
-	
+	public int getNumberOfQuestions() {
+		return numberOfQuestions;
+	}
 
 	@Override
 	public String toString() {

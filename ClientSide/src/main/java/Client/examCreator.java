@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CloneEntities.*;
-import UtilClasses.CloneQuestionInExam;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.ExamGenerator;
 import javafx.application.Platform;
