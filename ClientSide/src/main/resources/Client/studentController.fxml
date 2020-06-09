@@ -18,12 +18,11 @@
       <Button fx:id="startButton" layoutX="127.0" layoutY="385.0" mnemonicParsing="false" onAction="#OnClickedStartTest" prefHeight="25.0" prefWidth="88.0" text="Start Test" />
       <TableView fx:id="testsTable" layoutX="17.0" layoutY="61.0" prefHeight="291.0" prefWidth="710.0">
         <columns>
-          <TableColumn fx:id="nameCol" prefWidth="175.19995498657227" text="Test Name" />
-          <TableColumn fx:id="dateCol" prefWidth="121.60002136230469" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="104.79998779296875" text="Time" />
-            <TableColumn fx:id="codeCol" prefWidth="125.60003662109375" text="Test Code" />
-            <TableColumn fx:id="statusCol" prefWidth="104.00006103515625" text="Status" />
-            <TableColumn fx:id="gradeCol" prefWidth="79.99993896484375" text="Grade" />
+          <TableColumn fx:id="nameCol" prefWidth="271.0" text="Test Name" />
+          <TableColumn fx:id="dateCol" prefWidth="111.0" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="109.0" text="Time" />
+            <TableColumn fx:id="statusCol" prefWidth="145.0" text="Status" />
+            <TableColumn fx:id="gradeCol" prefWidth="73.0" text="Grade" />
         </columns>
       </TableView>
    </children>
