@@ -1,6 +1,6 @@
 package UtilClasses;
 
-
+import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestion;
 
 public class CloneQuestionInExam {
@@ -25,12 +25,22 @@ public class CloneQuestionInExam {
 		return pointsForQuestion;
 	}
 
-
-
+	public void setPointsForQuestion(int points) {
+		this.pointsForQuestion = points;
+	}
+	
 	public CloneQuestion getQuestion() {
 		return question;
 	}
-
-
+	
+	public String getGrade() {
+		if(pointsForQuestion == -1) 
+			return "";
+		return String.valueOf(pointsForQuestion);
+	}
+	
+	public String getName() {
+		return question.getSubject();
+	}
 
 }
