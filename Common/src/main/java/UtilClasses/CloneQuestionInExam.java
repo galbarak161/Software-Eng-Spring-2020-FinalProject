@@ -1,6 +1,6 @@
 package UtilClasses;
 
-import CloneEntities.CloneExam;
+
 import CloneEntities.CloneQuestion;
 
 public class CloneQuestionInExam {
