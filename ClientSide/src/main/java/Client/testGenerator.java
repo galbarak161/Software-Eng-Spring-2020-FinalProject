@@ -80,14 +80,15 @@ public class testGenerator extends AbstractController {
 			if (examCombo.getValue() == null)
 				errorsList.append("No exam has been chosen\n");
 
-			if (datePicker.getValue() == null)
-				errorsList.append("Date is empty\n");
+			if (datePicker.getValue() == null || datePicker.getValue().isBefore(LocalDate.now()))
+				errorsList.append("Date is empty or invalid\n");
 
 			if (!autoRadio.isSelected() && !manRadio.isSelected())
 				errorsList.append("Please choose test type\n");
 
-			if (beginText.getText().isEmpty() || !Pattern.compile(reg).matcher(beginText.getText()).matches())
-				errorsList.append("Begin time is empty or incorrect\n");
+			if (beginText.getText().isEmpty() || !Pattern.compile(reg).matcher(beginText.getText()).matches()
+					|| ((datePicker.getValue().isEqual(LocalDate.now())) && (LocalTime.parse(beginText.getText()).isBefore(LocalTime.now()))))
+				errorsList.append("Begin time is empty or invalid\n");
 
 			if (errorsList.length() != 0) {
 				throw new Exception(errorsList.toString());

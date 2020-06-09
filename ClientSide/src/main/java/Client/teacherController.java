@@ -20,12 +20,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class teacherController extends AbstractController {
 
 	@FXML
-	ComboBox<CloneCourse> courseCombo;
+	private Button viewButton;
 
 	@FXML
-	private Button viewButton;
-	@FXML
 	TableView<CloneTest> testsList;
+
+	@FXML
+	private TableColumn<CloneTest, String> courseCol;
 
 	@FXML
 	private TableColumn<CloneTest, String> nameCol;
@@ -41,8 +42,6 @@ public class teacherController extends AbstractController {
 
 	@FXML
 	private TableColumn<CloneTest, String> statusCol;
-	
-	public Thread refreshThread;
 
 	@FXML
 	void approveButton(ActionEvent event) {
@@ -56,49 +55,23 @@ public class teacherController extends AbstractController {
 
 	@Override
 	public void initialize() {
+		courseCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("CourseName"));
+
 		nameCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Name"));
-		
-		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Date"));
 
-		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Time"));
-		
+		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestDate"));
+
+		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestTime"));
+
 		codeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("ExecutionCode"));
-		
-		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Status"));
-		
-		testsList.getColumns().setAll(nameCol,dateCol , timeCol, codeCol, statusCol);
-	
-        new Thread() {
 
-            public void run() {
-        		try {
-        			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
-        		} catch (InterruptedException e) {
-        			e.printStackTrace();
-        		}
-        		try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        }.start();
+		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Status"));
+
+		testsList.getColumns().setAll(courseCol, nameCol, dateCol, timeCol, codeCol, statusCol);
+		
+		sendRequest(ClientToServerOpcodes.GetAllTestsOfTeacher, ClientMain.getUser());
         
 
-	}
-
-	public void setCourses(ObservableList<CloneCourse> c) {
-		courseCombo.setItems(c);
-	}
-
-	@FXML
-	void OnClickedCourse(ActionEvent event) {
-		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllTestsOfTeacherInCourse,new TeacherCourse(ClientMain.getUser(), courseCombo.getValue()) );
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

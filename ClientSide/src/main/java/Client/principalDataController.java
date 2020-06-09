@@ -115,5 +115,28 @@ public class principalDataController extends AbstractController {
 			});
 		}
 	}
+	
+	   @FXML
+	    void OnClickedTest(ActionEvent event) {
+		   if (testsList.getSelectionModel().getSelectedItem() != null) {
+				Platform.runLater(() -> {
+					Parent root = null;
+					try {
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayPrincipalTest.fxml"));
+						root = (Parent) fxmlLoader.load();
+						showTest e = fxmlLoader.getController();
+						e.setFields(testsList.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage stage = new Stage();
+					stage.setTitle("Test: " + testsList.getSelectionModel().getSelectedItem().getExamToExecute().getExamName());
+					stage.setScene(new Scene(root));
+					stage.show();
+				});
+			}
+
+	    }
 
 }

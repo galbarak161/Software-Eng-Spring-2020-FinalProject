@@ -124,65 +124,49 @@ public class questionsEditor extends AbstractController {
 	 **/
 	@FXML
 	public void onClickedSubmit(ActionEvent event) throws Exception {
-		CloneQuestion q = new CloneQuestion();
-
+		
+		int correctAnswer = 1;
 		try {
 			StringBuilder errorsList = new StringBuilder();
 
 			if (course_combo.getValue() == null)
 				errorsList.append("No course has been chosen\n");
-			else
-				q.setCourse(course_combo.getValue());
 
 			if (subject_text.getText().isEmpty())
 				errorsList.append("Subject is empty\n");
-			else
-				q.setSubject(subject_text.getText());
 
 			if (question_text.getText().isEmpty())
 				errorsList.append("Question is empty\n");
-			else
-				q.setQuestionText(question_text.getText());
 
 			if (answer_line_1.getText().isEmpty())
 				errorsList.append("Answer 1 is empty\n");
-			else
-				q.setAnswer_1(answer_line_1.getText());
 
 			if (answer_line_2.getText().isEmpty())
 				errorsList.append("Answer 2 is empty\n");
-			else
-				q.setAnswer_2(answer_line_2.getText());
 
 			if (answer_line_3.getText().isEmpty())
 				errorsList.append("Answer 3 is empty\n");
-			else
-				q.setAnswer_3(answer_line_3.getText());
 
 			if (answer_line_4.getText().isEmpty())
 				errorsList.append("Answer 4 is empty\n");
-			else
-				q.setAnswer_4(answer_line_4.getText());
 
 			RadioButton chk = (RadioButton) radioGroup.getSelectedToggle();
 			switch (chk.getText()) {
 			case "a.":
-				q.setCorrectAnswer(1);
+				correctAnswer = 1;
 				break;
 			case "b.":
-				q.setCorrectAnswer(2);
+				correctAnswer = 2;
 				break;
 			case "c.":
-				q.setCorrectAnswer(3);
+				correctAnswer = 3;
 				break;
 			case "d.":
-				q.setCorrectAnswer(4);
+				correctAnswer = 4;
 				break;
 			default:
 				errorsList.append("No correct answer\n");
 			}
-			
-			q.setTeacherId(ClientMain.getUser().getId());
 
 			if (errorsList.length() != 0) {
 				throw new Exception(errorsList.toString());
@@ -191,8 +175,16 @@ public class questionsEditor extends AbstractController {
 			popError("Please fill all question fields", e.getMessage());
 			return;
 		}
+		
+		CloneQuestion q = new CloneQuestion(subject_text.getText(), question_text.getText(), answer_line_1.getText(), 
+				answer_line_2.getText(), answer_line_3.getText(), answer_line_4.getText(), correctAnswer, course_combo.getValue(),
+				ClientMain.getUser().getId());
 
-		GetDataFromDB(ClientToServerOpcodes.CreateNewQuestion, q);
+		try {
+			GetDataFromDB(ClientToServerOpcodes.CreateNewQuestion, q);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 	}
 
