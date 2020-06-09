@@ -11,6 +11,7 @@ import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
+import UtilClasses.CloneQuestionInExam;
 import UtilClasses.DataElements;
 import UtilClasses.ExamGenerator;
 import UtilClasses.Login;
@@ -690,5 +691,27 @@ public class ServerOperations {
 			}
 		}
 		return null;
+	}
+
+
+
+	public  List<CloneQuestionInExam> handleSendAllQuestionInExamRelatedToExam(CloneExam cloneExam) throws Exception {
+		List<Exam> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(Exam.class);
+		Exam exam = null;
+		for (Exam exam1 : listFromDB) {
+			if(exam1.getId() == cloneExam.getId()) {
+				exam = exam1;
+				break;
+			}
+		}
+		if(exam==null) {
+			return null;
+		}
+		List<CloneQuestionInExam> cloneQuestionInExams = new ArrayList<CloneQuestionInExam>();
+		for (QuestionInExam questionInExam : exam.getQuestionInExam()) {
+			cloneQuestionInExams.add(questionInExam.createClone());
+		}
+		return cloneQuestionInExams;
 	}
 }

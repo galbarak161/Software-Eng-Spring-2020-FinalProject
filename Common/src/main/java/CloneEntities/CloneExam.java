@@ -3,7 +3,6 @@ package CloneEntities;
 import java.io.Serializable;
 import java.util.List;
 
-import UtilClasses.CloneQuestionInExam;
 
 public class CloneExam implements Serializable {
 	
@@ -25,10 +24,9 @@ public class CloneExam implements Serializable {
 	
 	private int teacherId;
 	
-	private List<CloneQuestionInExam> questionInExam;
 
 	public CloneExam(int id, int duration, String examName, String teacherComments, String studentComments,
-			int courseId, String courseName, int teacherId ,List<CloneQuestionInExam> questionInExam) {
+			int courseId, String courseName, int teacherId ) {
 		this.id = id;
 		this.duration = duration;
 		this.examName = examName;
@@ -37,7 +35,6 @@ public class CloneExam implements Serializable {
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.teacherId = teacherId;
-		setQuestionInExam(questionInExam);
 	}
 
 	public CloneExam(int duration, String examName, String teacherComments, String studentComments,
@@ -88,14 +85,7 @@ public class CloneExam implements Serializable {
 		return this.getExamName();
 	}
 
-	public List<CloneQuestionInExam> getQuestionInExam() {
-		return questionInExam;
-	}
 
-	public void setQuestionInExam(List<CloneQuestionInExam> questionInExam) {
-		this.questionInExam = questionInExam;
-	}
-	
 	
 
 

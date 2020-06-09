@@ -16,7 +16,7 @@ public class Teacher extends User {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "creator")
 	private List<Exam> exames;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "executor")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "executor")
 	private List<Test> tests;
 
 	public Teacher() {

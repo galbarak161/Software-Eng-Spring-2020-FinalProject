@@ -78,12 +78,8 @@ public class Test {
 		}
 
 		public CloneTest createClone() {
-			List<CloneStudentTest>  cloneStudentTests= new ArrayList<CloneStudentTest>();
-			for (StudentTest studentTest : students) {
-				cloneStudentTests.add(studentTest.createClone());
-			}
 			CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
-					examToExecute.createClone(), cloneStudentTests);
+					examToExecute.createClone());
 			return clone;
 		}
 

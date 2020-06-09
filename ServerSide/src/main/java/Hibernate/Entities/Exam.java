@@ -63,14 +63,9 @@ public class Exam {
 		questionInExam = new ArrayList<QuestionInExam>();
 	}
 
-	public CloneExam createClone() {
-		List<CloneQuestionInExam> cloneQuestionInExams = new ArrayList<CloneQuestionInExam>();
-		for (QuestionInExam qInExam : questionInExam) {
-			cloneQuestionInExams.add(qInExam.createClone());
-		}
-		
+	public CloneExam createClone() {	
 		CloneExam clone = new CloneExam(id, duration, examName, teacherComments, studentComments, course.getId(),
-				course.getCourseName(), creator.getId(),cloneQuestionInExams);
+				course.getCourseName(), creator.getId());
 		return clone;
 	}
 

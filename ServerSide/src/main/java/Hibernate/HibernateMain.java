@@ -23,6 +23,7 @@ import CloneEntities.*;
 import CloneEntities.CloneTest.ExamType;
 import Hibernate.Entities.*;
 import Server.ServerOperations;
+import UtilClasses.CloneQuestionInExam;
 import UtilClasses.Login;
 
 public class HibernateMain {
@@ -396,6 +397,11 @@ public class HibernateMain {
 		session.save(st2);
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
+		
+//		List<CloneQuestionInExam> cloneQuestionInExams = ServerOperations.handleSendAllQuestionInExamRelatedToExam(e1.createClone());
+//		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
+//			System.out.println(cloneQuestionInExam.getPointsForQuestion());
+//		}
 		session.flush();
 
 		session.clear();
