@@ -5,7 +5,7 @@ import javax.persistence.*;
 import UtilClasses.CloneQuestionInExam;
 
 @Entity
-@Table(name = "QuestionInExam")
+@Table(name = "Question_In_Exam")
 public class QuestionInExam {
 
 	@Id

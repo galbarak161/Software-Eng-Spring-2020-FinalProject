@@ -54,6 +54,7 @@ public class HibernateMain {
 		configuration.addAnnotatedClass(StudentTest.class);
 		configuration.addAnnotatedClass(Test.class);
 		configuration.addAnnotatedClass(TimeExtensionRequest.class);
+		configuration.addAnnotatedClass(AnswerToQuestion.class);
 
 		// Create new service and return it as session to DB
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -383,7 +384,6 @@ public class HibernateMain {
 		session.save(request);
 		session.flush();
 		request.setRequestConfirmed(true);
-
 		
 		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
 		session.save(test2);
@@ -397,6 +397,16 @@ public class HibernateMain {
 		session.save(st2);
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
+		
+		AnswerToQuestion a1 = new AnswerToQuestion(1,st1,questions[1].getId());
+		session.save(a1);
+		
+		AnswerToQuestion a2 = new AnswerToQuestion(3,st1,questions[2].getId());
+		session.save(a2);
+		
+		AnswerToQuestion a3 = new AnswerToQuestion(4,st2,questions[1].getId());
+		session.save(a3);
+		
 		
 //		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
 //		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
