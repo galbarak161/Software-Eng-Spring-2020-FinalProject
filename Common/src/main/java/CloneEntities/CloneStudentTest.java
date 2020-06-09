@@ -55,6 +55,12 @@ public class CloneStudentTest implements Serializable {
 	public int getGrade() {
 		return grade;
 	}
+	
+	public String getStringGrade() {
+		if (grade == -1)
+			return "";
+		return String.valueOf(grade);
+	}
 
 	public void setGrade(int grade) {
 		this.grade = grade;
@@ -79,6 +85,10 @@ public class CloneStudentTest implements Serializable {
 	public StudentTestStatus getStatus() {
 		return status;
 	}
+	
+	public String getStringStatus() {
+		return status.toString();
+	}
 
 	public void setStatus(StudentTestStatus status) {
 		this.status = status;
@@ -87,5 +97,17 @@ public class CloneStudentTest implements Serializable {
 	@Override
 	public String toString() {
 		return getTest().getExamToExecute().getExamName();
+	}
+	
+	public String getTestName() {
+		return test.getName();
+	}
+	
+	public String getTestDate() {
+		return test.getTestDate().toString();
+	}
+	
+	public String getTestTime() {
+		return test.getTestTime().toString();
 	}
 }

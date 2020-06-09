@@ -37,9 +37,6 @@ public class studentController extends AbstractController {
     private TableColumn<CloneStudentTest, String> timeCol;
 
     @FXML
-    private TableColumn<CloneStudentTest, String> codeCol;
-
-    @FXML
     private TableColumn<CloneStudentTest, String> statusCol;
 
     @FXML
@@ -52,24 +49,19 @@ public class studentController extends AbstractController {
 
 		nameCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestName"));
 		
-		dateCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("Date"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestDate"));
 		
 
-		timeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("Time"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestTime"));
 		
-		codeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("ExecutionCode"));
+		statusCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StringStatus"));
 		
-		statusCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("Status"));
+		gradeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StringGrade"));
 		
-		gradeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("Grade"));
-		
-		testsTable.getColumns().setAll(nameCol,dateCol , timeCol, codeCol, statusCol, gradeCol);
+		testsTable.getColumns().setAll(nameCol,dateCol , timeCol, statusCol, gradeCol);
 		
 		
 		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
-
-		
-		
 
 	}
 	

@@ -1,10 +1,8 @@
 package Client;
 
-import CloneEntities.CloneExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
-import CommonElements.DataElements.ClientToServerOpcodes;
-import javafx.collections.ObservableArray;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
