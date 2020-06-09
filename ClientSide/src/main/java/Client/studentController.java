@@ -67,7 +67,7 @@ public class studentController extends AbstractController {
 	
 	@FXML
 	void OnClickedStartTest(ActionEvent event) {
-			//switchMainPanel("TestCodeInput.fxml");
+			switchMainPanel("TestCodeInput.fxml");
 
 	}	
 	

@@ -81,103 +81,108 @@ public class ClientService extends AbstractClient {
 		/*
 		 * 
 		 */
-		switch (currControlName) {
-		case "loginController":
-			ClientMain.setUser((CloneUser) de.getData());
-			try {
-				App.changeStage("mainController", "High School Test System");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+
+			switch (currControlName) {
+			case "loginController":
+				ClientMain.setUser((CloneUser) de.getData());
+				try {
+					App.changeStage("mainController", "High School Test System");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			case "questionsEditor":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllCoursesOfTeacher:
+					((questionsEditor) o).course_combo
+							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					break;
+				case SendAllQuestionInCourse:
+					((questionsEditor) o).question_combo
+							.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					break;
+				case CreateNewQuestionResult:
+					((questionsEditor) o).showMsg("Success", "The question has been successfully created!");
+					break;
+				}
+				break;
+
+			case "examCreator":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllCoursesOfTeacher:
+					((examCreator) o).courseCombo
+							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					break;
+				case SendAllQuestionInCourse:
+					((examCreator) o).SetList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+
+					break;
+				case CreateNewExamResult:
+					((examCreator) o).showMsg("Success", "The exam has been successfully created!");
+					break;
+
+				}
+				break;
+
+			case "testGenerator":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllCoursesOfTeacher:
+					((testGenerator) o).courseCombo
+							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					break;
+				case SendAllExamsOfTeacherInCourse:
+					((testGenerator) o).examCombo
+							.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+					break;
+				case CreateNewTestResult:
+					((testGenerator) o).showMsg("Success", "The test has been successfully created!");
+					break;
+				}
+				break;
+
+			case "studentController":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllStudentTests:
+					((studentController) o).testsTable
+							.setItems(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
+					break;
+				}
+				break;
+
+			case "teacherController":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllTestsOfTeacher:
+					((teacherController) o).testsList
+							.setItems(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+					break;
+				}
+				break;
+
+			case "principalDataController":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllQuestion:
+					((principalDataController) o).questionsList.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					break;
+				case SendAllExams:
+					((principalDataController) o).examsList.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+					break;
+				case SendAllTests:
+					((principalDataController) o).testsList.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+					break;
+				}
+				break;
 			}
-			break;
-		case "questionsEditor":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllCoursesOfTeacher:
-				((questionsEditor) o).course_combo
-						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-				break;
-			case SendAllQuestionInCourse:
-				((questionsEditor) o).question_combo
-						.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
-				break;
-			case CreateNewQuestionResult:
-				((questionsEditor) o).showMsg("Success","The question has been successfully created!");
-				break;
-			}
-			break;
-
-		case "examCreator":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllCoursesOfTeacher:
-				((examCreator) o).courseCombo
-						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-				break;
-			case SendAllQuestionInCourse:
-				((examCreator) o).SetList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
-
-				break;
-			case CreateNewExamResult:
-				((examCreator) o).showMsg("Success","The exam has been successfully created!");
-				break;
-
-			}
-			break;
-
-		case "testGenerator":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllCoursesOfTeacher:
-				((testGenerator) o).courseCombo
-						.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
-				break;
-			case SendAllExamsOfTeacherInCourse:
-				((testGenerator) o).examCombo
-						.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
-				break;
-			case CreateNewTestResult:
-				((testGenerator) o).showMsg("Success","The test has been successfully created!");
-				break;
-			}
-			break;
-
-		case "studentController":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllStudentTests:
-				((studentController) o).testsTable
-						.setItems(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
-				break;
-			}
-			break;
-
-		case "teacherController":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllTestsOfTeacher:
-				((teacherController) o).testsList
-						.setItems(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
-				break;
-			}
-			break;
-
-		case "principalDataController":
-			switch (de.getOpCodeFromServer()) {
-			case SendAllQuestion:
-				((principalDataController) o).questionsList.getItems()
-						.setAll(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
-				break;
-			case SendAllExams:
-				((principalDataController) o).examsList.getItems()
-						.setAll(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
-				break;
-			case SendAllTests:
-				((principalDataController) o).testsList.getItems()
-						.setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
-
-				break;
-			}
-			break;
+		} catch (Exception e) {
+			e.getMessage();
+		} finally {
+			controllers.remove(currControlName);
+			AbstractController.msgRecieved();
 		}
-		controllers.remove(currControlName);
-		AbstractController.msgRecieved();
 	}
 
 }

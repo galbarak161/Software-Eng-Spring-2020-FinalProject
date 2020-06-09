@@ -25,7 +25,7 @@
       <TextField fx:id="durText" disable="true" layoutX="114.0" layoutY="136.0" prefHeight="26.0" prefWidth="79.0" />
       <TextField fx:id="nameText" disable="true" layoutX="113.0" layoutY="91.0" prefHeight="26.0" prefWidth="354.0" />
       <Label layoutX="22.0" layoutY="173.0" text="Add questions:" />
-      <Button fx:id="submit_button" disable="true" layoutX="337.0" layoutY="521.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="submit_button" disable="true" layoutX="337.0" layoutY="521.0" mnemonicParsing="false" onAction="#OnClickSubmit" text="Submit" />
       <Label layoutX="22.0" layoutY="338.0" text="Teacher's Comments:" />
       <TextField fx:id="teachersText" disable="true" layoutX="141.0" layoutY="331.0" prefHeight="78.0" prefWidth="535.0" />
       <ComboBox fx:id="courseCombo" layoutX="118.0" layoutY="56.0" onAction="#OnCourseClicked" prefHeight="26.0" prefWidth="244.0" />
