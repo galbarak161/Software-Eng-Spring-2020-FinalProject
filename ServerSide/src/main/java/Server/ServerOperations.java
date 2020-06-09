@@ -138,7 +138,7 @@ public class ServerOperations {
 	 * 
 	 * @return List<CloneTimeExtensionRequest> send all time extension requests
 	 */
-	public static List<CloneTimeExtensionRequest> handleSendAllRequests() {
+	public List<CloneTimeExtensionRequest> handleSendAllRequests() {
 		List<TimeExtensionRequest> listFromDB = null;
 		List<CloneTimeExtensionRequest> cloneRequests = new ArrayList<CloneTimeExtensionRequest>();
 		try {

@@ -1,8 +1,12 @@
 package CloneEntities;
 
+import java.io.Serializable;
 
-public class CloneTimeExtensionRequest {
+public class CloneTimeExtensionRequest implements Serializable{
 	
+
+	private static final long serialVersionUID = 6598660146086038505L;
+
 	private int id;
 	
 	private String body;

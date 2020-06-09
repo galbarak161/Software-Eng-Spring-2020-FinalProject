@@ -398,10 +398,10 @@ public class HibernateMain {
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
 		
-		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
-		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
-			System.out.println(clest.getTimeToExtenedInMinute());
-		}
+//		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
+//		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
+//			System.out.println(clest.getTimeToExtenedInMinute());
+//		}
 		
 //		List<CloneQuestionInExam> cloneQuestionInExams = ServerOperations.handleSendAllQuestionInExamRelatedToExam(e1.createClone());
 //		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
