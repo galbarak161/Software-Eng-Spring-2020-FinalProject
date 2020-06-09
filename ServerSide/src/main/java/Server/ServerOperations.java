@@ -97,6 +97,8 @@ public class ServerOperations {
 	}
 
 	/**
+	 * handleSendAllRequests()
+	 * 
 	 * sends all time extension requests
 	 * 
 	 * @return List<CloneTimeExtensionRequest> send all time extension requests
@@ -118,6 +120,8 @@ public class ServerOperations {
 	}
 
 	/**
+	 * handleSendAllExams()
+	 * 
 	 * sends all exams in DB
 	 * 
 	 * @return List<CloneExam> send all exams in system
@@ -139,6 +143,8 @@ public class ServerOperations {
 	}
 
 	/**
+	 * handleSendAllTests()
+	 * 
 	 * send all test in DB
 	 * 
 	 * @return List<CloneTest> send all tests in system
@@ -210,8 +216,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllCoursesOfTeacher(CloneUser) Send all courses who are taught by
-	 * teachers
+	 * handleSendAllCoursesOfTeacher(CloneUser) 
+	 * 
+	 * Send all courses who are taught by teachers
 	 * 
 	 * @param CloneUser - Teacher wants to see all courses he teaches
 	 * @return all the courses that are associated with this Teacher
@@ -236,8 +243,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestsFromTeacher(CloneUser data) Send all test related to
-	 * teacher, he was the (executor)
+	 * handleSendAllTestsFromTeacher(CloneUser data)
+	 * 
+	 *  Send all test related to teacher, he was the (executor)
 	 * 
 	 * @param CloneUser - Teacher wants to see all the tests that he was executed
 	 * @return list of Tests
@@ -262,9 +270,10 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleLogInRequest(Login data) function check users's username and passwords
-	 * and keeps user from login while account is till logged from another place,
-	 * and updates log status in DB.
+	 * handleLogInRequest(Login data)
+	 * 
+	 * function check users's username and passwords and keeps user from login while account is 
+	 * till logged from another place, and updates log status in DB.
 	 * 
 	 * @param data contains username and password entered
 	 * @return if the information is correct and he is not logged in the system
@@ -285,8 +294,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleLogOutRequest(int userId) function checkis user is log in and if he is
-	 * the function update login status in DB
+	 * handleLogOutRequest(int userId)
+	 * 
+	 *  function checkis user is log in and if he is the function update login status in DB
 	 * 
 	 * @param userId the users id , who want to log out
 	 * @return -1 if user is not found to be logged in , otherwise it found the user
@@ -305,8 +315,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllTestsOfTeacherInCourse (TeacherCourse) send all test that the
-	 * teacher is an executor and the test in a specific course
+	 * handleSendAllTestsOfTeacherInCourse (TeacherCourse)
+	 * 
+	 * send all test that the teacher is an executor and the test in a specific course
 	 * 
 	 * @param a class working as a container to teacher and course
 	 * @return List<CloneTest> all test that the teacher is an executor and the test
@@ -335,8 +346,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllExamsOfTeacherInCourse(TeacherCourse) returns all exams that the
-	 * teacher is a creator and the exam is in a specific course
+	 * handleSendAllExamsOfTeacherInCourse(TeacherCourse)
+	 * 
+	 *  returns all exams that the teacher is a creator and the exam is in a specific course
 	 * 
 	 * @param a class working as a container to teacher and course
 	 * @return List<CloneExam> all test that the teacher is a creator and the exam
@@ -364,8 +376,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleSendAllStudentTests (CloneUser) send all test related to a specific
-	 * student
+	 * handleSendAllStudentTests (CloneUser)
+	 * 
+	 * send all test related to a specific student
 	 * 
 	 * @param cloneUser a clone student
 	 * @return all test related to student
@@ -390,8 +403,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewQuestion(CloneQuestion newCloneQuestion) created new question
-	 * , based on constructor in CloneQuestion and adds it to DB
+	 * handleCreateNewQuestion(CloneQuestion newCloneQuestion)
+	 * 
+	 *  created new question, based on constructor in CloneQuestion and adds it to DB
 	 * 
 	 * @param newCloneQuestion the question we want to create
 	 * @return null if information is not complete , otherwise it updates the Db
@@ -418,8 +432,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewExam(CloneExam newCloneExam) creates new Exam based on
-	 * CloneExam
+	 * handleCreateNewExam(CloneExam newCloneExam) 
+	 * 
+	 * creates new Exam based on CloneExam
 	 * 
 	 * @param newExam a Clone exam entity that has all exam details.
 	 * @return null if information is not complete , otherwise it updates the DB
@@ -444,8 +459,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewTest(CloneTest newCloneTest) creates new Test based on
-	 * CloneTest
+	 * handleCreateNewTest(CloneTest newCloneTest)
+	 * 
+	 *  creates new Test based on CloneTest
 	 * 
 	 * @param newCloneTest a Clone exam entity that has all exam details.
 	 * @return null if information is not complete , otherwise it updates the DB
@@ -477,8 +493,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * hhandleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) creates new
-	 * Exam based on CloneTest
+	 * hhandleCreateNewStudentTest(CloneStudentTest newCloneStudentTest)
+	 * 
+	 * creates new, Exam based on CloneTest
 	 * 
 	 * @param newCloneStudentTest a Clone exam entity that has all StudentTest
 	 *                            details.
@@ -499,8 +516,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewTimeExtensionRequest creates new TimeExtensionRequest based on
-	 * CloneTimeExtensionRequest
+	 * handleCreateNewTimeExtensionRequest (CloneTimeExtensionRequest)
+	 * 
+	 *  creates new TimeExtensionRequest based on CloneTimeExtensionRequest
 	 * 
 	 * @param newCloneTimeExtensionRequest a Clone TimeExtensionRequest entity that
 	 *                                     has all TimeExtensionRequest details.
@@ -526,8 +544,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleUpdateTimeExtensionRequest function receives answer on time extension
-	 * request from client and updates Test entity in DB
+	 * handleUpdateTimeExtensionRequest (cloneTimeExtensionRequest)
+	 * 
+	 * function receives answer on time extension request from client and updates Test entity in DB
 	 * 
 	 * @param cloneTimeExtensionRequest the time request with answer
 	 * @return CloneTest with updates time
@@ -560,8 +579,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * getTestByCloneId (int) function receives CloneTest returns Test from DB that
-	 * match the CloneTest.
+	 * getTestByCloneId (int)
+	 * 
+	 *  function receives CloneTest returns Test from DB that match the CloneTest.
 	 * 
 	 * @param testid
 	 * @return null if not found otherwise it return Test object
@@ -579,8 +599,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * getExmaByCloneId (int) Function receives CloneExam return Exam from DB that
-	 * match the CloneExam.
+	 * getExmaByCloneId (int)
+	 * 
+	 *  Function receives CloneExam return Exam from DB that match the CloneExam.
 	 * 
 	 * @param examId
 	 * @return null if not found otherwise it return Exam object
@@ -598,8 +619,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * getCourseByCloneId (int) Function receives CloneCourse returns Course from DB
-	 * that match the CloneCourse.
+	 * getCourseByCloneId (int) 
+	 * 
+	 * Function receives CloneCourse returns Course from DB that match the CloneCourse.
 	 * 
 	 * @param courseId
 	 * @return null if not found otherwise it return Course object
@@ -617,8 +639,9 @@ public class ServerOperations {
 	}
 
 	/**
-	 * getUserByCloneId (int) Function receives userId returns User from DB that
-	 * match the CloneUser.
+	 * getUserByCloneId (int)
+	 * 
+	 *  Function receives userId returns User from DB that match the CloneUser.
 	 * 
 	 * @param userId
 	 * @return null if not found otherwise it return User object
