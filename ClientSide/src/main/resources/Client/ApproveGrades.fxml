@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ApproveGrades">
+   <children>
+      <Label layoutX="21.0" layoutY="38.0" prefHeight="30.0" prefWidth="186.0" text="Grades Confirmation" textFill="#cd1313">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="DisplayTestButton" layoutX="652.0" layoutY="269.0" mnemonicParsing="false" onAction="#OnClickDisplayTest" text="Display Test" />
+      <Button fx:id="ConfirmButton" layoutX="274.0" layoutY="506.0" mnemonicParsing="false" onAction="#OnClickConfirm" text="Confirm" />
+      <TableView fx:id="testsList" layoutX="21.0" layoutY="77.0" prefHeight="410.0" prefWidth="612.0">
+        <columns>
+          <TableColumn fx:id="FirstNameCol" editable="false" prefWidth="144.79999160766602" text="First Name" />
+          <TableColumn fx:id="LastNameCol" editable="false" prefWidth="121.60002136230469" text="Last Name" />
+            <TableColumn fx:id="idCol" editable="false" prefWidth="116.79998779296875" text="Student ID" />
+            <TableColumn fx:id="EmailCol" editable="false" prefWidth="138.39996337890625" text="Email" />
+            <TableColumn fx:id="GradeCol" prefWidth="88.79998779296875" text="Grade" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
