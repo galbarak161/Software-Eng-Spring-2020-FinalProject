@@ -33,6 +33,12 @@ public class CloneTimeExtensionRequest {
 	public boolean isRequestConfirmed() {
 		return isRequestConfirmed;
 	}
+	
+	public String getStatus() {
+		if(this.isRequestConfirmed) 
+			return "Confirmed";
+		return "Denied";
+	}
 
 	public void setRequestConfirmed(boolean isRequestConfirmed) {
 		this.isRequestConfirmed = isRequestConfirmed;
@@ -57,6 +63,17 @@ public class CloneTimeExtensionRequest {
 	public CloneTest getTest() {
 		return test;
 	}
-
+	
+	public String getTestName() {
+		return test.getExamToExecute().getExamName();
+	}
+	
+	public String getTestDate() {
+		return String.valueOf(test.getTestDate());
+	}
+	
+	public String getTestTime() {
+		return String.valueOf(test.getTestTime());
+	}
 	
 }
