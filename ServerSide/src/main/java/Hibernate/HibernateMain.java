@@ -384,7 +384,7 @@ public class HibernateMain {
 		session.flush();
 		request.setRequestConfirmed(true);
 
-
+		
 		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
 		session.save(test2);
 		Test test3= new Test(testDate, testTime, ExamType.Automated, t1, e1);
@@ -397,6 +397,11 @@ public class HibernateMain {
 		session.save(st2);
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
+		
+		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
+		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
+			System.out.println(clest.getTimeToExtenedInMinute());
+		}
 		
 //		List<CloneQuestionInExam> cloneQuestionInExams = ServerOperations.handleSendAllQuestionInExamRelatedToExam(e1.createClone());
 //		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
