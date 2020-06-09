@@ -1,12 +1,6 @@
 package CloneEntities;
 
 import java.io.Serializable;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-
-import CloneEntities.CloneStudentTest.StudentTestStatus;
-import UtilClasses.AnsweredQuestion;
 
 public class CloneStudentTest implements Serializable {
 

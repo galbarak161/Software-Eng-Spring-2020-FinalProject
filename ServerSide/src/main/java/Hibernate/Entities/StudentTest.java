@@ -1,5 +1,8 @@
 package Hibernate.Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
@@ -7,7 +10,7 @@ import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
 
 @Entity
-@Table(name = "StudentTest")
+@Table(name = "Student_Test")
 public class StudentTest {
 
 	@Id
@@ -18,9 +21,9 @@ public class StudentTest {
 	@Column(name = "grade")
 	private int grade;
 
-	// @Column(name = "questionsAnswers")
-	// private List<Integer> questionsAnswers; // each integer is between 1..4
-
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
+	private List<AnswerToQuestion> answers;
+	
 	@Column(name = "examCheckNotes")
 	private String examCheckNotes;
 
@@ -36,6 +39,7 @@ public class StudentTest {
 	private StudentTestStatus status;
 
 	public StudentTest() {
+		answers = new ArrayList<AnswerToQuestion>();
 	}
 
 	public StudentTest(Student student, Test test) {
@@ -44,6 +48,7 @@ public class StudentTest {
 		this.status = StudentTestStatus.Scheduled;
 		setTest(test);
 		setStudent(student);
+		answers = new ArrayList<AnswerToQuestion>();
 	}
 
 	public int getId() {
@@ -81,4 +86,11 @@ public class StudentTest {
 		this.status = status;
 	}
 
+	public List<AnswerToQuestion> getAnswers() {
+		return answers;
+	}
+
+	public void addAnswer(AnswerToQuestion answer) {
+		this.answers.add(answer);
+	}
 }

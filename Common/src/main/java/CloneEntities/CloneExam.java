@@ -1,8 +1,6 @@
 package CloneEntities;
 
 import java.io.Serializable;
-import java.util.List;
-
 
 public class CloneExam implements Serializable {
 	

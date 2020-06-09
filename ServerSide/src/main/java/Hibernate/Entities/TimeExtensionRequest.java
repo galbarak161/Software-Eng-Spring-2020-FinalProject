@@ -6,7 +6,7 @@ import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
 
 @Entity
-@Table(name = "TimeExtensionRequest")
+@Table(name = "Time_Extension_Request")
 public class TimeExtensionRequest {
 
 	@Id
