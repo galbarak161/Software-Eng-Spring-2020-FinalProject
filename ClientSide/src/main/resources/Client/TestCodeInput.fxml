@@ -23,5 +23,6 @@
       <Button fx:id="uploadButton" layoutX="388.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedUpload" text="Upload File" />
       <Button fx:id="submitButton" layoutX="492.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedSubmit" text="Submit File" />
       <Button fx:id="enterTestButton" layoutX="533.0" layoutY="245.0" mnemonicParsing="false" onAction="#onClickedEnter" text="Enter Test" />
+      <Label fx:id="timerText" layoutX="34.0" layoutY="426.0" prefHeight="104.0" prefWidth="235.0" />
    </children>
 </AnchorPane>

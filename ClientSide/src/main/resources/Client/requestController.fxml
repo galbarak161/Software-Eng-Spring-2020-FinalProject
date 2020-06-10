@@ -37,7 +37,7 @@
          </font>
       </Label>
       <TextArea fx:id="explaText" layoutX="30.0" layoutY="130.0" prefHeight="214.0" prefWidth="685.0" />
-      <Button layoutX="481.0" layoutY="376.0" mnemonicParsing="false" text="Deny" />
-      <Button layoutX="172.0" layoutY="376.0" mnemonicParsing="false" text="Approve" />
+      <Button fx:id="denyButton" layoutX="481.0" layoutY="376.0" mnemonicParsing="false" onAction="#onClickedDeny" text="Deny" />
+      <Button fx:id="approveButton" layoutX="172.0" layoutY="376.0" mnemonicParsing="false" onAction="#onClickedApprove" text="Approve" />
    </children>
 </AnchorPane>
