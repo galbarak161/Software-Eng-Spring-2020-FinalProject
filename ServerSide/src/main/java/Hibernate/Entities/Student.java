@@ -20,7 +20,7 @@ public class Student extends User {
 	}
 
 	public Student(String userName, String password, String firstName, String lastName, String emailAddress) {
-		super(userName, password, firstName, lastName, emailAddress);
+		super(userName, password, firstName, lastName, emailAddress, false);
 		courses = new ArrayList<Course>();
 		tests = new ArrayList<StudentTest>();
 	}
