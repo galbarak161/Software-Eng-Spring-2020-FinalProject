@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.showStudentTests">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.showStudentTests">
    <children>
-      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="129.0" text="Test" textFill="#cd1313">
+      <Label layoutX="25.0" layoutY="14.0" prefHeight="30.0" prefWidth="41.0" text="Test:" textFill="#cd1313">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="showTest" layoutX="338.0" layoutY="508.0" mnemonicParsing="false" onAction="#showTest" text="Show Test" />
+      <Button fx:id="showTest" layoutX="749.0" layoutY="260.0" mnemonicParsing="false" onAction="#showTest" text="Show Test" />
       <TableView fx:id="testsList" layoutX="20.0" layoutY="57.0" prefHeight="431.0" prefWidth="709.0">
         <columns>
             <TableColumn fx:id="nameCol" prefWidth="217.0" text="Student Name" />
@@ -22,6 +22,20 @@
           <TableColumn fx:id="emailCol" prefWidth="189.0" text="Email" />
             <TableColumn fx:id="gradeCol" minWidth="0.0" prefWidth="107.0" text="Grade" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
+      <Button fx:id="approveButton" layoutX="371.0" layoutY="510.0" mnemonicParsing="false" onAction="#onClickedApprove" text="Approve Grade" />
+      <Label fx:id="nameLabel" layoutX="75.0" layoutY="14.0" prefHeight="30.0" prefWidth="41.0" textFill="#cd1313">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="titleLabel" layoutX="330.0" layoutY="14.0" prefHeight="30.0" prefWidth="179.0" text="Grade Confirmation" textFill="#cd1313">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
