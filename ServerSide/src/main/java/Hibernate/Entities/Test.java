@@ -59,7 +59,8 @@ public class Test {
 	@JoinColumn(name = "examId")
 	private Exam examToExecute;
 
-	@OneToOne(mappedBy = "test", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "testStatisticsId")	
 	private TestStatistics statistics;
 
 	private int numberOfQuestionInExam;
@@ -69,7 +70,7 @@ public class Test {
 		numberOfQuestionInExam = 0;
 	}
 
-	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute) {
+	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute, TestStatistics statistics) {
 		this.testDate = testDate;
 		this.testTime = testTime;
 		TestCodeGenerator();
@@ -79,6 +80,7 @@ public class Test {
 		setExtensionRequests(null);
 		setExecutor(executor);
 		setExamToExecute(examToExecute);
+		setStatistics(statistics);
 		numberOfQuestionInExam = examToExecute.getNumberOfQuestionInExam();
 		students = new ArrayList<StudentTest>();
 	}
@@ -185,6 +187,7 @@ public class Test {
 
 	public void setStatistics(TestStatistics statistics) {
 		this.statistics = statistics;
+		statistics.setTest(this);
 	}
 
 	public int getNumberOfQuestionInExam() {

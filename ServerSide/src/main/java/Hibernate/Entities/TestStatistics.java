@@ -8,11 +8,10 @@ public class TestStatistics {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TestStatisticsId")
+	@Column(name = "testStatisticsId")
 	private int id;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "testId")
+	@OneToOne(mappedBy = "statistics", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
 	
 	@Column(name = "numberOfStudentsInTest")
@@ -27,10 +26,6 @@ public class TestStatistics {
 	public TestStatistics() {
 	}
 
-	public TestStatistics(Test test) {
-		setTest(test);
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -41,7 +36,6 @@ public class TestStatistics {
 
 	public void setTest(Test test) {
 		this.test = test;
-		test.setStatistics(this);
 	}
 
 	public int getNumberOfStudentsInTest() {

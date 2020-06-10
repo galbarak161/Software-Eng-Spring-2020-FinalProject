@@ -5,10 +5,12 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class SendEmail {
+	
+	//private final String 
 	public static void main(String[] args) {
 		// from,password,to,subject,message
 		//Sagigvili1993
-		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "galbarak161@gmail.com", "New Test",
+		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "Sagigvili1993@gmail.com", "New Test",
 				"New Test has been Scheduled");
 		// change from, password and to
 	}

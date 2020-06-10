@@ -376,7 +376,7 @@ public class HibernateMain {
 		LocalDate testDate = LocalDate.of(year, month, dayOfMonth);
 		LocalTime testTime = LocalTime.of(hour, minute);
 
-		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
+		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test1);
 
 		TimeExtensionRequest request = new TimeExtensionRequest("Bima tem odd zman", 50);
@@ -385,10 +385,12 @@ public class HibernateMain {
 		session.flush();
 		request.setRequestConfirmed(true);
 		
-		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1);
+		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test2);
-		Test test3= new Test(testDate, testTime, ExamType.Automated, t1, e1);
-		session.save(test2);
+		
+		Test test3= new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
+		session.save(test3);
+		
 		session.flush();
 
 		StudentTest st1 = new StudentTest(s1, test1);

@@ -507,9 +507,7 @@ public class ServerOperations {
 		if (t == null || e == null)
 			return null;
 
-		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e);
-		TestStatistics statisitcs = new TestStatistics(newTest);
-
+		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e, new TestStatistics());
 		HibernateMain.insertDataToDB(newTest);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
