@@ -18,10 +18,9 @@
       <TableView fx:id="testsList" layoutX="20.0" layoutY="57.0" prefHeight="431.0" prefWidth="709.0">
         <columns>
             <TableColumn fx:id="nameCol" prefWidth="217.0" text="Student Name" />
-          <TableColumn fx:id="idCol" prefWidth="119.0" text="Student ID" />
-          <TableColumn fx:id="emailCol" prefWidth="187.0" text="Email" />
-            <TableColumn fx:id="statusCol" prefWidth="98.0" text="Status" />
-            <TableColumn fx:id="gradeCol" minWidth="0.0" prefWidth="87.0" text="Grade" />
+          <TableColumn fx:id="idCol" prefWidth="194.0" text="Student ID" />
+          <TableColumn fx:id="emailCol" prefWidth="189.0" text="Email" />
+            <TableColumn fx:id="gradeCol" minWidth="0.0" prefWidth="107.0" text="Grade" />
         </columns>
       </TableView>
    </children>

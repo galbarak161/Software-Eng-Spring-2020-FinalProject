@@ -14,11 +14,11 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <TableView fx:id="QuestionTable" layoutX="179.0" layoutY="105.0" prefHeight="324.0" prefWidth="354.0">
+      <TableView fx:id="questionsTable" layoutX="179.0" layoutY="105.0" prefHeight="324.0" prefWidth="354.0">
         <columns>
-          <TableColumn fx:id="QuestionNumberCol" prefWidth="118.40002822875977" text="Question Number" />
-          <TableColumn fx:id="GradeCol" prefWidth="124.0" text="Correct Answer" />
-            <TableColumn fx:id="AnswerCol" prefWidth="111.20001220703125" text="Your Answer" />
+          <TableColumn fx:id="questionName" prefWidth="118.40002822875977" text="Question Number" />
+          <TableColumn fx:id="gradeCol" prefWidth="124.0" text="Correct Answer" />
+            <TableColumn fx:id="answerCol" prefWidth="111.20001220703125" text="Your Answer" />
         </columns>
       </TableView>
       <Label layoutX="52.0" layoutY="436.0" text="Test Grade:" />

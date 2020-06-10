@@ -122,6 +122,13 @@ public class ClientService extends AbstractClient {
 				case CreateNewExamResult:
 					((examCreator) o).showMsg("Success", "The exam has been successfully created!");
 					break;
+				case SendAllExamsOfTeacherInCourse:
+					((examCreator) o).examCombo.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+					break;
+				case SendAllQuestionInExamRelatedToExam:
+					((examCreator) o).addQuestionsInExam(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
+					
+					break;
 
 				}
 				break;
@@ -198,6 +205,14 @@ public class ClientService extends AbstractClient {
 				case SendAllQuestionInExamRelatedToExam:
 					((showTest) o).QuestionTable.getItems()
 							.setAll(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
+					break;
+				}
+				break;		
+			case "showStudentTests":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllStudntTestRelatedToTest:
+					((showStudentTests) o).testsList.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
 					break;
 				}
 				break;
