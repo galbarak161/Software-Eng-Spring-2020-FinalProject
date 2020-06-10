@@ -194,14 +194,26 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
-			status = 1;
+			status = -1;
 		}
 		return status;
 	}
 
-	private void CheckAutomaticTest(StudentTest st) {
-		List<QuestionInExam> quesions = st.getTest().getExamToExecute().getQuestionInExam();
+	private void CheckAutomaticTest(StudentTest st) throws Exception {
+		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
 		List<AnswerToQuestion> answers = st.getAnswers();
+
+		if (questions.size() != answers.size())
+			throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
+
+		for (int i = 0; i < questions.size(); i++) {
+			Question question = questions.get(i).getQuestion();
+			AnswerToQuestion answer = answers.get(i);
+			
+			//TODO: Change questionID in answerQuestion to getQuestionCode
+			//if(question.getQuestionCode() != answer.getQuestionCode())
+			
+		}
 		
 		HibernateMain.UpdateDataInDB(st);
 	}
