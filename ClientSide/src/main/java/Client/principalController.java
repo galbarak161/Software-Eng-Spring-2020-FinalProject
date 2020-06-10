@@ -48,7 +48,7 @@ public class principalController extends AbstractController{
 
 		requestsList.getColumns().setAll(testName, nameCol, dateCol, timeCol, statusCol);
 		
-    	sendRequest(ClientToServerOpcodes.GetAllRequests, null);
+    	sendRequest(ClientToServerOpcodes.GetAllTimeExtensionRequestRequests, null);
     }
 
 }
