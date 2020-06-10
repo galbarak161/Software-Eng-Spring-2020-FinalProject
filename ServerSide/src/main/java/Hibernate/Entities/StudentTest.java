@@ -104,8 +104,16 @@ public class StudentTest {
 		
 		this.status = status;
 	}
+	
+	public List<AnswerToQuestion> getAnswers() {
+		return answers;
+	}
 
-	public int getActualTestDuration() {
+	public void addAnswer(AnswerToQuestion answer) {
+		this.answers.add(answer);
+	}
+
+	public int getActualTestDurationInMinutes() {
 		return actualTestDurationInMinutes;
 	}
 
@@ -114,13 +122,5 @@ public class StudentTest {
 		int diffMinutes = LocalTime.now().getMinute() - startTime.getMinute();
 		
 		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);	
-	}
-	
-	public List<AnswerToQuestion> getAnswers() {
-		return answers;
-	}
-
-	public void addAnswer(int index, AnswerToQuestion answer) {
-		this.answers.add(answer);
 	}
 }

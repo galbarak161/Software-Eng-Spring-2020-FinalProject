@@ -29,7 +29,7 @@ public class AnswerToQuestion {
 
 	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionId, int questionNumberInExam) {
 		this.studentAnswer = studentAnswer;
-		setStudent(questionNumberInExam, student);
+		setStudent(student);
 		this.questionId = questionId;
 	}
 
@@ -62,8 +62,8 @@ public class AnswerToQuestion {
 		return student;
 	}
 
-	public void setStudent(int questionNumberInExam, StudentTest student) {
+	public void setStudent(StudentTest student) {
 		this.student = student;
-		student.addAnswer(questionNumberInExam, this);
+		student.addAnswer(this);
 	}	
 }
