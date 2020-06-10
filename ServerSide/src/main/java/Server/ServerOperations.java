@@ -198,8 +198,7 @@ public class ServerOperations {
 
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
-				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestionId(), i);
+				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(),st,answers[i].getQuestion().getId(),i);
 				HibernateMain.insertDataToDB(answer);
 			}
 

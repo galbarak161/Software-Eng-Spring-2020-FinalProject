@@ -2,8 +2,6 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
-import CloneEntities.CloneExam;
-import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;

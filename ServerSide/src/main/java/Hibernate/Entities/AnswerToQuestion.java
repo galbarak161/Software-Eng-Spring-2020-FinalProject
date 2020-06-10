@@ -2,6 +2,9 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneAnswerToQuestion;
+import CloneEntities.CloneQuestion;
+
 @Entity
 @Table(name = "Answer_To_Question")
 public class AnswerToQuestion {
@@ -20,16 +23,21 @@ public class AnswerToQuestion {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "StudentTestId")
 	private StudentTest student;
-
+	
 	public AnswerToQuestion() {
 	}
 
 	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionId, int questionNumberInExam) {
 		this.studentAnswer = studentAnswer;
 		setStudent(questionNumberInExam, student);
-		this.questionId = questionId;	
+		this.questionId = questionId;
 	}
 
+	public CloneAnswerToQuestion createClone(CloneQuestion question) {
+		CloneAnswerToQuestion clone = new CloneAnswerToQuestion(question, studentAnswer);
+		return clone;
+	}
+	
 	public int getId() {
 		return id;
 	}
