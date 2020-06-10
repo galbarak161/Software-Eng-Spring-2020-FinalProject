@@ -116,14 +116,14 @@ public class ClientService extends AbstractClient {
 							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllQuestionInCourse:
-					((examCreator) o).SetList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					((examCreator) o).setQuestionsList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 
 					break;
 				case CreateNewExamResult:
 					((examCreator) o).showMsg("Success", "The exam has been successfully created!");
 					break;
 				case SendAllExamsOfTeacherInCourse:
-					((examCreator) o).examCombo.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+					((examCreator) o).setExamsList(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
 					break;
 				case SendAllQuestionInExamRelatedToExam:
 					((examCreator) o).addQuestionsInExam(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
@@ -136,12 +136,10 @@ public class ClientService extends AbstractClient {
 			case "testGenerator":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllCoursesOfTeacher:
-					((testGenerator) o).courseCombo
-							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					((testGenerator) o).setCourses(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllExamsOfTeacherInCourse:
-					((testGenerator) o).examCombo
-							.setItems(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
+					((testGenerator) o).setExams(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
 					break;
 				case CreateNewTestResult:
 					((testGenerator) o).showMsg("Success", "The test has been successfully created!");
@@ -218,7 +216,7 @@ public class ClientService extends AbstractClient {
 				break;
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			controllers.remove(currControlName);
 			AbstractController.msgRecieved();

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -27,10 +28,8 @@
       <Label layoutX="22.0" layoutY="173.0" text="Add questions:" />
       <Button fx:id="submit_button" disable="true" layoutX="337.0" layoutY="521.0" mnemonicParsing="false" onAction="#OnClickSubmit" text="Submit" />
       <Label layoutX="22.0" layoutY="338.0" text="Teacher's Comments:" />
-      <TextField fx:id="teachersText" disable="true" layoutX="141.0" layoutY="331.0" prefHeight="78.0" prefWidth="535.0" />
       <ComboBox fx:id="courseCombo" layoutX="118.0" layoutY="56.0" onAction="#OnCourseClicked" prefHeight="26.0" prefWidth="244.0" />
       <Label layoutX="22.0" layoutY="420.0" text="Student's Comments:" />
-      <TextField fx:id="studentsComment" disable="true" layoutX="141.0" layoutY="420.0" prefHeight="78.0" prefWidth="535.0" />
       <ListView fx:id="questionsList" layoutX="110.0" layoutY="173.0" prefHeight="145.0" prefWidth="200.0" />
       <TableView fx:id="insertedQuestions" layoutX="373.0" layoutY="173.0" prefHeight="146.0" prefWidth="324.0">
         <columns>
@@ -52,5 +51,7 @@
       <Label layoutX="391.0" layoutY="60.0" prefHeight="18.0" prefWidth="96.0" text="Choose an exam:" />
       <ComboBox fx:id="examCombo" layoutX="487.0" layoutY="56.0" onAction="#onClickedExam" prefHeight="26.0" prefWidth="244.0" />
       <Label layoutX="201.0" layoutY="141.0" text="in minutes" />
+      <TextArea fx:id="teachersText" disable="true" layoutX="141.0" layoutY="338.0" prefHeight="71.0" prefWidth="535.0" />
+      <TextArea fx:id="studentsComment" disable="true" layoutX="141.0" layoutY="420.0" prefHeight="71.0" prefWidth="535.0" />
    </children>
 </AnchorPane>

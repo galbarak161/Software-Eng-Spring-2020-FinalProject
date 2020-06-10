@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 public abstract class AbstractNavi {
 	void switchMainPanel(String Sfxml) {
 		((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
+		AbstractController.isThreadRunning = false;
 	}
 
 	@FXML

@@ -11,6 +11,8 @@ import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.TeacherCourse;
 import UtilClasses.DataElements.ClientToServerOpcodes;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -57,6 +59,12 @@ public class testGenerator extends AbstractController {
 		autoRadio.setToggleGroup(radioGroup);
 		manRadio.setToggleGroup(radioGroup);
 	}
+	
+	public void setCourses(ObservableList<CloneCourse> courses) {
+		Platform.runLater(() -> {
+			this.courseCombo.setItems(courses);
+		});
+	}
 
 	@FXML
 	void onClickedCourse(ActionEvent event) {
@@ -66,6 +74,12 @@ public class testGenerator extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setExams(ObservableList<CloneExam> exams) {
+		Platform.runLater(() -> {
+			this.examCombo.setItems(exams);
+		});
 	}
 
 	@FXML
