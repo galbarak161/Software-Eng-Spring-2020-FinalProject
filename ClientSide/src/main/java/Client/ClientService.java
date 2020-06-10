@@ -159,12 +159,12 @@ public class ClientService extends AbstractClient {
 					break;
 				}
 				break;
-				
+
 			case "principalController":
 				switch (de.getOpCodeFromServer()) {
-				case SendAllRequests:
-					((principalController) o).requestsList
-							.setItems(FXCollections.observableArrayList((List<CloneTimeExtensionRequest>) de.getData()));
+				case SendAllTimeExtensionRequestRequests:
+					((principalController) o).requestsList.setItems(
+							FXCollections.observableArrayList((List<CloneTimeExtensionRequest>) de.getData()));
 					break;
 				}
 				break;
@@ -182,6 +182,22 @@ public class ClientService extends AbstractClient {
 				case SendAllTests:
 					((principalDataController) o).testsList.getItems()
 							.setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+					break;
+				}
+
+			case "showExam":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllQuestionInExamRelatedToExam:
+					((showExam) o).questionsTable.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
+					break;
+				}
+
+			case "showTest":
+				switch (de.getOpCodeFromServer()) {
+				case SendAllQuestionInExamRelatedToExam:
+					((showTest) o).QuestionTable.getItems()
+							.setAll(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
 					break;
 				}
 				break;
