@@ -162,7 +162,7 @@ public class ClientService extends AbstractClient {
 				
 			case "principalController":
 				switch (de.getOpCodeFromServer()) {
-				case SendAllRequests:
+				case SendAllTimeExtensionRequestRequests:
 					((principalController) o).requestsList
 							.setItems(FXCollections.observableArrayList((List<CloneTimeExtensionRequest>) de.getData()));
 					break;

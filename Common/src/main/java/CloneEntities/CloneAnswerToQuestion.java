@@ -23,7 +23,4 @@ public class CloneAnswerToQuestion implements Serializable{
 		return studentAnswer;
 	}
 	
-	
-	
-	
 }

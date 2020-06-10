@@ -17,7 +17,7 @@
       <TableView fx:id="QuestionTable" layoutX="179.0" layoutY="105.0" prefHeight="324.0" prefWidth="354.0">
         <columns>
           <TableColumn fx:id="QuestionNumberCol" prefWidth="118.40002822875977" text="Question Number" />
-          <TableColumn fx:id="GradeCol" prefWidth="124.0" text="Grade" />
+          <TableColumn fx:id="GradeCol" prefWidth="124.0" text="Correct Answer" />
             <TableColumn fx:id="AnswerCol" prefWidth="111.20001220703125" text="Your Answer" />
         </columns>
       </TableView>
