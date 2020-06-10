@@ -14,8 +14,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="displayButton" layoutX="100.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
-      <Button fx:id="startButton" layoutX="508.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Handle Request" />
+      <Button fx:id="showButton" layoutX="324.0" layoutY="480.0" mnemonicParsing="false" onAction="#onClickedShow" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
       <TableView fx:id="requestsList" layoutX="8.0" layoutY="69.0" prefHeight="372.0" prefWidth="727.0">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="230.0" text="Request" />
