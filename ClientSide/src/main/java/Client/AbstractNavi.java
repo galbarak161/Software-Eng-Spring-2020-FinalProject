@@ -24,7 +24,7 @@ public abstract class AbstractNavi {
 			e.printStackTrace();
 		}
 		try {
-			status = ClientMain.sendMessageToServer(new DataElements(ClientToServerOpcodes.UserLogOut,ClientMain.getUser()));
+			status = ClientMain.sendMessageToServer(new DataElements(ClientToServerOpcodes.UserLogOut,ClientMain.getUser().getId()));
 		} catch (IOException e) {
 			status = -1;
 			e.printStackTrace();
