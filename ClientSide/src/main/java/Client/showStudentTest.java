@@ -1,6 +1,10 @@
 package Client;
 
+
+import CloneEntities.CloneAnswerToQuestion;
+
 import CloneEntities.CloneStudentTest;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +25,7 @@ public class showStudentTest extends AbstractController {
 
 	@FXML
 	private TableColumn<CloneStudentTest, String> AnswerCol;
+
 
 	@FXML
 	private Label GradeLabel;

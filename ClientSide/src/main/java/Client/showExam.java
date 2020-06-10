@@ -5,7 +5,9 @@ import java.io.IOException;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestion;
+import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneTest;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,73 +25,73 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class showExam {
+public class showExam extends AbstractController {
 
-    @FXML
-    private AnchorPane courseText;
+	@FXML
+	private AnchorPane courseText;
 
-    @FXML
-    private TextField hoursText;
+	@FXML
+	private TextField ExamNameText;
 
-    @FXML
-    private TextField minutesText;
+	@FXML
+	private TextField courseNameText;
 
-    @FXML
-    private TextField ExamNameText;
+	@FXML
+	private TextField hoursText;
 
-    @FXML
-    private TextArea teachersText;
+	@FXML
+	private TextField minutesText;
 
-    @FXML
-    private TextArea studentsComment;
+	@FXML
+	private TextArea teachersText;
 
-    @FXML
-    private ListView<CloneQuestion> questionsList;
+	@FXML
+	private TextArea studentsComment;
 
-    @FXML
-    private TextField courseNameText;
+	@FXML
+	private Button QuestionButton;
 
-    @FXML
-    private Button QuestionButton;
-    
-    @FXML
-    private TableView<CloneQuestion> questionsTable;
+	@FXML TableView<CloneQuestionInExam> questionsTable;
 
-    @FXML
-    private TableColumn<CloneQuestion, String> SubjectCol;
+	@FXML
+	private TableColumn<CloneQuestionInExam, String> SubjectCol;
 
-    @FXML
-    private TableColumn<CloneQuestion, String> SubjectGrade;
-    
-    public void initialize() {
-    	SubjectCol.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Subject"));
+	@FXML
+	private TableColumn<CloneQuestionInExam, String> SubjectGrade;
 
-    	SubjectGrade.setCellValueFactory(new PropertyValueFactory<CloneQuestion, String>("Grade"));
+	public void initialize() {
+		SubjectCol.setCellValueFactory(new PropertyValueFactory<CloneQuestionInExam, String>("Name"));
 
+		SubjectGrade.setCellValueFactory(new PropertyValueFactory<CloneQuestionInExam, String>("Grade"));
 
 		questionsTable.getColumns().setAll(SubjectCol, SubjectGrade);
-    }
+	}
 
-    
 	void setFields(CloneExam exam) {
 		this.ExamNameText.setText(exam.getExamName());
-		//this.courseNameText.setText(exam.);
+		this.courseNameText.setText(exam.getCourseName());
 		this.hoursText.setText(String.valueOf(exam.getDuration()));
-		//this.questionsList.getItems().setAll(FXCollections.observableArrayList(exam.getQuestions()));
+		
+		try {
+			GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInExamRelatedToExam, exam);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.studentsComment.setText(exam.getStudentComments());
 		this.teachersText.setText(exam.getTeacherComments());
 	}
 
-    @FXML
-    void OnClickedQuestion(ActionEvent event) {
-		if (questionsList.getSelectionModel().getSelectedItem() != null) {
+	@FXML
+	void OnClickedQuestion(ActionEvent event) {
+		if (questionsTable.getSelectionModel().getSelectedItem() != null) {
 			Platform.runLater(() -> {
 				Parent root = null;
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
 					root = (Parent) fxmlLoader.load();
 					showQuestion q = fxmlLoader.getController();
-					q.setFields(questionsList.getSelectionModel().getSelectedItem());
+					q.setFields(questionsTable.getSelectionModel().getSelectedItem().getQuestion());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -100,6 +102,6 @@ public class showExam {
 				stage.show();
 			});
 		}
-    }
+	}
 
 }
