@@ -18,7 +18,9 @@ public abstract class AbstractController {
 	protected final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
 
 	private static boolean msgRecived = false;
-
+	
+	static boolean isThreadRunning = true;
+	
 	static void msgRecieved() {
 		msgRecived = true;
 	}
@@ -72,6 +74,7 @@ public abstract class AbstractController {
 	void switchMainPanel(String Sfxml) {
 		Platform.runLater(() -> {
 			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
+			isThreadRunning = false;
 		});
 	}
 
@@ -93,17 +96,18 @@ public abstract class AbstractController {
 	}
 
 	protected void sendRequest(ClientToServerOpcodes op, Object data) {
+		isThreadRunning = true;
 		new Thread() {
 			@Override
 			public void run() {
-				while (true) {
+				while (isThreadRunning) {
 					try {
 						GetDataFromDB(op, data);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 					try {
-						Thread.sleep(30000);
+						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

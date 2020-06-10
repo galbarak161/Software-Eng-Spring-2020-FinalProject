@@ -104,4 +104,13 @@ public class CloneQuestion implements Serializable {
 	public String toString() {
 		return this.getSubject();
 	}
+	
+	@Override
+	public boolean equals(Object o){
+	    if(o instanceof CloneQuestion){
+	    	CloneQuestion toCompare = (CloneQuestion) o;
+	        return id == toCompare.id;
+	    }
+	    return false;
+	}
 }

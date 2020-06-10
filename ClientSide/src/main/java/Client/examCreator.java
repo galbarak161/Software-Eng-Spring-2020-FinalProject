@@ -9,7 +9,6 @@ import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.ExamGenerator;
 import UtilClasses.TeacherCourse;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +23,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -46,13 +46,13 @@ public class examCreator extends AbstractController {
 	private Button submit_button;
 
 	@FXML
-	private TextField teachersText;
+	private TextArea teachersText;
 
 	@FXML
 	ComboBox<CloneCourse> courseCombo;
 
 	@FXML
-	private TextField studentsComment;
+	private TextArea studentsComment;
 
 	@FXML
 	TableView<CloneQuestionInExam> insertedQuestions;
@@ -106,9 +106,22 @@ public class examCreator extends AbstractController {
 
 	}
 
-	public void SetList(ObservableList<CloneQuestion> questions) {
+	public void setQuestionsList(ObservableList<CloneQuestion> questions) {
 		Platform.runLater(() -> {
 			this.questionsList.setItems(questions);
+			try {
+				GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse,
+						new TeacherCourse(ClientMain.getUser(), courseCombo.getValue()));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	public void setExamsList(ObservableList<CloneExam> exams) {
+		Platform.runLater(() -> {
+			this.examCombo.setItems(exams);
 		});
 	}
 
@@ -117,14 +130,6 @@ public class examCreator extends AbstractController {
 		if (courseCombo.getValue() != null) {
 			try {
 				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInCourse, courseCombo.getValue());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-				GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse,
-						new TeacherCourse(ClientMain.getUser(), courseCombo.getValue()));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -149,7 +154,7 @@ public class examCreator extends AbstractController {
 	void onClickedExam(ActionEvent event) {
 		if (examCombo.getValue() != null) {
 			CloneExam exam = examCombo.getValue();
-			nameText.setText(exam.getExamName());
+			//nameText.setText(exam.getExamName());
 			durText.setText(String.valueOf(exam.getDuration()));
 			studentsComment.setText(exam.getStudentComments());
 			teachersText.setText(exam.getTeacherComments());
@@ -164,11 +169,13 @@ public class examCreator extends AbstractController {
 	}
 
 	void addQuestionsInExam(ObservableList<CloneQuestionInExam> questions) {
-		insertedQuestions.setItems(questions);
-		for (CloneQuestionInExam q : questions) {
-			if (questionsList.getItems().contains(q.getQuestion()))
-				questionsList.getItems().remove(q.getQuestion());
-		}
+		Platform.runLater(() -> {
+			insertedQuestions.setItems(questions);
+			for (CloneQuestionInExam q : questions) {
+				if (questionsList.getItems().contains(q.getQuestion()))
+					questionsList.getItems().remove(q.getQuestion());
+			}
+		});
 	}
 
 	@FXML
