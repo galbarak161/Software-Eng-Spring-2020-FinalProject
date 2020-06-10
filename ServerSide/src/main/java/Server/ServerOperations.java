@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Session;
-
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import UtilClasses.ExamGenerator;
-import UtilClasses.Login;
-import UtilClasses.StudentExamCode;
-import UtilClasses.TeacherCourse;
+import UtilClasses.*;
 
 public class ServerOperations {
 
@@ -30,15 +27,15 @@ public class ServerOperations {
 	 * @return
 	 * @throws Exception
 	 */
-	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentExamCode studentExamCode)
+	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
 			throws Exception {
-		CloneUser user = studentExamCode.getUser();
-		String Testcode = studentExamCode.getExamCode();
+		int userId = studentExamCode.getUserId();
+		String Testcode = studentExamCode.getEexecutionCode();
 
 		List<Student> students = HibernateMain.getDataFromDB(Student.class);
 		Student s1 = null;
 		for (Student student : students) {
-			if (student.getId() == user.getId()) {
+			if (student.getId() == userId) {
 				s1 = student;
 				break;
 			}
@@ -139,14 +136,15 @@ public class ServerOperations {
 	 * 
 	 * The function update StudentTest status and test statistics
 	 * 
-	 * @param studentTest
+	 * @param studentExamCode
 	 * @return 1 If succeeded (Others -1)
 	 * @throws Exception
 	 */
-	public int handleStudentStartsTest(CloneStudentTest studentTest) {
+	public int handleStudentStartsTest(StudentStartTest studentStartTest) {
 		int status = 1;
 		try {
-			StudentTest st = getStudntTestByCloneId(studentTest.getId());
+			Test t = getTestByExamCode(studentStartTest.getEexecutionCode());
+			StudentTest st = getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			st.setStatus(StudentTestStatus.Ongoing);
 			statistics.increaseNumberOfStudentsInTest();
@@ -159,6 +157,24 @@ public class ServerOperations {
 			status = 1;
 		}
 		return status;
+	}
+
+	private StudentTest getStudntTestInTestIdByUserId(Test t, int userId) {
+		for (StudentTest student : t.getStudents()) {
+			if (student.getStudent().getId() == userId)
+				return student;
+		}
+		return null;
+	}
+
+	private Test getTestByExamCode(String executionCode) throws Exception {
+		List<Test> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(Test.class);
+		for (Test test : listFromDB) {
+			if (test.getExecutionCode().equals(executionCode))
+				return test;
+		}
+		return null;
 	}
 
 	/**
@@ -507,6 +523,7 @@ public class ServerOperations {
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
 			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
+			SendEmail.main(null);
 		}
 
 		return newTest.createClone();

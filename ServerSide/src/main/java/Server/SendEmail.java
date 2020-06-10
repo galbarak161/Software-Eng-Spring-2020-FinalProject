@@ -7,8 +7,9 @@ import javax.mail.internet.*;
 public class SendEmail {
 	public static void main(String[] args) {
 		// from,password,to,subject,message
-		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "xxx@xxx.com", "Time Extension",
-				"Please give me more time to abuse my students");
+		//Sagigvili1993
+		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "galbarak161@gmail.com", "New Test",
+				"New Test has been Scheduled");
 		// change from, password and to
 	}
 }
@@ -39,7 +40,7 @@ class Mailer {
 			message.setText(msg);
 			// send message
 			Transport.send(message);
-			System.out.println("message sent successfully");
+			//System.out.println("message sent successfully");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

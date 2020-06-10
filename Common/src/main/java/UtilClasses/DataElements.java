@@ -32,7 +32,7 @@ public class DataElements implements Serializable {
 	 * CreateNewTest (CloneTest)
 	 * CreateNewTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
-	 * StudntStartsTest (CloneStudentTest)
+	 * StudntStartsTest (StudentStartTest)
 	 * StudntFinshedTest (CloneStudentTest)
 	 * 
 	 * Error (NULL)

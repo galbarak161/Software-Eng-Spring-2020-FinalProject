@@ -6,11 +6,7 @@ import CloneEntities.*;
 import Hibernate.HibernateMain;
 import OCSF.AbstractServer;
 import OCSF.ConnectionToClient;
-import UtilClasses.DataElements;
-import UtilClasses.ExamGenerator;
-import UtilClasses.Login;
-import UtilClasses.StudentExamCode;
-import UtilClasses.TeacherCourse;
+import UtilClasses.*;
 
 public class ServerMain extends AbstractServer {
 	static int numberOfConnectedClients;
@@ -146,7 +142,7 @@ public class ServerMain extends AbstractServer {
 				break;
 			case GetStudentTestRelatedToStudentInExam:
 				dataToClient = serverHandler
-						.handleSendStudentTestRelatedToStudentInExam((StudentExamCode) de.getData());
+						.handleSendStudentTestRelatedToStudentInExam((StudentStartTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendStudentTestRelatedToStudentInExam);
 				de.setData(dataToClient);
 				break;
@@ -192,7 +188,7 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataToClient);
 				break;
 			case StudntStartsTest:
-				dataToClient = serverHandler.handleStudentStartsTest((CloneStudentTest) de.getData());
+				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntStartsTestResult);
 				de.setData(dataToClient);
 				break;
