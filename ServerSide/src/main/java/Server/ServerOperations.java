@@ -71,11 +71,10 @@ public class ServerOperations {
 		try {
 			listFromDB = HibernateMain.getDataFromDB(StudentTest.class);
 			for (StudentTest studentTest : listFromDB) {
-				if (studentTest.getTest().getTestDate() == cloneTest.getTestDate()
-						&& studentTest.getTest().getTestTime() == cloneTest.getTestTime()
-						&& studentTest.getTest().getExecutionCode() == cloneTest.getExecutionCode()) {
+				if ((studentTest.getTest().getTestDate().equals(cloneTest.getTestDate()))
+						&& (studentTest.getTest().getTestTime().equals(cloneTest.getTestTime()))
+						&& (studentTest.getTest().getExecutionCode().equals(cloneTest.getExecutionCode())))
 					cloneStudentTests.add(studentTest.createClone());
-				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -184,10 +183,11 @@ public class ServerOperations {
 
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
-				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st, answers[i].getQuestionId(), i);
+				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
+						answers[i].getQuestionId(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
-			
+
 			CheckAutomaticTest(st);
 
 			HibernateMain.UpdateDataInDB(statistics);
@@ -201,7 +201,7 @@ public class ServerOperations {
 	private void CheckAutomaticTest(StudentTest st) {
 		HibernateMain.UpdateDataInDB(st);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
