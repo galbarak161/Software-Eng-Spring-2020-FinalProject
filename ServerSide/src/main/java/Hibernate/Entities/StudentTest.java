@@ -1,5 +1,6 @@
 package Hibernate.Entities;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,15 @@ public class StudentTest {
 	@Column(name = "grade")
 	private int grade;
 
+	@Column(name = "startTime")
+	private LocalTime startTime;
+
+	@Column(name = "actualTestDurationInMinutes")
+	private int actualTestDurationInMinutes;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
 	private List<AnswerToQuestion> answers;
-	
+
 	@Column(name = "examCheckNotes")
 	private String examCheckNotes;
 
@@ -46,11 +53,18 @@ public class StudentTest {
 		this.grade = -1;
 		this.examCheckNotes = "";
 		this.status = StudentTestStatus.Scheduled;
+		this.startTime = null;
+		this.actualTestDurationInMinutes = -1;
 		setTest(test);
 		setStudent(student);
 		answers = new ArrayList<AnswerToQuestion>();
 	}
 
+	public CloneStudentTest createClone() {
+		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, actualTestDurationInMinutes);
+		return clone;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -72,10 +86,9 @@ public class StudentTest {
 		this.student = student;
 		student.getTests().add(this);
 	}
-
-	public CloneStudentTest createClone() {
-		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone());
-		return clone;
+	
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
 	public StudentTestStatus getStatus() {
@@ -83,14 +96,31 @@ public class StudentTest {
 	}
 
 	public void setStatus(StudentTestStatus status) {
+		if (status == StudentTestStatus.Ongoing)
+			this.startTime = LocalTime.now();
+		
+		else if (status == StudentTestStatus.WaitingForResult)
+			setActualTestDuration();
+		
 		this.status = status;
 	}
 
+	public int getActualTestDuration() {
+		return actualTestDurationInMinutes;
+	}
+
+	private void setActualTestDuration() {
+		int diffHours = LocalTime.now().getHour() - startTime.getHour();
+		int diffMinutes = LocalTime.now().getMinute() - startTime.getMinute();
+		
+		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);	
+	}
+	
 	public List<AnswerToQuestion> getAnswers() {
 		return answers;
 	}
 
-	public void addAnswer(AnswerToQuestion answer) {
+	public void addAnswer(int index, AnswerToQuestion answer) {
 		this.answers.add(answer);
 	}
 }

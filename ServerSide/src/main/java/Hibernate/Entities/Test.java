@@ -61,9 +61,12 @@ public class Test {
 
 	@OneToOne(mappedBy = "test", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private TestStatistics statistics;
-	
+
+	private int numberOfQuestionInExam;
+
 	public Test() {
 		students = new ArrayList<StudentTest>();
+		numberOfQuestionInExam = 0;
 	}
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute) {
@@ -76,15 +79,15 @@ public class Test {
 		setExtensionRequests(null);
 		setExecutor(executor);
 		setExamToExecute(examToExecute);
+		numberOfQuestionInExam = examToExecute.getNumberOfQuestionInExam();
 		students = new ArrayList<StudentTest>();
+	}
 
-		}
-
-		public CloneTest createClone() {
-			CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
-					examToExecute.createClone(),examToExecute.getQuestionInExam().size());
-			return clone;
-		}
+	public CloneTest createClone() {
+		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
+				examToExecute.createClone(), numberOfQuestionInExam);
+		return clone;
+	}
 
 	public int getId() {
 		return id;
@@ -176,13 +179,16 @@ public class Test {
 		this.status = status;
 	}
 
-	
 	public TestStatistics getStatistics() {
 		return statistics;
 	}
 
 	public void setStatistics(TestStatistics statistics) {
 		this.statistics = statistics;
+	}
+
+	public int getNumberOfQuestionInExam() {
+		return numberOfQuestionInExam;
 	}
 
 	public void TestCodeGenerator() {

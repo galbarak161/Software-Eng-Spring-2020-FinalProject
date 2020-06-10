@@ -45,9 +45,12 @@ public class Exam {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "exam")
 	private List<QuestionInExam> questionInExam;
 
+	private int numberOfQuestionInExam;
+
 	public Exam() {
 		tests = new ArrayList<Test>();
 		questionInExam = new ArrayList<QuestionInExam>();
+		numberOfQuestionInExam = 0;
 	}
 
 	public Exam(String examName, Teacher creator, int duration, Course course, String teacherComments,
@@ -61,9 +64,10 @@ public class Exam {
 		GenerateExamCode();
 		tests = new ArrayList<Test>();
 		questionInExam = new ArrayList<QuestionInExam>();
+		numberOfQuestionInExam = 0;
 	}
 
-	public CloneExam createClone() {	
+	public CloneExam createClone() {
 		CloneExam clone = new CloneExam(id, duration, examName, teacherComments, studentComments, course.getId(),
 				course.getCourseName(), creator.getId());
 		return clone;
@@ -116,6 +120,12 @@ public class Exam {
 
 	public void addQuestionInExam(QuestionInExam questionInExam) {
 		this.questionInExam.add(questionInExam);
+		this.numberOfQuestionInExam++;
+	}
+
+	
+	public int getNumberOfQuestionInExam() {
+		return numberOfQuestionInExam;
 	}
 
 	public int getDuration() {

@@ -13,7 +13,7 @@ public class AnswerToQuestion {
 
 	@Column(name = "questionId")
 	private int questionId;
-	
+
 	@Column(name = "studentAnswer")
 	private int studentAnswer;
 
@@ -24,10 +24,10 @@ public class AnswerToQuestion {
 	public AnswerToQuestion() {
 	}
 
-	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionId) {
+	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionId, int questionNumberInExam) {
 		this.studentAnswer = studentAnswer;
-		setStudent(student);
-		this.questionId = questionId;
+		setStudent(questionNumberInExam, student);
+		this.questionId = questionId;	
 	}
 
 	public int getId() {
@@ -54,8 +54,8 @@ public class AnswerToQuestion {
 		return student;
 	}
 
-	public void setStudent(StudentTest student) {
+	public void setStudent(int questionNumberInExam, StudentTest student) {
 		this.student = student;
-		student.getAnswers().add(this);
+		student.addAnswer(questionNumberInExam, this);
 	}	
 }

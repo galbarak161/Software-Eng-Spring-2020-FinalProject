@@ -398,13 +398,13 @@ public class HibernateMain {
 		StudentTest st3 = new StudentTest(s2, test2);
 		session.save(st3);
 		
-		AnswerToQuestion a1 = new AnswerToQuestion(1,st1,questions[1].getId());
+		AnswerToQuestion a1 = new AnswerToQuestion(1,st1,questions[1].getId(), 1);
 		session.save(a1);
 		
-		AnswerToQuestion a2 = new AnswerToQuestion(3,st1,questions[2].getId());
+		AnswerToQuestion a2 = new AnswerToQuestion(3,st1,questions[2].getId(), 2);
 		session.save(a2);
 		
-		AnswerToQuestion a3 = new AnswerToQuestion(4,st2,questions[1].getId());
+		AnswerToQuestion a3 = new AnswerToQuestion(4,st2,questions[1].getId(), 1);
 		session.save(a3);
 		
 		
