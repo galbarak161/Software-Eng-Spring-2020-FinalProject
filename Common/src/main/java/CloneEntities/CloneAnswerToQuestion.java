@@ -23,4 +23,16 @@ public class CloneAnswerToQuestion implements Serializable{
 		return studentAnswer;
 	}
 	
+	public String getName() {
+		return question.getSubject();
+	}
+	
+	public String getCorrectAnswer() {
+		return String.valueOf(question.getCorrectAnswer());
+	}
+	
+	public String getYourAnswer() {
+		return String.valueOf(studentAnswer);
+	}
+	
 }

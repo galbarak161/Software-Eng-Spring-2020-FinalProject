@@ -3,6 +3,7 @@ package Client;
 import java.io.IOException;
 
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneStudentTest.StudentTestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -73,7 +74,8 @@ public class studentController extends AbstractController {
 	
 	@FXML
     void OnClickedDisplay(ActionEvent event) {
-		if (testsTable.getSelectionModel().getSelectedItem() != null) {
+		if (testsTable.getSelectionModel().getSelectedItem() != null &&
+				testsTable.getSelectionModel().getSelectedItem().getStatus() == StudentTestStatus.Done) {
 			Platform.runLater(()->{
 			    Parent root = null;
 			    try {
@@ -90,7 +92,8 @@ public class studentController extends AbstractController {
 			    stage.setScene(new Scene(root));  
 			    stage.show();
 			});
-		}
+		} else
+			popError("Error", "Cannot display the test, either you didn't choose any or it hasn't been done yet");
     }
 
 }

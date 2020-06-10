@@ -6,6 +6,7 @@ import java.util.List;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.TeacherCourse;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
 public class teacherController extends AbstractController {
 
 	@FXML
-	private Button viewButton;
+	private Button testButton;
 
 	@FXML
 	TableView<CloneTest> testsList;
@@ -49,36 +50,67 @@ public class teacherController extends AbstractController {
 	private TableColumn<CloneTest, String> statusCol;
 
 	@FXML
-	void approveButton(ActionEvent event) {
-
+	void timeRequestButton(ActionEvent event) {
+		if (testsList.getSelectionModel().getSelectedItem() != null) {
+			if (testsList.getSelectionModel().getSelectedItem().getStatusEnum() == TestStatus.Ongoing) {
+				Platform.runLater(() -> {
+					Parent root = null;
+					try {
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("requestController.fxml"));
+						root = (Parent) fxmlLoader.load();
+						requestController q = fxmlLoader.getController();
+						q.setFields(testsList.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage stage = new Stage();
+					stage.setTitle("Time Extention Request Form");
+					stage.setScene(new Scene(root));
+					stage.show();
+				});
+			} else {
+				popError("Error", "This test is not ongoing, you cannot send a new request");
+				return;
+			}
+				
+		
+		} else
+			popError("Error", "Please choose a test");
 	}
 
 	@FXML
-	void timeRequestButton(ActionEvent event) {
-
-	}
-	
-    @FXML
-    void onClickedView(ActionEvent event) {
+	void onClickedTest(ActionEvent event) {
+		TestStatus status;
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(()->{
-			    Parent root = null;
-			    try {
-	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
-	                root = (Parent) fxmlLoader.load();
-	                showStudentTests q = fxmlLoader.getController();
-	                q.setFields(testsList.getSelectionModel().getSelectedItem());
+			if (testsList.getSelectionModel().getSelectedItem().getStatusEnum() == TestStatus.Done) {
+				status = TestStatus.Done;
+			} else if (testsList.getSelectionModel().getSelectedItem().getStatusEnum() == TestStatus.PendingApproval) {
+				status = TestStatus.PendingApproval;
+			} else {
+				popError("Error", "You can watch students' tests only when they're PendingApproval or Done");
+				return;
+			}
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
+					root = (Parent) fxmlLoader.load();
+					showStudentTests q = fxmlLoader.getController();
+					q.setFields(testsList.getSelectionModel().getSelectedItem(), status);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    Stage stage = new Stage();
-			    stage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName() + " exam");
-			    stage.setScene(new Scene(root));  
-			    stage.show();
+				Stage stage = new Stage();
+				stage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName()
+						+ " exam");
+				stage.setScene(new Scene(root));
+				stage.show();
 			});
-		}
-    }
+		} else 
+			popError("Error", "Please choose a test");
+	}
 
 	@Override
 	public void initialize() {
@@ -95,9 +127,8 @@ public class teacherController extends AbstractController {
 		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Status"));
 
 		testsList.getColumns().setAll(courseCol, nameCol, dateCol, timeCol, codeCol, statusCol);
-		
+
 		sendRequest(ClientToServerOpcodes.GetAllTestsOfTeacher, ClientMain.getUser());
-        
 
 	}
 

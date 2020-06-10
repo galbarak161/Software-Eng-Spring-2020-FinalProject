@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.mainController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.mainController">
 	<center>
 		<AnchorPane fx:id="mainPanel" prefHeight="476.0" prefWidth="746.0" BorderPane.alignment="CENTER" />
 	</center>
@@ -26,7 +26,7 @@
 						<Image url="@../logo.png" />
 					</image>
 				</ImageView>
-				<ImageView fitHeight="88.0" fitWidth="373.0" layoutX="425.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+				<ImageView fitHeight="71.0" fitWidth="360.0" layoutX="542.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
 					<image>
 						<Image url="@../logo2.png" />
 					</image>
