@@ -1,5 +1,6 @@
 package Client;
 
+import java.io.IOException;
 import java.util.List;
 
 import CloneEntities.CloneCourse;
@@ -11,11 +12,15 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class teacherController extends AbstractController {
 
@@ -52,6 +57,28 @@ public class teacherController extends AbstractController {
 	void timeRequestButton(ActionEvent event) {
 
 	}
+	
+    @FXML
+    void onClickedView(ActionEvent event) {
+		if (testsList.getSelectionModel().getSelectedItem() != null) {
+			Platform.runLater(()->{
+			    Parent root = null;
+			    try {
+	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
+	                root = (Parent) fxmlLoader.load();
+	                showStudentTests q = fxmlLoader.getController();
+	                q.setFields(testsList.getSelectionModel().getSelectedItem());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    Stage stage = new Stage();
+			    stage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName() + " exam");
+			    stage.setScene(new Scene(root));  
+			    stage.show();
+			});
+		}
+    }
 
 	@Override
 	public void initialize() {
