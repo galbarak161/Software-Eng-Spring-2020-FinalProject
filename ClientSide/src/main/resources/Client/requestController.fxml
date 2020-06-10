@@ -36,6 +36,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="explaText" layoutX="113.0" layoutY="109.0" prefHeight="216.0" prefWidth="602.0" />
+      <TextArea fx:id="explaText" layoutX="30.0" layoutY="130.0" prefHeight="214.0" prefWidth="685.0" />
+      <Button layoutX="481.0" layoutY="376.0" mnemonicParsing="false" text="Deny" />
+      <Button layoutX="172.0" layoutY="376.0" mnemonicParsing="false" text="Approve" />
    </children>
 </AnchorPane>

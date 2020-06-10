@@ -59,7 +59,7 @@ public class teacherController extends AbstractController {
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("requestController.fxml"));
 						root = (Parent) fxmlLoader.load();
 						requestController q = fxmlLoader.getController();
-						q.setFields(testsList.getSelectionModel().getSelectedItem());
+						q.setTest(testsList.getSelectionModel().getSelectedItem());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -73,8 +73,6 @@ public class teacherController extends AbstractController {
 				popError("Error", "This test is not ongoing, you cannot send a new request");
 				return;
 			}
-				
-		
 		} else
 			popError("Error", "Please choose a test");
 	}
