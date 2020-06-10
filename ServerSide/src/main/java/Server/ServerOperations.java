@@ -49,7 +49,6 @@ public class ServerOperations {
 			if (studentTest.getTest().getExecutionCode() == Testcode) {
 				return studentTest.createClone();
 			}
-			;
 		}
 		return null;
 	}
@@ -512,8 +511,6 @@ public class ServerOperations {
 		TestStatistics statisitcs = new TestStatistics(newTest);
 
 		HibernateMain.insertDataToDB(newTest);
-		Thread.sleep(100);
-		HibernateMain.insertDataToDB(statisitcs);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
 				+ newTest.getExecutionCode());
@@ -523,7 +520,7 @@ public class ServerOperations {
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
 			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
-			SendEmail.main(null);
+			//SendEmail.main(null);
 		}
 
 		return newTest.createClone();
