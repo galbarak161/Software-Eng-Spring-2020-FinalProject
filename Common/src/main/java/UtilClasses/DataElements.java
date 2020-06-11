@@ -47,7 +47,7 @@ public class DataElements implements Serializable {
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
 		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, GetAllQuestionInExamRelatedToExam,
 		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		CreateNewStudentTest, CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, Error;
+		CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, Error;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class DataElements implements Serializable {
 	public enum ServerToClientOpcodes {
 		SendAllExams, SendAllTests, SendAllQuestion, SendAllQuestionInCourse, SendAllCoursesOfTeacher,
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllTimeExtensionRequestRequests,
-		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, CreateNewStudentTestResult, SendAllExamsOfTeacher,
+		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
 		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
 		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudntStartsTestResult, StudntFinshedTestResult, Error;

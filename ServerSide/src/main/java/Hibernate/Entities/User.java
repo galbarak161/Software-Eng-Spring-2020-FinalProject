@@ -32,16 +32,19 @@ public abstract class User {
 	@Column(name = "isLoggedIn")
 	private boolean isLoggedIn;
 
+	private boolean isPrincipal;
+	
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName, String lastName, String emailAddress) {
+	public User(String userName, String password, String firstName, String lastName, String emailAddress, boolean isPrincipal) {
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
 		isLoggedIn = false;
+		this.isPrincipal = isPrincipal;
 	}
 
 	public CloneUser createClone() {
@@ -108,5 +111,9 @@ public abstract class User {
 
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
+	}
+
+	public boolean isPrincipal() {
+		return isPrincipal;
 	}
 }

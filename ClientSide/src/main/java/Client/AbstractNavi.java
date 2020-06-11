@@ -18,6 +18,7 @@ public abstract class AbstractNavi {
 	void logout(MouseEvent event) {
 		int status;
 		ClientMain.removeAllControllers();
+		AbstractController.isThreadRunning = false;
 		try {
 			App.changeStage("loginController", "login");
 		} catch (IOException e) {

@@ -2,25 +2,37 @@ package Server;
 
 import java.util.Properties;
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
-	
-	//private final String 
-	public static void main(String[] args) {
-		// from,password,to,subject,message
-		//Sagigvili1993
-		Mailer.send("highschooltestsystem@gmail.com", "HSTS147852", "Sagigvili1993@gmail.com", "New Test",
-				"New Test has been Scheduled");
-		// change from, password and to
+
+	public enum MessageType {
+		NewTest, TestFinished, NewTimeExtensionRequest, TimeExtensionRequestResult
 	}
-}
 
-class Mailer {
+	private Properties props;
+	private Session session;
+	private MimeMessage message;
 
-	public static void send(String from, String password, String to, String sub, String msg) {
+	private final String HSTS_EmailAddressName = "highschooltestsystem@gmail.com";
+	private final String HSTS_EmailAddressPassword = "HSTS147852";
+
+	private final String NewTest_subject = "New test has been scheduled";
+	private final String TestFinished_subject = "Test has been finished";
+	private final String NewTimeExtensionRequest_subject = "New time extension request";
+	private final String TimeExtensionRequestResult_subject = "Time extension request answered";
+
+	private final String NewTest_body = "";
+	private final String TestFinished_body = "";
+	private final String NewTimeExtensionRequest_body = "";
+	private final String TimeExtensionRequestResult_body = "";
+
+	private final String Signature = "\n\nThis message was sent to you automatically. All rights reserved. HTST 2020  \u00a9";
+
+	public SendEmail() {
 		// Get properties object
-		Properties props = new Properties();
+		props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -28,24 +40,57 @@ class Mailer {
 		props.put("mail.smtp.port", "465");
 
 		// get Session
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(from, password);
+				return new PasswordAuthentication(HSTS_EmailAddressName, HSTS_EmailAddressPassword);
 			}
 		});
 
-		// compose message
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			message.setSubject(sub);
-			message.setText(msg);
-			// send message
-			Transport.send(message);
-			//System.out.println("message sent successfully");
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
+		// Initialize Message object
+		message = new MimeMessage(session);
 
+		System.out.println("Server: Mail API initialized\n");
+	}
+
+	public void sendMessage(String to, MessageType type) {
+		String sub, msg;
+
+		// Debug mode
+		return;
+
+//		try {
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//			
+//			switch (type) {
+//			case NewTest:
+//				sub = NewTest_subject;
+//				msg = NewTest_body;
+//			case NewTimeExtensionRequest:
+//				sub = NewTimeExtensionRequest_subject;
+//				msg = NewTimeExtensionRequest_body;
+//				break;
+//			case TestFinished:
+//				sub = TestFinished_subject;
+//				msg = TestFinished_body;
+//				break;
+//			case TimeExtensionRequestResult:
+//				sub = TimeExtensionRequestResult_subject;
+//				msg = TimeExtensionRequestResult_body;
+//				break;
+//			default:
+//				return;
+//			}
+//
+//			// build message
+//			message.setSubject(sub);
+//			message.setText(msg + Signature);
+//
+//			// send message
+//			Transport.send(message);
+//
+//			// System.out.println("message sent successfully");
+//		} catch (MessagingException e) {
+//			throw new RuntimeException(e);
+//		}
 	}
 }

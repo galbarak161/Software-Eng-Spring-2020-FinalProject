@@ -1,6 +1,8 @@
 package Server;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.Session;
@@ -9,10 +11,17 @@ import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
+import Server.SendEmail.MessageType;
 import UtilClasses.ExamGenerator;
 import UtilClasses.*;
 
 public class ServerOperations {
+
+	private SendEmail mailer;
+
+	public ServerOperations() {
+		mailer = new SendEmail();
+	}
 
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
@@ -108,29 +117,6 @@ public class ServerOperations {
 	}
 
 	/**
-	 * handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest)
-	 * 
-	 * creates new, Exam based on CloneTest
-	 * 
-	 * @param newCloneStudentTest a Clone exam entity that has all StudentTest
-	 *                            details.
-	 * @return null if information is not complete , otherwise it updates the DB
-	 *         with new StudentTest
-	 * @throws Exception
-	 */
-	public CloneStudentTest handleCreateNewStudentTest(CloneStudentTest newCloneStudentTest) throws Exception {
-		Student s = (Student) getUserByCloneId(newCloneStudentTest.getStudent().getId());
-		Test t = getTestByCloneId(newCloneStudentTest.getTest().getId());
-
-		StudentTest newStudentTest = new StudentTest(s, t);
-
-		HibernateMain.insertDataToDB(newStudentTest);
-
-		System.out.println("Student " + newStudentTest.getStudent().getId() + " has started new test.");
-		return newStudentTest.createClone();
-	}
-
-	/**
 	 * handleStudentStartsTest (CloneStudentTest)
 	 * 
 	 * The function update StudentTest status and test statistics
@@ -199,7 +185,7 @@ public class ServerOperations {
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
 				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestionId(), i);
+						answers[i].getQuestion().getId(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
 
@@ -208,15 +194,28 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
-			status = 1;
+			status = -1;
 		}
 		return status;
 	}
 
-	private void CheckAutomaticTest(StudentTest st) {
-		HibernateMain.UpdateDataInDB(st);
-		// TODO Auto-generated method stub
+	private void CheckAutomaticTest(StudentTest st) throws Exception {
+		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
+		List<AnswerToQuestion> answers = st.getAnswers();
 
+		if (questions.size() != answers.size())
+			throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
+
+		for (int i = 0; i < questions.size(); i++) {
+			Question question = questions.get(i).getQuestion();
+			AnswerToQuestion answer = answers.get(i);
+			
+			//TODO: Change questionID in answerQuestion to getQuestionCode
+			//if(question.getQuestionCode() != answer.getQuestionCode())
+			
+		}
+		
+		HibernateMain.UpdateDataInDB(st);
 	}
 
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
@@ -507,7 +506,8 @@ public class ServerOperations {
 		if (t == null || e == null)
 			return null;
 
-		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e, new TestStatistics());
+		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
+				new TestStatistics());
 		HibernateMain.insertDataToDB(newTest);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
@@ -518,7 +518,7 @@ public class ServerOperations {
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
 			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
-			//SendEmail.main(null);
+			mailer.sendMessage(student.getEmailAddress(), MessageType.NewTest);
 		}
 
 		return newTest.createClone();
@@ -633,8 +633,22 @@ public class ServerOperations {
 
 		HibernateMain.insertDataToDB(timeExtensionRequest);
 
+		Principal p = getPrincipalUser();
+		mailer.sendMessage(p.getEmailAddress(), MessageType.NewTimeExtensionRequest);
+
 		return timeExtensionRequest.createClone();
 
+	}
+
+	private Principal getPrincipalUser() throws Exception {
+		List<User> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(User.class);
+		for (User user : listFromDB) {
+			if (user.isPrincipal() == true) {
+				return (Principal) user;
+			}
+		}
+		return null;
 	}
 
 	//////////////////////////////////////////////

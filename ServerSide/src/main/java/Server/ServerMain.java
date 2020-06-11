@@ -151,6 +151,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInExamRelatedToExam);
 				de.setData(dataToClient);
 				break;
+				
 			case UserLogIn:
 				dataToClient = serverHandler.handleLogInRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
@@ -161,6 +162,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
 				de.setData(dataToClient);
 				break;
+				
 			case CreateNewQuestion:
 				dataToClient = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
@@ -182,11 +184,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
-			case CreateNewStudentTest:
-				dataToClient = serverHandler.handleCreateNewStudentTest((CloneStudentTest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewStudentTestResult);
-				de.setData(dataToClient);
-				break;
+				
 			case StudntStartsTest:
 				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntStartsTestResult);
@@ -197,6 +195,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntFinshedTestResult);
 				de.setData(dataToClient);
 				break;
+				
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
 				de.setData("handleMessageFromClient: Unknown Error");

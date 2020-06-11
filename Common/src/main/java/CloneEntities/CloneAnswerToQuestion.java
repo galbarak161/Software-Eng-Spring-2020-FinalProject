@@ -6,21 +6,33 @@ public class CloneAnswerToQuestion implements Serializable{
 	
 	private static final long serialVersionUID = 1793964913547898831L;
 
-	private int questionId;
+	private CloneQuestion question;
 	
 	private int studentAnswer;
 
-	public CloneAnswerToQuestion(int questionId, int studentAnswer) {
-		this.questionId = questionId;
+	public CloneAnswerToQuestion(CloneQuestion question, int studentAnswer) {
+		this.question = question;
 		this.studentAnswer = studentAnswer;
 	}
 
-	public int getQuestionId() {
-		return questionId;
+	public CloneQuestion getQuestion() {
+		return question;
 	}
 
 	public int getStudentAnswer() {
 		return studentAnswer;
+	}
+	
+	public String getName() {
+		return question.getSubject();
+	}
+	
+	public String getCorrectAnswer() {
+		return String.valueOf(question.getCorrectAnswer());
+	}
+	
+	public String getYourAnswer() {
+		return String.valueOf(studentAnswer);
 	}
 	
 }
