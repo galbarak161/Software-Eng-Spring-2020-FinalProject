@@ -84,7 +84,7 @@ public class Test {
 	}
 
 	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, testDuration, type, executor.getId(),
+		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, extraMinute, testDuration, type, status, executor.getId(),
 				examToExecute.createClone(), numberOfQuestionInExam);
 		return clone;
 	}

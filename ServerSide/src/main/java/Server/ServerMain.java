@@ -253,7 +253,7 @@ public class ServerMain extends AbstractServer {
 			Timer timer = new Timer();
 			timer.schedule(new TimerHandler(), 0, threadTime);
 			
-			System.out.println("Server: Timer thread initialize. Udate server status every " + threadTime + " milliseconds\n");
+			System.out.println("Server: Timer thread initialize. Update server status every " + threadTime + " milliseconds\n");
 			
 			
 			System.out.println("Server ready!\n");

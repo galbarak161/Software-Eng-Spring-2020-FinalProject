@@ -14,8 +14,8 @@ public class AnswerToQuestion {
 	@Column(name = "AnswerToQuestionId")
 	private int id;
 
-	@Column(name = "questionId")
-	private int questionId;
+	@Column(name = "questionCode")
+	private int questionCode;
 
 	@Column(name = "studentAnswer")
 	private int studentAnswer;
@@ -27,10 +27,10 @@ public class AnswerToQuestion {
 	public AnswerToQuestion() {
 	}
 
-	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionId, int questionNumberInExam) {
+	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionCode, int questionNumberInExam) {
 		this.studentAnswer = studentAnswer;
 		setStudent(student);
-		this.questionId = questionId;
+		this.questionCode = questionCode;
 	}
 
 	public CloneAnswerToQuestion createClone(CloneQuestion question) {
@@ -42,12 +42,12 @@ public class AnswerToQuestion {
 		return id;
 	}
 	
-	public int getQuestionId() {
-		return questionId;
+	public int getQuestionCode() {
+		return questionCode;
 	}
 
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
+	public void setQuestionCode(int questionCode) {
+		this.questionCode = questionCode;
 	}
 
 	public int getStudentAnswer() {

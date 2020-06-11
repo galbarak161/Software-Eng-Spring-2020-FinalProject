@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
 
 	public enum MessageType {
-		NewTest, TestFinished, NewTimeExtensionRequest, TimeExtensionRequestResult
+		NewTest, NewTimeExtensionRequest, TimeExtensionRequestResult
 	}
 
 	private Properties props;

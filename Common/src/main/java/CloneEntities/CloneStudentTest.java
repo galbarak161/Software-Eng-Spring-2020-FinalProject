@@ -11,10 +11,6 @@ public class CloneStudentTest implements Serializable {
 		Done, Scheduled, WaitingForResult, Ongoing;
 	}
 
-	public enum TestAttendanceStatus {
-		Finish,DidNotFinish,DidNotAttend; 
-	}
-	
 	private int id;
 
 	private int grade;
@@ -32,31 +28,29 @@ public class CloneStudentTest implements Serializable {
 	private LocalTime startTime;
 
 	private int actualTestDurationInMinutes;
-	
-	private TestAttendanceStatus AttendanceStatus;
 
-	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int actualTestDurationInMinutes) {
+	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int grade, int actualTestDurationInMinutes, String examCheckNotes, StudentTestStatus status) {
 		this.id = id;
-		this.grade = -1;
-		this.examCheckNotes = "";
-		this.status = StudentTestStatus.Scheduled;
 		this.student = student;
 		this.test = test;
+		this.startTime = startTime;
+		this.grade = grade;
+		this.actualTestDurationInMinutes = actualTestDurationInMinutes;
+		this.examCheckNotes = examCheckNotes;
+		this.status = status;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
-		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
 	}
 
-	public CloneStudentTest(CloneUser student, CloneTest test) {
-		this.grade = -1;
-		this.examCheckNotes = "";
-		this.status = StudentTestStatus.Scheduled;
-		this.student = student;
-		this.test = test;
-		this.startTime = null;
-		this.actualTestDurationInMinutes = -1;
-		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
-		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
-	}
+//	public CloneStudentTest(CloneUser student, CloneTest test) {
+//		this.grade = -1;
+//		this.examCheckNotes = "";
+//		this.status = StudentTestStatus.Scheduled;
+//		this.student = student;
+//		this.test = test;
+//		this.startTime = null;
+//		this.actualTestDurationInMinutes = -1;
+//		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
+//	}
 
 	public int getId() {
 		return id;
@@ -135,11 +129,6 @@ public class CloneStudentTest implements Serializable {
 	public int getActualTestDurationInMinutes() {
 		return actualTestDurationInMinutes;
 	}
-
-	@Override
-	public String toString() {
-		return getTest().getExamToExecute().getExamName();
-	}
 	
 	public String getStudnetName() {
 		return student.getFirstName() + " " + student.getLastName();
@@ -156,12 +145,9 @@ public class CloneStudentTest implements Serializable {
 	public void setactualTestDurationInMinutes(int val) {
 		actualTestDurationInMinutes = val;
 	}
-
-	public void setAttendanceStatus(TestAttendanceStatus attendanceStatus) {
-		AttendanceStatus = attendanceStatus;
-	}
-
-	public TestAttendanceStatus getAttendanceStatus() {
-		return AttendanceStatus;
+	
+	@Override
+	public String toString() {
+		return getTest().getExamToExecute().getExamName();
 	}
 }

@@ -8,8 +8,6 @@ import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
-import CloneEntities.CloneStudentTest.TestAttendanceStatus;
-import CloneEntities.CloneTest.TestStatus;
 
 @Entity
 @Table(name = "Student_Test")
@@ -28,7 +26,7 @@ public class StudentTest {
 
 	@Column(name = "actualTestDurationInMinutes")
 	private int actualTestDurationInMinutes;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
 	private List<AnswerToQuestion> answers;
 
@@ -45,9 +43,6 @@ public class StudentTest {
 
 	@Column(name = "status")
 	private StudentTestStatus status;
-	
-	@Column(name = "AttendanceStatus")
-	private TestAttendanceStatus AttendanceStatus;
 
 	public StudentTest() {
 		answers = new ArrayList<AnswerToQuestion>();
@@ -62,14 +57,14 @@ public class StudentTest {
 		setTest(test);
 		setStudent(student);
 		answers = new ArrayList<AnswerToQuestion>();
-		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
 	}
 
 	public CloneStudentTest createClone() {
-		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, actualTestDurationInMinutes);
+		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
+				actualTestDurationInMinutes, examCheckNotes, status);
 		return clone;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -91,7 +86,7 @@ public class StudentTest {
 		this.student = student;
 		student.getTests().add(this);
 	}
-	
+
 	public LocalTime getStartTime() {
 		return startTime;
 	}
@@ -103,13 +98,13 @@ public class StudentTest {
 	public void setStatus(StudentTestStatus status) {
 		if (status == StudentTestStatus.Ongoing)
 			this.startTime = LocalTime.now();
-		
+
 		else if (status == StudentTestStatus.WaitingForResult)
 			setActualTestDuration();
-		
+
 		this.status = status;
 	}
-	
+
 	public List<AnswerToQuestion> getAnswers() {
 		return answers;
 	}
@@ -125,8 +120,8 @@ public class StudentTest {
 	private void setActualTestDuration() {
 		int diffHours = LocalTime.now().getHour() - startTime.getHour();
 		int diffMinutes = LocalTime.now().getMinute() - startTime.getMinute();
-		
-		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);	
+
+		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);
 	}
 
 	public int getGrade() {
@@ -136,14 +131,4 @@ public class StudentTest {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-
-	public TestAttendanceStatus getAttendanceStatus() {
-		return AttendanceStatus;
-	}
-
-	public void setAttendanceStatus(TestAttendanceStatus attendanceStatus) {
-		AttendanceStatus = attendanceStatus;
-	}
-	
-	
 }

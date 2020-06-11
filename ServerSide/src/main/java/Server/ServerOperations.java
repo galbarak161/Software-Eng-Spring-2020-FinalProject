@@ -1,11 +1,8 @@
 package Server;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.mail.Session;
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
@@ -196,9 +193,8 @@ public class ServerOperations {
 			StudentTest st = getStudntTestByCloneId(studentTest.getId());
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
-			
+
 			st.setStatus(StudentTestStatus.WaitingForResult);
-			st.setAttendanceStatus(studentTest.getAttendanceStatus());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
@@ -231,13 +227,15 @@ public class ServerOperations {
 			Question DBQestion = null;
 			List<Question> DBquestions = HibernateMain.getDataFromDB(Question.class);
 			for (Question question : DBquestions) {
-				if (answers.get(i).getId() == questions.get(i).getQuestion().getId()) {
+				if (answers.get(i).getQuestionCode() == questions.get(i).getQuestion().getQuestionCode()) {
 					DBQestion = question;
 				}
 			}
+
 			if (DBQestion == null) {
-				// error
+				throw new Exception("No match for QuestionCode");
 			}
+
 			Question question = questions.get(i).getQuestion();
 			AnswerToQuestion answer = answers.get(i);
 
@@ -245,14 +243,8 @@ public class ServerOperations {
 				if (answer.getStudentAnswer() == question.getCorrectAnswer()) {
 					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
 				}
-			} else {
-				// error
 			}
-			// TODO: Change questionID in answerQuestion to getQuestionCode
-			// if(question.getQuestionCode() != answer.getQuestionCode())
-
 		}
-
 		HibernateMain.UpdateDataInDB(st);
 	}
 

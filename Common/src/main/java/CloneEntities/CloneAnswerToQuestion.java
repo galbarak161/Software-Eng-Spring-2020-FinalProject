@@ -35,8 +35,8 @@ public class CloneAnswerToQuestion implements Serializable{
 		return String.valueOf(studentAnswer);
 	}
 	
-	public void setAnswer(int ans) {
-		studentAnswer = ans;
+	public void setAnswer(int answer) {
+		studentAnswer = answer;
 	}
 	
 }

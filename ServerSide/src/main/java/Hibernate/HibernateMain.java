@@ -1,5 +1,7 @@
 package Hibernate;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -515,6 +517,16 @@ public class HibernateMain {
 		AnswerToQuestion a92 = new AnswerToQuestion(2, st9, questions[4].getId(), 2);
 		session.save(a92);
 
+		session.flush();
+		session.clear();
+		
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		//////////////// Tests ///////////////////////
+		//////////////////////////////////////////////
+		//////////////////////////////////////////////
+		
+		
 //		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
 //		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
 //			System.out.println(clest.getTimeToExtenedInMinute());
@@ -524,20 +536,7 @@ public class HibernateMain {
 //		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
 //			System.out.println(cloneQuestionInExam.getPointsForQuestion());
 //		}
-		session.flush();
 
-		session.clear();
-
-		//////////////////////////////////////////////
-		//////////////////////////////////////////////
-		//////////////// Tests ///////////////////////
-		//////////////////////////////////////////////
-		//////////////////////////////////////////////
-
-		Exam ee = new Exam("ee", t1, 2, courses[0], "", "");
-		session.save(ee);
-		Test tt = new Test(LocalDate.now(), LocalTime.of(20, 02), ExamType.Automated, t1, ee, new TestStatistics());
-		session.save(tt);
 //		ServerOperations sp = new ServerOperations();
 //		
 //		System.out.println("Hibernate: Committing all queries before closing connection...\n");
@@ -589,6 +588,17 @@ public class HibernateMain {
 			session = sessionFactory.openSession();
 
 			System.out.println("Hibernate: Check session properties...\n");
+			
+//			DatabaseMetaData dbm = sessionFactory.getMetaData();
+//            ResultSet rs = dbm.getTables(null, "APP", "test2", null);
+//            if (!rs.next()) {
+//                PreparedStatement create = conn.prepareStatement("create table test2(name2 varchar(33))");
+//                create.executeUpdate();
+//            }else{
+//                System.out.println("already exists");
+//            }
+//			ResultSet rs = dbm.getTables(null, "APP", "TEST2", null);
+			
 			SessionFactoryImpl sessionImpl = (SessionFactoryImpl) session.getSessionFactory();
 			Settings setting = sessionImpl.getSettings();
 
