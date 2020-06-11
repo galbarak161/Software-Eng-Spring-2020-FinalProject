@@ -115,7 +115,7 @@ public class teacherController extends AbstractController {
 
 		nameCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Name"));
 
-		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestDate"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestDateInFormat"));
 
 		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestTime"));
 

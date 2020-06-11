@@ -41,17 +41,6 @@ public class CloneStudentTest implements Serializable {
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
 	}
 
-//	public CloneStudentTest(CloneUser student, CloneTest test) {
-//		this.grade = -1;
-//		this.examCheckNotes = "";
-//		this.status = StudentTestStatus.Scheduled;
-//		this.student = student;
-//		this.test = test;
-//		this.startTime = null;
-//		this.actualTestDurationInMinutes = -1;
-//		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
-//	}
-
 	public int getId() {
 		return id;
 	}

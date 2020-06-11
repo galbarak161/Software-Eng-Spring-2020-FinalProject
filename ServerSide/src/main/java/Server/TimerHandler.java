@@ -4,19 +4,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.TimerTask;
+
+import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
 import Hibernate.HibernateMain;
+import Hibernate.Entities.StudentTest;
 import Hibernate.Entities.Test;
 
 public class TimerHandler extends TimerTask {
+	
 	public void run() {
-		List<Test> listFromDB = null;
+		List<Test> testsFromDB = null;
+		List<StudentTest> studentTestsFromDB = null;
 		LocalTime currentTime = LocalTime.now();
 		LocalDate currentDate = LocalDate.now();
 
 		try {
-			listFromDB = HibernateMain.getDataFromDB(Test.class);
-			for (Test test : listFromDB) {
+			testsFromDB = HibernateMain.getDataFromDB(Test.class);
+			for (Test test : testsFromDB) {
 				if(test.getStatus() == TestStatus.Done)
 					continue;
 				
@@ -31,12 +36,32 @@ public class TimerHandler extends TimerTask {
 						// Test started
 						test.setStatus(TestStatus.Ongoing);
 						HibernateMain.UpdateDataInDB(test);
+						
+						studentTestsFromDB = HibernateMain.getDataFromDB(StudentTest.class);
+						
+						// Update all student tests
+						for (StudentTest studentTest : studentTestsFromDB) {
+							if(studentTest.getTest().getId() == test.getId()) {
+								studentTest.setStatus(StudentTestStatus.Ongoing);
+								HibernateMain.UpdateDataInDB(studentTest);
+							}
+						}
 					}
 					
 					else if (test.getStatus() == TestStatus.Ongoing && testStartTime.plusMinutes(test.getTestDuration()).isAfter(currentTime)) {
 						// Test finished
 						test.setStatus(TestStatus.PendingApproval);
 						HibernateMain.UpdateDataInDB(test);
+						
+						studentTestsFromDB = HibernateMain.getDataFromDB(StudentTest.class);
+						
+						// Update all student tests
+						for (StudentTest studentTest : studentTestsFromDB) {
+							if(studentTest.getTest().getId() == test.getId()) {
+								studentTest.setStatus(StudentTestStatus.WaitingForResult);
+								HibernateMain.UpdateDataInDB(studentTest);
+							}
+						}
 					}
 				}
 			}

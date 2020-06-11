@@ -3,6 +3,7 @@ package CloneEntities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class CloneTest implements Serializable {
 
@@ -13,7 +14,7 @@ public class CloneTest implements Serializable {
 	}
 
 	public enum TestStatus {
-		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingAnswerd;
+		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingAnswered;
 	}
 
 	private int id;
@@ -35,11 +36,13 @@ public class CloneTest implements Serializable {
 	private int teacherId;
 
 	private CloneExam examToExecute;
+	
+	private CloneTestStatistics statistics;
 
 	private int numberOfQuestions;
 
 	public CloneTest(int id, LocalDate testDate, LocalTime testTime, String executionCode, int extraMinute, int testDuration,
-			ExamType type, TestStatus status, int teacherId, CloneExam examToExecute, int numberOfQuestions) {
+			ExamType type, TestStatus status, int teacherId, CloneExam examToExecute, int numberOfQuestions, CloneTestStatistics statistics) {
 		this.id = id;
 		this.testDate = testDate;
 		this.testTime = testTime;
@@ -50,6 +53,7 @@ public class CloneTest implements Serializable {
 		this.status = status;
 		this.teacherId = teacherId;
 		this.examToExecute = examToExecute;
+		this.statistics = statistics;
 		this.numberOfQuestions = numberOfQuestions;
 	}
 
@@ -63,6 +67,7 @@ public class CloneTest implements Serializable {
 		this.examToExecute = examToExecute;
 		this.extraMinute = 0;
 		this.status = TestStatus.Scheduled;
+		this.statistics = null;
 	}
 
 	public int getExtraMinute() {
@@ -88,9 +93,14 @@ public class CloneTest implements Serializable {
 	public int getId() {
 		return id;
 	}
-
+	
 	public LocalDate getTestDate() {
 		return testDate;
+	}
+
+	public String getTestDateInFormat() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY"); 
+		return formatter.format(testDate);
 	}
 
 	public LocalTime getTestTime() {
@@ -127,6 +137,10 @@ public class CloneTest implements Serializable {
 
 	public int getNumberOfQuestions() {
 		return numberOfQuestions;
+	}
+	
+	public CloneTestStatistics getStatistics() {
+		return statistics;
 	}
 
 	@Override

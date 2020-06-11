@@ -70,8 +70,7 @@ public class Test {
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute,
 			TestStatistics statistics) {
-		this.testDate = testDate.plusDays(1); // MYSQL integration problem with LocalDate and time-zone need to add plus
-												// 1 day
+		this.testDate = testDate.plusDays(1); // MYSQL integration problem with LocalDate and time-zone need to add plus 1 day
 		this.testTime = testTime;
 		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
@@ -87,7 +86,7 @@ public class Test {
 
 	public CloneTest createClone() {
 		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, extraMinute, testDuration, type, status,
-				executor.getId(), examToExecute.createClone(), numberOfQuestionInExam);
+				executor.getId(), examToExecute.createClone(), numberOfQuestionInExam, statistics.createClone());
 		return clone;
 	}
 
