@@ -1,6 +1,7 @@
 package Server;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import CloneEntities.*;
 import Hibernate.HibernateMain;
@@ -193,6 +194,12 @@ public class ServerMain extends AbstractServer {
 			case StudntFinshedTest:
 				dataToClient = serverHandler.handleStudntFinshedTest((CloneStudentTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntFinshedTestResult);
+				de.setData(dataToClient);
+				break;
+				
+			case TeacherUpdateGrade:
+				dataToClient = serverHandler.handleTeacherUpdateGrade((List<CloneStudentTest>) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.TeacherUpdateGradeResult);
 				de.setData(dataToClient);
 				break;
 				

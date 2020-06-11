@@ -11,6 +11,10 @@ public class CloneStudentTest implements Serializable {
 		Done, Scheduled, WaitingForResult, Ongoing;
 	}
 
+	public enum TestAttendanceStatus {
+		Finish,DidNotFinish,DidNotAttend; 
+	}
+	
 	private int id;
 
 	private int grade;
@@ -28,6 +32,8 @@ public class CloneStudentTest implements Serializable {
 	private LocalTime startTime;
 
 	private int actualTestDurationInMinutes;
+	
+	private TestAttendanceStatus AttendanceStatus;
 
 	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int actualTestDurationInMinutes) {
 		this.id = id;
@@ -37,6 +43,7 @@ public class CloneStudentTest implements Serializable {
 		this.student = student;
 		this.test = test;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
+		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
 	}
 
 	public CloneStudentTest(CloneUser student, CloneTest test) {
@@ -48,6 +55,7 @@ public class CloneStudentTest implements Serializable {
 		this.startTime = null;
 		this.actualTestDurationInMinutes = -1;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
+		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
 	}
 
 	public int getId() {
@@ -147,5 +155,13 @@ public class CloneStudentTest implements Serializable {
 	
 	public void setactualTestDurationInMinutes(int val) {
 		actualTestDurationInMinutes = val;
+	}
+
+	public void setAttendanceStatus(TestAttendanceStatus attendanceStatus) {
+		AttendanceStatus = attendanceStatus;
+	}
+
+	public TestAttendanceStatus getAttendanceStatus() {
+		return AttendanceStatus;
 	}
 }

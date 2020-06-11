@@ -29,6 +29,31 @@ public class ServerOperations {
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 
+	
+	
+	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
+		if(cloneStudentTests.isEmpty()) {
+			return -1;
+		}
+		
+		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
+		List<StudentTest> studentTests = test.getStudents();
+		for (StudentTest studentTest : studentTests) {
+			for (CloneStudentTest cStudentTest : cloneStudentTests) {
+				if(cStudentTest.getStudent().getId()== studentTest.getStudent().getId()) {
+					studentTest.setGrade(cStudentTest.getGrade());
+					studentTest.setStatus(StudentTestStatus.Done);
+					break;
+				}
+			}
+		}
+		return 1;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * handleSendStudentTestRelatedToStudentInExam (StudentExamCode)
 	 * 
@@ -139,7 +164,7 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
-			status = 1;
+			status = -1;
 		}
 		return status;
 	}
@@ -178,6 +203,7 @@ public class ServerOperations {
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
 			st.setStatus(StudentTestStatus.WaitingForResult);
+			st.setAttendanceStatus(studentTest.getAttendanceStatus());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
@@ -202,14 +228,32 @@ public class ServerOperations {
 	private void CheckAutomaticTest(StudentTest st) throws Exception {
 		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
 		List<AnswerToQuestion> answers = st.getAnswers();
-
+		
 		if (questions.size() != answers.size())
 			throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 
 		for (int i = 0; i < questions.size(); i++) {
+			Question DBQestion = null ;
+			List<Question> DBquestions = HibernateMain.getDataFromDB(Question.class);
+			for (Question question : DBquestions) {
+				if(answers.get(i).getId() ==  questions.get(i).getQuestion().getId()) {
+					DBQestion = question;
+				}
+			}
+			if(DBQestion ==null) {
+				//error
+			}
 			Question question = questions.get(i).getQuestion();
 			AnswerToQuestion answer = answers.get(i);
 			
+			
+			if(question.getQuestionCode() == DBQestion.getQuestionCode()) {
+				if(answer.getStudentAnswer() == question.getCorrectAnswer()) {
+					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
+				}
+			}else {
+				//error
+			}
 			//TODO: Change questionID in answerQuestion to getQuestionCode
 			//if(question.getQuestionCode() != answer.getQuestionCode())
 			
