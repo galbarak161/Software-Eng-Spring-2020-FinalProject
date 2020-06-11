@@ -123,4 +123,12 @@ public class StudentTest {
 		
 		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);	
 	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 }
