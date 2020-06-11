@@ -58,7 +58,7 @@ public class Test {
 	private Exam examToExecute;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "testStatisticsId")	
+	@JoinColumn(name = "testStatisticsId")
 	private TestStatistics statistics;
 
 	private int numberOfQuestionInExam;
@@ -68,10 +68,12 @@ public class Test {
 		numberOfQuestionInExam = 0;
 	}
 
-	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute, TestStatistics statistics) {
-		this.testDate = testDate;
+	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute,
+			TestStatistics statistics) {
+		this.testDate = testDate.plusDays(1); // MYSQL integration problem with LocalDate and time-zone need to add plus
+												// 1 day
 		this.testTime = testTime;
-		TestCodeGenerator();
+		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
 		this.type = type;
 		this.status = TestStatus.Scheduled;
@@ -84,8 +86,8 @@ public class Test {
 	}
 
 	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, extraMinute, testDuration, type, status, executor.getId(),
-				examToExecute.createClone(), numberOfQuestionInExam);
+		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, extraMinute, testDuration, type, status,
+				executor.getId(), examToExecute.createClone(), numberOfQuestionInExam);
 		return clone;
 	}
 
@@ -95,6 +97,10 @@ public class Test {
 
 	public String getExecutionCode() {
 		return executionCode;
+	}
+
+	public void setExecutionCode(String codeGenerator) {
+		this.executionCode = codeGenerator;
 	}
 
 	public LocalDate getTestDate() {
@@ -196,7 +202,7 @@ public class Test {
 		return numberOfQuestionInExam;
 	}
 
-	public void TestCodeGenerator() {
+	public String TestCodeGenerator() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 4;
@@ -206,6 +212,6 @@ public class Test {
 				.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
 				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
 
-		this.executionCode = generatedString;
+		return generatedString;
 	}
 }
