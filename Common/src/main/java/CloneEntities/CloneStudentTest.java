@@ -152,6 +152,10 @@ public class CloneStudentTest implements Serializable {
 	public String getStudentEmail() {
 		return student.getEmailAddress();
 	}
+	
+	public void setactualTestDurationInMinutes(int val) {
+		actualTestDurationInMinutes = val;
+	}
 
 	public void setAttendanceStatus(TestAttendanceStatus attendanceStatus) {
 		AttendanceStatus = attendanceStatus;
@@ -160,6 +164,4 @@ public class CloneStudentTest implements Serializable {
 	public TestAttendanceStatus getAttendanceStatus() {
 		return AttendanceStatus;
 	}
-	
-	
 }

@@ -44,6 +44,8 @@ public class studentController extends AbstractController {
 	@FXML
 	private TableColumn<CloneStudentTest, String> gradeCol;
 
+	public static Stage testStage = new Stage();
+
 	@Override
 	public void initialize() {
 
@@ -72,11 +74,11 @@ public class studentController extends AbstractController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Stage stage = new Stage();
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setTitle("Test Start");
-		stage.setScene(new Scene(root));
-		stage.showAndWait();
+
+		testStage.initModality(Modality.APPLICATION_MODAL);
+		testStage.setTitle("Test Start");
+		testStage.setScene(new Scene(root));
+		testStage.showAndWait();
 	}
 
 	@FXML
