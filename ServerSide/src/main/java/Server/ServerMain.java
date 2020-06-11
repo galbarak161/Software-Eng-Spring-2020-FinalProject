@@ -191,15 +191,20 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
-
-			case StudntStartsTest:
-				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntStartsTestResult);
+				
+			case UpdateTimeExtension:
+				dataToClient = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
-			case StudntFinshedTest:
-				dataToClient = serverHandler.handleStudntFinshedTest((CloneStudentTest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntFinshedTestResult);
+			case StudentStartsTest:
+				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudentStartsTestResult);
+				de.setData(dataToClient);
+				break;
+			case StudentFinishedTest:
+				dataToClient = serverHandler.handleStudentFinishedTest((CloneStudentTest) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudentFinishedTestResult);
 				de.setData(dataToClient);
 				break;
 
@@ -208,7 +213,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.TeacherUpdateGradeResult);
 				de.setData(dataToClient);
 				break;
-				
+
 			default:
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.Error);
 				de.setData("handleMessageFromClient: Unknown Error");

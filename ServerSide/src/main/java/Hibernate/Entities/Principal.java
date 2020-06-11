@@ -8,8 +8,8 @@ public class Principal extends User {
 	public Principal() {
 	}
 
-	public Principal(String userName, String password, String firstName, String lastName, String emailAddress) {
-		super(userName, password, firstName, lastName, emailAddress, true);
+	public Principal(String identifyNumber, String userName, String password, String firstName, String lastName, String emailAddress) {
+		super(identifyNumber, userName, password, firstName, lastName, emailAddress, true);
 	}
 
 }

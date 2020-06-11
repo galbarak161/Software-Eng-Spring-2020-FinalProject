@@ -32,8 +32,10 @@ public class DataElements implements Serializable {
 	 * CreateNewTest (CloneTest)
 	 * CreateNewTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
-	 * StudntStartsTest (StudentStartTest)
-	 * StudntFinshedTest (CloneStudentTest)
+	 * UpdateTimeExtension (CloneTimeExtensionRequest)
+	 * 
+	 * StudentStartsTest (StudentStartTest)
+	 * StudentFinishedTest (CloneStudentTest)
 	 * 
 	 * TeacherUpdateGrade(List<CloneStudentTest>)
 	 * 
@@ -49,7 +51,7 @@ public class DataElements implements Serializable {
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
 		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, GetAllQuestionInExamRelatedToExam,
 		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, TeacherUpdateGrade, Error;
+		CreateNewTimeExtensionRequest, UpdateTimeExtension, StudentStartsTest, StudentFinishedTest, TeacherUpdateGrade, Error;
 	}
 
 	/**
@@ -79,8 +81,8 @@ public class DataElements implements Serializable {
 	 * 
 	 * UpdateTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * 
-	 * StudntStartsTestResult (int)
-	 * StudntFinshedTestResult (int)
+	 * StudentStartsTestResult (int)
+	 * StudentFinishedTestResult (int)
 	 * 
 	 * TeacherUpdateGradeResult (int)
 	 * 
@@ -95,7 +97,7 @@ public class DataElements implements Serializable {
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
 		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
-		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudntStartsTestResult, StudntFinshedTestResult, TeacherUpdateGradeResult, Error;
+		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudentStartsTestResult, StudentFinishedTestResult, TeacherUpdateGradeResult, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

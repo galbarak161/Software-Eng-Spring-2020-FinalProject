@@ -210,7 +210,7 @@ public class autoTestController extends AbstractController{
     	        	newMinute -= startTimeMin;
     	        	finishedTest.setactualTestDurationInMinutes((newHour*60)+newMinute);
     				try {
-    					GetDataFromDB(ClientToServerOpcodes.StudntFinshedTest, finishedTest);
+    					GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
     				} catch (InterruptedException e1) {
     					e1.printStackTrace();
     				}
@@ -272,7 +272,7 @@ public class autoTestController extends AbstractController{
 		timeline.setOnFinished((e) ->{
 			finishedTest.setactualTestDurationInMinutes((newHour*60)+newMinute);
 			try {
-				GetDataFromDB(ClientToServerOpcodes.StudntFinshedTest, finishedTest);
+				GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}

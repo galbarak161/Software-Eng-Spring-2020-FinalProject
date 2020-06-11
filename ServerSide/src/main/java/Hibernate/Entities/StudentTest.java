@@ -91,17 +91,19 @@ public class StudentTest {
 		return startTime;
 	}
 
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
+	}
+	
+	public String getExamCheckNotes() {
+		return examCheckNotes;
+	}
+	
 	public StudentTestStatus getStatus() {
 		return status;
 	}
 
 	public void setStatus(StudentTestStatus status) {
-		if (status == StudentTestStatus.Ongoing)
-			this.startTime = LocalTime.now();
-
-		else if (status == StudentTestStatus.WaitingForResult)
-			setActualTestDuration();
-
 		this.status = status;
 	}
 
@@ -117,11 +119,8 @@ public class StudentTest {
 		return actualTestDurationInMinutes;
 	}
 
-	private void setActualTestDuration() {
-		int diffHours = LocalTime.now().getHour() - startTime.getHour();
-		int diffMinutes = LocalTime.now().getMinute() - startTime.getMinute();
-
-		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);
+	public void setActualTestDurationInMinutes(int actualTestDurationInMinutes) {
+		this.actualTestDurationInMinutes = actualTestDurationInMinutes;
 	}
 
 	public int getGrade() {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 import javax.mail.Session;
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
@@ -30,14 +29,14 @@ public class ServerOperations {
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 
-	
 	/**
 	 * handleTeacherUpdateGrade (List<CloneStudentTest>)
 	 * 
-	 * get all CloneStudentTest with approved grades from teacher and updates them in DataBase
+	 * get all CloneStudentTest with approved grades from teacher and updates them
+	 * in DataBase
 	 * 
 	 * @param cloneStudentTests with updates and approved grades
-	 * @return	1 if all correct -1 if an error happened
+	 * @return 1 if all correct -1 if an error happened
 	 * @throws Exception
 	 */
 	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
@@ -47,7 +46,7 @@ public class ServerOperations {
 
 		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
 		test.setStatus(TestStatus.Done);
-		HibernateMain.UpdateDataInDB(test);
+		int totalGrades = 0;
 		
 		List<StudentTest> studentTests = test.getStudents();
 		for (StudentTest studentTest : studentTests) {
@@ -55,12 +54,16 @@ public class ServerOperations {
 				if (cStudentTest.getStudent().getId() == studentTest.getStudent().getId()) {
 					studentTest.setGrade(cStudentTest.getGrade());
 					studentTest.setStatus(StudentTestStatus.Done);
+					totalGrades += studentTest.getGrade();
 					HibernateMain.UpdateDataInDB(studentTest);
 					mailer.sendMessage(studentTest.getStudent().getEmailAddress(), MessageType.TestFinished);
 					break;
 				}
 			}
 		}
+		
+		test.getStatistics().setAverageGrade(totalGrades);
+		HibernateMain.UpdateDataInDB(test);
 		return 1;
 	}
 
@@ -166,7 +169,8 @@ public class ServerOperations {
 			Test t = getTestByExamCode(studentStartTest.getEexecutionCode());
 			StudentTest st = getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
-			st.setStatus(StudentTestStatus.Ongoing);
+
+			st.setStartTime(LocalTime.now());
 			statistics.increaseNumberOfStudentsInTest();
 
 			HibernateMain.UpdateDataInDB(st);
@@ -206,14 +210,15 @@ public class ServerOperations {
 	 * @return 1 If succeeded (Others -1)
 	 * @throws Exception
 	 */
-	public int handleStudntFinshedTest(CloneStudentTest studentTest) {
+	public int handleStudentFinishedTest(CloneStudentTest studentTest) {
 		int status = 1;
 		try {
 			StudentTest st = getStudntTestByCloneId(studentTest.getId());
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
-			
+
 			st.setStatus(StudentTestStatus.WaitingForResult);
+			st.setActualTestDurationInMinutes(studentTest.getActualTestDurationInMinutes());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
@@ -227,6 +232,8 @@ public class ServerOperations {
 
 			CheckAutomaticTest(st);
 
+			HibernateMain.UpdateDataInDB(st);
+			Thread.sleep(100);
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
@@ -246,12 +253,13 @@ public class ServerOperations {
 			Question DBQestion = null;
 			List<Question> DBquestions = HibernateMain.getDataFromDB(Question.class);
 			for (Question question : DBquestions) {
-				if (answers.get(i).getId() == questions.get(i).getQuestion().getId()) {
+				if (answers.get(i).getQuestionCode() == questions.get(i).getQuestion().getQuestionCode()) {
 					DBQestion = question;
 				}
 			}
+
 			if (DBQestion == null) {
-				// error
+				throw new Exception("no QuestionCode has been found");
 			}
 			Question question = questions.get(i).getQuestion();
 			AnswerToQuestion answer = answers.get(i);
@@ -261,14 +269,9 @@ public class ServerOperations {
 					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
 				}
 			} else {
-				// error
+				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 			}
-			// TODO: Change questionID in answerQuestion to getQuestionCode
-			// if(question.getQuestionCode() != answer.getQuestionCode())
-
 		}
-
-		HibernateMain.UpdateDataInDB(st);
 	}
 
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
@@ -399,13 +402,14 @@ public class ServerOperations {
 
 		Exam newExam = new Exam(exam.getExamName(), t, exam.getDuration(), c, exam.getTeacherComments(),
 				exam.getStudentComments());
-		
+
 		HibernateMain.insertDataToDB(newExam);
-		
+
 		for (int i = 0; i < newGeneratedExam.getQuestions().size(); i++) {
 			for (Question tempQuestion : HibernateMain.getDataFromDB(Question.class)) {
-				if(tempQuestion.getId() == newGeneratedExam.getQuestions().get(i).getId()) {
-					QuestionInExam questionInExam= new QuestionInExam(newGeneratedExam.getQuestionsPoint().get(i), newExam, tempQuestion);
+				if (tempQuestion.getId() == newGeneratedExam.getQuestions().get(i).getId()) {
+					QuestionInExam questionInExam = new QuestionInExam(newGeneratedExam.getQuestionsPoint().get(i),
+							newExam, tempQuestion);
 					HibernateMain.insertDataToDB(questionInExam);
 					newExam.addQuestionInExam(questionInExam);
 				}
@@ -571,20 +575,20 @@ public class ServerOperations {
 
 		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
 				new TestStatistics());
-		
+
 		List<Test> tests = HibernateMain.getDataFromDB(Test.class);
 		Boolean flag = true;
-		
+
 		while (flag) {
-			flag=false;
+			flag = false;
 			for (int i = 0; i < tests.size(); i++) {
-				if(tests.get(i).getExecutionCode()==newTest.getExecutionCode()) {
-					flag =true;
+				if (tests.get(i).getExecutionCode() == newTest.getExecutionCode()) {
+					flag = true;
 					newTest.setExecutionCode(newTest.TestCodeGenerator());
 				}
 			}
 		}
-		
+
 		HibernateMain.insertDataToDB(newTest);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "

@@ -223,7 +223,7 @@ public class ClientService extends AbstractClient {
 				break;
 			case "autoTestController":
 				switch (de.getOpCodeFromServer()) {
-				case StudntFinshedTestResult:
+				case StudentFinishedTestResult:
 					((autoTestController) o).showMsg("Test Successful Submission", "Test has been successfully submitted!");
 					break;
 				}

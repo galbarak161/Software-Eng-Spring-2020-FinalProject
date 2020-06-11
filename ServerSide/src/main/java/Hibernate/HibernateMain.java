@@ -4,6 +4,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -146,19 +147,19 @@ public class HibernateMain {
 		final int NUMBER_OF_QUESTIONS = 13;
 
 		// Generate users
-		Student s1 = new Student("GalB", "123", "Gal", "Barak", "Check@Check.com");
+		Student s1 = new Student("123456", "GalB", "123", "Gal", "Barak", "Check@Check.com");
 		session.save(s1);
-		Student s2 = new Student("abedI", "123", "Abed", "Idres", "Check@Check.com");
+		Student s2 = new Student("159753", "abedI", "123", "Abed", "Idres", "Check@Check.com");
 		session.save(s2);
-		Student s3 = new Student("OrA", "123", "Or", "Ashkenazi", "Check@Check.com");
+		Student s3 = new Student("147963", "OrA", "123", "Or", "Ashkenazi", "Check@Check.com");
 		session.save(s3);
-		Student s4 = new Student("SadiG", "123", "Sagi", "Gvili", "Check@Check.com");
+		Student s4 = new Student("789321", "SadiG", "123", "Sagi", "Gvili", "Check@Check.com");
 		session.save(s4);
-		Teacher t1 = new Teacher("MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
+		Teacher t1 = new Teacher("753159", "MalkiG", "123", "Malki", "Grossman", "Check@Check.com");
 		session.save(t1);
-		Teacher t2 = new Teacher("LielF", "123", "Liel", "Fridman", "Check@Check.com");
+		Teacher t2 = new Teacher("764129", "LielF", "123", "Liel", "Fridman", "Check@Check.com");
 		session.save(t2);
-		Principal d1 = new Principal("DaniK", "123", "Dani", "Keren", "Check@Check.com");
+		Principal d1 = new Principal("456852", "DaniK", "123", "Dani", "Keren", "Check@Check.com");
 		session.save(d1);
 
 		session.flush();
@@ -410,9 +411,6 @@ public class HibernateMain {
 		final int minute = 30;
 		LocalDate testDate = LocalDate.of(year, month, dayOfMonth);
 		LocalTime testTime = LocalTime.of(hour, minute);
-
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY"); 
-//      System.out.println(formatter.format(testDate));
 
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test1);
