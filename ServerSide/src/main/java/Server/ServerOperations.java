@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.mail.Session;
 
-import com.sun.tools.doclint.Checker.Flag;
-
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
