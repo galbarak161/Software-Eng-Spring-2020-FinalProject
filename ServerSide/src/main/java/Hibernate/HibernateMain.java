@@ -411,6 +411,9 @@ public class HibernateMain {
 		LocalDate testDate = LocalDate.of(year, month, dayOfMonth);
 		LocalTime testTime = LocalTime.of(hour, minute);
 
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY"); 
+//      System.out.println(formatter.format(testDate));
+
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test1);
 
@@ -469,8 +472,6 @@ public class HibernateMain {
 		StudentTest st9 = new StudentTest(s4, test4);
 		session.save(st9);
 
-		// studentAnswer,StudentTest, int questionId,questionNumberInExam)
-		// Answer to question
 		// st1
 		AnswerToQuestion a11 = new AnswerToQuestion(1, st1, questions[1].getId(), 1);
 		session.save(a11);
@@ -519,48 +520,12 @@ public class HibernateMain {
 
 		session.flush();
 		session.clear();
-		
+
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 		//////////////// Tests ///////////////////////
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
-		
-		
-//		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
-//		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
-//			System.out.println(clest.getTimeToExtenedInMinute());
-//		}
-
-//		List<CloneQuestionInExam> cloneQuestionInExams = ServerOperations.handleSendAllQuestionInExamRelatedToExam(e1.createClone());
-//		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
-//			System.out.println(cloneQuestionInExam.getPointsForQuestion());
-//		}
-
-//		ServerOperations sp = new ServerOperations();
-//		
-//		System.out.println("Hibernate: Committing all queries before closing connection...\n");
-//		session.getTransaction().commit();
-//		System.out.println("create question");
-//		
-//		CloneQuestion cQuestion = new CloneQuestion("subject","q1","a1","a2","a3","a4",4,courses[0].createClone(),t1.getId());
-//		sp.handleCreateNewQuestion(cQuestion);
-//		
-//		System.out.println("create exam");
-//		List<CloneQuestion> cqList= new ArrayList<>();
-//		cqList.add(questions[0].createClone());
-//		List<Integer> cqpList= new ArrayList<>();
-//		cqpList.add(100);
-//		CloneExam cExam = new CloneExam(cqList, cqpList, 60, "exam name" , "", "", 10, t1.getId());
-//		ServerOperations.handleCreateNewExam(cExam);
-//		
-//		System.out.println("create test");
-//		CloneTest cTest = new CloneTest(testDate, testTime, "idfk", 0, 60, ExamType.Automated, t1.getId(), e1.createClone());
-//		ServerOperations.handleCreateNewTest(cTest);
-//		
-//		System.out.println("create studentTest");
-//		CloneStudentTest cStudentTest = new CloneStudentTest(s1.createClone(), cTest);
-//		ServerOperations.handleCreateNewStudentTest(cStudentTest);
 	}
 
 	public static void main(String[] args) {
@@ -588,7 +553,7 @@ public class HibernateMain {
 			session = sessionFactory.openSession();
 
 			System.out.println("Hibernate: Check session properties...\n");
-			
+
 //			DatabaseMetaData dbm = sessionFactory.getMetaData();
 //            ResultSet rs = dbm.getTables(null, "APP", "test2", null);
 //            if (!rs.next()) {
@@ -598,7 +563,7 @@ public class HibernateMain {
 //                System.out.println("already exists");
 //            }
 //			ResultSet rs = dbm.getTables(null, "APP", "TEST2", null);
-			
+
 			SessionFactoryImpl sessionImpl = (SessionFactoryImpl) session.getSessionFactory();
 			Settings setting = sessionImpl.getSettings();
 

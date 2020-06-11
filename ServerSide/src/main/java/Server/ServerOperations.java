@@ -214,7 +214,6 @@ public class ServerOperations {
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
 			
 			st.setStatus(StudentTestStatus.WaitingForResult);
-			st.setAttendanceStatus(studentTest.getAttendanceStatus());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
