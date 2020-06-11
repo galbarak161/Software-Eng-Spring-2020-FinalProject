@@ -388,13 +388,13 @@ public class HibernateMain {
 		session.save(e3);
 		
 		Question[] questionList3 = new Question[2];
-		questionList2[0] = questions[3];
-		questionList2[1] = questions[4];
+		questionList3[0] = questions[3];
+		questionList3[1] = questions[4];
 		
 		QuestionInExam qe4 = new QuestionInExam(50, e3, questionList3[0]);
 		QuestionInExam qe3 = new QuestionInExam(50, e3, questionList3[1]);
-		e2.addQuestionInExam(qe4);
-		e2.addQuestionInExam(qe6);
+		e3.addQuestionInExam(qe4);
+		e3.addQuestionInExam(qe6);
 		session.save(qe4);
 		session.save(qe3);
 		session.flush();

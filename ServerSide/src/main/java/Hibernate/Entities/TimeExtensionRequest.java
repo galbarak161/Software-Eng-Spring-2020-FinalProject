@@ -2,8 +2,8 @@ package Hibernate.Entities;
 
 import javax.persistence.*;
 
-import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
+import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 
 @Entity
 @Table(name = "Time_Extension_Request")
@@ -22,6 +22,9 @@ public class TimeExtensionRequest {
 
 	@Column(name = "timeToExtenedInMinute")
 	private int timeToExtenedInMinute;
+	
+	@Column(name = "status")
+	private RequestStatus status;
 
 	@OneToOne(mappedBy = "extensionRequests", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Test test;
@@ -33,6 +36,7 @@ public class TimeExtensionRequest {
 		this.isRequestConfirmed = false;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
+		this.status = RequestStatus.Onging;
 	}
 
 	public CloneTimeExtensionRequest createClone() {
@@ -73,7 +77,22 @@ public class TimeExtensionRequest {
 		return isRequestConfirmed;
 	}
 
+	
+	
+	public RequestStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RequestStatus status) {
+		this.status = status;
+	}
+
 	public void setRequestConfirmed(boolean isRequestConfirmed) {
+		if(isRequestConfirmed) {
+			setStatus(RequestStatus.Confirmed); 
+		}else {
+			setStatus(RequestStatus.Denied); 
+		}
 		this.isRequestConfirmed = isRequestConfirmed;
 		if (this.isRequestConfirmed == true) {
 			this.getTest().setExtensionRequests(this);
