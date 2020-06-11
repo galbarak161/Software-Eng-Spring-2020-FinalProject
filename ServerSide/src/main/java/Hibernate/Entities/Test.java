@@ -69,7 +69,7 @@ public class Test {
 	}
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute, TestStatistics statistics) {
-		this.testDate = testDate;
+		this.testDate = testDate.plusDays(1);	//MYSQL integration problem with LocalDate and time-zone need to add plus 1 day
 		this.testTime = testTime;
 		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
