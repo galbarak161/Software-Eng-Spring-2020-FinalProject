@@ -62,6 +62,9 @@ public class ClientService extends AbstractClient {
 		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		String currControlName = (String) controllers.get("curr");
 		Object o = controllers.get(currControlName);
+		
+		if(o == null)
+			return;
 
 		/**
 		 * it checks if returns error from the server if it does, we check if we are in
@@ -96,12 +99,10 @@ public class ClientService extends AbstractClient {
 			case "questionsEditor":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllCoursesOfTeacher:
-					((questionsEditor) o).course_combo
-							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					((questionsEditor) o).setCourses(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllQuestionInCourse:
-					((questionsEditor) o).question_combo
-							.setItems(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					((questionsEditor) o).setQuestions(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 					break;
 				case CreateNewQuestionResult:
 					((questionsEditor) o).showMsg("Success", "The question has been successfully created!");
@@ -189,7 +190,7 @@ public class ClientService extends AbstractClient {
 							.setAll(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
 					break;
 				}
-
+				break;
 			case "showExam":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllQuestionInExamRelatedToExam:
@@ -197,7 +198,7 @@ public class ClientService extends AbstractClient {
 							.setAll(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
 					break;
 				}
-
+				break;
 			case "showTest":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllQuestionInExamRelatedToExam:
@@ -224,7 +225,9 @@ public class ClientService extends AbstractClient {
 				switch (de.getOpCodeFromServer()) {
 				case StudntFinshedTestResult:
 					((autoTestController) o).showMsg("Test Successful Submission", "Test has been successfully submitted!");
+					break;
 				}
+				break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

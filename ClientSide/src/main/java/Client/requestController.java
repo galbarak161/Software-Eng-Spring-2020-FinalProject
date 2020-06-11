@@ -2,6 +2,7 @@ package Client;
 
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
+import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +62,7 @@ public class requestController extends AbstractController {
 			GetDataFromDB(ClientToServerOpcodes.CreateNewTimeExtensionRequest, req);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} // REMEBER TELL GAL AND ABED ABOUT CHANGING TEST STATUS TO ONGOING REQUESTED
+		} 
     }
     
     void setTest(CloneTest test) {
@@ -72,12 +73,22 @@ public class requestController extends AbstractController {
     
     void setRequest(CloneTimeExtensionRequest request) {
     	thisRequest = request;
+    	if (request.getStatus() == RequestStatus.Confirmed) {
+        	timeText.setText(String.valueOf(request.getTimeToExtenedInMinute()));
+        	timeText.setDisable(true);
+        	timeText.resize(timeText.getWidth(), timeText.getHeight() + 66);
+        	explaText.setText(request.getBody());
+        	explaText.setDisable(true);
+        	submitrButton.setVisible(false);
+        	approveButton.setVisible(false);
+        	denyButton.setVisible(false);
+        	return;
+    	}
     	timeText.setText(String.valueOf(request.getTimeToExtenedInMinute()));
     	timeText.setDisable(true);
     	explaText.setText(request.getBody());
     	explaText.setDisable(true);
     	submitrButton.setVisible(false);
-    	// ADD control of VISIBILITY OF BUTTONS APPROVE AND DENY IN CONDITION OF ENUM STATUS
     }
     
     @FXML

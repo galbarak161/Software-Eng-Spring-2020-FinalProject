@@ -75,6 +75,9 @@ public class autoTestController extends AbstractController{
     @FXML
     private TextArea questionText;
     
+    @FXML
+    private TextArea commentsText;
+    
     private int hour, min;
     
     private int newHour;
@@ -98,6 +101,7 @@ public class autoTestController extends AbstractController{
     		nextButton.setVisible(false);
     	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
     	
+    	commentsText.setText(finishedTest.getTest().getExamToExecute().getStudentComments());
     	questionNumberLabel.setText("1");
     	allQuestionsNumberLabel.setText(String.valueOf(finishedTest.getAnswers().length));
     	
