@@ -1,8 +1,12 @@
 package Server;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+
+import javax.mail.Session;
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
@@ -26,18 +30,33 @@ public class ServerOperations {
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 
+	
+	/**
+	 * handleTeacherUpdateGrade (List<CloneStudentTest>)
+	 * 
+	 * get all CloneStudentTest with approved grades from teacher and updates them in DataBase
+	 * 
+	 * @param cloneStudentTests with updates and approved grades
+	 * @return	1 if all correct -1 if an error happened
+	 * @throws Exception
+	 */
 	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
 		if (cloneStudentTests.isEmpty()) {
 			return -1;
 		}
 
 		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
+		test.setStatus(TestStatus.Done);
+		HibernateMain.UpdateDataInDB(test);
+		
 		List<StudentTest> studentTests = test.getStudents();
 		for (StudentTest studentTest : studentTests) {
 			for (CloneStudentTest cStudentTest : cloneStudentTests) {
 				if (cStudentTest.getStudent().getId() == studentTest.getStudent().getId()) {
 					studentTest.setGrade(cStudentTest.getGrade());
 					studentTest.setStatus(StudentTestStatus.Done);
+					HibernateMain.UpdateDataInDB(studentTest);
+					mailer.sendMessage(studentTest.getStudent().getEmailAddress(), MessageType.TestFinished);
 					break;
 				}
 			}
@@ -193,8 +212,9 @@ public class ServerOperations {
 			StudentTest st = getStudntTestByCloneId(studentTest.getId());
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
-
+			
 			st.setStatus(StudentTestStatus.WaitingForResult);
+			st.setAttendanceStatus(studentTest.getAttendanceStatus());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
@@ -227,15 +247,13 @@ public class ServerOperations {
 			Question DBQestion = null;
 			List<Question> DBquestions = HibernateMain.getDataFromDB(Question.class);
 			for (Question question : DBquestions) {
-				if (answers.get(i).getQuestionCode() == questions.get(i).getQuestion().getQuestionCode()) {
+				if (answers.get(i).getId() == questions.get(i).getQuestion().getId()) {
 					DBQestion = question;
 				}
 			}
-
 			if (DBQestion == null) {
-				throw new Exception("No match for QuestionCode");
+				// error
 			}
-
 			Question question = questions.get(i).getQuestion();
 			AnswerToQuestion answer = answers.get(i);
 
@@ -243,8 +261,14 @@ public class ServerOperations {
 				if (answer.getStudentAnswer() == question.getCorrectAnswer()) {
 					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
 				}
+			} else {
+				// error
 			}
+			// TODO: Change questionID in answerQuestion to getQuestionCode
+			// if(question.getQuestionCode() != answer.getQuestionCode())
+
 		}
+
 		HibernateMain.UpdateDataInDB(st);
 	}
 
@@ -376,8 +400,18 @@ public class ServerOperations {
 
 		Exam newExam = new Exam(exam.getExamName(), t, exam.getDuration(), c, exam.getTeacherComments(),
 				exam.getStudentComments());
-
+		
 		HibernateMain.insertDataToDB(newExam);
+		
+		for (int i = 0; i < newGeneratedExam.getQuestions().size(); i++) {
+			for (Question tempQuestion : HibernateMain.getDataFromDB(Question.class)) {
+				if(tempQuestion.getId() == newGeneratedExam.getQuestions().get(i).getId()) {
+					QuestionInExam questionInExam= new QuestionInExam(newGeneratedExam.getQuestionsPoint().get(i), newExam, tempQuestion);
+					HibernateMain.insertDataToDB(questionInExam);
+					newExam.addQuestionInExam(questionInExam);
+				}
+			}
+		}
 
 		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
@@ -538,6 +572,20 @@ public class ServerOperations {
 
 		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
 				new TestStatistics());
+		
+		List<Test> tests = HibernateMain.getDataFromDB(Test.class);
+		Boolean flag = true;
+		
+		while (flag) {
+			flag=false;
+			for (int i = 0; i < tests.size(); i++) {
+				if(tests.get(i).getExecutionCode()==newTest.getExecutionCode()) {
+					flag =true;
+					newTest.setExecutionCode(newTest.TestCodeGenerator());
+				}
+			}
+		}
+		
 		HibernateMain.insertDataToDB(newTest);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
