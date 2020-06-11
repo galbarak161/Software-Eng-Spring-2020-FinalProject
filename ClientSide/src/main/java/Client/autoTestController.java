@@ -1,24 +1,31 @@
 package Client;
 
+import java.time.LocalTime;
+
 import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneStudentTest;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class autoTestController {
+public class autoTestController extends AbstractController{
 
     @FXML
     private AnchorPane mainAnchor;
@@ -68,26 +75,163 @@ public class autoTestController {
     @FXML
     private TextArea questionText;
     
+    @FXML
+    private TextArea commentsText;
+    
+    private int hour, min;
+    
+    private int newHour;
+    
+    private int newMinute;
+    
+    private ToggleGroup radioGroup;
+    
+    private CloneStudentTest finishedTest;
+    
+    private int currQuestionNum = 0;
+    
 	private Timeline timeline = new Timeline();
 	private int startTimeSec, startTimeMin, startTimeHour;
 	public BorderPane timeBorderPane;
-
-    @FXML
-    void OnClickedSubmit(ActionEvent event) {
-
-    }
     
     public void setFields(CloneStudentTest test) {
-    	CloneQuestion currQuestion = (test.getAnswers())[0].getQuestion();
+    	finishedTest = test;
+    	backButton.setVisible(false);
+    	if (finishedTest.getAnswers().length == 1)
+    		nextButton.setVisible(false);
+    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
+    	
+    	commentsText.setText(finishedTest.getTest().getExamToExecute().getStudentComments());
+    	questionNumberLabel.setText("1");
+    	allQuestionsNumberLabel.setText(String.valueOf(finishedTest.getAnswers().length));
+    	
+		radioGroup = new ToggleGroup();
+		answer_a_button.setToggleGroup(radioGroup);
+		answer_b_button.setToggleGroup(radioGroup);
+		answer_c_button.setToggleGroup(radioGroup);
+		answer_d_button.setToggleGroup(radioGroup);
+		
+		int originalHour = finishedTest.getTest().getTestTime().getHour();
+		
+		int originalMinute = finishedTest.getTest().getTestTime().getMinute();
+		
+		int durHour = finishedTest.getTest().getTestDuration() / 60;
+		
+		int durMinute = finishedTest.getTest().getTestDuration() % 60;
+		
+		newHour = Math.abs(durHour - Math.abs(LocalTime.now().getHour() - originalHour)); 
+		
+		newMinute = Math.abs(durMinute - Math.abs(LocalTime.now().getMinute() - originalMinute));
+		
+		hour = newHour;
+		
+		min = newMinute;
+    	
+    	startTimer();
+    }
+    
+    public void changeCurrQuestion(CloneAnswerToQuestion currAnsQuestion) {
+    	CloneQuestion currQuestion = currAnsQuestion.getQuestion();
     	questionText.setText(currQuestion.getQuestionText());
     	answerAText.setText(currQuestion.getAnswer_1());
     	answerBText.setText(currQuestion.getAnswer_2());
     	answerCText.setText(currQuestion.getAnswer_3());
     	answerDText.setText(currQuestion.getAnswer_4());
-    	startTimer(test.getTest().getTestDuration()/60, test.getTest().getTestDuration()%60);
+    	if(currAnsQuestion.getStudentAnswer() != 0) {
+    		switch(currAnsQuestion.getStudentAnswer()) {
+    		case 1:
+    			answer_a_button.setSelected(true);
+    			break;
+    		case 2:
+    			answer_b_button.setSelected(true);
+    			break;
+    		case 3:
+    			answer_c_button.setSelected(true);
+    			break;
+    		case 4:
+    			answer_d_button.setSelected(true);
+    			break;
+    		}
+    	}
+    		
     }
     
-	public void startTimer(int min, int hour) {
+    public void setStudentAnswer() {
+		RadioButton chk = (RadioButton) radioGroup.getSelectedToggle();
+		switch (chk.getText()) {
+		case "a.":
+			finishedTest.getAnswers()[currQuestionNum].setAnswer(1);
+			break;
+		case "b.":
+			finishedTest.getAnswers()[currQuestionNum].setAnswer(2);
+			break;
+		case "c.":
+			finishedTest.getAnswers()[currQuestionNum].setAnswer(3);
+			break;
+		case "d.":
+			finishedTest.getAnswers()[currQuestionNum].setAnswer(4);
+			break;
+		}
+    }
+    
+    @FXML
+    void onClickedNext(ActionEvent event) {
+    	currQuestionNum++;
+    	setStudentAnswer();
+    	backButton.setVisible(true);
+    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
+    	if (finishedTest.getAnswers().length == currQuestionNum+1)
+    		nextButton.setVisible(false);
+    	questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));
+    }
+    
+    @FXML
+    void onClickedBack(ActionEvent event) {
+    	currQuestionNum--;
+    	setStudentAnswer();
+    	nextButton.setVisible(true);
+    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
+    	if (currQuestionNum-1 == 0)
+    		backButton.setVisible(false);
+    	questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));
+    }
+    
+    @FXML
+    void OnClickedSubmit(ActionEvent event) {
+    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    	alert.setTitle("Test Submission");
+    	alert.setContentText("Are you sure you want to submit the test?");
+    	ButtonType okButton = new ButtonType("Yes", ButtonData.YES);
+    	ButtonType noButton = new ButtonType("No", ButtonData.NO);
+    	alert.getButtonTypes().setAll(okButton, noButton);
+    	alert.showAndWait().ifPresent(type -> {
+    	        if (type == ButtonType.OK) {
+    	        	newHour -= startTimeHour;
+    	        	newMinute -= startTimeMin;
+    	        	finishedTest.setactualTestDurationInMinutes((newHour*60)+newMinute);
+    				try {
+    					GetDataFromDB(ClientToServerOpcodes.StudntFinshedTest, finishedTest);
+    				} catch (InterruptedException e1) {
+    					e1.printStackTrace();
+    				}
+    				alert.close();
+    				studentController.testStage.close();
+    				return;
+    	        }
+    	        alert.close();
+    	});
+    }
+    
+    public void updateTimer(int addedTime) {
+    	hour += addedTime/60;
+    	if ((min + addedTime%60) >= 60) {
+    		min = (min + addedTime) % 60;
+    		hour++;
+    	} else 
+    		min +=addedTime%60;
+    	
+    }
+	public void startTimer() {
 		
 		KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
@@ -116,8 +260,7 @@ public class autoTestController {
 
 				}
 
-				timerText
-						.setText(String.format("%d hours,%d min, %02d sec", startTimeHour, startTimeMin, startTimeSec));
+				timerText.setText(String.format("%d hours, %d min, %02d sec", startTimeHour, startTimeMin, startTimeSec));
 			}
 		});
 		timerText.setTextFill(Color.BLACK);
@@ -126,9 +269,15 @@ public class autoTestController {
 		startTimeHour = hour;
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(keyframe);
-//		timeline.setOnFinished((e) ->{
-//			System.out.println("Sup");
-//		});
+		timeline.setOnFinished((e) ->{
+			finishedTest.setactualTestDurationInMinutes((newHour*60)+newMinute);
+			try {
+				GetDataFromDB(ClientToServerOpcodes.StudntFinshedTest, finishedTest);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			showMsg("Test's Time is up", "Test is over and sent to review");
+		});
 		timeline.playFromStart();
 		timeline.play();
 	}

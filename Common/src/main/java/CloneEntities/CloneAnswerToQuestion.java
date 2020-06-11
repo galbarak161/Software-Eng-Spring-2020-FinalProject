@@ -8,7 +8,7 @@ public class CloneAnswerToQuestion implements Serializable{
 
 	private CloneQuestion question;
 	
-	private int studentAnswer;
+	private int studentAnswer = 0;
 
 	public CloneAnswerToQuestion(CloneQuestion question, int studentAnswer) {
 		this.question = question;
@@ -33,6 +33,10 @@ public class CloneAnswerToQuestion implements Serializable{
 	
 	public String getYourAnswer() {
 		return String.valueOf(studentAnswer);
+	}
+	
+	public void setAnswer(int ans) {
+		studentAnswer = ans;
 	}
 	
 }

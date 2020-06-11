@@ -2,6 +2,9 @@ package Client;
 
 import CloneEntities.*;
 import UtilClasses.DataElements.ClientToServerOpcodes;
+import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -248,6 +251,19 @@ public class questionsEditor extends AbstractController {
 				break;
 			}
 		}
+	}
+	
+	void setCourses(ObservableList<CloneCourse> courses) {
+		Platform.runLater(() -> {
+			course_combo.setItems(courses);
+		});
+	}
+	
+	void setQuestions(ObservableList<CloneQuestion> questions) {
+		Platform.runLater(() -> {
+			question_combo.setItems(questions);
+		});
+		
 	}
 
 }

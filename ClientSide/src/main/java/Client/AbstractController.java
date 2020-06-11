@@ -78,19 +78,6 @@ public abstract class AbstractController {
 		});
 	}
 
-	/**
-	 * Activate as a respond for an unknown exception in client
-	 * 
-	 * @param object Contains the error description
-	 */
-	public void popError(String title, String errorMessage) {
-		Platform.runLater(() -> {
-			alert.setHeaderText(title);
-			alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
-			alert.showAndWait();
-		});
-	}
-
 	public void initialize() {
 
 	}
@@ -117,13 +104,33 @@ public abstract class AbstractController {
 			}
 		}.start();
 	}
-
+	
+	/**
+	 * Invokes an info alert message
+	 * Mostly for a success create of objects on server
+	 * @param title- Window title 
+	 * @param content- detailed info about the message
+	 */
 	void showMsg(String title, String content) {
 		Platform.runLater(() -> {
 			Alert info = new Alert(Alert.AlertType.INFORMATION);
 			info.setTitle(title);
 			info.setHeaderText(content);
 			info.showAndWait();
+		});
+	}
+	
+	/**
+	 * Error message
+	 * 
+	 * @param title - main content of the error
+	 * @param errorMessage - the detailed content of error 
+	 */
+	public void popError(String title, String errorMessage) {
+		Platform.runLater(() -> {
+			alert.setHeaderText(title);
+			alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
+			alert.showAndWait();
 		});
 	}
 }

@@ -14,19 +14,19 @@
       <Label layoutX="40.0" layoutY="55.0" text="Exam Name:" />
       <Label layoutX="40.0" layoutY="93.0" text="Duration:" />
       <TextField fx:id="hoursText" disable="true" layoutX="142.0" layoutY="89.0" prefHeight="26.0" prefWidth="49.0" />
-      <Label layoutX="197.0" layoutY="93.0" prefHeight="18.0" prefWidth="42.0" text="minutes" />
+      <Label layoutX="197.0" layoutY="93.0" prefHeight="18.0" prefWidth="56.0" text="minutes" />
       <TextField fx:id="ExamNameText" disable="true" layoutX="142.0" layoutY="51.0" prefHeight="26.0" prefWidth="354.0" />
       <Label layoutX="40.0" layoutY="130.0" text="Questions:" />
       <Label layoutX="23.0" layoutY="340.0" text="Teacher's Comments:" />
       <Label layoutX="23.0" layoutY="426.0" text="Student's Comments:" />
       <TextField fx:id="courseNameText" disable="true" layoutX="142.0" layoutY="13.0" prefHeight="26.0" prefWidth="354.0" />
-      <Button fx:id="QuestionButton" layoutX="399.0" layoutY="216.0" mnemonicParsing="false" onAction="#OnClickedQuestion" text="Show Question" />
+      <Button fx:id="QuestionButton" layoutX="586.0" layoutY="217.0" mnemonicParsing="false" onAction="#OnClickedQuestion" text="Show Question" />
       <TextArea fx:id="teachersText" disable="true" layoutX="142.0" layoutY="340.0" prefHeight="73.0" prefWidth="473.0" />
       <TextArea fx:id="studentsComment" disable="true" layoutX="142.0" layoutY="420.0" prefHeight="73.0" prefWidth="473.0" />
-      <TableView fx:id="questionsTable" layoutX="142.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="questionsTable" layoutX="142.0" layoutY="129.0" prefHeight="200.0" prefWidth="432.0">
         <columns>
-          <TableColumn fx:id="SubjectCol" prefWidth="128.0" text="Subject" />
-          <TableColumn fx:id="SubjectGrade" prefWidth="71.20001220703125" text="Grade" />
+          <TableColumn fx:id="SubjectCol" prefWidth="347.0" text="Subject" />
+          <TableColumn fx:id="SubjectGrade" prefWidth="84.0" text="Grade" />
         </columns>
       </TableView>
    </children>

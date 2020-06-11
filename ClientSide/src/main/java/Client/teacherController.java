@@ -97,7 +97,6 @@ public class teacherController extends AbstractController {
 					showStudentTests q = fxmlLoader.getController();
 					q.setFields(testsList.getSelectionModel().getSelectedItem(), status);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();

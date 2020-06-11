@@ -49,7 +49,7 @@ public class SendEmail {
 		// Initialize Message object
 		message = new MimeMessage(session);
 
-		System.out.println("Server: Mail API initialized\n");
+		System.out.println("Mail API: initialized\n");
 	}
 
 	public void sendMessage(String to, MessageType type) {
