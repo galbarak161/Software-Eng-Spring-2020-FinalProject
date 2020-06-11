@@ -29,18 +29,33 @@ public class ServerOperations {
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 
+	
+	/**
+	 * handleTeacherUpdateGrade (List<CloneStudentTest>)
+	 * 
+	 * get all CloneStudentTest with approved grades from teacher and updates them in DataBase
+	 * 
+	 * @param cloneStudentTests with updates and approved grades
+	 * @return	1 if all correct -1 if an error happened
+	 * @throws Exception
+	 */
 	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
 		if (cloneStudentTests.isEmpty()) {
 			return -1;
 		}
 
 		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
+		test.setStatus(TestStatus.Done);
+		HibernateMain.UpdateDataInDB(test);
+		
 		List<StudentTest> studentTests = test.getStudents();
 		for (StudentTest studentTest : studentTests) {
 			for (CloneStudentTest cStudentTest : cloneStudentTests) {
 				if (cStudentTest.getStudent().getId() == studentTest.getStudent().getId()) {
 					studentTest.setGrade(cStudentTest.getGrade());
 					studentTest.setStatus(StudentTestStatus.Done);
+					HibernateMain.UpdateDataInDB(studentTest);
+					mailer.sendMessage(studentTest.getStudent().getEmailAddress(), MessageType.TestFinished);
 					break;
 				}
 			}
