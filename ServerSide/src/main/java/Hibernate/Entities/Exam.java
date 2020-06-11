@@ -45,6 +45,7 @@ public class Exam {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "exam")
 	private List<QuestionInExam> questionInExam;
 
+	@Column(name = "numberOfQuestionInExam")
 	private int numberOfQuestionInExam;
 
 	public Exam() {
