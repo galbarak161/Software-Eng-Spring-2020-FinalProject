@@ -98,7 +98,7 @@ public class HibernateMain {
 			session.save(newEntitiy);
 			session.flush();
 			session.clear();
-			session.getTransaction().commit();			
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			hibernateRollBake();
 			status = -1;
@@ -112,7 +112,7 @@ public class HibernateMain {
 			session.beginTransaction();
 			session.evict(entitiy);
 			session.update(entitiy);
-			session.getTransaction().commit();			
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			hibernateRollBake();
 			status = -1;
@@ -338,7 +338,7 @@ public class HibernateMain {
 		session.flush();
 
 		// Generate exams
-		//first exam
+		// first exam
 
 		int duration = 60;
 
@@ -349,7 +349,7 @@ public class HibernateMain {
 		Exam e1 = new Exam(name, t1, duration, courses[0], teacherCommString, studentCommString);
 		session.save(e1);
 		session.flush();
-		
+
 		Question[] questionList = new Question[2];
 		questionList[0] = questions[1];
 		questionList[1] = questions[2];
@@ -360,18 +360,18 @@ public class HibernateMain {
 		session.save(qe1);
 		session.save(qe2);
 		session.flush();
-		
-		//second exam
+
+		// second exam
 		String name2 = "social studies exam";
 		String teacherCommString2 = " know your history";
 		String studentCommString2 = " read questions carfully";
 		Exam e2 = new Exam(name2, t2, duration, courses[4], teacherCommString2, studentCommString2);
 		session.save(e2);
-		
+
 		Question[] questionList2 = new Question[2];
 		questionList2[0] = questions[5];
 		questionList2[1] = questions[6];
-		
+
 		QuestionInExam qe5 = new QuestionInExam(50, e2, questionList2[0]);
 		QuestionInExam qe6 = new QuestionInExam(50, e2, questionList2[1]);
 		e2.addQuestionInExam(qe5);
@@ -380,17 +380,17 @@ public class HibernateMain {
 		session.save(qe6);
 		session.flush();
 
-		//third exam 
+		// third exam
 		String name3 = "grammer and writing";
 		String teacherCommString3 = " please use black pens only";
 		String studentCommString3 = " read questions carfully";
 		Exam e3 = new Exam(name3, t1, duration, courses[2], teacherCommString3, studentCommString3);
 		session.save(e3);
-		
+
 		Question[] questionList3 = new Question[2];
 		questionList3[0] = questions[3];
 		questionList3[1] = questions[4];
-		
+
 		QuestionInExam qe4 = new QuestionInExam(50, e3, questionList3[0]);
 		QuestionInExam qe3 = new QuestionInExam(50, e3, questionList3[1]);
 		e3.addQuestionInExam(qe4);
@@ -398,9 +398,9 @@ public class HibernateMain {
 		session.save(qe4);
 		session.save(qe3);
 		session.flush();
-		
+
 		// Generate tests
-		//first test
+		// first test
 		final int year = 2020;
 		final int month = 6;
 		final int dayOfMonth = 16;
@@ -411,37 +411,35 @@ public class HibernateMain {
 
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test1);
-		
-		//second test
+
+		// second test
 		Test test2 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());
 		session.save(test2);
-		
-		//third test
+
+		// third test
 		Test test3 = new Test(testDate, testTime, ExamType.Automated, t2, e2, new TestStatistics());
 		session.save(test3);
-		
-		
-		//forth test
+
+		// forth test
 		Test test4 = new Test(testDate, testTime, ExamType.Automated, t2, e3, new TestStatistics());
 		session.save(test4);
-		
+
 		session.flush();
-		
-		
-		//time extension request
-		//fist request
+
+		// time extension request
+		// fist request
 		TimeExtensionRequest request1 = new TimeExtensionRequest("students are complaining", 50);
 		test1.setExtensionRequests(request1);
 		session.save(request1);
 		session.flush();
 		request1.setRequestConfirmed(true);
-		
-		//second request
+
+		// second request
 		TimeExtensionRequest request2 = new TimeExtensionRequest("first question was too hard", 20);
 		test3.setExtensionRequests(request2);
 		session.save(request2);
-		
-		//third request
+
+		// third request
 		TimeExtensionRequest request3 = new TimeExtensionRequest("because corona", 30);
 		test4.setExtensionRequests(request3);
 		session.save(request3);
@@ -449,8 +447,7 @@ public class HibernateMain {
 		request3.setRequestConfirmed(true);
 		session.flush();
 
-		
-		//studentTest
+		// studentTest
 		StudentTest st1 = new StudentTest(s1, test1);
 		session.save(st1);
 		StudentTest st2 = new StudentTest(s2, test1);
@@ -469,61 +466,60 @@ public class HibernateMain {
 		session.save(st8);
 		StudentTest st9 = new StudentTest(s4, test4);
 		session.save(st9);
-		
-		
-		//studentAnswer,StudentTest, int questionId,questionNumberInExam)
-		//Answer to question
-		//st1
-		AnswerToQuestion a11 = new AnswerToQuestion(1,st1,questions[1].getId(), 1);
+
+		// studentAnswer,StudentTest, int questionId,questionNumberInExam)
+		// Answer to question
+		// st1
+		AnswerToQuestion a11 = new AnswerToQuestion(1, st1, questions[1].getId(), 1);
 		session.save(a11);
-		AnswerToQuestion a12 = new AnswerToQuestion(3,st1,questions[2].getId(), 2);
+		AnswerToQuestion a12 = new AnswerToQuestion(3, st1, questions[2].getId(), 2);
 		session.save(a12);
-		//st2
-		AnswerToQuestion a21 = new AnswerToQuestion(4,st2,questions[1].getId(), 1);
+		// st2
+		AnswerToQuestion a21 = new AnswerToQuestion(4, st2, questions[1].getId(), 1);
 		session.save(a21);
-		AnswerToQuestion a22 = new AnswerToQuestion(1,st2,questions[2].getId(), 2);
+		AnswerToQuestion a22 = new AnswerToQuestion(1, st2, questions[2].getId(), 2);
 		session.save(a22);
-		//st3
-		AnswerToQuestion a31 = new AnswerToQuestion(2,st3,questions[1].getId(), 1);
+		// st3
+		AnswerToQuestion a31 = new AnswerToQuestion(2, st3, questions[1].getId(), 1);
 		session.save(a31);
-		AnswerToQuestion a32 = new AnswerToQuestion(2,st3,questions[2].getId(), 2);
+		AnswerToQuestion a32 = new AnswerToQuestion(2, st3, questions[2].getId(), 2);
 		session.save(a32);
-		//st4
-		AnswerToQuestion a41 = new AnswerToQuestion(1,st4,questions[1].getId(), 1);
+		// st4
+		AnswerToQuestion a41 = new AnswerToQuestion(1, st4, questions[1].getId(), 1);
 		session.save(a41);
-		AnswerToQuestion a42 = new AnswerToQuestion(4,st4,questions[2].getId(), 2);
+		AnswerToQuestion a42 = new AnswerToQuestion(4, st4, questions[2].getId(), 2);
 		session.save(a42);
-		//st5
-		AnswerToQuestion a51 = new AnswerToQuestion(2,st5,questions[5].getId(), 1);
+		// st5
+		AnswerToQuestion a51 = new AnswerToQuestion(2, st5, questions[5].getId(), 1);
 		session.save(a51);
-		AnswerToQuestion a52 = new AnswerToQuestion(3,st5,questions[6].getId(), 2);
+		AnswerToQuestion a52 = new AnswerToQuestion(3, st5, questions[6].getId(), 2);
 		session.save(a52);
-		//st6
-		AnswerToQuestion a61 = new AnswerToQuestion(3,st6,questions[5].getId(), 1);
+		// st6
+		AnswerToQuestion a61 = new AnswerToQuestion(3, st6, questions[5].getId(), 1);
 		session.save(a61);
-		AnswerToQuestion a62 = new AnswerToQuestion(3,st6,questions[6].getId(), 2);
+		AnswerToQuestion a62 = new AnswerToQuestion(3, st6, questions[6].getId(), 2);
 		session.save(a62);
-		//st6=7
-		AnswerToQuestion a71 = new AnswerToQuestion(4,st7,questions[5].getId(), 1);
+		// st6=7
+		AnswerToQuestion a71 = new AnswerToQuestion(4, st7, questions[5].getId(), 1);
 		session.save(a71);
-		AnswerToQuestion a72 = new AnswerToQuestion(4,st7,questions[6].getId(), 2);
+		AnswerToQuestion a72 = new AnswerToQuestion(4, st7, questions[6].getId(), 2);
 		session.save(a72);
-		//st6=8
-		AnswerToQuestion a81 = new AnswerToQuestion(2,st8,questions[3].getId(), 1);
+		// st6=8
+		AnswerToQuestion a81 = new AnswerToQuestion(2, st8, questions[3].getId(), 1);
 		session.save(a81);
-		AnswerToQuestion a82 = new AnswerToQuestion(1,st8,questions[4].getId(), 2);
+		AnswerToQuestion a82 = new AnswerToQuestion(1, st8, questions[4].getId(), 2);
 		session.save(a82);
-		//st6=9
-		AnswerToQuestion a91 = new AnswerToQuestion(1,st9,questions[3].getId(), 1);
+		// st6=9
+		AnswerToQuestion a91 = new AnswerToQuestion(1, st9, questions[3].getId(), 1);
 		session.save(a91);
-		AnswerToQuestion a92 = new AnswerToQuestion(2,st9,questions[4].getId(), 2);
+		AnswerToQuestion a92 = new AnswerToQuestion(2, st9, questions[4].getId(), 2);
 		session.save(a92);
-		
+
 //		List<CloneTimeExtensionRequest> cloneTimeExtensionRequests= ServerOperations.handleSendAllRequests();
 //		for (CloneTimeExtensionRequest clest : cloneTimeExtensionRequests) {
 //			System.out.println(clest.getTimeToExtenedInMinute());
 //		}
-		
+
 //		List<CloneQuestionInExam> cloneQuestionInExams = ServerOperations.handleSendAllQuestionInExamRelatedToExam(e1.createClone());
 //		for (CloneQuestionInExam cloneQuestionInExam : cloneQuestionInExams) {
 //			System.out.println(cloneQuestionInExam.getPointsForQuestion());
@@ -538,6 +534,10 @@ public class HibernateMain {
 		//////////////////////////////////////////////
 		//////////////////////////////////////////////
 
+		Exam ee = new Exam("ee", t1, 2, courses[0], "", "");
+		session.save(ee);
+		Test tt = new Test(LocalDate.now(), LocalTime.of(20, 02), ExamType.Automated, t1, ee, new TestStatistics());
+		session.save(tt);
 //		ServerOperations sp = new ServerOperations();
 //		
 //		System.out.println("Hibernate: Committing all queries before closing connection...\n");

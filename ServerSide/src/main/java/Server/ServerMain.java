@@ -3,6 +3,8 @@ package Server;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+
 import CloneEntities.*;
 import Hibernate.HibernateMain;
 import OCSF.AbstractServer;
@@ -244,6 +246,16 @@ public class ServerMain extends AbstractServer {
 
 		try {
 			server.listen();
+			
+			System.out.println("Server: Initialize timer thread... \n");
+			
+			long threadTime = 10000;
+			Timer timer = new Timer();
+			timer.schedule(new TimerHandler(), 0, threadTime);
+			
+			System.out.println("Server: Timer thread initialize. Udate server status every " + threadTime + " milliseconds\n");
+			
+			
 			System.out.println("Server ready!\n");
 		} catch (IOException e) {
 			e.printStackTrace();

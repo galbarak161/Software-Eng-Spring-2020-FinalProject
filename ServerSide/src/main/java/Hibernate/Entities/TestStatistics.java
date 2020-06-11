@@ -61,11 +61,4 @@ public class TestStatistics {
 	public void setAverageGrade(double averageGrade) {
 		this.averageGrade = averageGrade;
 	}
-
-
-	
-	
-	
-	
-	
 }

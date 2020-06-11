@@ -188,6 +188,10 @@ public class Test {
 		statistics.setTest(this);
 	}
 
+	public int getTestDuration() {
+		return testDuration;
+	}
+
 	public int getNumberOfQuestionInExam() {
 		return numberOfQuestionInExam;
 	}
