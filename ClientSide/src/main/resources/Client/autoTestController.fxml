@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.autoTestController">
    <children>
-      <Label layoutX="307.0" layoutY="31.0" text="Test Name">
+      <Label layoutX="296.0" layoutY="31.0" text="Test Name">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
@@ -20,18 +20,18 @@
       <TextField fx:id="answerBText" editable="false" layoutX="127.0" layoutY="268.0" prefHeight="26.0" prefWidth="572.0" />
       <TextField fx:id="answerCText" editable="false" layoutX="127.0" layoutY="324.0" prefHeight="26.0" prefWidth="572.0" />
       <TextField fx:id="answerDText" editable="false" layoutX="127.0" layoutY="384.0" prefHeight="26.0" prefWidth="572.0" />
-      <RadioButton fx:id="answer_a_button" layoutX="72.0" layoutY="218.0" mnemonicParsing="false" text="A." />
-      <RadioButton fx:id="answer_b_button" layoutX="72.0" layoutY="273.0" mnemonicParsing="false" text="B." />
-      <RadioButton fx:id="answer_c_button" layoutX="72.0" layoutY="329.0" mnemonicParsing="false" text="C." />
-      <RadioButton fx:id="answer_d_button" layoutX="72.0" layoutY="389.0" mnemonicParsing="false" text="D." />
+      <RadioButton fx:id="answer_a_button" layoutX="72.0" layoutY="218.0" mnemonicParsing="false" text="a." />
+      <RadioButton fx:id="answer_b_button" layoutX="72.0" layoutY="273.0" mnemonicParsing="false" text="b." />
+      <RadioButton fx:id="answer_c_button" layoutX="72.0" layoutY="329.0" mnemonicParsing="false" text="c." />
+      <RadioButton fx:id="answer_d_button" layoutX="72.0" layoutY="389.0" mnemonicParsing="false" text="d." />
       <Label fx:id="questionNumberLabel" layoutX="319.0" layoutY="75.0" text="?" />
       <Label layoutX="346.0" layoutY="75.0" text="/" />
       <Label fx:id="allQuestionsNumberLabel" layoutX="373.0" layoutY="75.0" text="?" />
       <Label layoutX="63.0" layoutY="492.0" text="End time:" />
       <Label fx:id="timerText" layoutX="127.0" layoutY="492.0" text="???" />
-      <Button fx:id="SubmitButton" layoutX="347.0" layoutY="510.0" mnemonicParsing="false" onAction="#OnClickedSubmit" text="Submit" />
-      <Button fx:id="nextButton" layoutX="285.0" layoutY="429.0" mnemonicParsing="false" text="Next " />
-      <Button fx:id="backButton" layoutX="423.0" layoutY="429.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="SubmitButton" layoutX="339.0" layoutY="509.0" mnemonicParsing="false" onAction="#OnClickedSubmit" text="Submit" />
+      <Button fx:id="nextButton" layoutX="433.0" layoutY="429.0" mnemonicParsing="false" onAction="#onClickedNext" text="Next " />
+      <Button fx:id="backButton" layoutX="255.0" layoutY="429.0" mnemonicParsing="false" onAction="#onClickedBack" text="Back" />
       <TextArea fx:id="questionText" editable="false" layoutX="127.0" layoutY="102.0" prefHeight="83.0" prefWidth="572.0" />
    </children>
 </AnchorPane>
