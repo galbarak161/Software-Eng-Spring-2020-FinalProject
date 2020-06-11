@@ -12,12 +12,15 @@ import OCSF.ConnectionToClient;
 import UtilClasses.*;
 
 public class ServerMain extends AbstractServer {
-	static int numberOfConnectedClients;
+
+	private static int numberOfConnectedClients;
 	private ServerOperations serverHandler = null;
+	private static Timer timer;
 
 	public ServerMain(int port) {
 		super(port);
 		serverHandler = new ServerOperations();
+		timer = new Timer();
 		numberOfConnectedClients = 0;
 	}
 
@@ -56,6 +59,7 @@ public class ServerMain extends AbstractServer {
 
 	@Override
 	protected void serverClosed() {
+		timer.cancel();
 		HibernateMain.closeSession();
 		super.serverClosed();
 	}
@@ -154,7 +158,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllQuestionInExamRelatedToExam);
 				de.setData(dataToClient);
 				break;
-				
+
 			case UserLogIn:
 				dataToClient = serverHandler.handleLogInRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
@@ -165,7 +169,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
 				de.setData(dataToClient);
 				break;
-				
+
 			case CreateNewQuestion:
 				dataToClient = serverHandler.handleCreateNewQuestion((CloneQuestion) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewQuestionResult);
@@ -187,7 +191,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
-				
+
 			case StudntStartsTest:
 				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntStartsTestResult);
@@ -198,7 +202,7 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudntFinshedTestResult);
 				de.setData(dataToClient);
 				break;
-				
+
 			case TeacherUpdateGrade:
 				dataToClient = serverHandler.handleTeacherUpdateGrade((List<CloneStudentTest>) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.TeacherUpdateGradeResult);
@@ -246,16 +250,15 @@ public class ServerMain extends AbstractServer {
 
 		try {
 			server.listen();
-			
+
 			System.out.println("Server: Initialize timer thread... \n");
-			
+
 			long threadTime = 10000;
-			Timer timer = new Timer();
 			timer.schedule(new TimerHandler(), 0, threadTime);
-			
-			System.out.println("Server: Timer thread initialize. Update server status every " + threadTime + " milliseconds\n");
-			
-			
+
+			System.out.println(
+					"Server: Timer thread initialize. Update server status every " + threadTime + " milliseconds\n");
+
 			System.out.println("Server ready!\n");
 		} catch (IOException e) {
 			e.printStackTrace();
