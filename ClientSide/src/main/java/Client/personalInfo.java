@@ -19,6 +19,9 @@ public class personalInfo extends AbstractController {
 
 	@FXML
 	private TextField emailField;
+	
+    @FXML
+    private TextField IDField;
 
 	@FXML
 	private CheckBox editCheck;
@@ -29,12 +32,14 @@ public class personalInfo extends AbstractController {
 			firstField.setDisable(false);
 			lastField.setDisable(false);
 			emailField.setDisable(false);
+			IDField.setDisable(false);
 			setButton.setDisable(false);
 		}
 		else {
 			firstField.setDisable(true);
 			lastField.setDisable(true);
 			emailField.setDisable(true);
+			IDField.setDisable(true);
 			setButton.setDisable(true);
 		}
 	}
@@ -43,6 +48,7 @@ public class personalInfo extends AbstractController {
 		firstField.setText(ClientMain.getUser().getFirstName());
 		lastField.setText(ClientMain.getUser().getLastName());
 		emailField.setText(ClientMain.getUser().getEmailAddress());
+		IDField.setText(String.valueOf(ClientMain.getUser().getId()));
 	}
 
 	@FXML

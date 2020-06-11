@@ -15,85 +15,92 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class studentController extends AbstractController {
 
+	@FXML
+	private Button displayButton;
 
-    @FXML
-    private Button displayButton;
+	@FXML
+	private Button startButton;
 
-    @FXML
-    private Button startButton;
+	@FXML
+	TableView<CloneStudentTest> testsTable;
 
-    @FXML TableView<CloneStudentTest> testsTable;
+	@FXML
+	private TableColumn<CloneStudentTest, String> nameCol;
 
-    @FXML
-    private TableColumn<CloneStudentTest, String> nameCol;
+	@FXML
+	private TableColumn<CloneStudentTest, String> dateCol;
 
-    @FXML
-    private TableColumn<CloneStudentTest, String> dateCol;
+	@FXML
+	private TableColumn<CloneStudentTest, String> timeCol;
 
-    @FXML
-    private TableColumn<CloneStudentTest, String> timeCol;
+	@FXML
+	private TableColumn<CloneStudentTest, String> statusCol;
 
-    @FXML
-    private TableColumn<CloneStudentTest, String> statusCol;
+	@FXML
+	private TableColumn<CloneStudentTest, String> gradeCol;
 
-    @FXML
-    private TableColumn<CloneStudentTest, String> gradeCol;
-    
-    
 	@Override
 	public void initialize() {
-		
 
 		nameCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestName"));
-		
+
 		dateCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestDate"));
-		
 
 		timeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("TestTime"));
-		
+
 		statusCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StringStatus"));
-		
+
 		gradeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StringGrade"));
-		
-		testsTable.getColumns().setAll(nameCol,dateCol , timeCol, statusCol, gradeCol);
-		
-		
+
+		testsTable.getColumns().setAll(nameCol, dateCol, timeCol, statusCol, gradeCol);
+
 		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 
 	}
-	
+
 	@FXML
 	void OnClickedStartTest(ActionEvent event) {
-			switchMainPanel("TestCodeInput.fxml");
+		Parent root = null;
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("testEntrance.fxml"));
+			root = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Test Start");
+		stage.setScene(new Scene(root));
+		stage.showAndWait();
+	}
 
-	}	
-	
 	@FXML
-    void OnClickedDisplay(ActionEvent event) {
-		if (testsTable.getSelectionModel().getSelectedItem() != null &&
-				testsTable.getSelectionModel().getSelectedItem().getStatus() == StudentTestStatus.Done) {
-			Platform.runLater(()->{
-			    Parent root = null;
-			    try {
-	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTest.fxml"));
-	                root = (Parent) fxmlLoader.load();
-	                showStudentTest q = fxmlLoader.getController();
-	                q.setFields(testsTable.getSelectionModel().getSelectedItem());
+	void OnClickedDisplay(ActionEvent event) {
+		if (testsTable.getSelectionModel().getSelectedItem() != null
+				&& testsTable.getSelectionModel().getSelectedItem().getStatus() == StudentTestStatus.Done) {
+			Platform.runLater(() -> {
+				Parent root = null;
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTest.fxml"));
+					root = (Parent) fxmlLoader.load();
+					showStudentTest q = fxmlLoader.getController();
+					q.setFields(testsTable.getSelectionModel().getSelectedItem());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    Stage stage = new Stage();
-			    stage.setTitle("Test Review");
-			    stage.setScene(new Scene(root));  
-			    stage.show();
+				Stage stage = new Stage();
+				stage.setTitle("Test Review");
+				stage.setScene(new Scene(root));
+				stage.show();
 			});
 		} else
 			popError("Error", "Cannot display the test, either you didn't choose any or it hasn't been done yet");
-    }
+	}
 
 }

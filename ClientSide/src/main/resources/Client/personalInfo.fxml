@@ -29,10 +29,16 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="setButton" disable="true" layoutX="313.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnClickedSetDetails" text="Set Personal Details" />
+      <Button fx:id="setButton" disable="true" layoutX="313.0" layoutY="276.0" mnemonicParsing="false" onAction="#OnClickedSetDetails" text="Set Personal Details" />
       <TextField fx:id="firstField" disable="true" layoutX="127.0" layoutY="68.0" prefHeight="26.0" prefWidth="207.0" />
       <TextField fx:id="lastField" disable="true" layoutX="127.0" layoutY="114.0" prefHeight="26.0" prefWidth="207.0" />
       <TextField fx:id="emailField" disable="true" layoutX="127.0" layoutY="160.0" prefHeight="26.0" prefWidth="207.0" />
       <CheckBox fx:id="editCheck" layoutX="451.0" layoutY="118.0" mnemonicParsing="false" onAction="#OnClickedEdit" text="Enable Edit" />
+      <Label layoutX="26.0" layoutY="206.0" text="ID number:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="IDField" disable="true" layoutX="127.0" layoutY="203.0" prefHeight="26.0" prefWidth="207.0" />
    </children>
 </AnchorPane>
