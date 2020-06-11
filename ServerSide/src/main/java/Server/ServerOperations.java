@@ -29,6 +29,31 @@ public class ServerOperations {
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 
+	
+	
+	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
+		if(cloneStudentTests.isEmpty()) {
+			return -1;
+		}
+		
+		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
+		List<StudentTest> studentTests = test.getStudents();
+		for (StudentTest studentTest : studentTests) {
+			for (CloneStudentTest cStudentTest : cloneStudentTests) {
+				if(cStudentTest.getStudent().getId()== studentTest.getStudent().getId()) {
+					studentTest.setGrade(cStudentTest.getGrade());
+					studentTest.setStatus(StudentTestStatus.Done);
+					break;
+				}
+			}
+		}
+		return 1;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * handleSendStudentTestRelatedToStudentInExam (StudentExamCode)
 	 * 
