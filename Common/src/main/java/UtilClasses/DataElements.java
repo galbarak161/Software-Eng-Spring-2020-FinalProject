@@ -35,6 +35,8 @@ public class DataElements implements Serializable {
 	 * StudntStartsTest (StudentStartTest)
 	 * StudntFinshedTest (CloneStudentTest)
 	 * 
+	 * TeacherUpdateGrade(List<CloneStudentTest>)
+	 * 
 	 * Error (NULL)
 	 * 
 	 * @author Gal
@@ -47,7 +49,7 @@ public class DataElements implements Serializable {
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
 		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, GetAllQuestionInExamRelatedToExam,
 		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
-		CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, Error;
+		CreateNewTimeExtensionRequest, StudntStartsTest, StudntFinshedTest, TeacherUpdateGrade, Error;
 	}
 
 	/**
@@ -80,6 +82,8 @@ public class DataElements implements Serializable {
 	 * StudntStartsTestResult (int)
 	 * StudntFinshedTestResult (int)
 	 * 
+	 * TeacherUpdateGradeResult (int)
+	 * 
 	 * Error(NULL)
 	 * 
 	 * @author Gal
@@ -91,7 +95,7 @@ public class DataElements implements Serializable {
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
 		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
-		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudntStartsTestResult, StudntFinshedTestResult, Error;
+		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudntStartsTestResult, StudntFinshedTestResult, TeacherUpdateGradeResult, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

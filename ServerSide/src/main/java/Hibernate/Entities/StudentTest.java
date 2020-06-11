@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneStudentTest.TestAttendanceStatus;
 import CloneEntities.CloneTest.TestStatus;
 
 @Entity
@@ -44,6 +45,9 @@ public class StudentTest {
 
 	@Column(name = "status")
 	private StudentTestStatus status;
+	
+	@Column(name = "AttendanceStatus")
+	private TestAttendanceStatus AttendanceStatus;
 
 	public StudentTest() {
 		answers = new ArrayList<AnswerToQuestion>();
@@ -58,6 +62,7 @@ public class StudentTest {
 		setTest(test);
 		setStudent(student);
 		answers = new ArrayList<AnswerToQuestion>();
+		this.AttendanceStatus= TestAttendanceStatus.DidNotAttend;
 	}
 
 	public CloneStudentTest createClone() {
@@ -123,4 +128,22 @@ public class StudentTest {
 		
 		actualTestDurationInMinutes = (diffHours * 60) + (diffMinutes);	
 	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+	public TestAttendanceStatus getAttendanceStatus() {
+		return AttendanceStatus;
+	}
+
+	public void setAttendanceStatus(TestAttendanceStatus attendanceStatus) {
+		AttendanceStatus = attendanceStatus;
+	}
+	
+	
 }
