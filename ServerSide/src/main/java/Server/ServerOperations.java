@@ -390,8 +390,18 @@ public class ServerOperations {
 
 		Exam newExam = new Exam(exam.getExamName(), t, exam.getDuration(), c, exam.getTeacherComments(),
 				exam.getStudentComments());
-
+		
 		HibernateMain.insertDataToDB(newExam);
+		
+		for (int i = 0; i < newGeneratedExam.getQuestions().size(); i++) {
+			for (Question tempQuestion : HibernateMain.getDataFromDB(Question.class)) {
+				if(tempQuestion.getId() == newGeneratedExam.getQuestions().get(i).getId()) {
+					QuestionInExam questionInExam= new QuestionInExam(newGeneratedExam.getQuestionsPoint().get(i), newExam, tempQuestion);
+					HibernateMain.insertDataToDB(questionInExam);
+					newExam.addQuestionInExam(questionInExam);
+				}
+			}
+		}
 
 		System.out.println("New exam added. Exam id = " + newExam.getId() + ". Exam code = " + newExam.getExamCode());
 		return newExam.createClone();
