@@ -95,7 +95,6 @@ public class showStudentTests extends AbstractController {
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllStudntTestRelatedToTest, test);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (s == TestStatus.Done) {

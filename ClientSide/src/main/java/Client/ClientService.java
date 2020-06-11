@@ -214,6 +214,11 @@ public class ClientService extends AbstractClient {
 					break;
 				}
 				break;
+			case "testEntracnce":
+				switch (de.getOpCodeFromServer()) {
+				case SendStudentTestRelatedToStudentInExam:
+					
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
