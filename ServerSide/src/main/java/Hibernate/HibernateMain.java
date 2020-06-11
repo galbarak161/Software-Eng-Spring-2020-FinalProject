@@ -2,6 +2,7 @@ package Hibernate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -407,6 +408,9 @@ public class HibernateMain {
 		final int hour = 14;
 		final int minute = 30;
 		LocalDate testDate = LocalDate.of(year, month, dayOfMonth);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY"); 
+//      System.out.println(formatter.format(testDate));
+        
 		LocalTime testTime = LocalTime.of(hour, minute);
 
 		Test test1 = new Test(testDate, testTime, ExamType.Automated, t1, e1, new TestStatistics());

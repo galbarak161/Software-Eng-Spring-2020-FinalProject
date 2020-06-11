@@ -69,9 +69,9 @@ public class Test {
 	}
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute, TestStatistics statistics) {
-		this.testDate = testDate;
+		this.testDate = testDate.plusDays(1);	//MYSQL integration problem with LocalDate and time-zone need to add plus 1 day
 		this.testTime = testTime;
-		TestCodeGenerator();
+		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
 		this.type = type;
 		this.status = TestStatus.Scheduled;
@@ -95,6 +95,10 @@ public class Test {
 
 	public String getExecutionCode() {
 		return executionCode;
+	}
+	
+	public void setExecutionCode(String executionCode) {
+		this.executionCode = executionCode;
 	}
 
 	public LocalDate getTestDate() {
@@ -196,7 +200,7 @@ public class Test {
 		return numberOfQuestionInExam;
 	}
 
-	public void TestCodeGenerator() {
+	public String TestCodeGenerator() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 4;
@@ -206,6 +210,9 @@ public class Test {
 				.filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength)
 				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
 
-		this.executionCode = generatedString;
+		return generatedString;
 	}
+
+	
+	
 }
