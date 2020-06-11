@@ -8,6 +8,7 @@ import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -66,8 +67,13 @@ public class showTest extends AbstractController {
 
 	@FXML
 	private Label EndTimeLabel;
+	
+    @FXML
+    private Button resultsButton;
 
 	private ToggleGroup radioGroup;
+	
+	private CloneTest thisTest;
 
 	public void initialize() {
 
@@ -101,6 +107,8 @@ public class showTest extends AbstractController {
 		else
 			ManualRadio.setSelected(true);
 		this.TestNameLabel.setText(test.getExamToExecute().getExamName());
+		
+		thisTest = test;
 
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInExamRelatedToExam, test.getExamToExecute());
@@ -133,5 +141,30 @@ public class showTest extends AbstractController {
 		}
 
 	}
+	
+
+    @FXML
+    void onClickedResults(ActionEvent event) {
+			if (thisTest.getStatusEnum() == TestStatus.Done) {
+				Platform.runLater(() -> {
+					Parent root = null;
+					try {
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
+						root = (Parent) fxmlLoader.load();
+						showStudentTests q = fxmlLoader.getController();
+						q.setFields(thisTest, thisTest.getStatusEnum());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					Stage stage = new Stage();
+					stage.setTitle("Students' tests of " + thisTest.getName() + " exam");
+					stage.setScene(new Scene(root));
+					stage.show();
+				});
+			} else {
+				popError("Error", "You can watch students' tests only when they're Done");
+				return;
+			}
+    }
 
 }

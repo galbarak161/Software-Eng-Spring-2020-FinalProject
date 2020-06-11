@@ -207,7 +207,6 @@ public class examCreator extends AbstractController {
 			popError("Please fill all question fields", e.getMessage());
 			return;
 		}
-		System.out.print("Good job!");
 		CloneExam newExam = new CloneExam(Integer.valueOf(durText.getText()), nameText.getText(),
 				teachersText.getText(), studentsComment.getText(), courseCombo.getValue().getId(),
 				courseCombo.getValue().getCourseName(), ClientMain.getUser().getId());
