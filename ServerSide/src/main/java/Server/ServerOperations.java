@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.Session;
+
+import com.sun.tools.doclint.Checker.Flag;
+
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
@@ -571,6 +574,20 @@ public class ServerOperations {
 
 		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
 				new TestStatistics());
+		
+		List<Test> tests = HibernateMain.getDataFromDB(Test.class);
+		Boolean flag = true;
+		
+		while (flag) {
+			flag=false;
+			for (int i = 0; i < tests.size(); i++) {
+				if(tests.get(i).getExecutionCode()==newTest.getExecutionCode()) {
+					flag =true;
+					newTest.setExecutionCode(newTest.TestCodeGenerator());
+				}
+			}
+		}
+		
 		HibernateMain.insertDataToDB(newTest);
 
 		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
