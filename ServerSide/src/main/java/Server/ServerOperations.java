@@ -139,7 +139,7 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
-			status = 1;
+			status = -1;
 		}
 		return status;
 	}
@@ -178,6 +178,7 @@ public class ServerOperations {
 			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
 			Exam e = getExmaByCloneId(st.getTest().getExamToExecute().getId());
 			st.setStatus(StudentTestStatus.WaitingForResult);
+			st.setAttendanceStatus(studentTest.getAttendanceStatus());
 
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
