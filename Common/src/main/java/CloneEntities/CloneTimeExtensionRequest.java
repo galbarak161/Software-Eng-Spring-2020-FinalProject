@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class CloneTimeExtensionRequest implements Serializable{
 	
-
+	public enum RequestStatus {
+		Denied ,Confirmed, Onging;
+	}
 	private static final long serialVersionUID = 6598660146086038505L;
 
 	private int id;
@@ -16,6 +18,8 @@ public class CloneTimeExtensionRequest implements Serializable{
 	private int timeToExtenedInMinute;
 	
 	private CloneTest test;
+	
+	private RequestStatus status;
 
 	public CloneTimeExtensionRequest(int id, String body, int timeToExtenedInMinute, CloneTest test) {
 		super();
@@ -24,6 +28,7 @@ public class CloneTimeExtensionRequest implements Serializable{
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 		this.test = test;
 		this.isRequestConfirmed = false;
+		this.status = RequestStatus.Onging;
 	}
 
 	public CloneTimeExtensionRequest(String body, int timeToExtenedInMinute, CloneTest test) {
@@ -32,19 +37,21 @@ public class CloneTimeExtensionRequest implements Serializable{
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 		this.test = test;
 		this.isRequestConfirmed = false;
+		this.status = RequestStatus.Onging;
 	}
 
 	public boolean isRequestConfirmed() {
 		return isRequestConfirmed;
 	}
 	
-	public String getStatus() {
-		if(this.isRequestConfirmed) 
-			return "Confirmed";
-		return "Denied";
-	}
+
 
 	public void setRequestConfirmed(boolean isRequestConfirmed) {
+		if(isRequestConfirmed) {
+			this.status = RequestStatus.Confirmed;
+		}else {
+			this.status = RequestStatus.Denied;
+		}
 		this.isRequestConfirmed = isRequestConfirmed;
 	}
 
@@ -78,6 +85,14 @@ public class CloneTimeExtensionRequest implements Serializable{
 	
 	public String getTestTime() {
 		return String.valueOf(test.getTestTime());
+	}
+
+	public void setStatus(RequestStatus status) {
+		this.status = status;
+	}
+	
+	public RequestStatus getStatus() {
+		return status;
 	}
 	
 }

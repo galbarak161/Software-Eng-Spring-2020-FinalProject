@@ -32,6 +32,7 @@ public abstract class User {
 	@Column(name = "isLoggedIn")
 	private boolean isLoggedIn;
 
+	@Column(name = "isPrincipal")
 	private boolean isPrincipal;
 	
 	public User() {
