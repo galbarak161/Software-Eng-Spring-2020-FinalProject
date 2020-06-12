@@ -8,6 +8,7 @@ import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -91,5 +92,11 @@ public class principalController extends AbstractController{
 		} else
 			popError("Error", "Please choose a test");
     }
+    
+	void updateTable(ObservableList<CloneTimeExtensionRequest> requests) {
+		int keepSelection = requestsList.getSelectionModel().getSelectedIndex();
+		requestsList.setItems(requests);
+		requestsList.getSelectionModel().select(keepSelection);
+	}
 
 }

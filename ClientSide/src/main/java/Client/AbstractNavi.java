@@ -11,14 +11,14 @@ import javafx.scene.input.MouseEvent;
 public abstract class AbstractNavi {
 	void switchMainPanel(String Sfxml) {
 		((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
-		AbstractController.isThreadRunning = false;
+		AbstractController.stopTimer();
 	}
 
 	@FXML
 	void logout(MouseEvent event) {
 		int status;
 		ClientMain.removeAllControllers();
-		AbstractController.isThreadRunning = false;
+		AbstractController.stopTimer();
 		try {
 			App.changeStage("loginController", "login");
 		} catch (IOException e) {

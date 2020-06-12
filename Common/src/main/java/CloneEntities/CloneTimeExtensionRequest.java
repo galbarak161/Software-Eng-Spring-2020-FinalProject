@@ -80,7 +80,7 @@ public class CloneTimeExtensionRequest implements Serializable{
 	}
 	
 	public String getTestDate() {
-		return String.valueOf(test.getTestDate());
+		return test.getTestDateInFormat();
 	}
 	
 	public String getTestTime() {

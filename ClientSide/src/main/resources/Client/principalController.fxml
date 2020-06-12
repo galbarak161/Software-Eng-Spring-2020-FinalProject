@@ -19,9 +19,9 @@
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="230.0" text="Request" />
             <TableColumn fx:id="testName" prefWidth="136.0" text="Test" />
-            <TableColumn fx:id="dateCol" prefWidth="88.0" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="97.0" text="Time" />
-            <TableColumn fx:id="statusCol" prefWidth="175.0" text="Status" />
+            <TableColumn fx:id="dateCol" prefWidth="88.0" style="-fx-alignment: CENTER;" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="97.0" style="-fx-alignment: CENTER;" text="Time" />
+            <TableColumn fx:id="statusCol" prefWidth="175.0" style="-fx-alignment: CENTER;" text="Status" />
          </columns>
       </TableView>
    </children>

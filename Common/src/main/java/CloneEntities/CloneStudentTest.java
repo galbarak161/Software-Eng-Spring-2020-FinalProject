@@ -96,7 +96,7 @@ public class CloneStudentTest implements Serializable {
 	}
 
 	public String getTestDate() {
-		return test.getTestDate().toString();
+		return test.getTestDateInFormat();
 	}
 
 	public String getTestTime() {
