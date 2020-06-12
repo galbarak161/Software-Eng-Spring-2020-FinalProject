@@ -124,7 +124,6 @@ public class Exam {
 		this.numberOfQuestionInExam++;
 	}
 
-	
 	public int getNumberOfQuestionInExam() {
 		return numberOfQuestionInExam;
 	}
