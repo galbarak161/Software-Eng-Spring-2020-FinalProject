@@ -48,7 +48,7 @@ public class TimerHandler extends TimerTask {
 						}
 					}
 					
-					else if (test.getStatus() == TestStatus.Ongoing && testStartTime.plusMinutes(test.getTestDuration()).isAfter(currentTime)) {
+					else if (test.getStatus() == TestStatus.Ongoing && testStartTime.plusMinutes(test.getTestDuration()).isBefore(currentTime)) {
 						// Test finished
 						test.setStatus(TestStatus.PendingApproval);
 						HibernateMain.UpdateDataInDB(test);
