@@ -207,9 +207,6 @@ public class examCreator extends AbstractController {
 			popError("Please fill all question fields", e.getMessage());
 			return;
 		}
-		CloneExam newExam = new CloneExam(Integer.valueOf(durText.getText()), nameText.getText(),
-				teachersText.getText(), studentsComment.getText(), courseCombo.getValue().getId(),
-				courseCombo.getValue().getCourseName(), ClientMain.getUser().getId());
 
 		List<Integer> columnData = new ArrayList<>();
 		List<CloneQuestion> qToSend = new ArrayList<>();
@@ -217,6 +214,10 @@ public class examCreator extends AbstractController {
 			columnData.add(Integer.valueOf(questionGradeCol.getCellObservableValue(item).getValue()));
 			qToSend.add(item.getQuestion());
 		}
+		
+		CloneExam newExam = new CloneExam(Integer.valueOf(durText.getText()), nameText.getText(),
+				teachersText.getText(), studentsComment.getText(), courseCombo.getValue().getId(),
+				courseCombo.getValue().getCourseName(), ClientMain.getUser().getId(), qToSend.size());
 
 		try {
 			GetDataFromDB(ClientToServerOpcodes.CreateNewExam, new ExamGenerator(newExam, qToSend, columnData));

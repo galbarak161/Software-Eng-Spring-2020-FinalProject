@@ -53,8 +53,8 @@ public class CloneTest implements Serializable {
 		this.status = status;
 		this.teacherId = teacherId;
 		this.examToExecute = examToExecute;
-		this.statistics = statistics;
 		this.numberOfQuestions = numberOfQuestions;
+		this.statistics = statistics;
 	}
 
 	public CloneTest(LocalDate testDate, LocalTime testTime, int testDuration, ExamType type, int teacherId,
@@ -67,6 +67,7 @@ public class CloneTest implements Serializable {
 		this.examToExecute = examToExecute;
 		this.extraMinute = 0;
 		this.status = TestStatus.Scheduled;
+		this.numberOfQuestions = examToExecute.getNumberOfQuestions();
 		this.statistics = null;
 	}
 
