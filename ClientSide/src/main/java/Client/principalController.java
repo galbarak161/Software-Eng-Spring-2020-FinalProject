@@ -5,6 +5,7 @@ import java.io.IOException;
 import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
+import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class principalController extends AbstractController{
@@ -57,15 +59,19 @@ public class principalController extends AbstractController{
 
 		requestsList.getColumns().setAll(testName, nameCol, dateCol, timeCol, statusCol);
 		
-//		requestsList.setRowFactory(tv -> new TableRow<CloneTimeExtensionRequest>() {
-//			@Override
-//			public void updateItem(CloneTimeExtensionRequest item, boolean empty) {
-//				super.updateItem(item, empty);
-//				if (item.getStatus() == )
-//					setStyle("-fx-background-color: #ffff00;");
-//
-//			}
-//		}); WAIT FOR STATUS ENUMS
+		requestsList.setRowFactory(tv -> new TableRow<CloneTimeExtensionRequest>() {
+			@Override
+			public void updateItem(CloneTimeExtensionRequest item, boolean empty) {
+				super.updateItem(item, empty);
+//				if (item.getStatus() == RequestStatus.Onging)
+//					setTextFill(Color.YELLOW);
+//				else if (item.getStatus() == RequestStatus.Denied)
+//					setTextFill(Color.RED);
+//				else
+//					setTextFill(Color.GREEN);
+
+			}
+		}); 
 		
     	sendRequest(ClientToServerOpcodes.GetAllTimeExtensionRequestRequests, null);
     }

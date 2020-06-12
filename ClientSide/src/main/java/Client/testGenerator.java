@@ -116,8 +116,9 @@ public class testGenerator extends AbstractController {
 				Integer.valueOf(beginText.getText().split(":")[1]));
 		
 		ExamType type;
-
-		if (radioGroup.getSelectedToggle().toString() == "Automated")
+		
+		RadioButton chk = (RadioButton) radioGroup.getSelectedToggle();
+		if (chk.getText().equals("Automated"))
 			type = CloneTest.ExamType.Automated;
 		else
 			type = CloneTest.ExamType.Manual;
