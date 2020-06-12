@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 
@@ -62,6 +63,15 @@ public class StudentTest {
 	public CloneStudentTest createClone() {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
 				actualTestDurationInMinutes, examCheckNotes, status);
+		//List<QuestionInExam> questions = this.getTest().getExamToExecute().getQuestionInExam();
+		//CloneAnswerToQuestion[] studentAnswers = new CloneAnswerToQuestion[questions.size()];
+		
+		/*for(int i=0; i<questions.size();i++) {
+			studentAnswers[i] = qu
+		}
+		questions.forEach(q => q);
+		;
+		clone.setAnswers(answers);*/
 		return clone;
 	}
 
