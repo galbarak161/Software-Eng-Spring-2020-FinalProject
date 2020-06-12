@@ -1,6 +1,8 @@
 package Client;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import UtilClasses.DataElements;
 import UtilClasses.DataElements.ClientToServerOpcodes;
@@ -18,9 +20,9 @@ public abstract class AbstractController {
 	protected final String ERROR_TITLE_Client = "An error occurred while the system was hanaling your actions";
 
 	private static boolean msgRecived = false;
-	
-	static boolean isThreadRunning = true;
-	
+
+	static Timer timer;
+
 	static void msgRecieved() {
 		msgRecived = true;
 	}
@@ -74,7 +76,6 @@ public abstract class AbstractController {
 	void switchMainPanel(String Sfxml) {
 		Platform.runLater(() -> {
 			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
-			isThreadRunning = false;
 		});
 	}
 
@@ -83,32 +84,28 @@ public abstract class AbstractController {
 	}
 
 	protected void sendRequest(ClientToServerOpcodes op, Object data) {
-		isThreadRunning = true;
-		new Thread() {
+		TimerTask timerTask = new TimerTask() {
+
 			@Override
 			public void run() {
-				while (isThreadRunning) {
-					try {
-						GetDataFromDB(op, data);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					GetDataFromDB(op, data);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
 			}
-		}.start();
+		};
+
+		timer = new Timer("RefreshingTimer");
+
+		timer.scheduleAtFixedRate(timerTask, 30, 10000);
 	}
-	
+
 	/**
-	 * Invokes an info alert message
-	 * Mostly for a success create of objects on server
-	 * @param title- Window title 
+	 * Invokes an info alert message Mostly for a success create of objects on
+	 * server
+	 * 
+	 * @param title-   Window title
 	 * @param content- detailed info about the message
 	 */
 	void showMsg(String title, String content) {
@@ -119,12 +116,12 @@ public abstract class AbstractController {
 			info.showAndWait();
 		});
 	}
-	
+
 	/**
 	 * Error message
 	 * 
-	 * @param title - main content of the error
-	 * @param errorMessage - the detailed content of error 
+	 * @param title        - main content of the error
+	 * @param errorMessage - the detailed content of error
 	 */
 	public void popError(String title, String errorMessage) {
 		Platform.runLater(() -> {
@@ -132,5 +129,9 @@ public abstract class AbstractController {
 			alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
 			alert.showAndWait();
 		});
+	}
+	
+	public static void stopTimer() {
+		timer.cancel();
 	}
 }

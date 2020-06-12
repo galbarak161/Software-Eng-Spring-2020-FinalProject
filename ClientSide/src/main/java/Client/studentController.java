@@ -6,6 +6,7 @@ import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,6 +104,12 @@ public class studentController extends AbstractController {
 			});
 		} else
 			popError("Error", "Cannot display the test, either you didn't choose any or it hasn't been done yet");
+	}
+	
+	void updateTable(ObservableList<CloneStudentTest> tests) {
+		int keepSelection = testsTable.getSelectionModel().getSelectedIndex();
+		testsTable.setItems(tests);
+		testsTable.getSelectionModel().select(keepSelection);
 	}
 
 }

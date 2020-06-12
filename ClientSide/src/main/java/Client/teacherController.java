@@ -48,6 +48,26 @@ public class teacherController extends AbstractController {
 
 	@FXML
 	private TableColumn<CloneTest, String> statusCol;
+	
+	@Override
+	public void initialize() {
+		courseCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("CourseName"));
+
+		nameCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Name"));
+
+		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestDateInFormat"));
+
+		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestTime"));
+
+		codeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("ExecutionCode"));
+
+		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Status"));
+
+		testsList.getColumns().setAll(courseCol, nameCol, dateCol, timeCol, codeCol, statusCol);
+
+		sendRequest(ClientToServerOpcodes.GetAllTestsOfTeacher, ClientMain.getUser());
+
+	}
 
 	@FXML
 	void timeRequestButton(ActionEvent event) {
@@ -108,25 +128,11 @@ public class teacherController extends AbstractController {
 		} else 
 			popError("Error", "Please choose a test");
 	}
-
-	@Override
-	public void initialize() {
-		courseCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("CourseName"));
-
-		nameCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Name"));
-
-		dateCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestDateInFormat"));
-
-		timeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("TestTime"));
-
-		codeCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("ExecutionCode"));
-
-		statusCol.setCellValueFactory(new PropertyValueFactory<CloneTest, String>("Status"));
-
-		testsList.getColumns().setAll(courseCol, nameCol, dateCol, timeCol, codeCol, statusCol);
-
-		sendRequest(ClientToServerOpcodes.GetAllTestsOfTeacher, ClientMain.getUser());
-
+	
+	void updateTable(ObservableList<CloneTest> tests) {
+		int keepSelection = testsList.getSelectionModel().getSelectedIndex();
+		testsList.setItems(tests);
+		testsList.getSelectionModel().select(keepSelection);
 	}
 
 }

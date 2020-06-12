@@ -20,10 +20,10 @@
         <columns>
             <TableColumn fx:id="courseCol" prefWidth="117.0" text="Course" />
           <TableColumn fx:id="nameCol" prefWidth="155.0" text="Test Name" />
-          <TableColumn fx:id="dateCol" text="Date" />
-            <TableColumn fx:id="timeCol" prefWidth="79.0" text="Time" />
-            <TableColumn fx:id="codeCol" minWidth="0.0" prefWidth="86.0" text="Test Code" />
-            <TableColumn fx:id="statusCol" minWidth="8.0" prefWidth="190.0" text="Status" />
+          <TableColumn fx:id="dateCol" style="-fx-alignment: CENTER;" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="79.0" style="-fx-alignment: CENTER;" text="Time" />
+            <TableColumn fx:id="codeCol" minWidth="0.0" prefWidth="86.0" style="-fx-alignment: CENTER;" text="Test Code" />
+            <TableColumn fx:id="statusCol" minWidth="8.0" prefWidth="190.0" style="-fx-alignment: CENTER;" text="Status" />
         </columns>
       </TableView>
    </children>

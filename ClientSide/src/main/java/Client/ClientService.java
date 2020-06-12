@@ -62,8 +62,8 @@ public class ClientService extends AbstractClient {
 		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		String currControlName = (String) controllers.get("curr");
 		Object o = controllers.get(currControlName);
-		
-		if(o == null)
+
+		if (o == null)
 			return;
 
 		/**
@@ -99,10 +99,12 @@ public class ClientService extends AbstractClient {
 			case "questionsEditor":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllCoursesOfTeacher:
-					((questionsEditor) o).setCourses(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					((questionsEditor) o)
+							.setCourses(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllQuestionInCourse:
-					((questionsEditor) o).setQuestions(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					((questionsEditor) o)
+							.setQuestions(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 					break;
 				case CreateNewQuestionResult:
 					((questionsEditor) o).showMsg("Success", "The question has been successfully created!");
@@ -117,7 +119,8 @@ public class ClientService extends AbstractClient {
 							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllQuestionInCourse:
-					((examCreator) o).setQuestionsList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
+					((examCreator) o)
+							.setQuestionsList(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 
 					break;
 				case CreateNewExamResult:
@@ -127,8 +130,9 @@ public class ClientService extends AbstractClient {
 					((examCreator) o).setExamsList(FXCollections.observableArrayList((List<CloneExam>) de.getData()));
 					break;
 				case SendAllQuestionInExamRelatedToExam:
-					((examCreator) o).addQuestionsInExam(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
-					
+					((examCreator) o).addQuestionsInExam(
+							FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
+
 					break;
 
 				}
@@ -151,8 +155,8 @@ public class ClientService extends AbstractClient {
 			case "studentController":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllStudentTests:
-					((studentController) o).testsTable
-							.setItems(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
+					((studentController) o)
+							.updateTable(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
 					break;
 				}
 				break;
@@ -160,8 +164,8 @@ public class ClientService extends AbstractClient {
 			case "teacherController":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllTestsOfTeacher:
-					((teacherController) o).testsList
-							.setItems(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
+					((teacherController) o)
+							.updateTable(FXCollections.observableArrayList((List<CloneTest>) de.getData()));
 					break;
 				}
 				break;
@@ -169,8 +173,8 @@ public class ClientService extends AbstractClient {
 			case "principalController":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllTimeExtensionRequestRequests:
-				  	((principalController) o).requestsList.setItems(
-					  	FXCollections.observableArrayList((List<CloneTimeExtensionRequest>) de.getData()));
+					((principalController) o).updateTable(
+							FXCollections.observableArrayList((List<CloneTimeExtensionRequest>) de.getData()));
 					break;
 				}
 				break;
@@ -206,7 +210,7 @@ public class ClientService extends AbstractClient {
 							.setAll(FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
 					break;
 				}
-				break;		
+				break;
 			case "showStudentTests":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllStudntTestRelatedToTest:
@@ -218,13 +222,14 @@ public class ClientService extends AbstractClient {
 			case "testEntracnce":
 				switch (de.getOpCodeFromServer()) {
 				case SendStudentTestRelatedToStudentInExam:
-					
+
 				}
 				break;
 			case "autoTestController":
 				switch (de.getOpCodeFromServer()) {
 				case StudentFinishedTestResult:
-					((autoTestController) o).showMsg("Test Successful Submission", "Test has been successfully submitted!");
+					((autoTestController) o).showMsg("Test Successful Submission",
+							"Test has been successfully submitted!");
 					break;
 				}
 				break;
