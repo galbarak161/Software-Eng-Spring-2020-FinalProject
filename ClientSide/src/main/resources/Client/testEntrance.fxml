@@ -19,13 +19,13 @@
             <TextField fx:id="codeText" layoutX="368.0" layoutY="96.0" />
             <Label fx:id="codeLabel" layoutX="190.0" layoutY="100.0" text="Enter your exam code here:" />
             <Button fx:id="startButton" layoutX="334.0" layoutY="518.0" mnemonicParsing="false" onAction="#OnClickedStart" text="Start" />
-            <TextField fx:id="IDText" layoutX="291.0" layoutY="245.0" />
-            <Label fx:id="IDLabel" layoutX="130.0" layoutY="249.0" text="Enter your ID:" />
-            <Button fx:id="downloadButton" layoutX="306.0" layoutY="299.0" mnemonicParsing="false" onAction="#onClickedDownload" text="Download Test" />
-            <TextField fx:id="fileField" layoutX="90.0" layoutY="377.0" prefHeight="25.0" prefWidth="267.0" />
-            <Button fx:id="uploadButton" layoutX="388.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedUpload" text="Upload File" />
-            <Button fx:id="submitButton" layoutX="492.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedSubmit" text="Submit File" />
-            <Button fx:id="enterTestButton" layoutX="533.0" layoutY="245.0" mnemonicParsing="false" onAction="#onClickedEnter" text="Enter Test" />
+            <TextField fx:id="IDText" layoutX="291.0" layoutY="245.0" visible="false" />
+            <Label fx:id="IDLabel" layoutX="130.0" layoutY="249.0" text="Enter your ID:" visible="false" />
+            <Button fx:id="downloadButton" layoutX="306.0" layoutY="299.0" mnemonicParsing="false" onAction="#onClickedDownload" text="Download Test" visible="false" />
+            <TextField fx:id="fileField" layoutX="90.0" layoutY="377.0" prefHeight="25.0" prefWidth="267.0" visible="false" />
+            <Button fx:id="uploadButton" layoutX="388.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedUpload" text="Upload File" visible="false" />
+            <Button fx:id="submitButton" layoutX="492.0" layoutY="377.0" mnemonicParsing="false" onAction="#onClickedSubmit" text="Submit File" visible="false" />
+            <Button fx:id="enterTestButton" layoutX="533.0" layoutY="245.0" mnemonicParsing="false" onAction="#onClickedEnter" text="Enter Test" visible="false" />
             <Label fx:id="timerText" layoutX="34.0" layoutY="426.0" prefHeight="104.0" prefWidth="235.0" />
          </children>
       </AnchorPane>

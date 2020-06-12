@@ -93,7 +93,7 @@ public class ServerOperations {
 
 		List<StudentTest> studentTests = s1.getTests();
 		for (StudentTest studentTest : studentTests) {
-			if (studentTest.getTest().getExecutionCode() == Testcode) {
+			if (studentTest.getTest().getExecutionCode().equals(Testcode)) {
 				return studentTest.createClone();
 			}
 		}
