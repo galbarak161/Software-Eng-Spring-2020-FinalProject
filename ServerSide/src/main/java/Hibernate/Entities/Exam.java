@@ -70,7 +70,7 @@ public class Exam {
 
 	public CloneExam createClone() {
 		CloneExam clone = new CloneExam(id, duration, examName, teacherComments, studentComments, course.getId(),
-				course.getCourseName(), creator.getId());
+				course.getCourseName(), creator.getId(), numberOfQuestionInExam);
 		return clone;
 	}
 
