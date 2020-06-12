@@ -27,8 +27,8 @@ public class AnswerToQuestion {
 	public AnswerToQuestion() {
 	}
 
-	public AnswerToQuestion(int studentAnswer, StudentTest student, int questionCode, int questionNumberInExam) {
-		this.studentAnswer = studentAnswer;
+	public AnswerToQuestion(StudentTest student, int questionCode, int questionNumberInExam) {
+		this.studentAnswer = -1;
 		setStudent(student);
 		this.questionCode = questionCode;
 	}

@@ -598,7 +598,16 @@ public class ServerOperations {
 
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
-			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
+			StudentTest st = new StudentTest(student, newTest);
+			HibernateMain.insertDataToDB(st);
+			
+			int questionNumberInExam = 1;
+			for (QuestionInExam question : e.getQuestionInExam()) {
+				AnswerToQuestion answer = new AnswerToQuestion(st,question.getQuestion().getQuestionCode(), questionNumberInExam);
+				HibernateMain.insertDataToDB(answer);
+				questionNumberInExam++;
+			}
+			
 			mailer.sendMessage(student.getEmailAddress(), MessageType.NewTest);
 		}
 
