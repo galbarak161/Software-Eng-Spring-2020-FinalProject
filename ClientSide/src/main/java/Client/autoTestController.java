@@ -94,16 +94,20 @@ public class autoTestController extends AbstractController{
 	private int startTimeSec, startTimeMin, startTimeHour;
 	public BorderPane timeBorderPane;
     
-    public void setFields(CloneStudentTest test) {
-    	finishedTest = test;
+	
+	public void initialize() {
+		finishedTest = testEntracnce.studTest;
+		setFields();
+	}
+    public void setFields() {
     	backButton.setVisible(false);
     	if (finishedTest.getAnswers().length == 1)
     		nextButton.setVisible(false);
-    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
+    	changeCurrQuestion(finishedTest.getAnswerAtIndex(currQuestionNum));
     	
     	commentsText.setText(finishedTest.getTest().getExamToExecute().getStudentComments());
     	questionNumberLabel.setText("1");
-    	allQuestionsNumberLabel.setText(String.valueOf(finishedTest.getAnswers().length));
+    	allQuestionsNumberLabel.setText(String.valueOf(finishedTest.getAnswersLength()));
     	
 		radioGroup = new ToggleGroup();
 		answer_a_button.setToggleGroup(radioGroup);
@@ -160,16 +164,16 @@ public class autoTestController extends AbstractController{
 		RadioButton chk = (RadioButton) radioGroup.getSelectedToggle();
 		switch (chk.getText()) {
 		case "a.":
-			finishedTest.getAnswers()[currQuestionNum].setAnswer(1);
+			finishedTest.setAnswerAtIndex(currQuestionNum, 1);
 			break;
 		case "b.":
-			finishedTest.getAnswers()[currQuestionNum].setAnswer(2);
+			finishedTest.setAnswerAtIndex(currQuestionNum, 2);
 			break;
 		case "c.":
-			finishedTest.getAnswers()[currQuestionNum].setAnswer(3);
+			finishedTest.setAnswerAtIndex(currQuestionNum, 3);
 			break;
 		case "d.":
-			finishedTest.getAnswers()[currQuestionNum].setAnswer(4);
+			finishedTest.setAnswerAtIndex(currQuestionNum, 4);
 			break;
 		}
     }
@@ -179,8 +183,8 @@ public class autoTestController extends AbstractController{
     	currQuestionNum++;
     	setStudentAnswer();
     	backButton.setVisible(true);
-    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
-    	if (finishedTest.getAnswers().length == currQuestionNum+1)
+    	changeCurrQuestion(finishedTest.getAnswerAtIndex(currQuestionNum));
+    	if (finishedTest.getAnswersLength()== currQuestionNum+1)
     		nextButton.setVisible(false);
     	questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));
     }
@@ -190,7 +194,7 @@ public class autoTestController extends AbstractController{
     	currQuestionNum--;
     	setStudentAnswer();
     	nextButton.setVisible(true);
-    	changeCurrQuestion((finishedTest.getAnswers())[currQuestionNum]);
+    	changeCurrQuestion(finishedTest.getAnswerAtIndex(currQuestionNum));
     	if (currQuestionNum-1 == 0)
     		backButton.setVisible(false);
     	questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));

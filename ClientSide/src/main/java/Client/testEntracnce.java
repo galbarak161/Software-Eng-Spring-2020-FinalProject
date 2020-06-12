@@ -70,8 +70,8 @@ public class testEntracnce extends AbstractController {
 
 	@FXML
 	private AnchorPane mainAnchor;
-	
-	private CloneStudentTest currTest;
+
+	public static CloneStudentTest studTest;
 
 	private Timeline timeline = new Timeline();
 	private int min = 1, hour = 2;
@@ -163,7 +163,7 @@ public class testEntracnce extends AbstractController {
 				submitButton.setVisible(true);
 				fileField.setVisible(true);
 			}
-			currTest = (CloneStudentTest) test;
+			studTest = (CloneStudentTest) test;
 		} else
 			popError("Error", "Your code is invalid or your test didn't start yet");
 
@@ -174,12 +174,8 @@ public class testEntracnce extends AbstractController {
 		if (String.valueOf(ClientMain.getUser().getId()) != IDText.getText()) {
 			Platform.runLater(() -> {
 				try {
-					autoTestController con = new autoTestController();
-					con.setFields(currTest);
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("autoTestController.fxml"));
-					fxmlLoader.setRoot(mainAnchor);
-					fxmlLoader.setController(con);
-					fxmlLoader.load();
+					mainAnchor.getChildren()
+							.setAll((Node) FXMLLoader.load(getClass().getResource("autoTestController.fxml")));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

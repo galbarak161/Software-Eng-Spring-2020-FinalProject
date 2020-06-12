@@ -106,6 +106,18 @@ public class CloneStudentTest implements Serializable {
 	public CloneAnswerToQuestion[] getAnswers() {
 		return answers;
 	}
+	
+	public int getAnswersLength() {
+		return answers.length;
+	}
+	
+	public CloneAnswerToQuestion getAnswerAtIndex(int i) {
+		return this.answers[i];
+	}
+	
+	public void setAnswerAtIndex(int i, int k) {
+		this.answers[i].setAnswer(k);
+	}
 
 	public void addAnswers(int index, CloneAnswerToQuestion answer) {
 		this.answers[index] = answer;
