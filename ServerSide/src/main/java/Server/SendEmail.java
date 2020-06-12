@@ -23,10 +23,10 @@ public class SendEmail {
 	private final String NewTimeExtensionRequest_subject = "New time extension request";
 	private final String TimeExtensionRequestResult_subject = "Time extension request answered";
 
-	private final String NewTest_body = "";
-	private final String TestFinished_body = "";
-	private final String NewTimeExtensionRequest_body = "";
-	private final String TimeExtensionRequestResult_body = "";
+	private final String NewTest_body = "You Have test, study hard and don't give up. remember to check the time to see when is your exam";
+	private final String TestFinished_body = "You finished the test, Hope it turn out hiw you wanted";
+	private final String NewTimeExtensionRequest_body = " An extension request has been sent";
+	private final String TimeExtensionRequestResult_body = "The result for the time extention has arrived";
 
 	private final String Signature = "\n\nThis message was sent to you automatically. All rights reserved. HTST 2020  \u00a9";
 
