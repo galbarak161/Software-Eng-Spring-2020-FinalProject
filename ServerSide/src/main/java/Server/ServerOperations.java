@@ -401,7 +401,7 @@ public class ServerOperations {
 			return null;
 
 		Exam newExam = new Exam(exam.getExamName(), t, exam.getDuration(), c, exam.getTeacherComments(),
-				exam.getStudentComments());
+				exam.getStudentComments(), exam.getNumberOfQuestions());
 
 		HibernateMain.insertDataToDB(newExam);
 

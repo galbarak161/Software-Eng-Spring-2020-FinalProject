@@ -55,7 +55,7 @@ public class Exam {
 	}
 
 	public Exam(String examName, Teacher creator, int duration, Course course, String teacherComments,
-			String studentComments) {
+			String studentComments, int numberOfQuestionInExam) {
 		this.examName = examName;
 		this.duration = duration;
 		this.teacherComments = teacherComments;
@@ -65,7 +65,7 @@ public class Exam {
 		GenerateExamCode();
 		tests = new ArrayList<Test>();
 		questionInExam = new ArrayList<QuestionInExam>();
-		numberOfQuestionInExam = 0;
+		this.numberOfQuestionInExam = numberOfQuestionInExam;
 	}
 
 	public CloneExam createClone() {
@@ -121,7 +121,7 @@ public class Exam {
 
 	public void addQuestionInExam(QuestionInExam questionInExam) {
 		this.questionInExam.add(questionInExam);
-		this.numberOfQuestionInExam++;
+		this.numberOfQuestionInExam = this.questionInExam.size();
 	}
 
 	public int getNumberOfQuestionInExam() {

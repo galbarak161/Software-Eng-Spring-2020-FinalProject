@@ -349,7 +349,7 @@ public class HibernateMain {
 		String teacherCommString = " monthly math exam that is %20  of your final grade";
 		String studentCommString = " read questions carfully";
 
-		Exam e1 = new Exam(name, t1, duration, courses[0], teacherCommString, studentCommString);
+		Exam e1 = new Exam(name, t1, duration, courses[0], teacherCommString, studentCommString, 0);
 		session.save(e1);
 		session.flush();
 
@@ -368,7 +368,7 @@ public class HibernateMain {
 		String name2 = "social studies exam";
 		String teacherCommString2 = " know your history";
 		String studentCommString2 = " read questions carfully";
-		Exam e2 = new Exam(name2, t2, duration, courses[4], teacherCommString2, studentCommString2);
+		Exam e2 = new Exam(name2, t2, duration, courses[4], teacherCommString2, studentCommString2, 0);
 		session.save(e2);
 
 		Question[] questionList2 = new Question[2];
@@ -387,7 +387,7 @@ public class HibernateMain {
 		String name3 = "grammer and writing";
 		String teacherCommString3 = " please use black pens only";
 		String studentCommString3 = " read questions carfully";
-		Exam e3 = new Exam(name3, t1, duration, courses[2], teacherCommString3, studentCommString3);
+		Exam e3 = new Exam(name3, t1, duration, courses[2], teacherCommString3, studentCommString3, 0);
 		session.save(e3);
 
 		Question[] questionList3 = new Question[2];
