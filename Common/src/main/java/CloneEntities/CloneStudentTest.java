@@ -135,12 +135,6 @@ public class CloneStudentTest implements Serializable {
 		actualTestDurationInMinutes = val;
 	}
 	
-	public void setAnswers(CloneAnswerToQuestion[] answers) {
-		for (int i = 0; i < answers.length; i++) {
-			this.answers[i] = answers[i];
-		}
-	}
-
 	@Override
 	public String toString() {
 		return getTest().getExamToExecute().getExamName();
