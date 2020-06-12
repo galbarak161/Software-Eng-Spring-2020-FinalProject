@@ -78,6 +78,14 @@ public class testEntracnce extends AbstractController {
 	private int startTimeSec, startTimeMin, startTimeHour;
 	public BorderPane timeBorderPane;
 
+	
+	
+	
+	
+	
+	/**
+	 * setting the timer
+	 */
 	public void startTimer() {
 		KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
@@ -145,6 +153,18 @@ public class testEntracnce extends AbstractController {
 			popError("Error", "Please enter test code");
 	}
 
+	
+	
+	
+	/**
+	 * after the student inputs the correct test code, the client sends request for the studentTest
+	 * the function figures what's the type of the test (automatedd or manual) and sets the form
+	 * according to the type.
+	 * 
+	 * the function is called from client service, because the server sent the CloneStudentTest object
+	 * the function keeps the studentTest in a global parameter in this class. - called studTest
+	 * @param test
+	 */
 	void checkTestType(Object test) {
 		if (test instanceof CloneStudentTest) {
 			CloneStudentTest currTest = (CloneStudentTest) test;
@@ -169,6 +189,11 @@ public class testEntracnce extends AbstractController {
 
 	}
 
+	
+	/**
+	 * the function calls to the autoTestController form to start the test
+	 * @param event
+	 */
 	@FXML
 	void onClickedEnter(ActionEvent event) {
 		if (String.valueOf(ClientMain.getUser().getId()) != IDText.getText()) {
@@ -184,6 +209,13 @@ public class testEntracnce extends AbstractController {
 			popError("Error", "Wrong ID, please try again");
 	}
 
+	
+	/**
+	 * downloading the WORD document for a manual test
+	 * @param event
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@FXML
 	void onClickedDownload(ActionEvent event) throws IOException, InterruptedException {
 		createWord();
@@ -195,6 +227,13 @@ public class testEntracnce extends AbstractController {
 
 	}
 
+	
+	/**
+	 * the function uploads a file from the user pc to the system 
+	 * 
+	 * in our case: Word doc which represents a studentTest (allegedly)
+	 * @param event
+	 */
 	@FXML
 	void onClickedUpload(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();

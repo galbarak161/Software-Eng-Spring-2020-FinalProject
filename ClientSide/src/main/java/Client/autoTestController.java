@@ -103,8 +103,14 @@ public class autoTestController extends AbstractController{
     	backButton.setVisible(false);
     	if (finishedTest.getAnswers().length == 1)
     		nextButton.setVisible(false);
-    	changeCurrQuestion(finishedTest.getAnswerAtIndex(currQuestionNum));
-    	
+    	CloneAnswerToQuestion temp = finishedTest.getAnswerAtIndex(0);
+    	questionText.setText(temp.getQuestion().getQuestionText());
+    	answerAText.setText(temp.getQuestion().getAnswer_1());
+    	answerBText.setText(temp.getQuestion().getAnswer_2());
+    	answerCText.setText(temp.getQuestion().getAnswer_3());
+    	answerDText.setText(temp.getQuestion().getAnswer_4());
+    //	changeCurrQuestion(finishedTest.getAnswerAtIndex(currQuestionNum));
+    	//questionText.setText(finishedTest.getAnswerAtIndex(0));//TODO
     	commentsText.setText(finishedTest.getTest().getExamToExecute().getStudentComments());
     	questionNumberLabel.setText("1");
     	allQuestionsNumberLabel.setText(String.valueOf(finishedTest.getAnswersLength()));
