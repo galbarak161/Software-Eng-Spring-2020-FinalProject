@@ -8,6 +8,7 @@ import CloneEntities.CloneTest.TestStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class Test {
 	private int id;
 
 	@Column(name = "testDate")
-	private LocalDate testDate;
+	private String testDate;
 
 	@Column(name = "testTime")
 	private LocalTime testTime;
@@ -70,7 +71,7 @@ public class Test {
 
 	public Test(LocalDate testDate, LocalTime testTime, ExamType type, Teacher executor, Exam examToExecute,
 			TestStatistics statistics) {
-		this.testDate = testDate.plusDays(1); // MYSQL integration problem with LocalDate and time-zone need to add plus 1 day
+		setTestDate(testDate);
 		this.testTime = testTime;
 		this.executionCode = TestCodeGenerator();
 		this.extraMinute = 0;
@@ -85,8 +86,15 @@ public class Test {
 	}
 
 	public CloneTest createClone() {
-		CloneTest clone = new CloneTest(id, testDate, testTime, executionCode, extraMinute, testDuration, type, status,
+		String[] values = testDate.split("\\.");
+		int day = Integer.parseInt(values[0]);
+		int month = Integer.parseInt(values[1]);
+		int year = Integer.parseInt(values[2]);
+		LocalDate localDate = LocalDate.of(year, month, day);
+
+		CloneTest clone = new CloneTest(id, localDate, testTime, executionCode, extraMinute, testDuration, type, status,
 				executor.getId(), examToExecute.createClone(), numberOfQuestionInExam, statistics.createClone());
+
 		return clone;
 	}
 
@@ -102,12 +110,13 @@ public class Test {
 		this.executionCode = codeGenerator;
 	}
 
-	public LocalDate getTestDate() {
+	public String getTestDate() {
 		return testDate;
 	}
 
 	public void setTestDate(LocalDate testDate) {
-		this.testDate = testDate;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY");
+		this.testDate = formatter.format(testDate);
 	}
 
 	public LocalTime getTestTime() {
