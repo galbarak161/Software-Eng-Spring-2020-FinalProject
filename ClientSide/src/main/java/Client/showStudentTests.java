@@ -103,6 +103,7 @@ public class showStudentTests extends AbstractController {
 			testsList.resize(testsList.getWidth(), testsList.getHeight() + 200);
 			return;
 		}
+		nameLabel.setText(test.getName());
 		thisTest = test;
 		gradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		gradeCol.setOnEditCommit(new EventHandler<CellEditEvent<CloneStudentTest, String>>() {
