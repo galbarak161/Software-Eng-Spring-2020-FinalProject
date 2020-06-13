@@ -258,11 +258,8 @@ public class ServerOperations {
 						answers[i].getQuestion().getId(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
-
-			CheckAutomaticTest(st);
-
 			HibernateMain.UpdateDataInDB(st);
-			Thread.sleep(100);
+			CheckAutomaticTest(st);
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
@@ -271,36 +268,39 @@ public class ServerOperations {
 		return status;
 	}
 
-	private void CheckAutomaticTest(StudentTest st) throws Exception {
+	private void CheckAutomaticTest(StudentTest studentTest) throws Exception {
+		StudentTest st = getStudntTestByCloneId(studentTest.getId());
 		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
 		List<AnswerToQuestion> answers = st.getAnswers();
+		st.setGrade(0);
 
 		if (questions.size() != answers.size())
 			throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 
 		for (int i = 0; i < questions.size(); i++) {
-			Question DBQestion = null;
-			List<Question> DBquestions = HibernateMain.getDataFromDB(Question.class);
-			for (Question question : DBquestions) {
-				if (answers.get(i).getQuestionCode() == questions.get(i).getQuestion().getQuestionCode()) {
-					DBQestion = question;
+			QuestionInExam DBQestion = null;
+			List<QuestionInExam> DBquestions = getExmaByCloneId(st.getTest().getExamToExecute().getId()).getQuestionInExam();
+			for (QuestionInExam questionInDB : DBquestions) {
+				if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
+					DBQestion = questionInDB;
 				}
 			}
 
 			if (DBQestion == null) {
 				throw new Exception("no QuestionCode has been found");
 			}
-			Question question = questions.get(i).getQuestion();
 			AnswerToQuestion answer = answers.get(i);
 
-			if (question.getQuestionCode() == DBQestion.getQuestionCode()) {
-				if (answer.getStudentAnswer() == question.getCorrectAnswer()) {
+			
+				if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer()) {
 					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
-				}
-			} else {
+				} else {
 				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 			}
 		}
+		HibernateMain.UpdateDataInDB(st);
+		
+		
 	}
 
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
