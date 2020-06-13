@@ -9,6 +9,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
+import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest.ExamType;
 import UtilClasses.DataElements.ClientToServerOpcodes;
@@ -21,7 +22,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -70,8 +70,10 @@ public class testEntracnce extends AbstractController {
 
 	@FXML
 	private AnchorPane mainAnchor;
+
+	static CloneStudentTest thisTest;
 	
-	private CloneStudentTest currTest;
+	static List<CloneQuestionInExam> currQuestions;
 
 	private Timeline timeline = new Timeline();
 	private int min = 1, hour = 2;
@@ -145,27 +147,24 @@ public class testEntracnce extends AbstractController {
 			popError("Error", "Please enter test code");
 	}
 
-	void checkTestType(Object test) {
-		if (test instanceof CloneStudentTest) {
-			CloneStudentTest currTest = (CloneStudentTest) test;
-			codeLabel.setVisible(false);
-			codeText.setVisible(false);
-			startButton.setVisible(false);
+	void checkTestType(List<Object> test) {
+		thisTest = (CloneStudentTest) test.get(0);
+		codeLabel.setVisible(false);
+		codeText.setVisible(false);
+		startButton.setVisible(false);
 
-			if (currTest.getTest().getType() == ExamType.Automated) {
-				IDText.setVisible(true);
-				IDLabel.setVisible(true);
-				enterTestButton.setVisible(true);
+		if (thisTest.getTest().getType() == ExamType.Automated) {
+			IDText.setVisible(true);
+			IDLabel.setVisible(true);
+			enterTestButton.setVisible(true);
 
-			} else {
-				downloadButton.setVisible(true);
-				uploadButton.setVisible(true);
-				submitButton.setVisible(true);
-				fileField.setVisible(true);
-			}
-			currTest = (CloneStudentTest) test;
-		} else
-			popError("Error", "Your code is invalid or your test didn't start yet");
+		} else {
+			downloadButton.setVisible(true);
+			uploadButton.setVisible(true);
+			submitButton.setVisible(true);
+			fileField.setVisible(true);
+		}
+		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
 
 	}
 
@@ -174,12 +173,8 @@ public class testEntracnce extends AbstractController {
 		if (String.valueOf(ClientMain.getUser().getId()) != IDText.getText()) {
 			Platform.runLater(() -> {
 				try {
-					autoTestController con = new autoTestController();
-					con.setFields(currTest);
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("autoTestController.fxml"));
-					fxmlLoader.setRoot(mainAnchor);
-					fxmlLoader.setController(con);
-					fxmlLoader.load();
+					mainAnchor.getChildren()
+							.setAll((Node) FXMLLoader.load(getClass().getResource("autoTestController.fxml")));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

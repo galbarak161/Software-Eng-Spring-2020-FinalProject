@@ -74,7 +74,7 @@ public class ServerOperations {
 	 * @return
 	 * @throws Exception
 	 */
-	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
+	public List<Object> handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
 			throws Exception {
 		int userId = studentExamCode.getUserId();
 		String Testcode = studentExamCode.getEexecutionCode();
@@ -94,7 +94,13 @@ public class ServerOperations {
 		List<StudentTest> studentTests = s1.getTests();
 		for (StudentTest studentTest : studentTests) {
 			if (studentTest.getTest().getExecutionCode().equals(Testcode)) {
-				return studentTest.createClone();
+				List<Object> toSend = new ArrayList<>();
+				toSend.add(studentTest.createClone());
+				List<CloneQuestionInExam> qToSend = new ArrayList<>();
+				for (QuestionInExam q :studentTest.getTest().getExamToExecute().getQuestionInExam())
+					qToSend.add(q.createClone());
+				toSend.add(qToSend);
+				return toSend;
 			}
 		}
 		return null;
@@ -185,8 +191,10 @@ public class ServerOperations {
 
 	private StudentTest getStudntTestInTestIdByUserId(Test t, int userId) {
 		for (StudentTest student : t.getStudents()) {
-			if (student.getStudent().getId() == userId)
+			if (student.getStudent().getId() == userId) {
 				return student;
+			}
+				
 		}
 		return null;
 	}
@@ -598,16 +606,7 @@ public class ServerOperations {
 
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
-			StudentTest st = new StudentTest(student, newTest);
-			HibernateMain.insertDataToDB(st);
-			
-			int questionNumberInExam = 1;
-			for (QuestionInExam question : e.getQuestionInExam()) {
-				AnswerToQuestion answer = new AnswerToQuestion(st,question.getQuestion().getQuestionCode(), questionNumberInExam);
-				HibernateMain.insertDataToDB(answer);
-				questionNumberInExam++;
-			}
-			
+			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
 			mailer.sendMessage(student.getEmailAddress(), MessageType.NewTest);
 		}
 

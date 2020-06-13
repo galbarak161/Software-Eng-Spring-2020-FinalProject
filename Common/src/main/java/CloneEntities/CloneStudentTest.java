@@ -2,6 +2,7 @@ package CloneEntities;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.List;
 
 public class CloneStudentTest implements Serializable {
 
@@ -107,8 +108,14 @@ public class CloneStudentTest implements Serializable {
 		return answers;
 	}
 
-	public void addAnswers(int index, CloneAnswerToQuestion answer) {
-		this.answers[index] = answer;
+	public void setAnswers(List<CloneAnswerToQuestion> _answers) {
+		int i = 0;
+		this.answers = new CloneAnswerToQuestion[_answers.size()];
+		for (CloneAnswerToQuestion q: _answers)
+		{
+			this.answers[i] = q;
+			i++;
+		}
 	}
 	
 	public LocalTime getStartTime() {
@@ -135,12 +142,6 @@ public class CloneStudentTest implements Serializable {
 		actualTestDurationInMinutes = val;
 	}
 	
-	public void setAnswers(CloneAnswerToQuestion[] answers) {
-		for (int i = 0; i < answers.length; i++) {
-			this.answers[i] = answers[i];
-		}
-	}
-
 	@Override
 	public String toString() {
 		return getTest().getExamToExecute().getExamName();
