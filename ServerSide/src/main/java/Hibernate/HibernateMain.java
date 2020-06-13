@@ -341,6 +341,23 @@ public class HibernateMain {
 		session.flush();
 
 		// Generate exams
+		
+		//test Exam
+		Exam eTest = new Exam("test", t1, 2, courses[0], "test", "test");
+		session.save(eTest);
+		session.flush();
+
+		Question[] questionListTest = new Question[2];
+		questionListTest[0] = questions[1];
+		questionListTest[1] = questions[2];
+		QuestionInExam qeTest1 = new QuestionInExam(50, eTest, questionListTest[0]);
+		QuestionInExam qeTest2 = new QuestionInExam(50, eTest, questionListTest[1]);
+		eTest.addQuestionInExam(qeTest1);
+		eTest.addQuestionInExam(qeTest2);
+		session.save(qeTest1);
+		session.save(qeTest2);
+		session.flush();
+		
 		// first exam
 
 		int duration = 60;

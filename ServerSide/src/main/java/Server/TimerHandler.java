@@ -37,6 +37,9 @@ public class TimerHandler extends TimerTask {
 						test.setStatus(TestStatus.Ongoing);
 						HibernateMain.UpdateDataInDB(test);
 						
+						test.setTestDate(currentDate.plusDays(1));
+						HibernateMain.UpdateDataInDB(test);
+						
 						studentTestsFromDB = HibernateMain.getDataFromDB(StudentTest.class);
 						
 						// Update all student tests
@@ -51,6 +54,9 @@ public class TimerHandler extends TimerTask {
 					else if (test.getStatus() == TestStatus.Ongoing && testStartTime.plusMinutes(test.getTestDuration()).isBefore(currentTime)) {
 						// Test finished
 						test.setStatus(TestStatus.PendingApproval);
+						HibernateMain.UpdateDataInDB(test);
+						
+						test.setTestDate(currentDate.plusDays(1));
 						HibernateMain.UpdateDataInDB(test);
 						
 						studentTestsFromDB = HibernateMain.getDataFromDB(StudentTest.class);
