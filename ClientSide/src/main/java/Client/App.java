@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import UtilClasses.DataElements;
+import UtilClasses.DataElements.ClientToServerOpcodes;
+
 public class App extends Application {
 
 	private static Scene scene;
@@ -24,6 +27,17 @@ public class App extends Application {
 		mainStage.getIcons().add(new Image(App.class.getResource("main_icon.png").toExternalForm()));
 		mainStage.setResizable(false);
 		mainStage.show();
+	}
+	
+	@Override
+	public void stop() throws IOException {
+		int status;
+		try {
+			status = ClientMain.sendMessageToServer(new DataElements(ClientToServerOpcodes.UserLogOut,ClientMain.getUser().getId()));
+		} catch (IOException e) {
+			status = -1;
+			e.printStackTrace();
+		}
 	}
 
 	static void changeStage(String fxml, String title) throws IOException {

@@ -114,8 +114,7 @@ public class ServerOperations {
 		try {
 			listFromDB = HibernateMain.getDataFromDB(StudentTest.class);
 			for (StudentTest studentTest : listFromDB) {
-				if ((studentTest.getTest().getTestDate().equals(cloneTest.getTestDate()))
-						&& (studentTest.getTest().getTestTime().equals(cloneTest.getTestTime()))
+				if ((studentTest.getTest().getTestDate().equals(cloneTest.getTestDateInFormat()))
 						&& (studentTest.getTest().getExecutionCode().equals(cloneTest.getExecutionCode())))
 					cloneStudentTests.add(studentTest.createClone());
 			}
@@ -255,7 +254,7 @@ public class ServerOperations {
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
 				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestion().getId(), i);
+						answers[i].getQuestion().getQuestionCode(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
 			HibernateMain.UpdateDataInDB(st);

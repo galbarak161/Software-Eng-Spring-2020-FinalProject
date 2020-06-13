@@ -22,7 +22,6 @@ public abstract class AbstractNavi {
 		try {
 			App.changeStage("loginController", "login");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {

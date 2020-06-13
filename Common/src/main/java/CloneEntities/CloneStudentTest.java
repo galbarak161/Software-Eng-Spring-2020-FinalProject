@@ -55,7 +55,7 @@ public class CloneStudentTest implements Serializable {
 	}
 
 	public String getStringGrade() {
-		if (grade == -1)
+		if (grade == -1 || status == StudentTestStatus.WaitingForResult)
 			return "";
 		return String.valueOf(grade);
 	}
@@ -126,7 +126,7 @@ public class CloneStudentTest implements Serializable {
 		return actualTestDurationInMinutes;
 	}
 	
-	public String getStudnetName() {
+	public String getStudentName() {
 		return student.getFirstName() + " " + student.getLastName();
 	}
 	
