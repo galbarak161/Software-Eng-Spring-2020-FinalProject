@@ -32,7 +32,7 @@
       </Label>
       <Button fx:id="signinButton" layoutX="210.0" layoutY="233.0" mnemonicParsing="false" onAction="#signinAction" prefHeight="30.0" prefWidth="67.0" text="Sign-In" />
       <Button fx:id="clearButton" layoutX="322.0" layoutY="233.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="30.0" prefWidth="67.0" text="Clear" />
-      <Label fx:id="errorLabel" layoutX="131.0" layoutY="191.0" prefHeight="25.0" prefWidth="360.0" text="Username or Password are incorrent., please insert again." textFill="RED" visible="false">
+      <Label fx:id="errorLabel" layoutX="131.0" layoutY="191.0" prefHeight="25.0" prefWidth="360.0" text="Username or Password are incorrent, please insert again." textFill="RED" visible="false">
          <font>
             <Font size="14.0" />
          </font>
