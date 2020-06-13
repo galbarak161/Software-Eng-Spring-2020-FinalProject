@@ -97,7 +97,7 @@ public class ServerOperations {
 				return studentTest.createClone();
 			}
 		}
-		return null;
+		return null;		
 	}
 
 	/**
@@ -163,6 +163,25 @@ public class ServerOperations {
 	 * @return 1 If succeeded (Others -1)
 	 * @throws Exception
 	 */
+//	public int handleStudentStartsTest(StudentStartTest studentStartTest) {
+//		int status = 1;
+//		try {
+//			Test t = getTestByExamCode(studentStartTest.getEexecutionCode());
+//			StudentTest st = getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
+//			TestStatistics statistics = getTestStatisticsByTestId(st.getTest().getId());
+//
+//			st.setStartTime(LocalTime.now());
+//			statistics.increaseNumberOfStudentsInTest();
+//
+//			HibernateMain.UpdateDataInDB(st);
+//			Thread.sleep(100);
+//			HibernateMain.UpdateDataInDB(statistics);
+//
+//		} catch (Exception e) {
+//			status = -1;
+//		}
+//		return status;
+//	}
 	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) {
 		int status = 1;
 		try {
@@ -236,7 +255,7 @@ public class ServerOperations {
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
 				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestion().getQuestionCode(), i);
+						answers[i].getQuestion().getId(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
 			HibernateMain.UpdateDataInDB(st);
