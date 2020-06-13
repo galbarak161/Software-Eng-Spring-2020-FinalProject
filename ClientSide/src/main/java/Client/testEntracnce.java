@@ -138,7 +138,7 @@ public class testEntracnce extends AbstractController {
 	void OnClickedStart(ActionEvent event) {
 		if (!codeText.getText().isEmpty()) {
 			try {
-				GetDataFromDB(ClientToServerOpcodes.GetStudentTestRelatedToStudentInExam,
+				GetDataFromDB(ClientToServerOpcodes.StudentStartsTest,
 						new StudentStartTest(ClientMain.getUser().getId(), codeText.getText()));
 			} catch (InterruptedException e) {
 				e.printStackTrace();

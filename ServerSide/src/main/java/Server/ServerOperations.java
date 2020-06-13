@@ -74,7 +74,7 @@ public class ServerOperations {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Object> handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
+	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
 			throws Exception {
 		int userId = studentExamCode.getUserId();
 		String Testcode = studentExamCode.getEexecutionCode();
@@ -94,13 +94,7 @@ public class ServerOperations {
 		List<StudentTest> studentTests = s1.getTests();
 		for (StudentTest studentTest : studentTests) {
 			if (studentTest.getTest().getExecutionCode().equals(Testcode)) {
-				List<Object> toSend = new ArrayList<>();
-				toSend.add(studentTest.createClone());
-				List<CloneQuestionInExam> qToSend = new ArrayList<>();
-				for (QuestionInExam q :studentTest.getTest().getExamToExecute().getQuestionInExam())
-					qToSend.add(q.createClone());
-				toSend.add(qToSend);
-				return toSend;
+				return studentTest.createClone();
 			}
 		}
 		return null;
@@ -169,7 +163,7 @@ public class ServerOperations {
 	 * @return 1 If succeeded (Others -1)
 	 * @throws Exception
 	 */
-	public int handleStudentStartsTest(StudentStartTest studentStartTest) {
+	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) {
 		int status = 1;
 		try {
 			Test t = getTestByExamCode(studentStartTest.getEexecutionCode());
@@ -182,11 +176,19 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(st);
 			Thread.sleep(100);
 			HibernateMain.UpdateDataInDB(statistics);
-
+			
+			List<Object> toSend = new ArrayList<>();
+			toSend.add(st.createClone());
+			List<CloneQuestionInExam> qToSend = new ArrayList<>();
+			for (QuestionInExam q :st.getTest().getExamToExecute().getQuestionInExam())
+				qToSend.add(q.createClone());
+			toSend.add(qToSend);
+			return toSend;
+			
 		} catch (Exception e) {
 			status = -1;
 		}
-		return status;
+		return null;
 	}
 
 	private StudentTest getStudntTestInTestIdByUserId(Test t, int userId) {
@@ -234,11 +236,11 @@ public class ServerOperations {
 			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
 				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestion().getId(), i);
+						answers[i].getQuestion().getQuestionCode(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
 
-			CheckAutomaticTest(st);
+			//CheckAutomaticTest(st);
 
 			HibernateMain.UpdateDataInDB(st);
 			Thread.sleep(100);

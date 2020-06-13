@@ -61,6 +61,8 @@ public class studentController extends AbstractController {
 		gradeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StringGrade"));
 
 		testsTable.getColumns().setAll(nameCol, dateCol, timeCol, statusCol, gradeCol);
+		
+		testStage.initModality(Modality.APPLICATION_MODAL);
 
 		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 
@@ -76,7 +78,6 @@ public class studentController extends AbstractController {
 			e.printStackTrace();
 		}
 
-		testStage.initModality(Modality.APPLICATION_MODAL);
 		testStage.setTitle("Test Start");
 		testStage.setScene(new Scene(root));
 		testStage.showAndWait();
