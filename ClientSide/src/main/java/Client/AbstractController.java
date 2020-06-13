@@ -26,6 +26,24 @@ public abstract class AbstractController {
 	static void msgRecieved() {
 		msgRecived = true;
 	}
+	
+	protected void sendRequest(ClientToServerOpcodes op, Object data) {
+		TimerTask timerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				try {
+					GetDataFromDB(op, data);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		timer = new Timer("RefreshingTimer");
+
+		timer.scheduleAtFixedRate(timerTask, 30, 10000);
+	}
 
 	/**
 	 * getDataFromServer(DataElements) The function calls the
@@ -82,24 +100,8 @@ public abstract class AbstractController {
 	public void initialize() {
 
 	}
-
-	protected void sendRequest(ClientToServerOpcodes op, Object data) {
-		TimerTask timerTask = new TimerTask() {
-
-			@Override
-			public void run() {
-				try {
-					GetDataFromDB(op, data);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-
-		timer = new Timer("RefreshingTimer");
-
-		timer.scheduleAtFixedRate(timerTask, 30, 10000);
-	}
+	
+	
 
 	/**
 	 * Invokes an info alert message Mostly for a success create of objects on

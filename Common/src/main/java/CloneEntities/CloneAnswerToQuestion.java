@@ -8,7 +8,12 @@ public class CloneAnswerToQuestion implements Serializable{
 
 	private CloneQuestion question;
 	
-	private int studentAnswer = 0;
+	private int studentAnswer;
+	
+	public CloneAnswerToQuestion(CloneQuestion question) {
+		this.question = question;
+		this.studentAnswer = -1;
+	}
 
 	public CloneAnswerToQuestion(CloneQuestion question, int studentAnswer) {
 		this.question = question;

@@ -222,7 +222,10 @@ public class ClientService extends AbstractClient {
 			case "testEntracnce":
 				switch (de.getOpCodeFromServer()) {
 				case SendStudentTestRelatedToStudentInExam:
-					((testEntracnce) o).checkTestType(de.getData());
+					if (de.getData() != null)
+						((testEntracnce) o).checkTestType((List<Object>) de.getData());
+					else
+						((testEntracnce) o).popError("Error", "Your code is invalid or your test didn't start yet");
 				}
 				break;
 			case "autoTestController":
