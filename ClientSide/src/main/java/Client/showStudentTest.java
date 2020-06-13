@@ -58,10 +58,10 @@ public class showStudentTest extends AbstractController {
 			@Override
 			public void updateItem(CloneAnswerToQuestion item, boolean empty) {
 				super.updateItem(item, empty);
-				if (item.getCorrectAnswer().equals(item.getYourAnswer()))
-					setStyle("-fx-background-color: #66ff66;");
-				else
-					setStyle("-fx-background-color: #ff0000;");
+//				if (item.getCorrectAnswer().equals(item.getYourAnswer()))
+//					setStyle("-fx-background-color: #66ff66;");
+//				else
+//					setStyle("-fx-background-color: #ff0000;");
 
 			}
 		});

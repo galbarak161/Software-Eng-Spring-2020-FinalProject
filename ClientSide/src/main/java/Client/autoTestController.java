@@ -67,6 +67,9 @@ public class autoTestController extends AbstractController {
 	@FXML
 	private Label timerText;
 
+    @FXML
+    private Label nameLabel;
+
 	@FXML
 	private Button SubmitButton;
 
@@ -113,6 +116,7 @@ public class autoTestController extends AbstractController {
 	}
 
 	public void setFields() {
+		nameLabel.setText(finishedTest.getTestName());
 		backButton.setVisible(false);
 		if (finishedTest.getAnswers().length == 1)
 			nextButton.setVisible(false);

@@ -3,6 +3,7 @@ package Client;
 import java.io.IOException;
 
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -62,7 +63,9 @@ public class studentController extends AbstractController {
 
 		testsTable.getColumns().setAll(nameCol, dateCol, timeCol, statusCol, gradeCol);
 		
-		testStage.initModality(Modality.APPLICATION_MODAL);
+		if (!(testStage.getModality() == Modality.APPLICATION_MODAL))
+			testStage.initModality(Modality.APPLICATION_MODAL);
+		
 
 		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 
@@ -108,6 +111,8 @@ public class studentController extends AbstractController {
 	}
 	
 	void updateTable(ObservableList<CloneStudentTest> tests) {
+		for(CloneStudentTest q : tests)
+			System.out.println(q.getTestName());
 		int keepSelection = testsTable.getSelectionModel().getSelectedIndex();
 		testsTable.setItems(tests);
 		testsTable.getSelectionModel().select(keepSelection);

@@ -119,8 +119,11 @@ public class showStudentTests extends AbstractController {
 
 	@FXML
 	void onClickedApprove(ActionEvent event) {
-		CloneTest testToSend = thisTest;
-		testToSend.setStatus(TestStatus.Done);
+		try {
+			GetDataFromDB(ClientToServerOpcodes.TeacherUpdateGrade, testsList.getItems());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
