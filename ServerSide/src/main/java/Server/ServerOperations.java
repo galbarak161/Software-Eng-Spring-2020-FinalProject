@@ -74,7 +74,7 @@ public class ServerOperations {
 	 * @return
 	 * @throws Exception
 	 */
-	public CloneStudentTest handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
+	public List<Object> handleSendStudentTestRelatedToStudentInExam(StudentStartTest studentExamCode)
 			throws Exception {
 		int userId = studentExamCode.getUserId();
 		String Testcode = studentExamCode.getEexecutionCode();
@@ -94,7 +94,13 @@ public class ServerOperations {
 		List<StudentTest> studentTests = s1.getTests();
 		for (StudentTest studentTest : studentTests) {
 			if (studentTest.getTest().getExecutionCode().equals(Testcode)) {
-				return studentTest.createClone();
+				List<Object> toSend = new ArrayList<>();
+				toSend.add(studentTest.createClone());
+				List<CloneQuestionInExam> qToSend = new ArrayList<>();
+				for (QuestionInExam q :studentTest.getTest().getExamToExecute().getQuestionInExam())
+					qToSend.add(q.createClone());
+				toSend.add(qToSend);
+				return toSend;
 			}
 		}
 		return null;
@@ -185,8 +191,10 @@ public class ServerOperations {
 
 	private StudentTest getStudntTestInTestIdByUserId(Test t, int userId) {
 		for (StudentTest student : t.getStudents()) {
-			if (student.getStudent().getId() == userId)
+			if (student.getStudent().getId() == userId) {
 				return student;
+			}
+				
 		}
 		return null;
 	}
