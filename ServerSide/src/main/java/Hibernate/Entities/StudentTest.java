@@ -27,7 +27,7 @@ public class StudentTest {
 	@Column(name = "actualTestDurationInMinutes")
 	private int actualTestDurationInMinutes;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "student")
 	private List<AnswerToQuestion> answers;
 
 	@Column(name = "examCheckNotes")

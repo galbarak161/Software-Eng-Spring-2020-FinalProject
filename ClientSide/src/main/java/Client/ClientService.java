@@ -221,7 +221,7 @@ public class ClientService extends AbstractClient {
 				break;
 			case "testEntracnce":
 				switch (de.getOpCodeFromServer()) {
-				case SendStudentTestRelatedToStudentInExam:
+				case StudentStartsTestResult:
 					if (de.getData() != null)
 						((testEntracnce) o).checkTestType((List<Object>) de.getData());
 					else
