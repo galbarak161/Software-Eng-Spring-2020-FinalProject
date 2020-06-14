@@ -122,10 +122,10 @@ public class requestController extends AbstractController {
 			info.setTitle(title);
 			info.setHeaderText(content);
 			info.showAndWait();
+	        Stage stage;
+	        stage=(Stage) timeText.getScene().getWindow();
+	        stage.close();
 		});
-        Stage stage;
-        stage=(Stage) timeText.getScene().getWindow();
-        stage.close();
 	}
 
 }
