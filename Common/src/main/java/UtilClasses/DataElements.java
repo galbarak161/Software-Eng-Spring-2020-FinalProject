@@ -23,6 +23,7 @@ public class DataElements implements Serializable {
 	 * GetAnswerToTimeExtensionRequest (CloneTimeExtensionRequest)
 	 * GetStudentTestRelatedToStudentInExam (StudentExamCode)
 	 * GetAllQuestionInExamRelatedToExam (CloneExam)
+	 * GetAnswersToExamOfStudentTest (CloneStudentTest)
 	 * 
 	 * UserLogIn (Login)
 	 * UserLogOut (int userId)
@@ -50,7 +51,7 @@ public class DataElements implements Serializable {
 		GetAllTestsOfTeacherInCourse, GetAllStudentTests, GetAllTimeExtensionRequestRequests, GetAllTestRelatedToTeacher,
 		GetAllStudntTestRelatedToTest, GetAllExamsOfTeacher, GetAllExamsOfTeacherInCourse,
 		GetAnswerToTimeExtensionRequest,GetStudentTestRelatedToStudentInExam, GetAllQuestionInExamRelatedToExam,
-		UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
+		GetAnswersToExamOfStudentTest, UserLogIn, UserLogOut, CreateNewQuestion, CreateNewExam, CreateNewTest,
 		CreateNewTimeExtensionRequest, UpdateTimeExtension, StudentStartsTest, StudentFinishedTest, TeacherUpdateGrade, Error;
 	}
 
@@ -70,6 +71,7 @@ public class DataElements implements Serializable {
 	 * SendAllExamsOfTeacherInCourse (List<CloneExam>)
 	 * SendStudentTestRelatedToStudentInExam (CloneStudentTest)
 	 * SendAllQuestionInExamRelatedToExam (List<QiestionInExam>)
+	 * SendAnswersToExamOfStudentTest (List<CloneAnswerToQuestion>)
 	 * 
 	 * UserLoggedIn  (Login)
 	 * UserLoggedOut (int userId)
@@ -96,7 +98,7 @@ public class DataElements implements Serializable {
 		SendAllTestsOfTeacher, SendAllTestsOfTeacherInCourse, SendAllStudentTests, SendAllTimeExtensionRequestRequests,
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
-		UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
+		SendAnswersToExamOfStudentTest , UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
 		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudentStartsTestResult, StudentFinishedTestResult, TeacherUpdateGradeResult, Error;
 	}
 
