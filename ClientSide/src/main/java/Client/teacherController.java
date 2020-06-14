@@ -119,11 +119,11 @@ public class teacherController extends AbstractController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Stage stage = new Stage();
-				stage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName()
+				Stage testsStage = new Stage();
+				testsStage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName()
 						+ " exam");
-				stage.setScene(new Scene(root));
-				stage.show();
+				testsStage.setScene(new Scene(root));
+				testsStage.show();
 			});
 		} else 
 			popError("Error", "Please choose a test");

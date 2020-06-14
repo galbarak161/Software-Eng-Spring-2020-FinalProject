@@ -15,7 +15,7 @@
          </font>
       </Label>
       <Button fx:id="showButton" layoutX="324.0" layoutY="480.0" mnemonicParsing="false" onAction="#onClickedShow" prefHeight="25.0" prefWidth="99.0" text="Show Request" />
-      <TableView fx:id="requestsList" layoutX="8.0" layoutY="69.0" prefHeight="372.0" prefWidth="727.0">
+      <TableView fx:id="requestsList" layoutX="8.0" layoutY="69.0" prefHeight="372.0" prefWidth="727.0" stylesheets="@tableStyle.css">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="230.0" text="Request" />
             <TableColumn fx:id="testName" prefWidth="136.0" text="Test" />

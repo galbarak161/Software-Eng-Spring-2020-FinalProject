@@ -217,6 +217,22 @@ public class ClientService extends AbstractClient {
 					((showStudentTests) o).testsList.getItems()
 							.setAll(FXCollections.observableArrayList((List<CloneStudentTest>) de.getData()));
 					break;
+				case TeacherUpdateGradeResult:
+					((showStudentTests) o).showMsg("Success", "Grades has been successfully approved!");
+				}
+				break;
+			case "showStudentTest":
+				switch (de.getOpCodeFromServer()) {
+				case SendAnswersToExamOfStudentTest:
+					((showStudentTest) o).setQuestions(FXCollections.observableArrayList((List<CloneAnswerToQuestion>) de.getData()));
+					break;
+				}
+				break;
+			case "requestController":
+				switch (de.getOpCodeFromServer()) {
+				case CreateNewTimeExtensionRequestResult:
+					((showStudentTests) o).showMsg("Success", "Request has been successfully sent to Pricipal!");
+					break;
 				}
 				break;
 			case "testEntracnce":

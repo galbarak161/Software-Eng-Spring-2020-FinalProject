@@ -51,11 +51,13 @@ public class CloneStudentTest implements Serializable {
 	}
 	
 	public String getStudentGrade() {
+		if (grade == -1)
+			return "0";
 		return String.valueOf(grade);
 	}
 
 	public String getStringGrade() {
-		if (grade == -1 || status == StudentTestStatus.WaitingForResult)
+		if (status != StudentTestStatus.Done)
 			return "";
 		return String.valueOf(grade);
 	}
@@ -145,5 +147,11 @@ public class CloneStudentTest implements Serializable {
 	@Override
 	public String toString() {
 		return getTest().getExamToExecute().getExamName();
+	}
+	
+	public String getDone() {
+		if(grade == -1)
+			return "Not Done";
+		return "Done";
 	}
 }

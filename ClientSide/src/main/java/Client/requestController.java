@@ -4,12 +4,15 @@ import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class requestController extends AbstractController {
 
@@ -111,5 +114,18 @@ public class requestController extends AbstractController {
 			e.printStackTrace();
 		}
     }
+    
+	@Override
+	void showMsg(String title, String content) {
+		Platform.runLater(() -> {
+			Alert info = new Alert(Alert.AlertType.INFORMATION);
+			info.setTitle(title);
+			info.setHeaderText(content);
+			info.showAndWait();
+		});
+        Stage stage;
+        stage=(Stage) timeText.getScene().getWindow();
+        stage.close();
+	}
 
 }
