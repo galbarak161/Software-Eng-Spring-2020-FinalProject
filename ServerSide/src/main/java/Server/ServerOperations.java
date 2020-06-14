@@ -9,6 +9,7 @@ import javax.mail.Session;
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
+import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import Server.SendEmail.MessageType;
@@ -698,10 +699,7 @@ public class ServerOperations {
 	 */
 	public CloneTimeExtensionRequest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest)
 			throws Exception {
-
-		if (cloneTimeExtensionRequest.isRequestConfirmed() == false)
-			return cloneTimeExtensionRequest;
-
+		
 		List<TimeExtensionRequest> timeExtensionRequests = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 		TimeExtensionRequest request = null;
 		for (TimeExtensionRequest timeExtensionRequest : timeExtensionRequests) {
@@ -712,14 +710,19 @@ public class ServerOperations {
 
 		if (request == null)
 			return null;
-
+		
+		if (cloneTimeExtensionRequest.isRequestConfirmed() == false) {
+			request.setStatus(RequestStatus.Denied);
+			return request.createClone();
+		}
+		request.setStatus(RequestStatus.Confirmed);
 		request.setRequestConfirmed(true);
 
 		HibernateMain.UpdateDataInDB(request);
 		Thread.sleep(100);
 		HibernateMain.UpdateDataInDB(request.getTest());
 
-		return cloneTimeExtensionRequest;
+		return request.createClone();
 	}
 
 	/**
