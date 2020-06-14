@@ -322,40 +322,6 @@ public class ServerOperations {
 		return status;
 	}
 
-	private int CheckAutomaticTest(StudentTest studentTest) throws Exception {
-		StudentTest st = getStudntTestByCloneId(studentTest.getId());
-		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
-		List<AnswerToQuestion> answers = st.getAnswers();
-		st.setGrade(0);
-
-		if (questions.size() != answers.size())
-			throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
-
-		for (int i = 0; i < questions.size(); i++) {
-			QuestionInExam DBQestion = null;
-			List<QuestionInExam> DBquestions = getExmaByCloneId(st.getTest().getExamToExecute().getId())
-					.getQuestionInExam();
-			for (QuestionInExam questionInDB : DBquestions) {
-				if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
-					DBQestion = questionInDB;
-				}
-			}
-
-			if (DBQestion == null) {
-				throw new Exception("no QuestionCode has been found");
-			}
-			AnswerToQuestion answer = answers.get(i);
-
-			if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer()) {
-				st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
-			} else {
-				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
-			}
-		}
-		return st.getGrade();
-
-	}
-
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
 		List<TestStatistics> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(TestStatistics.class);
@@ -715,11 +681,14 @@ public class ServerOperations {
 			request.setStatus(RequestStatus.Denied);
 			return request.createClone();
 		}
-		request.setStatus(RequestStatus.Confirmed);
-		request.setRequestConfirmed(true);
+		else {
+			request.setStatus(RequestStatus.Confirmed);
+			request.setRequestConfirmed(true);
+		}	
 
+		request.getTest().setStatus(TestStatus.OngoingAnswered);
+		
 		HibernateMain.UpdateDataInDB(request);
-		Thread.sleep(100);
 		HibernateMain.UpdateDataInDB(request.getTest());
 
 		return request.createClone();
@@ -797,6 +766,7 @@ public class ServerOperations {
 		Test test = getTestByCloneId(newCloneTimeExtensionRequest.getTest().getId());
 		timeExtensionRequest.setTest(test);
 		test.setExtensionRequests(timeExtensionRequest);
+		test.setStatus(TestStatus.OngoingRequested);
 
 		HibernateMain.insertDataToDB(timeExtensionRequest);
 		HibernateMain.UpdateDataInDB(test);
