@@ -728,12 +728,13 @@ public class ServerOperations {
 	 * sends all time extension requests
 	 * 
 	 * @return List<CloneTimeExtensionRequest> send all time extension requests
+	 * @throws Exception 
 	 */
-	public List<CloneTimeExtensionRequest> handleSendAllTimeExtensionRequestRequests() {
-		List<TimeExtensionRequest> listFromDB = null;
+	public List<CloneTimeExtensionRequest> handleSendAllTimeExtensionRequestRequests() throws Exception {
+		List<TimeExtensionRequest> listFromDB = new ArrayList<TimeExtensionRequest>();
 		List<CloneTimeExtensionRequest> cloneRequests = new ArrayList<CloneTimeExtensionRequest>();
+		listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 		try {
-			listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 			for (TimeExtensionRequest Tex : listFromDB) {
 				cloneRequests.add(Tex.createClone());
 			}
@@ -766,9 +767,11 @@ public class ServerOperations {
 		}
 		Test test = getTestByCloneId(newCloneTimeExtensionRequest.getTest().getId());
 		timeExtensionRequest.setTest(test);
+		test.setExtensionRequests(timeExtensionRequest);
 
 		HibernateMain.insertDataToDB(timeExtensionRequest);
-
+		HibernateMain.UpdateDataInDB(test);
+		
 		Principal p = getPrincipalUser();
 		mailer.sendMessage(p.getEmailAddress(), MessageType.NewTimeExtensionRequest);
 
