@@ -199,7 +199,7 @@ public class ServerMain extends AbstractServer {
 				
 			case UpdateTimeExtension:
 				dataToClient = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
 				de.setData(dataToClient);
 				break;
 			case StudentStartsTest:
