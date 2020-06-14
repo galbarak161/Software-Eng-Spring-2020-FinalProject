@@ -226,6 +226,9 @@ public class ClientService extends AbstractClient {
 				case SendAnswersToExamOfStudentTest:
 					((showStudentTest) o).setQuestions(FXCollections.observableArrayList((List<CloneAnswerToQuestion>) de.getData()));
 					break;
+				case SendAllQuestionInExamRelatedToExam:
+					((showStudentTest) o).setAnswers((List<CloneQuestionInExam>) de.getData());
+					break;
 				}
 				break;
 			case "requestController":

@@ -1,8 +1,11 @@
 package Client;
 
 import java.io.IOException;
+import java.util.List;
 
 import CloneEntities.CloneAnswerToQuestion;
+import CloneEntities.CloneExam;
+import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTimeExtensionRequest;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
@@ -40,6 +43,9 @@ public class showStudentTest extends AbstractController {
 	private TableColumn<CloneAnswerToQuestion, String> answerCol;
 
 	@FXML
+	private TableColumn<CloneAnswerToQuestion, String> pointsCol;
+
+	@FXML
 	private Label GradeLabel;
 
 	@FXML
@@ -51,6 +57,8 @@ public class showStudentTest extends AbstractController {
 	@FXML
 	private Button ShowQuestionButton;
 
+	private CloneExam thisExam;
+
 	public void initialize() {
 		questionName.setCellValueFactory(new PropertyValueFactory<CloneAnswerToQuestion, String>("Name"));
 
@@ -58,55 +66,69 @@ public class showStudentTest extends AbstractController {
 
 		answerCol.setCellValueFactory(new PropertyValueFactory<CloneAnswerToQuestion, String>("YourAnswer"));
 
-		questionsTable.getColumns().setAll(questionName, answerCol, gradeCol);
+		pointsCol.setCellValueFactory(new PropertyValueFactory<CloneAnswerToQuestion, String>("Points"));
+
+		questionsTable.getColumns().setAll(questionName, answerCol, gradeCol, pointsCol);
 	}
 
-	public void setFields(CloneStudentTest st) {
+	public void setFields(CloneStudentTest st) throws InterruptedException {
 		TeacherCommentField.setText(st.getExamCheckNotes());
 		GradeLabel.setText(String.valueOf(st.getGrade()));
 		TestNameLabel.setText(st.getTest().getExamToExecute().getExamName());
 		TeacherCommentField.setText(st.getTest().getExamToExecute().getTeacherComments());
-		
-		questionsTable.setRowFactory((Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>) new Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>() 
-		{
-		    @Override public TableRow<CloneAnswerToQuestion> call(TableView<CloneAnswerToQuestion> questionsTableView) 
-		    {
-		        return new TableRow<CloneAnswerToQuestion>() 
-		        {
-		            @Override protected void updateItem(CloneAnswerToQuestion item, boolean b) 
-		            {
-		                super.updateItem(item, b);
 
-		                if (item == null)
-		                    return;
+		questionsTable.setRowFactory(
+				(Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>) new Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>() {
+					@Override
+					public TableRow<CloneAnswerToQuestion> call(TableView<CloneAnswerToQuestion> questionsTableView) {
+						return new TableRow<CloneAnswerToQuestion>() {
+							@Override
+							protected void updateItem(CloneAnswerToQuestion item, boolean b) {
+								super.updateItem(item, b);
 
-		                if (item.getCorrectAnswer().equals(item.getYourAnswer()))
-		                	setStyle("-fx-background-color: #03fc35;");
-						else
-							setStyle("-fx-background-color: #ff0000;");
-		            }
-		        };
-		    }
-		});
-		
+								if (item == null)
+									return;
+
+								if (item.getCorrectAnswer().equals(item.getYourAnswer()))
+									setStyle("-fx-background-color: #03fc35;");
+								else
+									setStyle("-fx-background-color: #ff0000;");
+							}
+						};
+					}
+				});
+
+		thisExam = st.getTest().getExamToExecute();
+
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAnswersToExamOfStudentTest, st);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+		Thread.sleep(150);
 
 	}
-	
+
 	void setQuestions(ObservableList<CloneAnswerToQuestion> questions) {
-		Platform.runLater(()->{
+		Platform.runLater(() -> {
 			questionsTable.setItems(questions);
+			try {
+				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInExamRelatedToExam, thisExam);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		});
 	}
-	
 
-    @FXML
-    void onClickedQuestion(ActionEvent event) {
+	void setAnswers(List<CloneQuestionInExam> questions) {
+
+		for (int i = 0; i < questionsTable.getItems().size(); i++) {
+			questionsTable.getItems().get(i).setPoints(questions.get(i).getGrade());
+		}
+	}
+
+	@FXML
+	void onClickedQuestion(ActionEvent event) {
 		if (questionsTable.getSelectionModel().getSelectedItem() != null) {
 			Platform.runLater(() -> {
 				Parent root = null;
@@ -120,10 +142,11 @@ public class showStudentTest extends AbstractController {
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();
-				stage.setTitle("Question " + questionsTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
+				stage.setTitle(
+						"Question " + questionsTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
 				stage.setScene(new Scene(root));
 				stage.show();
 			});
 		}
-    }
+	}
 }

@@ -79,7 +79,7 @@ public class showStudentTests extends AbstractController {
 					root = (Parent) fxmlLoader.load();
 					showStudentTest q = fxmlLoader.getController();
 					q.setFields(testsList.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
+				} catch (IOException | InterruptedException e) {
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();
