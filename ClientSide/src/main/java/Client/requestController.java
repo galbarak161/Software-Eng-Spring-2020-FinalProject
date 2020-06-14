@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class requestController extends AbstractController {
@@ -66,6 +67,34 @@ public class requestController extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
+    }
+    
+    public void initialize() {
+    	timeText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	explaText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+    	
+    	explaText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	timeText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
     }
     
     void setTest(CloneTest test) {

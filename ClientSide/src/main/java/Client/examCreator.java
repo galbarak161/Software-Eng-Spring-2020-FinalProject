@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -96,6 +97,39 @@ public class examCreator extends AbstractController {
 		});
 		insertedQuestions.getColumns().setAll(questionNameCol, questionGradeCol);
 		insertedQuestions.setEditable(true);
+		
+		nameText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	durText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickSubmit(new ActionEvent());
+            }
+        });
+		
+		durText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	teachersText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickSubmit(new ActionEvent());
+            }
+        });
+		
+		teachersText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	studentsComment.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickSubmit(new ActionEvent());
+            }
+        });
+		
+		studentsComment.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickSubmit(new ActionEvent());
+            }
+        });
 
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
@@ -204,7 +238,7 @@ public class examCreator extends AbstractController {
 				throw new Exception(errorsList.toString());
 			}
 		} catch (Exception e) {
-			popError("Please fill all question fields", e.getMessage());
+			popError("Please fill all question fields correctly", e.getMessage());
 			return;
 		}
 
