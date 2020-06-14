@@ -28,24 +28,23 @@ public class ServerOperations {
 	/////////////// Student Test /////////////////
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
-	
-	
-	
-	
+
 	/**
 	 * handleSendAnswersToExamOfStudentTest (CloneStudentTest)
 	 * 
-	 * function receives ClonesQuestionTest  returns a list of CloneAnswerToQuestioin that are related to that student in CloneStudentTest
+	 * function receives ClonesQuestionTest returns a list of CloneAnswerToQuestioin
+	 * that are related to that student in CloneStudentTest
 	 * 
 	 * @param cloneStudentTest
 	 * @return List<CloneAnswerToQuestion> , null if question code is not correct.
 	 * @throws Exception if no student with given student id was found.
 	 */
-	public List<CloneAnswerToQuestion> handleSendAnswersToExamOfStudentTest( CloneStudentTest cloneStudentTest) throws Exception{
+	public List<CloneAnswerToQuestion> handleSendAnswersToExamOfStudentTest(CloneStudentTest cloneStudentTest)
+			throws Exception {
 		StudentTest studentTest = getStudntTestByCloneId(cloneStudentTest.getId());
 		List<AnswerToQuestion> answerToQuestions = studentTest.getAnswers();
 		List<CloneAnswerToQuestion> cloneAnswerToQuestions = new ArrayList<CloneAnswerToQuestion>();
-		
+
 		for (AnswerToQuestion answerToQ : answerToQuestions) {
 			CloneQuestion cloneQuestion = getQuestionByQuestionCode(answerToQ.getQuestionCode()).createClone();
 			CloneAnswerToQuestion cloneAnswerToQuestion = answerToQ.createClone(cloneQuestion);
@@ -54,7 +53,6 @@ public class ServerOperations {
 		}
 		return cloneAnswerToQuestions;
 	}
-	
 
 	/**
 	 * handleTeacherUpdateGrade (List<CloneStudentTest>)
@@ -74,7 +72,7 @@ public class ServerOperations {
 		Test test = getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
 		test.setStatus(TestStatus.Done);
 		int totalGrades = 0;
-		
+
 		List<StudentTest> studentTests = test.getStudents();
 		for (StudentTest studentTest : studentTests) {
 			for (CloneStudentTest cStudentTest : cloneStudentTests) {
@@ -88,7 +86,7 @@ public class ServerOperations {
 				}
 			}
 		}
-		
+
 		test.getStatistics().setAverageGrade(totalGrades);
 		HibernateMain.UpdateDataInDB(test);
 		return 1;
@@ -124,7 +122,7 @@ public class ServerOperations {
 				return studentTest.createClone();
 			}
 		}
-		return null;		
+		return null;
 	}
 
 	/**
@@ -221,15 +219,15 @@ public class ServerOperations {
 			HibernateMain.UpdateDataInDB(st);
 			Thread.sleep(100);
 			HibernateMain.UpdateDataInDB(statistics);
-			
+
 			List<Object> toSend = new ArrayList<>();
 			toSend.add(st.createClone());
 			List<CloneQuestionInExam> qToSend = new ArrayList<>();
-			for (QuestionInExam q :st.getTest().getExamToExecute().getQuestionInExam())
+			for (QuestionInExam q : st.getTest().getExamToExecute().getQuestionInExam())
 				qToSend.add(q.createClone());
 			toSend.add(qToSend);
 			return toSend;
-			
+
 		} catch (Exception e) {
 			status = -1;
 		}
@@ -241,7 +239,7 @@ public class ServerOperations {
 			if (student.getStudent().getId() == userId) {
 				return student;
 			}
-				
+
 		}
 		return null;
 	}
@@ -278,14 +276,43 @@ public class ServerOperations {
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
 
-			CloneAnswerToQuestion[] answers = studentTest.getAnswers();
+			CloneAnswerToQuestion[] cloneAnswersArr = studentTest.getAnswers();
 			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
-				AnswerToQuestion answer = new AnswerToQuestion(answers[i].getStudentAnswer(), st,
-						answers[i].getQuestion().getQuestionCode(), i);
+				AnswerToQuestion answer = new AnswerToQuestion(cloneAnswersArr[i].getStudentAnswer(), st,
+						cloneAnswersArr[i].getQuestion().getQuestionCode(), i);
 				HibernateMain.insertDataToDB(answer);
 			}
+
+			// Calculate grade
+			List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
+			List<AnswerToQuestion> answers = st.getAnswers();
+
+			if (questions.size() != answers.size())
+				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
+
+			int grade = 0;
+			for (int i = 0; i < questions.size(); i++) {
+				QuestionInExam DBQestion = null;
+				List<QuestionInExam> DBquestions = getExmaByCloneId(st.getTest().getExamToExecute().getId())
+						.getQuestionInExam();
+				for (QuestionInExam questionInDB : DBquestions) {
+					if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
+						DBQestion = questionInDB;
+					}
+				}
+
+				if (DBQestion == null) {
+					throw new Exception("no QuestionCode has been found");
+				}
+				AnswerToQuestion answer = answers.get(i);
+
+				if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer()) 
+					grade += questions.get(i).getPointsForQuestion();
+			}
+			
+			st.setGrade(grade);
 			HibernateMain.UpdateDataInDB(st);
-			CheckAutomaticTest(st);
+			// CheckAutomaticTest(st);
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
@@ -294,7 +321,7 @@ public class ServerOperations {
 		return status;
 	}
 
-	private void CheckAutomaticTest(StudentTest studentTest) throws Exception {
+	private int CheckAutomaticTest(StudentTest studentTest) throws Exception {
 		StudentTest st = getStudntTestByCloneId(studentTest.getId());
 		List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
 		List<AnswerToQuestion> answers = st.getAnswers();
@@ -305,7 +332,8 @@ public class ServerOperations {
 
 		for (int i = 0; i < questions.size(); i++) {
 			QuestionInExam DBQestion = null;
-			List<QuestionInExam> DBquestions = getExmaByCloneId(st.getTest().getExamToExecute().getId()).getQuestionInExam();
+			List<QuestionInExam> DBquestions = getExmaByCloneId(st.getTest().getExamToExecute().getId())
+					.getQuestionInExam();
 			for (QuestionInExam questionInDB : DBquestions) {
 				if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
 					DBQestion = questionInDB;
@@ -317,16 +345,14 @@ public class ServerOperations {
 			}
 			AnswerToQuestion answer = answers.get(i);
 
-			
-				if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer()) {
-					st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
-				} else {
+			if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer()) {
+				st.setGrade(st.getGrade() + questions.get(i).getPointsForQuestion());
+			} else {
 				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 			}
 		}
-		HibernateMain.UpdateDataInDB(st);
-		
-		
+		return st.getGrade();
+
 	}
 
 	private TestStatistics getTestStatisticsByTestId(int id) throws Exception {
@@ -911,7 +937,8 @@ public class ServerOperations {
 	/**
 	 * getQuestionByQuestionCode (int)
 	 * 
-	 * Function receives QuestionCode returns Question from DB that match the QuesrionCode.
+	 * Function receives QuestionCode returns Question from DB that match the
+	 * QuesrionCode.
 	 * 
 	 * @param questionCode
 	 * @return null if not found otherwise it return Question object
@@ -921,13 +948,13 @@ public class ServerOperations {
 		List<Question> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(Question.class);
 		for (Question question : listFromDB) {
-			if(question.getQuestionCode() == questionCode){
+			if (question.getQuestionCode() == questionCode) {
 				return question;
 			}
 		}
 		return null;
 	}
-	
+
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 	/////////////////// Course ///////////////////
