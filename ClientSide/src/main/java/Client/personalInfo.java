@@ -48,7 +48,7 @@ public class personalInfo extends AbstractController {
 		firstField.setText(ClientMain.getUser().getFirstName());
 		lastField.setText(ClientMain.getUser().getLastName());
 		emailField.setText(ClientMain.getUser().getEmailAddress());
-		IDField.setText(String.valueOf(ClientMain.getUser().getId()));
+		IDField.setText(String.valueOf(ClientMain.getUser().getIdentifyNumber()));
 	}
 
 	@FXML

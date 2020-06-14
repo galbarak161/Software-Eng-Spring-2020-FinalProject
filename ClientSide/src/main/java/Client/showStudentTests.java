@@ -1,6 +1,8 @@
 package Client;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneQuestionInExam;
@@ -14,8 +16,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -24,6 +28,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class showStudentTests extends AbstractController {
 
@@ -47,6 +52,9 @@ public class showStudentTests extends AbstractController {
 
 	@FXML
 	private TableColumn<CloneStudentTest, String> gradeCol;
+	
+    @FXML
+    private TableColumn<CloneStudentTest, String> statusCol;
 
 	@FXML
 	private Label nameLabel;
@@ -58,6 +66,11 @@ public class showStudentTests extends AbstractController {
 
 	@FXML
 	void showTest(ActionEvent event) {
+		if (testsList.getSelectionModel().getSelectedItem().getDone().equals("Not Done")) {
+			popError("Error", "Cannot show an undone test");
+			return;
+		}
+		
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
 			Platform.runLater(() -> {
 				Parent root = null;
@@ -67,7 +80,6 @@ public class showStudentTests extends AbstractController {
 					showStudentTest q = fxmlLoader.getController();
 					q.setFields(testsList.getSelectionModel().getSelectedItem());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Stage stage = new Stage();
@@ -85,26 +97,11 @@ public class showStudentTests extends AbstractController {
 		idCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StudentID"));
 
 		emailCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StudentEmail"));
-
+		
 		gradeCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StudentGrade"));
 
-		testsList.getColumns().setAll(nameCol, idCol, emailCol, gradeCol);
-	}
-
-	public void setFields(CloneTest test, TestStatus s) {
-		try {
-			GetDataFromDB(ClientToServerOpcodes.GetAllStudntTestRelatedToTest, test);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if (s == TestStatus.Done) {
-			titleLabel.setText("View Grades");
-			approveButton.setVisible(false);
-			testsList.resize(testsList.getWidth(), testsList.getHeight() + 200);
-			return;
-		}
-		nameLabel.setText(test.getName());
-		thisTest = test;
+		statusCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("Done"));
+		
 		gradeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		gradeCol.setOnEditCommit(new EventHandler<CellEditEvent<CloneStudentTest, String>>() {
 			public void handle(CellEditEvent<CloneStudentTest, String> t) {
@@ -116,15 +113,54 @@ public class showStudentTests extends AbstractController {
 				}
 			}
 		});
+		
+		testsList.getColumns().setAll(nameCol, idCol, emailCol,statusCol, gradeCol);
+		testsList.setEditable(true);
+	}
+
+	public void setFields(CloneTest test, TestStatus s) {
+		try {
+			GetDataFromDB(ClientToServerOpcodes.GetAllStudntTestRelatedToTest, test);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		nameLabel.setText(test.getName());
+		if (s == TestStatus.Done) {
+			titleLabel.setText("View Grades");
+			approveButton.setVisible(false);
+			testsList.resize(testsList.getWidth(), testsList.getHeight() + 200);
+			testsList.setEditable(false);
+			return;
+		}
+		thisTest = test;
 	}
 
 	@FXML
 	void onClickedApprove(ActionEvent event) {
+		List<CloneStudentTest> toSend = new ArrayList<>();
+		for (CloneStudentTest st : testsList.getItems())
+			toSend.add(st);
+		for (CloneStudentTest st : toSend) {
+			System.out.println(st.getTestName() + " " + st.getGrade());
+		}
 		try {
-			GetDataFromDB(ClientToServerOpcodes.TeacherUpdateGrade, testsList.getItems());
+			GetDataFromDB(ClientToServerOpcodes.TeacherUpdateGrade, toSend);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	void showMsg(String title, String content) {
+		Platform.runLater(() -> {
+			Alert info = new Alert(Alert.AlertType.INFORMATION);
+			info.setTitle(title);
+			info.setHeaderText(content);
+			info.showAndWait();
+	        Stage stage;
+	        stage=(Stage) showTest.getScene().getWindow();
+	        stage.close();
+		});
 	}
 
 }

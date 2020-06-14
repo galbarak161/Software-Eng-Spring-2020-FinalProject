@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class principalController extends AbstractController{
 
@@ -59,19 +60,29 @@ public class principalController extends AbstractController{
 
 		requestsList.getColumns().setAll(testName, nameCol, dateCol, timeCol, statusCol);
 		
-		requestsList.setRowFactory(tv -> new TableRow<CloneTimeExtensionRequest>() {
-			@Override
-			public void updateItem(CloneTimeExtensionRequest item, boolean empty) {
-				super.updateItem(item, empty);
-//				if (item.getStatus() == RequestStatus.Onging)
-//					setTextFill(Color.YELLOW);
-//				else if (item.getStatus() == RequestStatus.Denied)
-//					setTextFill(Color.RED);
-//				else
-//					setTextFill(Color.GREEN);
+		requestsList.setRowFactory((Callback<TableView<CloneTimeExtensionRequest>, TableRow<CloneTimeExtensionRequest>>) new Callback<TableView<CloneTimeExtensionRequest>, TableRow<CloneTimeExtensionRequest>>() 
+		{
+		    @Override public TableRow<CloneTimeExtensionRequest> call(TableView<CloneTimeExtensionRequest> requestsListView) 
+		    {
+		        return new TableRow<CloneTimeExtensionRequest>() 
+		        {
+		            @Override protected void updateItem(CloneTimeExtensionRequest item, boolean b) 
+		            {
+		                super.updateItem(item, b);
 
-			}
-		}); 
+		                if (item == null)
+		                    return;
+
+						if (item.getStatus() == RequestStatus.Onging)
+							setStyle("-fx-background-color: #f8fc03;");
+						else if (item.getStatus() == RequestStatus.Denied)
+							setStyle("-fx-background-color: #ff0000;");
+						else
+							setStyle("-fx-background-color: #03fc35;");
+		            }
+		        };
+		    }
+		});
 		
     	sendRequest(ClientToServerOpcodes.GetAllTimeExtensionRequestRequests, null);
     }

@@ -80,10 +80,11 @@ public class studentController extends AbstractController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		stopTimer();
 		testStage.setTitle("Test Start");
 		testStage.setScene(new Scene(root));
 		testStage.showAndWait();
+		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 	}
 
 	@FXML

@@ -170,7 +170,7 @@ public class testEntracnce extends AbstractController {
 
 	@FXML
 	void onClickedEnter(ActionEvent event) {
-		if (String.valueOf(ClientMain.getUser().getId()) != IDText.getText()) {
+		if (String.valueOf(ClientMain.getUser().getIdentifyNumber()) != IDText.getText()) {
 			Platform.runLater(() -> {
 				try {
 					mainAnchor.getChildren()
