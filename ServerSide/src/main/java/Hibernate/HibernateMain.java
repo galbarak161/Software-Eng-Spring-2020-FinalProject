@@ -24,8 +24,8 @@ import org.hibernate.service.ServiceRegistry;
 
 import CloneEntities.*;
 import CloneEntities.CloneTest.ExamType;
+import Controllers.ServerOperations;
 import Hibernate.Entities.*;
-import Server.ServerOperations;
 import UtilClasses.Login;
 
 public class HibernateMain {

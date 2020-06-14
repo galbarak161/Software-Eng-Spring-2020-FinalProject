@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.util.Timer;
 
 import CloneEntities.*;
+import Controllers.DoTestController;
+import Controllers.ServerOperations;
+import Controllers.UserController;
 import Hibernate.HibernateMain;
 import OCSF.AbstractServer;
 import OCSF.ConnectionToClient;
@@ -15,11 +18,17 @@ public class ServerMain extends AbstractServer {
 
 	private static int numberOfConnectedClients;
 	private ServerOperations serverHandler = null;
+	private UserController userController = null;
+	private DoTestController doTestController = null;
+	
 	private static Timer timer;
 
 	public ServerMain(int port) {
 		super(port);
-		serverHandler = new ServerOperations();
+		serverHandler = ServerOperations.getInstance();
+		userController = new UserController();
+		doTestController = new DoTestController();
+		
 		timer = new Timer();
 		numberOfConnectedClients = 0;
 	}
@@ -128,7 +137,7 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataToClient);
 				break;
 			case GetAllTimeExtensionRequestRequests:
-				dataToClient = serverHandler.handleSendAllTimeExtensionRequestRequests();
+				dataToClient = doTestController.handleSendAllTimeExtensionRequests();
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllTimeExtensionRequestRequests);
 				de.setData(dataToClient);
 				break;
@@ -140,11 +149,6 @@ public class ServerMain extends AbstractServer {
 			case GetAllStudntTestRelatedToTest:
 				dataToClient = serverHandler.handleSendAllStudntTestRelatedToTest((CloneTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAllStudntTestRelatedToTest);
-				de.setData(dataToClient);
-				break;
-			case GetAnswerToTimeExtensionRequest:
-				dataToClient = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
-				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
 				de.setData(dataToClient);
 				break;
 			case GetStudentTestRelatedToStudentInExam:
@@ -163,14 +167,18 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendAnswersToExamOfStudentTest);
 				de.setData(dataToClient);
 				break;
-
+			case GetAnswerToTimeExtensionRequest:
+				dataToClient = doTestController.handleSendTimeExtensionRequestsRelatedToTest((int) de.getData());
+				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.SendTimeExtensionResult);
+				de.setData(dataToClient);
+				break;
 			case UserLogIn:
-				dataToClient = serverHandler.handleLogInRequest((Login) de.getData());
+				dataToClient = userController.handleLogInRequest((Login) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedIn);
 				de.setData(dataToClient);
 				break;
 			case UserLogOut:
-				dataToClient = serverHandler.handleLogOutRequest((int) de.getData());
+				dataToClient = userController.handleLogOutRequest((int) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UserLoggedOut);
 				de.setData(dataToClient);
 				break;
@@ -191,30 +199,30 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataToClient);
 				break;
 			case CreateNewTimeExtensionRequest:
-				dataToClient = serverHandler
+				dataToClient = doTestController
 						.handleCreateNewTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
 				
 			case UpdateTimeExtension:
-				dataToClient = serverHandler.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				dataToClient = doTestController.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
 				de.setData(dataToClient);
 				break;
 			case StudentStartsTest:
-				dataToClient = serverHandler.handleStudentStartsTest((StudentStartTest) de.getData());
+				dataToClient = doTestController.handleStudentStartsTest((StudentStartTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudentStartsTestResult);
 				de.setData(dataToClient);
 				break;
 			case StudentFinishedTest:
-				dataToClient = serverHandler.handleStudentFinishedTest((CloneStudentTest) de.getData());
+				dataToClient = doTestController.handleStudentFinishedTest((CloneStudentTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.StudentFinishedTestResult);
 				de.setData(dataToClient);
 				break;
 
 			case TeacherUpdateGrade:
-				dataToClient = serverHandler.handleTeacherUpdateGrade((List<CloneStudentTest>) de.getData());
+				dataToClient = doTestController.handleTeacherUpdateGrade((List<CloneStudentTest>) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.TeacherUpdateGradeResult);
 				de.setData(dataToClient);
 				break;
