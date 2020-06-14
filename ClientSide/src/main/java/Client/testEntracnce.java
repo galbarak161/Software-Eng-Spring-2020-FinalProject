@@ -13,7 +13,9 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.ExamType;
+import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.StudentStartTest;
 import javafx.animation.KeyFrame;
@@ -151,6 +153,10 @@ public class testEntracnce extends AbstractController {
 
 	void checkTestType(List<Object> test) {
 		thisTest = (CloneStudentTest) test.get(0);
+		if(thisTest.getStatus() != StudentTestStatus.Ongoing) {
+			popError("Error", "Test is over");
+			return;
+		}	
 		codeLabel.setVisible(false);
 		codeText.setVisible(false);
 		startButton.setVisible(false);
