@@ -36,7 +36,7 @@ public class TimeExtensionRequest {
 		this.isRequestConfirmed = false;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
-		this.status = RequestStatus.Onging;
+		this.status = RequestStatus.Ongoing;
 	}
 
 	public CloneTimeExtensionRequest createClone() {
