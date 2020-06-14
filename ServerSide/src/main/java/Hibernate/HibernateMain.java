@@ -450,21 +450,23 @@ public class HibernateMain {
 		// fist request
 		TimeExtensionRequest request1 = new TimeExtensionRequest("students are complaining", 50);
 		test1.setExtensionRequests(request1);
-		session.save(request1);
-		session.flush();
 		request1.setRequestConfirmed(true);
+		session.save(request1);
+		session.save(test1);
+		session.flush();
 
 		// second request
 		TimeExtensionRequest request2 = new TimeExtensionRequest("first question was too hard", 20);
 		test3.setExtensionRequests(request2);
 		session.save(request2);
+		session.save(test3);
 
 		// third request
 		TimeExtensionRequest request3 = new TimeExtensionRequest("because corona", 30);
 		test4.setExtensionRequests(request3);
-		session.save(request3);
-		session.flush();
 		request3.setRequestConfirmed(true);
+		session.save(request3);
+		session.save(test4);
 		session.flush();
 
 		// studentTest
