@@ -49,6 +49,7 @@ public class testGenerator extends AbstractController {
 	private ToggleGroup radioGroup;
 
 	public void initialize() {
+		
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {

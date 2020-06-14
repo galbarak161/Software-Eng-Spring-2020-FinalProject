@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class questionsEditor extends AbstractController {
@@ -96,6 +97,81 @@ public class questionsEditor extends AbstractController {
 	 * 
 	 */
 	public void initialize() {
+		subject_text.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	question_text.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		question_text.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	answer_line_1.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		answer_line_1.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	answer_line_2.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		answer_line_2.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	answer_line_3.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		answer_line_3.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	answer_line_4.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		answer_line_4.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	try {
+					onClickedSubmit(new ActionEvent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        });
+		
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
 		} catch (InterruptedException e) {
@@ -175,7 +251,7 @@ public class questionsEditor extends AbstractController {
 				throw new Exception(errorsList.toString());
 			}
 		} catch (Exception e) {
-			popError("Please fill all question fields", e.getMessage());
+			popError("Please fill all question fields correctly", e.getMessage());
 			return;
 		}
 		

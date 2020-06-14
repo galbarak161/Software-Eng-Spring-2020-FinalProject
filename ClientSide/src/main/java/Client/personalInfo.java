@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class personalInfo extends AbstractController {
 
@@ -46,9 +47,42 @@ public class personalInfo extends AbstractController {
 
 	public void initialize() {
 		firstField.setText(ClientMain.getUser().getFirstName());
+		firstField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	lastField.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickedSetDetails(new ActionEvent());
+            }
+        });
+		
 		lastField.setText(ClientMain.getUser().getLastName());
+		lastField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	emailField.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickedSetDetails(new ActionEvent());
+            }
+        });
+		
 		emailField.setText(ClientMain.getUser().getEmailAddress());
+		emailField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	IDField.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickedSetDetails(new ActionEvent());
+            }
+        });
+		
 		IDField.setText(String.valueOf(ClientMain.getUser().getIdentifyNumber()));
+		IDField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	OnClickedSetDetails(new ActionEvent());
+            }
+        });
+
 	}
 
 	@FXML

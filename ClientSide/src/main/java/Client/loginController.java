@@ -11,11 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class loginController extends AbstractController {
 
     @FXML
     private TextField usernameText;
+    
+    @FXML
+    private PasswordField passwordText;
 
     @FXML
     private Label usernameLabel1;
@@ -28,15 +32,31 @@ public class loginController extends AbstractController {
 
     @FXML
     private Label errorLabel;
-
-    @FXML
-    private PasswordField passwordText;
     
     @FXML
     void clearAction(ActionEvent event) {
     	usernameText.clear();
     	passwordText.clear();
     	errorLabel.setVisible(false);
+    }
+    
+    public void initialize() {
+    	usernameText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	passwordText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	signinAction(new ActionEvent());
+            }
+        });
+    	passwordText.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.TAB)){
+            	usernameText.requestFocus();
+            }
+            if(event.getCode().equals(KeyCode.ENTER)){
+            	signinAction(new ActionEvent());
+            }
+        });
     }
     
     public void showErrorLabel() {
