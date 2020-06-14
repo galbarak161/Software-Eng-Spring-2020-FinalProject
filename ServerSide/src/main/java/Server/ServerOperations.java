@@ -696,11 +696,11 @@ public class ServerOperations {
 	 * @return CloneTest with updates time
 	 * @throws Exception
 	 */
-	public CloneTest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest)
+	public CloneTimeExtensionRequest handleUpdateTimeExtensionRequest(CloneTimeExtensionRequest cloneTimeExtensionRequest)
 			throws Exception {
 
 		if (cloneTimeExtensionRequest.isRequestConfirmed() == false)
-			return cloneTimeExtensionRequest.getTest();
+			return cloneTimeExtensionRequest;
 
 		List<TimeExtensionRequest> timeExtensionRequests = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 		TimeExtensionRequest request = null;
@@ -719,7 +719,7 @@ public class ServerOperations {
 		Thread.sleep(100);
 		HibernateMain.UpdateDataInDB(request.getTest());
 
-		return request.getTest().createClone();
+		return cloneTimeExtensionRequest;
 	}
 
 	/**
