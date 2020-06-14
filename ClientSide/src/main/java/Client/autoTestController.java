@@ -9,9 +9,11 @@ import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTimeExtensionRequest;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,8 +69,8 @@ public class autoTestController extends AbstractController {
 	@FXML
 	private Label timerText;
 
-    @FXML
-    private Label nameLabel;
+	@FXML
+	private Label nameLabel;
 
 	@FXML
 	private Button SubmitButton;
@@ -104,6 +106,7 @@ public class autoTestController extends AbstractController {
 	private Timeline timeline = new Timeline();
 	private int startTimeSec, startTimeMin, startTimeHour;
 	public BorderPane timeBorderPane;
+	private boolean hasBeenExtened = false;
 
 	public void initialize() {
 		finishedTest = testEntracnce.thisTest;
@@ -112,6 +115,7 @@ public class autoTestController extends AbstractController {
 		for (CloneQuestionInExam q : qInTest) {
 			questionsAns.add(new CloneAnswerToQuestion(q.getQuestion()));
 		}
+		sendRequest(ClientToServerOpcodes.GetAnswerToTimeExtensionRequest, finishedTest.getTest().getId());
 		setFields();
 	}
 
@@ -249,6 +253,7 @@ public class autoTestController extends AbstractController {
 		alert.setContentText("Are you sure you want to submit the test?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get().getButtonData() == ButtonData.OK_DONE) {
+			timeline.stop();
 			setStudentAnswer();
 			newHour -= startTimeHour;
 			newMinute -= startTimeMin;
@@ -267,13 +272,18 @@ public class autoTestController extends AbstractController {
 	}
 
 	public void updateTimer(int addedTime) {
-		hour += addedTime / 60;
-		if ((min + addedTime % 60) >= 60) {
-			min = (min + addedTime) % 60;
-			hour++;
+		if (hasBeenExtened)
+			return;
+		startTimeHour += addedTime / 60;
+		if ((startTimeMin + addedTime % 60) >= 60) {
+			startTimeMin = (startTimeMin + addedTime) % 60;
+			startTimeHour++;
 		} else
-			min += addedTime % 60;
+			startTimeMin += addedTime % 60;
 
+		hasBeenExtened = true;
+//		timeline.stop();
+//		timeline.playFromStart();
 	}
 
 	public void startTimer() {

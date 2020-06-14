@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CloneTimeExtensionRequest implements Serializable{
 	
 	public enum RequestStatus {
-		Denied ,Confirmed, Onging;
+		Denied ,Confirmed, Ongoing;
 	}
 	private static final long serialVersionUID = 6598660146086038505L;
 
@@ -28,7 +28,7 @@ public class CloneTimeExtensionRequest implements Serializable{
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 		this.test = test;
 		this.isRequestConfirmed = false;
-		this.status = RequestStatus.Onging;
+		this.status = RequestStatus.Ongoing;
 	}
 
 	public CloneTimeExtensionRequest(String body, int timeToExtenedInMinute, CloneTest test) {
@@ -37,7 +37,7 @@ public class CloneTimeExtensionRequest implements Serializable{
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 		this.test = test;
 		this.isRequestConfirmed = false;
-		this.status = RequestStatus.Onging;
+		this.status = RequestStatus.Ongoing;
 	}
 
 	public boolean isRequestConfirmed() {
