@@ -98,7 +98,7 @@ public class studentController extends AbstractController {
 					root = (Parent) fxmlLoader.load();
 					showStudentTest q = fxmlLoader.getController();
 					q.setFields(testsTable.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
+				} catch (IOException | InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

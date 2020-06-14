@@ -10,6 +10,8 @@ public class CloneAnswerToQuestion implements Serializable{
 	
 	private int studentAnswer;
 	
+	private String points;
+
 	public CloneAnswerToQuestion(CloneQuestion question) {
 		this.question = question;
 		this.studentAnswer = -1;
@@ -42,6 +44,14 @@ public class CloneAnswerToQuestion implements Serializable{
 	
 	public void setAnswer(int answer) {
 		studentAnswer = answer;
+	}
+	
+	public String getPoints() {
+		return points;
+	}
+
+	public void setPoints(String points) {
+		this.points = points;
 	}
 	
 }

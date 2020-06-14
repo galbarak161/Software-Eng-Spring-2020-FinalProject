@@ -249,6 +249,7 @@ public class autoTestController extends AbstractController {
 		alert.setContentText("Are you sure you want to submit the test?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get().getButtonData() == ButtonData.OK_DONE) {
+			setStudentAnswer();
 			newHour -= startTimeHour;
 			newMinute -= startTimeMin;
 			finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
@@ -300,7 +301,17 @@ public class autoTestController extends AbstractController {
 					startTimeMin = 0;
 					startTimeSec = 0;
 					startTimeHour = 0;
-					timerText.setTextFill(Color.RED);
+					setStudentAnswer();
+					finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
+					finishedTest.setAnswers(questionsAns);
+					showMsg("Test's Time is up", "Test is over and will be send to review");
+					try {
+						GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					studentController.testStage.close();
+					return;
 
 				}
 
@@ -314,17 +325,6 @@ public class autoTestController extends AbstractController {
 		startTimeHour = hour;
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(keyframe);
-		timeline.setOnFinished((e) -> {
-			finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
-			finishedTest.setAnswers(questionsAns);
-			try {
-				GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			showMsg("Test's Time is up", "Test is over and sent to review");
-		});
-		timeline.playFromStart();
 		timeline.play();
 	}
 

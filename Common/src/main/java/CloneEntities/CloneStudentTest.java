@@ -59,6 +59,8 @@ public class CloneStudentTest implements Serializable {
 	public String getStringGrade() {
 		if (status != StudentTestStatus.Done)
 			return "";
+		if(grade == -1)
+			return "0";
 		return String.valueOf(grade);
 	}
 

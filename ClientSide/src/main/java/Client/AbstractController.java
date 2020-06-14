@@ -52,7 +52,7 @@ public abstract class AbstractController {
 	 * @param DataElements with opcode and data
 	 * @return -1 for fail
 	 */
-	protected int sendRequestForDataFromServer(DataElements de) {
+	protected synchronized int sendRequestForDataFromServer(DataElements de) {
 		int status;
 		try {
 			status = ClientMain.sendMessageToServer(de);
