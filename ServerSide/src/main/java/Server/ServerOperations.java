@@ -28,6 +28,33 @@ public class ServerOperations {
 	/////////////// Student Test /////////////////
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
+	
+	
+	
+	
+	/**
+	 * handleSendAnswersToExamOfStudentTest (CloneStudentTest)
+	 * 
+	 * function receives ClonesQuestionTest  returns a list of CloneAnswerToQuestioin that are related to that student in CloneStudentTest
+	 * 
+	 * @param cloneStudentTest
+	 * @return List<CloneAnswerToQuestion> , null if question code is not correct.
+	 * @throws Exception if no student with given student id was found.
+	 */
+	public List<CloneAnswerToQuestion> handleSendAnswersToExamOfStudentTest( CloneStudentTest cloneStudentTest) throws Exception{
+		StudentTest studentTest = getStudntTestByCloneId(cloneStudentTest.getId());
+		List<AnswerToQuestion> answerToQuestions = studentTest.getAnswers();
+		List<CloneAnswerToQuestion> cloneAnswerToQuestions = new ArrayList<CloneAnswerToQuestion>();
+		
+		for (AnswerToQuestion answerToQ : answerToQuestions) {
+			CloneQuestion cloneQuestion = getQuestionByQuestionCode(answerToQ.getQuestionCode()).createClone();
+			CloneAnswerToQuestion cloneAnswerToQuestion = answerToQ.createClone(cloneQuestion);
+			cloneAnswerToQuestion.setAnswer(answerToQ.getStudentAnswer());
+			cloneAnswerToQuestions.add(cloneAnswerToQuestion);
+		}
+		return cloneAnswerToQuestions;
+	}
+	
 
 	/**
 	 * handleTeacherUpdateGrade (List<CloneStudentTest>)
@@ -878,6 +905,26 @@ public class ServerOperations {
 		return cloneQuestionInExams;
 	}
 
+	/**
+	 * getQuestionByQuestionCode (int)
+	 * 
+	 * Function receives QuestionCode returns Question from DB that match the QuesrionCode.
+	 * 
+	 * @param questionCode
+	 * @return null if not found otherwise it return Question object
+	 * @throws Exception
+	 */
+	public Question getQuestionByQuestionCode(int questionCode) throws Exception {
+		List<Question> listFromDB = null;
+		listFromDB = HibernateMain.getDataFromDB(Question.class);
+		for (Question question : listFromDB) {
+			if(question.getQuestionCode() == questionCode){
+				return question;
+			}
+		}
+		return null;
+	}
+	
 	//////////////////////////////////////////////
 	//////////////////////////////////////////////
 	/////////////////// Course ///////////////////
