@@ -6,6 +6,7 @@ import java.util.List;
 import CloneEntities.CloneCourse;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.TeacherCourse;
 import UtilClasses.DataElements.ClientToServerOpcodes;
@@ -18,9 +19,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class teacherController extends AbstractController {
@@ -70,25 +74,11 @@ public class teacherController extends AbstractController {
 	}
 
 	@FXML
-	void timeRequestButton(ActionEvent event) {
+	void timeRequestButton(ActionEvent event) throws Exception {
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
 			if (testsList.getSelectionModel().getSelectedItem().getStatusEnum() == TestStatus.Ongoing) {
-				Platform.runLater(() -> {
-					Parent root = null;
-					try {
-						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("requestController.fxml"));
-						root = (Parent) fxmlLoader.load();
-						requestController q = fxmlLoader.getController();
-						q.setTest(testsList.getSelectionModel().getSelectedItem());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Stage stage = new Stage();
-					stage.setTitle("Time Extention Request Form");
-					stage.setScene(new Scene(root));
-					stage.show();
-				});
+				newWindow(testsList, new requestController(), "requestController.fxml",
+						"Time Extention Request Form");
 			} else {
 				popError("Error", "This test is not ongoing, you cannot send a new request");
 				return;
@@ -98,7 +88,7 @@ public class teacherController extends AbstractController {
 	}
 
 	@FXML
-	void onClickedTest(ActionEvent event) {
+	void onClickedTest(ActionEvent event) throws Exception {
 		TestStatus status;
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
 			if (testsList.getSelectionModel().getSelectedItem().getStatusEnum() == TestStatus.Done) {
@@ -109,22 +99,8 @@ public class teacherController extends AbstractController {
 				popError("Error", "You can watch students' tests only when they're PendingApproval or Done");
 				return;
 			}
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showStudentTests q = fxmlLoader.getController();
-					q.setFields(testsList.getSelectionModel().getSelectedItem(), status);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				Stage testsStage = new Stage();
-				testsStage.setTitle("Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName()
-						+ " exam");
-				testsStage.setScene(new Scene(root));
-				testsStage.show();
-			});
+			newWindow(testsList, new showStudentTests(), "showStudentTests.fxml",
+					"Students' tests of " + testsList.getSelectionModel().getSelectedItem().getName() + " exam");
 		} else 
 			popError("Error", "Please choose a test");
 	}

@@ -88,32 +88,16 @@ public class studentController extends AbstractController {
 	}
 
 	@FXML
-	void OnClickedDisplay(ActionEvent event) {
+	void OnClickedDisplay(ActionEvent event) throws Exception {
 		if (testsTable.getSelectionModel().getSelectedItem() != null
 				&& testsTable.getSelectionModel().getSelectedItem().getStatus() == StudentTestStatus.Done) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTest.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showStudentTest q = fxmlLoader.getController();
-					q.setFields(testsTable.getSelectionModel().getSelectedItem());
-				} catch (IOException | InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Test Review");
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(testsTable, new showStudentTest(), "showStudentTest.fxml",
+					"Test Review");
 		} else
 			popError("Error", "Cannot display the test, either you didn't choose any or it hasn't been done yet");
 	}
 	
 	void updateTable(ObservableList<CloneStudentTest> tests) {
-		for(CloneStudentTest q : tests)
-			System.out.println(q.getTestName());
 		int keepSelection = testsTable.getSelectionModel().getSelectedIndex();
 		testsTable.setItems(tests);
 		testsTable.getSelectionModel().select(keepSelection);

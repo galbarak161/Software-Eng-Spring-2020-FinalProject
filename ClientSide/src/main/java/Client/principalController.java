@@ -96,31 +96,15 @@ public class principalController extends AbstractController{
     }
     
     @FXML
-    void onClickedShow(ActionEvent event) {
-		if (requestsList.getSelectionModel().getSelectedItem() != null) { // REMEMBER TO USE STATUSES LATER WHEN IT'S READY
-				Platform.runLater(() -> {
-					Parent root = null;
-					try {
-						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("requestController.fxml"));
-						root = (Parent) fxmlLoader.load();
-						requestController q = fxmlLoader.getController();
-						q.setRequest(requestsList.getSelectionModel().getSelectedItem());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Stage stage = new Stage();
-					stage.setTitle("Time Extention Approval Form");
-					stage.setScene(new Scene(root));
-					stage.show();
-				});
+    void onClickedShow(ActionEvent event) throws Exception {
+		if (requestsList.getSelectionModel().getSelectedItem() != null) { 
+			newWindow(requestsList, new requestController(), "requestController.fxml",
+					"Request " + requestsList.getSelectionModel().getSelectedItem().getTestName());
 		} else
 			popError("Error", "Please choose a test");
     }
     
 	void updateTable(ObservableList<CloneTimeExtensionRequest> requests) {
-		for(CloneTimeExtensionRequest c : requests)
-			System.out.println(c.getStatus().toString());
 		int keepSelection = requestsList.getSelectionModel().getSelectedIndex();
 		requestsList.setItems(requests);
 		requestsList.getSelectionModel().select(keepSelection);

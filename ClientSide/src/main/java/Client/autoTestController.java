@@ -1,6 +1,5 @@
 package Client;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +10,7 @@ import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTimeExtensionRequest;
 import UtilClasses.DataElements.ClientToServerOpcodes;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -27,11 +22,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
-public class autoTestController extends AbstractController {
+public class autoTestController extends  AbstractTest {
 
 	@FXML
 	private AnchorPane mainAnchor;
@@ -87,32 +80,19 @@ public class autoTestController extends AbstractController {
 	@FXML
 	private TextArea commentsText;
 
-	private int hour, min;
-
 	private int newHour;
 
 	private int newMinute;
 
 	private ToggleGroup radioGroup;
 
-	private CloneStudentTest finishedTest;
-
-	private List<CloneQuestionInExam> qInTest;
-
 	private List<CloneAnswerToQuestion> questionsAns;
 
 	private int currQuestionNum = 0;
 
-	private Timeline timeline = new Timeline();
-	private int startTimeSec, startTimeMin, startTimeHour;
-	public BorderPane timeBorderPane;
-	private boolean hasBeenExtened = false;
-
 	public void initialize() {
-		finishedTest = testEntracnce.thisTest;
-		qInTest = testEntracnce.currQuestions;
 		questionsAns = new ArrayList<>();
-		for (CloneQuestionInExam q : qInTest) {
+		for (CloneQuestionInExam q : currQuestions) {
 			questionsAns.add(new CloneAnswerToQuestion(q.getQuestion()));
 		}
 		sendRequest(ClientToServerOpcodes.GetAnswerToTimeExtensionRequest, finishedTest.getTest().getId());
@@ -124,11 +104,11 @@ public class autoTestController extends AbstractController {
 		backButton.setVisible(false);
 		if (finishedTest.getAnswers().length == 1)
 			nextButton.setVisible(false);
-		changeCurrQuestion(qInTest.get(currQuestionNum));
+		changeCurrQuestion(currQuestions.get(currQuestionNum));
 
 		commentsText.setText(finishedTest.getTest().getExamToExecute().getStudentComments());
 		questionNumberLabel.setText("1");
-		allQuestionsNumberLabel.setText(String.valueOf(qInTest.size()));
+		allQuestionsNumberLabel.setText(String.valueOf(currQuestions.size()));
 
 		radioGroup = new ToggleGroup();
 		answer_a_button.setToggleGroup(radioGroup);
@@ -136,32 +116,7 @@ public class autoTestController extends AbstractController {
 		answer_c_button.setToggleGroup(radioGroup);
 		answer_d_button.setToggleGroup(radioGroup);
 
-		int originalHour = finishedTest.getTest().getTestTime().getHour();
-
-		int originalMinute = finishedTest.getTest().getTestTime().getMinute();
-
-		int durHour = finishedTest.getTest().getTestDuration() / 60;
-
-		int durMinute = finishedTest.getTest().getTestDuration() % 60;
-
-		newHour = Math.abs(durHour - Math.abs(LocalTime.now().getHour() - originalHour));
-
-		newMinute = durMinute - Math.abs(LocalTime.now().getMinute() - originalMinute);
-
-		if (newMinute <= 0) {
-			newHour--;
-			newMinute = 60 + newMinute;
-		}
-
-		if (newHour < 0) {
-			newHour = 0;
-		}
-
-		hour = newHour;
-
-		min = newMinute;
-
-		startTimer();
+		startTimer(timerText);
 	}
 
 	public void changeCurrQuestion(CloneQuestionInExam question) {
@@ -198,8 +153,9 @@ public class autoTestController extends AbstractController {
 		answer_c_button.setSelected(false);
 		answer_d_button.setSelected(false);
 	}
-
-	public void setStudentAnswer() {
+	
+	@Override
+	protected void setStudentAnswer() {
 		RadioButton chk = (RadioButton) radioGroup.getSelectedToggle();
 		if (chk != null) {
 			switch (chk.getText()) {
@@ -227,8 +183,8 @@ public class autoTestController extends AbstractController {
 		currQuestionNum++;
 		backButton.setVisible(true);
 		radioReset();
-		changeCurrQuestion(qInTest.get(currQuestionNum));
-		if (qInTest.size() == currQuestionNum + 1)
+		changeCurrQuestion(currQuestions.get(currQuestionNum));
+		if (currQuestions.size() == currQuestionNum + 1)
 			nextButton.setVisible(false);
 		questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));
 	}
@@ -239,7 +195,7 @@ public class autoTestController extends AbstractController {
 		currQuestionNum--;
 		nextButton.setVisible(true);
 		radioReset();
-		changeCurrQuestion(qInTest.get(currQuestionNum));
+		changeCurrQuestion(currQuestions.get(currQuestionNum));
 		if (currQuestionNum - 1 <= 0)
 			backButton.setVisible(false);
 		questionNumberLabel.setText(String.valueOf(currQuestionNum + 1));
@@ -257,85 +213,25 @@ public class autoTestController extends AbstractController {
 			setStudentAnswer();
 			newHour -= startTimeHour;
 			newMinute -= startTimeMin;
-			finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
-			finishedTest.setAnswers(questionsAns);
-			try {
-				GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			alert.close();
-			studentController.testStage.close();
+			finishTest();
 			return;
 		}
 		alert.close();
 	}
-
-	public void updateTimer(int addedTime) {
-		if (hasBeenExtened)
-			return;
-		startTimeHour += addedTime / 60;
-		if ((startTimeMin + addedTime % 60) >= 60) {
-			startTimeMin = (startTimeMin + addedTime) % 60;
-			startTimeHour++;
-		} else
-			startTimeMin += addedTime % 60;
-
-		hasBeenExtened = true;
-//		timeline.stop();
-//		timeline.playFromStart();
-	}
-
-	public void startTimer() {
-
-		KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-
-				startTimeSec--;
-				boolean isSecondsZero = startTimeSec == 0;
-				boolean isMinutesZero = startTimeMin == 0;
-				boolean timeToChangeBackground = startTimeSec == 0 && startTimeMin == 0 && startTimeHour == 0;
-
-				if (isSecondsZero) {
-					if (isMinutesZero) {
-						startTimeHour--;
-						startTimeMin = 60;
-					}
-					startTimeMin--;
-					startTimeSec = 59;
-
-				}
-				if (timeToChangeBackground) {
-					timeline.stop();
-					startTimeMin = 0;
-					startTimeSec = 0;
-					startTimeHour = 0;
-					setStudentAnswer();
-					finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
-					finishedTest.setAnswers(questionsAns);
-					showMsg("Test's Time is up", "Test is over and will be send to review");
-					try {
-						GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					studentController.testStage.close();
-					return;
-
-				}
-
-				timerText.setText(
-						String.format("%d hours, %d min, %02d sec", startTimeHour, startTimeMin, startTimeSec));
-			}
-		});
-		timerText.setTextFill(Color.BLACK);
-		startTimeSec = 60;
-		startTimeMin = min - 1;
-		startTimeHour = hour;
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.getKeyFrames().add(keyframe);
-		timeline.play();
+	
+	@Override
+	protected void finishTest() {
+		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
+		finishedTest.setAnswers(questionsAns);
+		try {
+			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		showMsg("Test Finished", "Test is over and will be send to review");
+		Stage stage;
+		stage = (Stage) timerText.getScene().getWindow();
+		stage.close();
 	}
 
 }

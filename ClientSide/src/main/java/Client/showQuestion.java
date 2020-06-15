@@ -1,12 +1,14 @@
 package Client;
 
+import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneQuestion;
+import CloneEntities.CloneQuestionInExam;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class showQuestion {
+public class showQuestion extends AbstractShow{
 
     @FXML
     private TextField answer_line_1;
@@ -63,6 +65,17 @@ public class showQuestion {
 				radio_4.setSelected(true);
 				break;
 		}
+	}
+
+	@Override
+	protected <T> void setFields(T selectedItem) {
+		if(selectedItem instanceof CloneQuestion)
+			setFields((CloneQuestion)selectedItem);
+		else if (selectedItem instanceof CloneQuestionInExam)
+			setFields(((CloneQuestionInExam)selectedItem).getQuestion());
+		else
+			setFields(((CloneAnswerToQuestion)selectedItem).getQuestion());
+		
 	}
 	
 
