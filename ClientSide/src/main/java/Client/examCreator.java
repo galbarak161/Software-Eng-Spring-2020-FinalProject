@@ -9,6 +9,7 @@ import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.ExamGenerator;
 import UtilClasses.TeacherCourse;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -142,6 +143,10 @@ public class examCreator extends AbstractController {
 
 	public void setQuestionsList(ObservableList<CloneQuestion> questions) {
 		Platform.runLater(() -> {
+			if (questions.isEmpty()) {
+				popError("No questions on the course", "Please create questions for the course");
+				return;
+			}
 			this.questionsList.setItems(questions);
 			try {
 				GetDataFromDB(ClientToServerOpcodes.GetAllExamsOfTeacherInCourse,
@@ -150,6 +155,12 @@ public class examCreator extends AbstractController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		});
+	}
+
+	public void setCoursessList(ObservableList<CloneCourse> courses) {
+		Platform.runLater(() -> {
+			this.courseCombo.setItems(courses);
 		});
 	}
 

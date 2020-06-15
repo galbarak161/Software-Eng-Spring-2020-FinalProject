@@ -117,8 +117,7 @@ public class ClientService extends AbstractClient {
 			case "examCreator":
 				switch (de.getOpCodeFromServer()) {
 				case SendAllCoursesOfTeacher:
-					((examCreator) o).courseCombo
-							.setItems(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
+					((examCreator) o).setCoursessList(FXCollections.observableArrayList((List<CloneCourse>) de.getData()));
 					break;
 				case SendAllQuestionInCourse:
 					((examCreator) o)

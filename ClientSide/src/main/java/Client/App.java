@@ -32,11 +32,13 @@ public class App extends Application {
 	@Override
 	public void stop() throws IOException {
 		int status;
-		try {
-			status = ClientMain.sendMessageToServer(new DataElements(ClientToServerOpcodes.UserLogOut,ClientMain.getUser().getId()));
-		} catch (IOException e) {
-			status = -1;
-			e.printStackTrace();
+		if(ClientMain.getUser() != null) {
+			try {
+				status = ClientMain.sendMessageToServer(new DataElements(ClientToServerOpcodes.UserLogOut,ClientMain.getUser().getId()));
+			} catch (IOException e) {
+				status = -1;
+				e.printStackTrace();
+			}
 		}
 	}
 

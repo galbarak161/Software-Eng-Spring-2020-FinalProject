@@ -21,6 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 
 public class testGenerator extends AbstractController {
 
@@ -59,6 +60,12 @@ public class testGenerator extends AbstractController {
 		radioGroup = new ToggleGroup();
 		autoRadio.setToggleGroup(radioGroup);
 		manRadio.setToggleGroup(radioGroup);
+		
+		beginText.setOnKeyPressed(event -> {
+			if (event.getCode().equals(KeyCode.ENTER)) {
+				onClickedGenerate(new ActionEvent());
+			}
+		});
 	}
 	
 	public void setCourses(ObservableList<CloneCourse> courses) {

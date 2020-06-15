@@ -147,9 +147,6 @@ public class showStudentTests extends AbstractController {
 		List<CloneStudentTest> toSend = new ArrayList<>();
 		for (CloneStudentTest st : testsList.getItems())
 			toSend.add(st);
-		for (CloneStudentTest st : toSend) {
-			System.out.println(st.getTestName() + " " + st.getGrade());
-		}
 		try {
 			GetDataFromDB(ClientToServerOpcodes.TeacherUpdateGrade, toSend);
 		} catch (InterruptedException e) {

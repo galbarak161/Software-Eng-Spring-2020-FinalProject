@@ -82,8 +82,6 @@ public class requestController extends AbstractController {
 		denyButton.setVisible(false);
 		approveButton.setVisible(false);
 	}
-	
-	
 
 	void setRequest(CloneTimeExtensionRequest request) {
 		thisRequest = request;
@@ -109,22 +107,14 @@ public class requestController extends AbstractController {
 	void onClickedApprove(ActionEvent event) {
 		thisRequest.setTimeToExtenedInMinute(Integer.valueOf(timeText.getText()));
 		thisRequest.setRequestConfirmed(true);
-		try {
-			GetDataFromDB(ClientToServerOpcodes.UpdateTimeExtension, thisRequest);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		sendRespond();
 		closeWindow();
 	}
 
 	@FXML
 	void onClickedDeny(ActionEvent event) {
 		thisRequest.setRequestConfirmed(false);
-		try {
-			GetDataFromDB(ClientToServerOpcodes.UpdateTimeExtension, thisRequest);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		sendRespond();
 		closeWindow();
 	}
 
@@ -155,16 +145,13 @@ public class requestController extends AbstractController {
 		}
 		closeWindow();
 	}
-
-	@Override
-	void showMsg(String title, String content) {
-		Platform.runLater(() -> {
-			Alert info = new Alert(Alert.AlertType.INFORMATION);
-			info.setTitle(title);
-			info.setHeaderText(content);
-			info.showAndWait();
-			closeWindow();
-		});
+	
+	public void sendRespond() {
+		try {
+			GetDataFromDB(ClientToServerOpcodes.UpdateTimeExtension, thisRequest);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	void closeWindow() {
