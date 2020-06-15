@@ -9,6 +9,7 @@ import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -24,9 +25,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -65,28 +68,26 @@ public class showStudentTests extends AbstractController {
 	private CloneTest thisTest;
 
 	@FXML
-	void showTest(ActionEvent event) {
+	void showTest(ActionEvent event) throws Exception {
 		if (testsList.getSelectionModel().getSelectedItem().getDone().equals("Not Done")) {
 			popError("Error", "Cannot show an undone test");
 			return;
 		}
 		
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTest.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showStudentTest q = fxmlLoader.getController();
-					q.setFields(testsList.getSelectionModel().getSelectedItem());
-				} catch (IOException | InterruptedException e) {
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Test Review");
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			if (testsList.getSelectionModel().getSelectedItem().getTest().getType() == ExamType.Manual) {
+				Label title = new Label(testsList.getSelectionModel().getSelectedItem().getTest().getName());
+		        TextArea textArea = new TextArea();
+		        textArea.autosize();
+		        textArea.setText(testsList.getSelectionModel().getSelectedItem().getMaunalTest());
+		        VBox box = new VBox(2, title, textArea);
+		        Stage stage = new Stage();
+		        stage.setScene(new Scene(box, 400, 400));
+		        stage.showAndWait();
+		        return;
+		    }
+			newWindow(testsList, new showStudentTest(), "showStudentTest.fxml",
+					"Test Review");
 		} else
 			popError("Error", "Please choose a test");
 	}
@@ -116,6 +117,12 @@ public class showStudentTests extends AbstractController {
 		
 		testsList.getColumns().setAll(nameCol, idCol, emailCol,statusCol, gradeCol);
 		testsList.setEditable(true);
+	}
+	
+	@Override
+	protected <T> void setFields(T selectedItem) {
+		setFields((CloneTest)selectedItem, (TestStatus) ((CloneTest)selectedItem).getStatusEnum());
+		
 	}
 
 	public void setFields(CloneTest test, TestStatus s) {

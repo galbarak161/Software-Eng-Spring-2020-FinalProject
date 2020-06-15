@@ -7,7 +7,9 @@ import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
+import CloneEntities.CloneTest.TestStatus;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
@@ -70,6 +72,16 @@ public class showStudentTest extends AbstractController {
 
 		questionsTable.getColumns().setAll(questionName, answerCol, gradeCol, pointsCol);
 	}
+	
+	@Override
+	protected <T> void setFields(T selectedItem) {
+		try {
+			setFields((CloneStudentTest)selectedItem);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	public void setFields(CloneStudentTest st) throws InterruptedException {
 		TeacherCommentField.setText(st.getExamCheckNotes());
@@ -128,25 +140,10 @@ public class showStudentTest extends AbstractController {
 	}
 
 	@FXML
-	void onClickedQuestion(ActionEvent event) {
+	void onClickedQuestion(ActionEvent event) throws Exception {
 		if (questionsTable.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showQuestion q = fxmlLoader.getController();
-					q.setFields(questionsTable.getSelectionModel().getSelectedItem().getQuestion());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle(
-						"Question " + questionsTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(questionsTable, new showQuestion(), "showQuestion.fxml",
+					"Question " + questionsTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
 		}
 	}
 }

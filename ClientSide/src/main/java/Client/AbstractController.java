@@ -7,11 +7,17 @@ import java.util.TimerTask;
 import UtilClasses.DataElements;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
-public abstract class AbstractController {
+public abstract class AbstractController extends AbstractShow{
 
 	protected Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -25,6 +31,63 @@ public abstract class AbstractController {
 
 	static void msgRecieved() {
 		msgRecived = true;
+	}
+	
+	public <T, E> void newWindow(ListView<T> list, E con, String name, String title) throws Exception {
+		Platform.runLater(() -> {
+			Parent root = null;
+			try {
+				E curr;
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name));
+				root = (Parent) fxmlLoader.load();
+				curr = fxmlLoader.getController();
+				((AbstractShow) curr).setFields(list.getSelectionModel().getSelectedItem());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Stage stage = new Stage();
+			stage.setTitle(title);
+			stage.setScene(new Scene(root));
+			stage.show();
+		});
+	}
+	
+	public <T, E> void newWindow(TableView<T> list, E con, String name, String title) throws Exception {
+		Platform.runLater(() -> {
+			Parent root = null;
+			try {
+				E curr;
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name));
+				root = (Parent) fxmlLoader.load();
+				curr = fxmlLoader.getController();
+				((AbstractShow) curr).setFields(list.getSelectionModel().getSelectedItem());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Stage stage = new Stage();
+			stage.setTitle(title);
+			stage.setScene(new Scene(root));
+			stage.show();
+		});
+	}
+	
+	public <T, E> void newWindow(T item, E con, String name, String title) throws Exception {
+		Platform.runLater(() -> {
+			Parent root = null;
+			try {
+				E curr;
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name));
+				root = (Parent) fxmlLoader.load();
+				curr = fxmlLoader.getController();
+				((AbstractShow) curr).setFields(item);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Stage stage = new Stage();
+			stage.setTitle(title);
+			stage.setScene(new Scene(root));
+			stage.show();
+		});
 	}
 	
 	protected void sendRequest(ClientToServerOpcodes op, Object data) {

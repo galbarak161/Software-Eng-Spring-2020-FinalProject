@@ -69,12 +69,21 @@ public class requestController extends AbstractController {
 			}
 		});
 	}
+	
+	protected <T> void setFields(T selectedItem) {
+		if(selectedItem instanceof CloneTest)
+			setTest((CloneTest)selectedItem);
+		else
+			setRequest((CloneTimeExtensionRequest)selectedItem);
+	}
 
 	void setTest(CloneTest test) {
 		thisTest = test;
 		denyButton.setVisible(false);
 		approveButton.setVisible(false);
 	}
+	
+	
 
 	void setRequest(CloneTimeExtensionRequest request) {
 		thisRequest = request;
@@ -105,9 +114,7 @@ public class requestController extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Stage stage;
-		stage = (Stage) timeText.getScene().getWindow();
-		stage.close();
+		closeWindow();
 	}
 
 	@FXML
@@ -118,9 +125,7 @@ public class requestController extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Stage stage;
-		stage = (Stage) timeText.getScene().getWindow();
-		stage.close();
+		closeWindow();
 	}
 
 	@FXML
@@ -148,9 +153,7 @@ public class requestController extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Stage stage;
-		stage = (Stage) timeText.getScene().getWindow();
-		stage.close();
+		closeWindow();
 	}
 
 	@Override
@@ -160,10 +163,14 @@ public class requestController extends AbstractController {
 			info.setTitle(title);
 			info.setHeaderText(content);
 			info.showAndWait();
-			Stage stage;
-			stage = (Stage) timeText.getScene().getWindow();
-			stage.close();
+			closeWindow();
 		});
+	}
+	
+	void closeWindow() {
+		Stage stage;
+		stage = (Stage) timeText.getScene().getWindow();
+		stage.close();
 	}
 
 }

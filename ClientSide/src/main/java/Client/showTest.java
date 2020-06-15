@@ -87,6 +87,12 @@ public class showTest extends AbstractController {
 		AutomatRadio.setToggleGroup(radioGroup);
 		ManualRadio.setToggleGroup(radioGroup);
 	}
+	
+	@Override
+	protected <T> void setFields(T selectedItem) {
+		setFields((CloneTest)selectedItem);
+		
+	}
 
 	void setFields(CloneTest test) {
 		this.DateLabel.setText(test.getTestDate().toString());
@@ -120,47 +126,20 @@ public class showTest extends AbstractController {
 	}
 
 	@FXML
-	void OnClickedQuestion(ActionEvent event) {
+	void OnClickedQuestion(ActionEvent event) throws Exception {
 		if (QuestionTable.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showQuestion q = fxmlLoader.getController();
-					q.setFields(QuestionTable.getSelectionModel().getSelectedItem().getQuestion());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Question");
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(QuestionTable, new showQuestion(), "showQuestion.fxml",
+					"Question " + QuestionTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
 		}
 
 	}
 	
 
     @FXML
-    void onClickedResults(ActionEvent event) {
+    void onClickedResults(ActionEvent event) throws Exception {
 			if (thisTest.getStatusEnum() == TestStatus.Done) {
-				Platform.runLater(() -> {
-					Parent root = null;
-					try {
-						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showStudentTests.fxml"));
-						root = (Parent) fxmlLoader.load();
-						showStudentTests q = fxmlLoader.getController();
-						q.setFields(thisTest, thisTest.getStatusEnum());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					Stage stage = new Stage();
-					stage.setTitle("Students' tests of " + thisTest.getName() + " exam");
-					stage.setScene(new Scene(root));
-					stage.show();
-				});
+				newWindow(thisTest, new showStudentTests(), "showStudentTests.fxml",
+						"Students' tests of " + thisTest.getName() + " exam");
 			} else {
 				popError("Error", "You can watch students' tests only when they're Done");
 				return;

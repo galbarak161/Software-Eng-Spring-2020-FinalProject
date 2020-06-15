@@ -27,7 +27,6 @@ public class ClientMain {
 	public static void addController(String name, Object con) {
 		if (!ClientService.controllers.containsKey(name)) {
 			ClientService.controllers.put(name,con);
-			System.out.println(name);
 		}
 			
 	}

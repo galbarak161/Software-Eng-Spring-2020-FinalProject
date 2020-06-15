@@ -97,39 +97,39 @@ public class examCreator extends AbstractController {
 		});
 		insertedQuestions.getColumns().setAll(questionNameCol, questionGradeCol);
 		insertedQuestions.setEditable(true);
-		
+
 		nameText.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.TAB)){
-            	durText.requestFocus();
-            }
-            if(event.getCode().equals(KeyCode.ENTER)){
-            	OnClickSubmit(new ActionEvent());
-            }
-        });
-		
+			if (event.getCode().equals(KeyCode.TAB)) {
+				durText.requestFocus();
+			}
+			if (event.getCode().equals(KeyCode.ENTER)) {
+				OnClickSubmit(new ActionEvent());
+			}
+		});
+
 		durText.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.TAB)){
-            	teachersText.requestFocus();
-            }
-            if(event.getCode().equals(KeyCode.ENTER)){
-            	OnClickSubmit(new ActionEvent());
-            }
-        });
-		
+			if (event.getCode().equals(KeyCode.TAB)) {
+				teachersText.requestFocus();
+			}
+			if (event.getCode().equals(KeyCode.ENTER)) {
+				OnClickSubmit(new ActionEvent());
+			}
+		});
+
 		teachersText.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.TAB)){
-            	studentsComment.requestFocus();
-            }
-            if(event.getCode().equals(KeyCode.ENTER)){
-            	OnClickSubmit(new ActionEvent());
-            }
-        });
-		
+			if (event.getCode().equals(KeyCode.TAB)) {
+				studentsComment.requestFocus();
+			}
+			if (event.getCode().equals(KeyCode.ENTER)) {
+				OnClickSubmit(new ActionEvent());
+			}
+		});
+
 		studentsComment.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.ENTER)){
-            	OnClickSubmit(new ActionEvent());
-            }
-        });
+			if (event.getCode().equals(KeyCode.ENTER)) {
+				OnClickSubmit(new ActionEvent());
+			}
+		});
 
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAllCoursesOfTeacher, ClientMain.getUser());
@@ -188,7 +188,7 @@ public class examCreator extends AbstractController {
 	void onClickedExam(ActionEvent event) {
 		if (examCombo.getValue() != null) {
 			CloneExam exam = examCombo.getValue();
-			//nameText.setText(exam.getExamName());
+			// nameText.setText(exam.getExamName());
 			durText.setText(String.valueOf(exam.getDuration()));
 			studentsComment.setText(exam.getStudentComments());
 			teachersText.setText(exam.getTeacherComments());
@@ -248,7 +248,7 @@ public class examCreator extends AbstractController {
 			columnData.add(Integer.valueOf(questionGradeCol.getCellObservableValue(item).getValue()));
 			qToSend.add(item.getQuestion());
 		}
-		
+
 		CloneExam newExam = new CloneExam(Integer.valueOf(durText.getText()), nameText.getText(),
 				teachersText.getText(), studentsComment.getText(), courseCombo.getValue().getId(),
 				courseCombo.getValue().getCourseName(), ClientMain.getUser().getId(), qToSend.size());
@@ -282,24 +282,10 @@ public class examCreator extends AbstractController {
 	}
 
 	@FXML
-	public void OnClickedShowQuestion(ActionEvent event) {
+	public void OnClickedShowQuestion(ActionEvent event) throws Exception {
 		if (questionsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showQuestion q = fxmlLoader.getController();
-					q.setFields(questionsList.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(questionsList, new showQuestion(), "showQuestion.fxml",
+					"Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
 		}
 	}
 

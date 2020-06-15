@@ -3,10 +3,18 @@ package Client;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -26,9 +34,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -37,7 +48,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 
-public class testEntracnce extends AbstractController {
+public class testEntracnce extends AbstractTest {
 
 	@FXML
 	private Button startButton;
@@ -74,62 +85,8 @@ public class testEntracnce extends AbstractController {
 
 	@FXML
 	private AnchorPane mainAnchor;
-
-	static CloneStudentTest thisTest;
 	
-	static List<CloneQuestionInExam> currQuestions;
-
-	private Timeline timeline = new Timeline();
-	private int min = 1, hour = 2;
-	private int startTimeSec, startTimeMin, startTimeHour;
-	public BorderPane timeBorderPane;
-
-	public void startTimer() {
-		KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-
-				startTimeSec--;
-				boolean isSecondsZero = startTimeSec == 0;
-				boolean isMinutesZero = startTimeMin == 0;
-				boolean timeToChangeBackground = startTimeSec == 0 && startTimeMin == 0 && startTimeHour == 0;
-
-				if (isSecondsZero) {
-					if (isMinutesZero) {
-						startTimeHour--;
-						startTimeMin = 60;
-					}
-					startTimeMin--;
-					startTimeSec = 59;
-
-				}
-				if (timeToChangeBackground) {
-					timeline.stop();
-					startTimeMin = 0;
-					startTimeSec = 0;
-					startTimeHour = 0;
-					timerText.setTextFill(Color.RED);
-
-				}
-
-				timerText
-						.setText(String.format("%d hours,%d min, %02d sec", startTimeHour, startTimeMin, startTimeSec));
-			}
-		});
-		timerText.setTextFill(Color.BLACK);
-		startTimeSec = 60;
-		startTimeMin = min - 1;
-		startTimeHour = hour;
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.getKeyFrames().add(keyframe);
-//		timeline.setOnFinished((e) -> {
-//			System.out.println("Sup");
-//		});
-		timeline.playFromStart();
-		timeline.play();
-
-	}
-
+	private String uploadedAnswer = null;
 	/**
 	 * After user fills in the test code, we send it to the server via
 	 * "StudentStartTest" object The server checks whether the code it valid and the
@@ -152,8 +109,9 @@ public class testEntracnce extends AbstractController {
 	}
 
 	void checkTestType(List<Object> test) {
-		thisTest = (CloneStudentTest) test.get(0);
-		if(thisTest.getStatus() != StudentTestStatus.Ongoing) {
+		finishedTest = (CloneStudentTest) test.get(0);
+		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
+		if(finishedTest.getStatus() != StudentTestStatus.Ongoing) {
 			popError("Error", "Test is over");
 			return;
 		}	
@@ -161,7 +119,7 @@ public class testEntracnce extends AbstractController {
 		codeText.setVisible(false);
 		startButton.setVisible(false);
 
-		if (thisTest.getTest().getType() == ExamType.Automated) {
+		if (finishedTest.getTest().getType() == ExamType.Automated) {
 			IDText.setVisible(true);
 			IDLabel.setVisible(true);
 			enterTestButton.setVisible(true);
@@ -172,7 +130,6 @@ public class testEntracnce extends AbstractController {
 			submitButton.setVisible(true);
 			fileField.setVisible(true);
 		}
-		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
 
 	}
 
@@ -194,16 +151,28 @@ public class testEntracnce extends AbstractController {
 	@FXML
 	void onClickedDownload(ActionEvent event) throws IOException, InterruptedException {
 		createWord();
-		startTimer();
+		startTimer(timerText);
+		sendRequest(ClientToServerOpcodes.GetAnswerToTimeExtensionRequest, finishedTest.getTest().getId());
 	}
 
 	@FXML
 	void onClickedSubmit(ActionEvent event) {
-
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Test Submission");
+		alert.setContentText("Are you sure you want to submit the test?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get().getButtonData() == ButtonData.OK_DONE) {
+			timeline.stop();
+			newHour -= startTimeHour;
+			newMinute -= startTimeMin;
+			finishTest();
+			return;
+		}
+		alert.close();
 	}
 
 	@FXML
-	void onClickedUpload(ActionEvent event) {
+	void onClickedUpload(ActionEvent event) throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select Test File");
 		// fileChooser.setInitialDirectory(new File("X:\\testdir\\two"));
@@ -211,14 +180,35 @@ public class testEntracnce extends AbstractController {
 		Stage stage = new Stage();
 		List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
 
-		if (selectedFiles != null)
+		if (selectedFiles != null) {
+			uploadedAnswer = new String(Files.readAllBytes(Paths.get(selectedFiles.get(0).toURI())), StandardCharsets.UTF_8);
 			fileField.setText(selectedFiles.get(0).getPath());
+		}
+			
+	}
+	
+	@Override
+	protected void finishTest() {
+		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
+		if(uploadedAnswer == null)
+			uploadedAnswer = "No uploaded file";
+		finishedTest.setMaunalTest(uploadedAnswer);
+		showMsg("Test Finished", "Test is over and will be send to review");
+		try {
+			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		Stage stage;
+		stage = (Stage) timerText.getScene().getWindow();
+		stage.close();
 	}
 
 	public void createWord() throws IOException {
-		String line = "Sup";
+
 		// Blank Document
 		XWPFDocument document = new XWPFDocument();
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Test File");
 		// fileChooser.setInitialDirectory(new File("X:\\testdir\\two"));
@@ -231,13 +221,40 @@ public class testEntracnce extends AbstractController {
 			FileOutputStream out = new FileOutputStream(selectedFiles);
 			// create Paragraph
 			XWPFParagraph paragraph = document.createParagraph();
+			paragraph.setAlignment(ParagraphAlignment.LEFT);
 			XWPFRun run = paragraph.createRun();
-			run.setText("VK Number (Parameter): " + line + " here you type your text...\n");
+			/////////////////////////// make title bigger /////////////////////////////
+			run.setText(finishedTest.getTestName());
+			int i = 1;
+			for (CloneQuestionInExam q: currQuestions) {
+				paragraph = document.createParagraph();
+				paragraph.setAlignment(ParagraphAlignment.LEFT);
+				run = paragraph.createRun();
+				run.setText("Question " + String.valueOf(i) + ": " + q.getQuestion().getQuestionText());
+				run.addBreak();
+				run = paragraph.createRun();
+				run.setText("a. " +  q.getQuestion().getAnswer_1());
+				run.addBreak();
+				run = paragraph.createRun();
+				run.setText("b. " +  q.getQuestion().getAnswer_2());
+				run.addBreak();
+				run = paragraph.createRun();
+				run.setText("c. " +  q.getQuestion().getAnswer_3());
+				run.addBreak();
+				run = paragraph.createRun();
+				run.setText("d. " +  q.getQuestion().getAnswer_4());
+				run.addBreak();
+				run = paragraph.createRun();
+				run.setText("Answer: _____________________");
+				run.addBreak();
+				run.addBreak();
+				i++;
+			}
+
 			document.write(out);
 
 			// Close document
 			out.close();
-			System.out.println("createdWord" + "_" + line + ".docx" + " written successfully");
 		}
 	}
 

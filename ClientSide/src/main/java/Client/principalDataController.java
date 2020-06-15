@@ -50,82 +50,29 @@ public class principalDataController extends AbstractController {
 		}
 	}
 
-	/*
-	 * public <T> void DataDisplay(String fxml, String title) { Platform.runLater(()
-	 * -> { Parent root = null; try { FXMLLoader fxmlLoader = new
-	 * FXMLLoader(getClass().getResource(fxml+".fxml")); root = (Parent)
-	 * fxmlLoader.load(); T q = fxmlLoader.getController(); ((T)
-	 * q).setFields(questionsList.getSelectionModel().getSelectedItem()); } catch
-	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * Stage stage = new Stage(); stage.setTitle(title); stage.setScene(new
-	 * Scene(root)); stage.show(); }); }
-	 */
-
 	@FXML
-	void onClickedQuestion(ActionEvent event) {
+	void onClickedQuestion(ActionEvent event) throws Exception {
 		if (questionsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showQuestion.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showQuestion q = fxmlLoader.getController();
-					q.setFields(questionsList.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(questionsList, new showQuestion(), "showQuestion.fxml",
+					"Question " + questionsList.getSelectionModel().getSelectedItem().getSubject());
 		}
 
 	}
 
 	@FXML
-	void OnClickedExam(ActionEvent event) {
+	void OnClickedExam(ActionEvent event) throws Exception {
 		if (examsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showExam.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showExam e = fxmlLoader.getController();
-					e.setFields(examsList.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle("Exam " + examsList.getSelectionModel().getSelectedItem().getExamName());
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(examsList, new showExam(), "showExam.fxml",
+					"Exam " + examsList.getSelectionModel().getSelectedItem().getExamName());
 		}
 	}
 
 	@FXML
-	void OnClickedTest(ActionEvent event) {
+	void OnClickedTest(ActionEvent event) throws Exception {
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
-			Platform.runLater(() -> {
-				Parent root = null;
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showTest.fxml"));
-					root = (Parent) fxmlLoader.load();
-					showTest e = fxmlLoader.getController();
-					e.setFields(testsList.getSelectionModel().getSelectedItem());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Stage stage = new Stage();
-				stage.setTitle(
-						"Test: " + testsList.getSelectionModel().getSelectedItem().getExamToExecute().getExamName());
-				stage.setScene(new Scene(root));
-				stage.show();
-			});
+			newWindow(testsList, new showTest(), "showTest.fxml",
+					"Test " + testsList.getSelectionModel().getSelectedItem().getName());
+
 		}
 
 	}
