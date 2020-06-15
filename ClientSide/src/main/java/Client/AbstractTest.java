@@ -15,14 +15,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class AbstractTest extends AbstractController {
-	
+
 	protected Timeline timeline = new Timeline();
 	protected int startTimeSec, startTimeMin, startTimeHour, newHour, newMinute;
 	protected boolean hasBeenExtened = false;
 	static CloneStudentTest finishedTest;
 	static List<CloneQuestionInExam> currQuestions;
-	
-	
+
 	public void startTimer(Label timerText) {
 		int originalHour = finishedTest.getTest().getTestTime().getHour();
 
@@ -87,7 +86,7 @@ public class AbstractTest extends AbstractController {
 		timeline.getKeyFrames().add(keyframe);
 		timeline.play();
 	}
-	
+
 	public void updateTimer(int addedTime) {
 		if (hasBeenExtened)
 			return;
@@ -97,15 +96,15 @@ public class AbstractTest extends AbstractController {
 			startTimeHour++;
 		} else
 			startTimeMin += addedTime % 60;
-
+		showMsg("Time extension approved", addedTime + " minutes has been added to the test");
 		hasBeenExtened = true;
 	}
-	
+
 	protected void setStudentAnswer() {
-		
+
 	}
-	
+
 	protected void finishTest() {
-		
+
 	}
 }

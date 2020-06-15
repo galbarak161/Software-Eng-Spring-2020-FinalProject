@@ -7,7 +7,7 @@ import CloneEntities.*;
 public class ClientMain {
 
 	private static ClientService clientS;
-	private static CloneUser current_user;
+	private static CloneUser current_user = null;
 	
 
 	public ClientMain(ClientService client) {
