@@ -72,13 +72,21 @@ public class principalController extends AbstractController{
 
 		                if (item == null)
 		                    return;
-
-						if (item.getStatus() == RequestStatus.Onging)
-							setStyle("-fx-background-color: #f8fc03;");
-						else if (item.getStatus() == RequestStatus.Denied)
-							setStyle("-fx-background-color: #ff0000;");
-						else
-							setStyle("-fx-background-color: #03fc35;");
+		                
+		                switch (item.getStatus()) {
+		                case Ongoing:
+		                	setStyle("-fx-background-color: #f8fc03;");
+		                	break;
+		                case Denied:
+		                	setStyle("-fx-background-color: #ff0000;");
+		                	break;
+		                case Confirmed:
+		                	setStyle("-fx-background-color: #03fc35;");
+		                	break;
+		                default:
+		                	break;
+		                	
+		                }
 		            }
 		        };
 		    }
@@ -111,6 +119,8 @@ public class principalController extends AbstractController{
     }
     
 	void updateTable(ObservableList<CloneTimeExtensionRequest> requests) {
+		for(CloneTimeExtensionRequest c : requests)
+			System.out.println(c.getStatus().toString());
 		int keepSelection = requestsList.getSelectionModel().getSelectedIndex();
 		requestsList.setItems(requests);
 		requestsList.getSelectionModel().select(keepSelection);

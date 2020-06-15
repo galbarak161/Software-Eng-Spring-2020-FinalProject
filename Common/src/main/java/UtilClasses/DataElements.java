@@ -99,7 +99,7 @@ public class DataElements implements Serializable {
 		SendAllTestRelatedToTeacher, SendAllStudntTestRelatedToTest, SendAllExamsOfTeacher,
 		SendAllExamsOfTeacherInCourse, SendStudentTestRelatedToStudentInExam, SendAllQuestionInExamRelatedToExam,
 		SendAnswersToExamOfStudentTest , UserLoggedIn, UserLoggedOut, CreateNewQuestionResult, CreateNewExamResult, CreateNewTestResult,
-		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, StudentStartsTestResult, StudentFinishedTestResult, TeacherUpdateGradeResult, Error;
+		CreateNewTimeExtensionRequestResult, UpdateTimeExtensionRequest, SendTimeExtensionResult, StudentStartsTestResult, StudentFinishedTestResult, TeacherUpdateGradeResult, Error;
 	}
 
 	private ClientToServerOpcodes opcodeFromClient;

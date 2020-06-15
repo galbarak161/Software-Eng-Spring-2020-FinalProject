@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import CloneEntities.*;
 import OCSF.AbstractClient;
 import UtilClasses.*;
+import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.DataElements.ServerToClientOpcodes;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
@@ -60,8 +61,10 @@ public class ClientService extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		DataElements de = (DataElements) msg;
 		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
+		Object o = null;
+		
 		String currControlName = (String) controllers.get("curr");
-		Object o = controllers.get(currControlName);
+		o = controllers.get(currControlName);
 
 		if (o == null)
 			return;
@@ -92,7 +95,6 @@ public class ClientService extends AbstractClient {
 				try {
 					App.changeStage("mainController", "High School Test System");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -132,9 +134,7 @@ public class ClientService extends AbstractClient {
 				case SendAllQuestionInExamRelatedToExam:
 					((examCreator) o).addQuestionsInExam(
 							FXCollections.observableArrayList((List<CloneQuestionInExam>) de.getData()));
-
 					break;
-
 				}
 				break;
 
@@ -234,7 +234,7 @@ public class ClientService extends AbstractClient {
 			case "requestController":
 				switch (de.getOpCodeFromServer()) {
 				case CreateNewTimeExtensionRequestResult:
-					((showStudentTests) o).showMsg("Success", "Request has been successfully sent to Pricipal!");
+					((requestController) o).showMsg("Success", "Request has been successfully sent to Pricipal!");
 					break;
 				}
 				break;
@@ -253,6 +253,9 @@ public class ClientService extends AbstractClient {
 					((autoTestController) o).showMsg("Test Successful Submission",
 							"Test has been successfully submitted!");
 					break;
+				case SendTimeExtensionResult:
+					if((int)de.getData() != -1)
+						((autoTestController) o).updateTimer((int)de.getData());
 				}
 				break;
 			}
