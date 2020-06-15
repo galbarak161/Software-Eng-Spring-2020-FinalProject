@@ -21,14 +21,14 @@ public class CloneTimeExtensionRequest implements Serializable{
 	
 	private RequestStatus status;
 
-	public CloneTimeExtensionRequest(int id, String body, int timeToExtenedInMinute, CloneTest test) {
+	public CloneTimeExtensionRequest(int id, String body, int timeToExtenedInMinute, CloneTest test , RequestStatus status) {
 		super();
 		this.id = id;
 		this.body = body;
 		this.timeToExtenedInMinute = timeToExtenedInMinute;
 		this.test = test;
 		this.isRequestConfirmed = false;
-		this.status = RequestStatus.Onging;
+		this.status = status;
 	}
 
 	public CloneTimeExtensionRequest(String body, int timeToExtenedInMinute, CloneTest test) {

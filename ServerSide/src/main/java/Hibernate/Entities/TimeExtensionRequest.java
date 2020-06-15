@@ -41,7 +41,7 @@ public class TimeExtensionRequest {
 
 	public CloneTimeExtensionRequest createClone() {
 		CloneTimeExtensionRequest clone = new CloneTimeExtensionRequest(id, body, timeToExtenedInMinute,
-				getTest().createClone());
+				getTest().createClone() , status);
 		return clone;
 	}
 
