@@ -428,55 +428,7 @@ public class ServerOperations {
 		return tests;
 	}
 
-	/**
-	 * handleCreateNewTest(CloneTest newCloneTest)
-	 * 
-	 * creates new Test based on CloneTest
-	 * 
-	 * @param newCloneTest a Clone exam entity that has all exam details.
-	 * @return null if information is not complete , otherwise it updates the DB
-	 *         with new test
-	 * @throws Exception
-	 */
-	public CloneTest handleCreateNewTest(CloneTest newCloneTest) throws Exception {
-		Teacher t = (Teacher) getUserByCloneId(newCloneTest.getTeacherId());
-		Exam e = getExmaByCloneId(newCloneTest.getExamToExecute().getId());
-
-		if (t == null || e == null)
-			return null;
-
-		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
-				new TestStatistics());
-
-		List<Test> tests = HibernateMain.getDataFromDB(Test.class);
-		Boolean flag = true;
-
-		while (flag) {
-			flag = false;
-			for (int i = 0; i < tests.size(); i++) {
-				if (tests.get(i).getExecutionCode() == newTest.getExecutionCode()) {
-					flag = true;
-					newTest.setExecutionCode(newTest.TestCodeGenerator());
-				}
-			}
-		}
-
-		HibernateMain.insertDataToDB(newTest);
-
-		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
-				+ newTest.getExecutionCode());
-
-		Course course = getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
-
-		List<Student> students = course.getStudents();
-		for (Student student : students) {
-			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
-			mailer.sendMessage(student.getEmailAddress(), MessageType.NewTest);
-		}
-
-		return newTest.createClone();
-	}
-
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////// Question
@@ -657,7 +609,7 @@ public class ServerOperations {
 	 * @return null if not found otherwise it return Course object
 	 * @throws Exception
 	 */
-	private Course getCourseByCloneId(int courseId) throws Exception {
+	public Course getCourseByCloneId(int courseId) throws Exception {
 		List<Course> listFromDB = null;
 		listFromDB = HibernateMain.getDataFromDB(Course.class);
 		for (Course course : listFromDB) {

@@ -29,10 +29,10 @@ public class CloneStudentTest implements Serializable {
 	private LocalTime startTime;
 
 	private int actualTestDurationInMinutes;
-	
-	private String maunalTest;
 
-	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int grade, int actualTestDurationInMinutes, String examCheckNotes, StudentTestStatus status) {
+	private String copyOfManualTest;
+	
+	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int grade, int actualTestDurationInMinutes, String examCheckNotes, StudentTestStatus status, String copyOfManualTest) {
 		this.id = id;
 		this.student = student;
 		this.test = test;
@@ -41,15 +41,16 @@ public class CloneStudentTest implements Serializable {
 		this.actualTestDurationInMinutes = actualTestDurationInMinutes;
 		this.examCheckNotes = examCheckNotes;
 		this.status = status;
+		this.copyOfManualTest = copyOfManualTest;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
 	}
 	
 	public String getMaunalTest() {
-		return maunalTest;
+		return copyOfManualTest;
 	}
 
 	public void setMaunalTest(String maunalTest) {
-		this.maunalTest = maunalTest;
+		this.copyOfManualTest = maunalTest;
 	}
 
 	public int getId() {

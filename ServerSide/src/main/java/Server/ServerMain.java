@@ -20,7 +20,7 @@ public class ServerMain extends AbstractServer {
 	private ServerOperations serverHandler = null;
 	private UserController userController = null;
 	private DoTestController doTestController = null;
-	
+
 	private static Timer timer;
 
 	public ServerMain(int port) {
@@ -28,7 +28,7 @@ public class ServerMain extends AbstractServer {
 		serverHandler = ServerOperations.getInstance();
 		userController = new UserController();
 		doTestController = new DoTestController();
-		
+
 		timer = new Timer();
 		numberOfConnectedClients = 0;
 	}
@@ -194,7 +194,7 @@ public class ServerMain extends AbstractServer {
 				de.setData(dataToClient);
 				break;
 			case CreateNewTest:
-				dataToClient = serverHandler.handleCreateNewTest((CloneTest) de.getData());
+				dataToClient = doTestController.handleCreateNewTest((CloneTest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTestResult);
 				de.setData(dataToClient);
 				break;
@@ -204,9 +204,10 @@ public class ServerMain extends AbstractServer {
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.CreateNewTimeExtensionRequestResult);
 				de.setData(dataToClient);
 				break;
-				
+
 			case UpdateTimeExtension:
-				dataToClient = doTestController.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
+				dataToClient = doTestController
+						.handleUpdateTimeExtensionRequest((CloneTimeExtensionRequest) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.UpdateTimeExtensionRequest);
 				de.setData(dataToClient);
 				break;

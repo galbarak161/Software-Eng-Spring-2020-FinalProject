@@ -22,14 +22,11 @@ public class TestStatistics {
 	@Column(name = "numberOfStudentsThatFinishedInTime")
 	private int numberOfStudentsThatFinishedInTime;
 
-	@Column(name = "averageGrade")
-	private double averageGrade;
-
 	public TestStatistics() {
 	}
 
 	public CloneTestStatistics createClone() {
-		CloneTestStatistics clone = new CloneTestStatistics(numberOfStudentsInTest, numberOfStudentsThatFinishedInTime, averageGrade);
+		CloneTestStatistics clone = new CloneTestStatistics(numberOfStudentsInTest, numberOfStudentsThatFinishedInTime);
 		return clone;
 	}
 
@@ -59,13 +56,5 @@ public class TestStatistics {
 
 	public void increaseNumberOfStudentsThatFinishedInTime() {
 		this.numberOfStudentsThatFinishedInTime++;
-	}
-
-	public double getAverageGrade() {
-		return averageGrade;
-	}
-
-	public void setAverageGrade(int totalGrades) {
-		this.averageGrade = totalGrades / numberOfStudentsInTest;
 	}
 }
