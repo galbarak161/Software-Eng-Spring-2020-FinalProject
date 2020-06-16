@@ -90,7 +90,7 @@ public class showStudentTests extends AbstractController {
 		        TextArea textArea = new TextArea();
 		        textArea.autosize();
 		        textArea.setText(extractedText);
-		        VBox box = new VBox(1, title, textArea);
+		        VBox box = new VBox(1, textArea);
 		        Stage stage = new Stage();
 		        stage.setTitle("Test: " + testsList.getSelectionModel().getSelectedItem().getTest().getName());
 		        stage.setScene(new Scene(box, 600, 600));
