@@ -6,6 +6,7 @@ import java.util.List;
 
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
@@ -126,43 +127,52 @@ public class DoTestController {
 			if (st.getTest().getStatus() == TestStatus.Ongoing)
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
 
-			CloneAnswerToQuestion[] cloneAnswersArr = studentTest.getAnswers();
-			for (int i = 0; i < e.getQuestionInExam().size(); i++) {
-				AnswerToQuestion answer = new AnswerToQuestion(cloneAnswersArr[i].getStudentAnswer(), st,
-						cloneAnswersArr[i].getQuestion().getQuestionCode(), i);
-				HibernateMain.insertDataToDB(answer);
-			}
-
-			// Calculate grade
-			List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
-			List<AnswerToQuestion> answers = st.getAnswers();
-
-			if (questions.size() != answers.size())
-				throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
-
 			int grade = 0;
-			for (int i = 0; i < questions.size(); i++) {
-				QuestionInExam DBQestion = null;
-				List<QuestionInExam> DBquestions = serverHandler
-						.getExmaByCloneId(st.getTest().getExamToExecute().getId()).getQuestionInExam();
-				for (QuestionInExam questionInDB : DBquestions) {
-					if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
-						DBQestion = questionInDB;
+			
+			// Calculate grade for automatic test
+			if (st.getTest().getType() == ExamType.Automated) {
+				CloneAnswerToQuestion[] cloneAnswersArr = studentTest.getAnswers();
+				for (int i = 0; i < e.getQuestionInExam().size(); i++) {
+					AnswerToQuestion answer = new AnswerToQuestion(cloneAnswersArr[i].getStudentAnswer(), st,
+							cloneAnswersArr[i].getQuestion().getQuestionCode(), i);
+					HibernateMain.insertDataToDB(answer);
+				}
+			
+				List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
+				List<AnswerToQuestion> answers = st.getAnswers();
+
+				if (questions.size() != answers.size())
+					throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
+
+				
+				for (int i = 0; i < questions.size(); i++) {
+					QuestionInExam DBQestion = null;
+					List<QuestionInExam> DBquestions = serverHandler
+							.getExmaByCloneId(st.getTest().getExamToExecute().getId()).getQuestionInExam();
+					for (QuestionInExam questionInDB : DBquestions) {
+						if (answers.get(i).getQuestionCode() == questionInDB.getQuestion().getQuestionCode()) {
+							DBQestion = questionInDB;
+						}
 					}
-				}
 
-				if (DBQestion == null) {
-					throw new Exception("no QuestionCode has been found");
-				}
-				AnswerToQuestion answer = answers.get(i);
+					if (DBQestion == null) {
+						throw new Exception("no QuestionCode has been found");
+					}
+					AnswerToQuestion answer = answers.get(i);
 
-				if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer())
-					grade += questions.get(i).getPointsForQuestion();
+					if (answer.getStudentAnswer() == DBQestion.getQuestion().getCorrectAnswer())
+						grade += questions.get(i).getPointsForQuestion();
+				}
+			}
+			
+			// Keep copy of manual test
+			else {
+				st.setCopyOfManualTest(studentTest.getMaunalTest());
 			}
 
-			st.setGrade(grade);
-
-			st.setCopyOfManualTest(studentTest.getMaunalTest());
+			
+			// Update student grade - for manual test the grade will be 0
+			st.setGrade(grade);	
 
 			HibernateMain.UpdateDataInDB(st);
 
