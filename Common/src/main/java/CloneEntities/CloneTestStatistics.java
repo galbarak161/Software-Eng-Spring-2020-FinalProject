@@ -10,13 +10,9 @@ public class CloneTestStatistics implements Serializable {
 
 	private int numberOfStudentsThatFinishedInTime;
 
-	private double averageGrade;
-
-	public CloneTestStatistics(int numberOfStudentsInTest, int numberOfStudentsThatFinishedInTime,
-			double averageGrade) {
+	public CloneTestStatistics(int numberOfStudentsInTest, int numberOfStudentsThatFinishedInTime) {
 		this.numberOfStudentsInTest = numberOfStudentsInTest;
 		this.numberOfStudentsThatFinishedInTime = numberOfStudentsThatFinishedInTime;
-		this.averageGrade = averageGrade;
 	}
 
 	public int getNumberOfStudentsInTest() {
@@ -25,9 +21,5 @@ public class CloneTestStatistics implements Serializable {
 
 	public int getNumberOfStudentsThatFinishedInTime() {
 		return numberOfStudentsThatFinishedInTime;
-	}
-
-	public double getAverageGrade() {
-		return averageGrade;
 	}
 }

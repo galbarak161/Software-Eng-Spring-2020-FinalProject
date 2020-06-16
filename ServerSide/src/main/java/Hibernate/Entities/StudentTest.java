@@ -44,6 +44,9 @@ public class StudentTest {
 	@Column(name = "status")
 	private StudentTestStatus status;
 
+	@Column(name = "copyOfManualTest")
+	private String copyOfManualTest;
+	
 	public StudentTest() {
 		answers = new ArrayList<AnswerToQuestion>();
 	}
@@ -56,12 +59,13 @@ public class StudentTest {
 		this.actualTestDurationInMinutes = -1;
 		setTest(test);
 		setStudent(student);
+		this.copyOfManualTest = null;
 		answers = new ArrayList<AnswerToQuestion>();
 	}
 
 	public CloneStudentTest createClone() {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
-				actualTestDurationInMinutes, examCheckNotes, status);
+				actualTestDurationInMinutes, examCheckNotes, status, copyOfManualTest);
 		return clone;
 	}
 
@@ -130,4 +134,14 @@ public class StudentTest {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+
+	public String getCopyOfManualTest() {
+		return copyOfManualTest;
+	}
+
+	public void setCopyOfManualTest(String copyOfManualTest) {
+		this.copyOfManualTest = copyOfManualTest;
+	}
+	
+	
 }

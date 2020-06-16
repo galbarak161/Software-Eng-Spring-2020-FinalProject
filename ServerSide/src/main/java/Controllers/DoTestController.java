@@ -4,22 +4,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import CloneEntities.CloneAnswerToQuestion;
-import CloneEntities.CloneQuestionInExam;
-import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTimeExtensionRequest;
+import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.TestStatus;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
-import Hibernate.Entities.AnswerToQuestion;
-import Hibernate.Entities.Exam;
-import Hibernate.Entities.Principal;
-import Hibernate.Entities.QuestionInExam;
-import Hibernate.Entities.StudentTest;
-import Hibernate.Entities.Test;
-import Hibernate.Entities.TestStatistics;
-import Hibernate.Entities.TimeExtensionRequest;
+import Hibernate.Entities.*;
 import Server.SendEmail.MessageType;
 import UtilClasses.StudentStartTest;
 
@@ -29,6 +19,55 @@ public class DoTestController {
 
 	public DoTestController() {
 		serverHandler = ServerOperations.getInstance();
+	}
+
+	/**
+	 * handleCreateNewTest(CloneTest newCloneTest)
+	 * 
+	 * creates new Test based on CloneTest
+	 * 
+	 * @param newCloneTest a Clone exam entity that has all exam details.
+	 * @return null if information is not complete , otherwise it updates the DB
+	 *         with new test
+	 * @throws Exception
+	 */
+	public CloneTest handleCreateNewTest(CloneTest newCloneTest) throws Exception {
+		Teacher t = (Teacher) serverHandler.getUserByCloneId(newCloneTest.getTeacherId());
+		Exam e = serverHandler.getExmaByCloneId(newCloneTest.getExamToExecute().getId());
+
+		if (t == null || e == null)
+			return null;
+
+		Test newTest = new Test(newCloneTest.getTestDate(), newCloneTest.getTestTime(), newCloneTest.getType(), t, e,
+				new TestStatistics());
+
+		List<Test> tests = HibernateMain.getDataFromDB(Test.class);
+		Boolean flag = true;
+
+		while (flag) {
+			flag = false;
+			for (int i = 0; i < tests.size(); i++) {
+				if (tests.get(i).getExecutionCode() == newTest.getExecutionCode()) {
+					flag = true;
+					newTest.setExecutionCode(newTest.TestCodeGenerator());
+				}
+			}
+		}
+
+		HibernateMain.insertDataToDB(newTest);
+
+		System.out.println("New test added. Test id = " + newTest.getId() + ". Test execution code = "
+				+ newTest.getExecutionCode());
+
+		Course course = serverHandler.getCourseByCloneId(newCloneTest.getExamToExecute().getCourseId());
+
+		List<Student> students = course.getStudents();
+		for (Student student : students) {
+			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
+			serverHandler.getMailer().sendMessage(student.getEmailAddress(), MessageType.NewTest);
+		}
+
+		return newTest.createClone();
 	}
 
 	/**
@@ -122,8 +161,11 @@ public class DoTestController {
 			}
 
 			st.setGrade(grade);
+
+			st.setCopyOfManualTest(studentTest.getMaunalTest());
+
 			HibernateMain.UpdateDataInDB(st);
-			// CheckAutomaticTest(st);
+
 			HibernateMain.UpdateDataInDB(statistics);
 
 		} catch (Exception e) {
@@ -149,25 +191,27 @@ public class DoTestController {
 
 		Test test = serverHandler.getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
 		test.setStatus(TestStatus.Done);
-		int totalGrades = 0;
+
+		HibernateMain.UpdateDataInDB(test);
 
 		List<StudentTest> studentTests = test.getStudents();
+
 		for (StudentTest studentTest : studentTests) {
 			for (CloneStudentTest cStudentTest : cloneStudentTests) {
 				if (cStudentTest.getStudent().getId() == studentTest.getStudent().getId()) {
 					studentTest.setGrade(cStudentTest.getGrade());
 					studentTest.setStatus(StudentTestStatus.Done);
-					totalGrades += studentTest.getGrade();
+
 					HibernateMain.UpdateDataInDB(studentTest);
+
 					serverHandler.getMailer().sendMessage(studentTest.getStudent().getEmailAddress(),
 							MessageType.TestFinished);
+
 					break;
 				}
 			}
 		}
 
-		test.getStatistics().setAverageGrade(totalGrades);
-		HibernateMain.UpdateDataInDB(test);
 		return 1;
 	}
 
@@ -268,14 +312,13 @@ public class DoTestController {
 
 		return cloneRequests;
 	}
-	
 
 	public int handleSendTimeExtensionRequestsRelatedToTest(int testId) throws Exception {
 		List<TimeExtensionRequest> listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 		try {
 			for (TimeExtensionRequest timeExtension : listFromDB) {
-				if(timeExtension.getTest().getId() == testId) {
-					if(timeExtension.getStatus() == RequestStatus.Confirmed)
+				if (timeExtension.getTest().getId() == testId) {
+					if (timeExtension.getStatus() == RequestStatus.Confirmed)
 						return timeExtension.getTimeToExtenedInMinute();
 				}
 			}
