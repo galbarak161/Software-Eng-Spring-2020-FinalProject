@@ -1,5 +1,6 @@
 package Hibernate.Entities;
 
+import java.sql.Blob;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
+import CloneEntities.CloneTest.ExamType;
 
 @Entity
 @Table(name = "Student_Test")
@@ -45,7 +47,7 @@ public class StudentTest {
 	private StudentTestStatus status;
 
 	@Column(name = "copyOfManualTest")
-	private String copyOfManualTest;
+	private Blob copyOfManualTest;
 	
 	public StudentTest() {
 		answers = new ArrayList<AnswerToQuestion>();
@@ -63,11 +65,15 @@ public class StudentTest {
 		answers = new ArrayList<AnswerToQuestion>();
 	}
 
-	public CloneStudentTest createClone() {
+	public CloneStudentTest createClone(ExamType type) {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
-				actualTestDurationInMinutes, examCheckNotes, status, copyOfManualTest);
+				actualTestDurationInMinutes, examCheckNotes, status);
+		if(type == ExamType.Manual)
+			clone.setMaunalTest(convertBlobToString(copyOfManualTest));
 		return clone;
 	}
+	
+	
 
 	public int getId() {
 		return id;
@@ -135,11 +141,11 @@ public class StudentTest {
 		this.grade = grade;
 	}
 
-	public String getCopyOfManualTest() {
+	public Blob getCopyOfManualTest() {
 		return copyOfManualTest;
 	}
 
-	public void setCopyOfManualTest(String copyOfManualTest) {
+	public void setCopyOfManualTest(Blob copyOfManualTest) {
 		this.copyOfManualTest = copyOfManualTest;
 	}
 	
