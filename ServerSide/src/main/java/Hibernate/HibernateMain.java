@@ -611,17 +611,4 @@ public class HibernateMain {
 		hibernateSessionStatus = status;
 		return status;
 	}
-	
-	public static Blob convertFileToBlob(File file) {
-		Blob blob = null;
-		try {
-			FileInputStream inputStream = new FileInputStream(file);
-			blob = Hibernate.getLobCreator(session)
-                    .createBlob(inputStream, file.length());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		return blob;
-	}
 }

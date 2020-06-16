@@ -1,8 +1,10 @@
 package Client;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,6 +16,8 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.poi.POITextExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -182,7 +186,6 @@ public class testEntracnce extends AbstractTest {
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Word Files", "*.docx"));
 		Stage stage = new Stage();
 		List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
-
 		if (selectedFiles != null) {
 			uploadedFile = selectedFiles.get(0);
 			uploadedAnswer = new String(Files.readAllBytes(Paths.get(selectedFiles.get(0).toURI())),
@@ -195,7 +198,7 @@ public class testEntracnce extends AbstractTest {
 	@Override
 	protected void finishTest() {
 		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
-		if(uploadedAnswer == null || uploadedFile == null)
+		if (uploadedAnswer == null || uploadedFile == null)
 			uploadedAnswer = "No uploaded file";
 		finishedTest.setMaunalTest(uploadedAnswer);
 		finishedTest.setUploadedFile(uploadedFile);

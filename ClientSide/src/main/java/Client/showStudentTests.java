@@ -1,8 +1,14 @@
 package Client;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.poi.POITextExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneQuestionInExam;
@@ -76,13 +82,18 @@ public class showStudentTests extends AbstractController {
 		
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
 			if (testsList.getSelectionModel().getSelectedItem().getTest().getType() == ExamType.Manual) {
-				Label title = new Label(testsList.getSelectionModel().getSelectedItem().getTest().getName());
+				InputStream fis = new FileInputStream(testsList.getSelectionModel().getSelectedItem().getUploadedFile());
+				POITextExtractor extractor;
+				XWPFDocument doc = new XWPFDocument(fis);
+				extractor = new XWPFWordExtractor(doc);
+				String extractedText = extractor.getText();
 		        TextArea textArea = new TextArea();
 		        textArea.autosize();
-		        textArea.setText(testsList.getSelectionModel().getSelectedItem().getMaunalTest());
-		        VBox box = new VBox(2, title, textArea);
+		        textArea.setText(extractedText);
+		        VBox box = new VBox(1, title, textArea);
 		        Stage stage = new Stage();
-		        stage.setScene(new Scene(box, 400, 400));
+		        stage.setTitle("Test: " + testsList.getSelectionModel().getSelectedItem().getTest().getName());
+		        stage.setScene(new Scene(box, 600, 600));
 		        stage.showAndWait();
 		        return;
 		    }

@@ -1,5 +1,7 @@
 package Hibernate.Entities;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -48,8 +50,8 @@ public class StudentTest {
 	private StudentTestStatus status;
 
 	@Column(name = "copyOfManualTest")
-	private Blob copyOfManualTest;
-	
+	private File copyOfManualTest;
+
 	public StudentTest() {
 		answers = new ArrayList<AnswerToQuestion>();
 	}
@@ -70,7 +72,7 @@ public class StudentTest {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
 				actualTestDurationInMinutes, examCheckNotes, status);
 		if(this.getTest().getType()== ExamType.Manual)
-			clone.setMaunalTest(convertBlobToString(copyOfManualTest));
+			clone.setUploadedFile(copyOfManualTest);
 		return clone;
 	}
 	
@@ -141,24 +143,12 @@ public class StudentTest {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-
-	public Blob getCopyOfManualTest() {
+	
+	public File getCopyOfManualTest() {
 		return copyOfManualTest;
 	}
 
-	public void setCopyOfManualTest(Blob copyOfManualTest) {
+	public void setCopyOfManualTest(File copyOfManualTest) {
 		this.copyOfManualTest = copyOfManualTest;
-	}
-	
-	private String convertBlobToString (Blob blob) {
-		byte[] blobBytes = null;
-		try {
-			blobBytes = blob.getBytes(1, (int) blob.length());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		return new String(blobBytes, java.nio.charset.StandardCharsets.UTF_8);
 	}
 }
