@@ -168,8 +168,7 @@ public class DoTestController {
 			
 			// Keep copy of manual test
 			else {
-				Blob blob = HibernateMain.convertFileToBlob(studentTest.getUploadedFile());
-				st.setCopyOfManualTest(blob);
+				st.setCopyOfManualTest(studentTest.getUploadedFile());
 			}
 
 			

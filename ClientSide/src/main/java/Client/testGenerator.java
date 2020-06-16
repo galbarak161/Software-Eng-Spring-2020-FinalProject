@@ -116,7 +116,7 @@ public class testGenerator extends AbstractController {
 				throw new Exception(errorsList.toString());
 			}
 		} catch (Exception e) {
-			popError("Please fill all question fields", e.getMessage());
+			popError("Please fill all test fields or fix invalid inputs", e.getMessage());
 			return;
 		}
 		LocalDate startDate = datePicker.getValue();
