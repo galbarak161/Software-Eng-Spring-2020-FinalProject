@@ -65,10 +65,10 @@ public class StudentTest {
 		answers = new ArrayList<AnswerToQuestion>();
 	}
 
-	public CloneStudentTest createClone(ExamType type) {
+	public CloneStudentTest createClone() {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
 				actualTestDurationInMinutes, examCheckNotes, status);
-		if(type == ExamType.Manual)
+		if(this.getTest().getType()== ExamType.Manual)
 			clone.setMaunalTest(convertBlobToString(copyOfManualTest));
 		return clone;
 	}
