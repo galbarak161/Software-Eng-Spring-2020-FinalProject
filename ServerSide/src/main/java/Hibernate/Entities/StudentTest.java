@@ -1,6 +1,7 @@
 package Hibernate.Entities;
 
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,5 +150,15 @@ public class StudentTest {
 		this.copyOfManualTest = copyOfManualTest;
 	}
 	
-	
+	private String convertBlobToString (Blob blob) {
+		byte[] blobBytes = null;
+		try {
+			blobBytes = blob.getBytes(1, (int) blob.length());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return new String(blobBytes, java.nio.charset.StandardCharsets.UTF_8);
+	}
 }

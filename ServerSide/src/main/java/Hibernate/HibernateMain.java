@@ -1,5 +1,9 @@
 package Hibernate;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Blob;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -13,6 +17,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +27,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Settings;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
-
 import CloneEntities.*;
 import CloneEntities.CloneTest.ExamType;
 import Controllers.ServerOperations;
@@ -605,5 +610,18 @@ public class HibernateMain {
 		}
 		hibernateSessionStatus = status;
 		return status;
+	}
+	
+	public static Blob convertFileToBlob(File file) {
+		Blob blob = null;
+		try {
+			FileInputStream inputStream = new FileInputStream(file);
+			blob = Hibernate.getLobCreator(session)
+                    .createBlob(inputStream, file.length());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return blob;
 	}
 }
