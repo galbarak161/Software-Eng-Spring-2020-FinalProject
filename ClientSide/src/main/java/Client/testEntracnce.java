@@ -85,8 +85,11 @@ public class testEntracnce extends AbstractTest {
 
 	@FXML
 	private AnchorPane mainAnchor;
-	
+
 	private String uploadedAnswer = null;
+
+	private File uploadedFile = null;
+
 	/**
 	 * After user fills in the test code, we send it to the server via
 	 * "StudentStartTest" object The server checks whether the code it valid and the
@@ -111,10 +114,10 @@ public class testEntracnce extends AbstractTest {
 	void checkTestType(List<Object> test) {
 		finishedTest = (CloneStudentTest) test.get(0);
 		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
-		if(finishedTest.getStatus() != StudentTestStatus.Ongoing) {
+		if (finishedTest.getStatus() != StudentTestStatus.Ongoing) {
 			popError("Error", "Test is over");
 			return;
-		}	
+		}
 		codeLabel.setVisible(false);
 		codeText.setVisible(false);
 		startButton.setVisible(false);
@@ -181,18 +184,21 @@ public class testEntracnce extends AbstractTest {
 		List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
 
 		if (selectedFiles != null) {
-			uploadedAnswer = new String(Files.readAllBytes(Paths.get(selectedFiles.get(0).toURI())), StandardCharsets.UTF_8);
+			uploadedFile = selectedFiles.get(0);
+			uploadedAnswer = new String(Files.readAllBytes(Paths.get(selectedFiles.get(0).toURI())),
+					StandardCharsets.UTF_8);
 			fileField.setText(selectedFiles.get(0).getPath());
 		}
-			
+
 	}
-	
+
 	@Override
 	protected void finishTest() {
 		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
-		if(uploadedAnswer == null)
+		if(uploadedAnswer == null || uploadedFile == null)
 			uploadedAnswer = "No uploaded file";
 		finishedTest.setMaunalTest(uploadedAnswer);
+		finishedTest.setUploadedFile(uploadedFile);
 		showMsg("Test Finished", "Test is over and will be send to review");
 		try {
 			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
@@ -208,7 +214,7 @@ public class testEntracnce extends AbstractTest {
 
 		// Blank Document
 		XWPFDocument document = new XWPFDocument();
-		
+
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Test File");
 		// fileChooser.setInitialDirectory(new File("X:\\testdir\\two"));
@@ -226,23 +232,23 @@ public class testEntracnce extends AbstractTest {
 			/////////////////////////// make title bigger /////////////////////////////
 			run.setText(finishedTest.getTestName());
 			int i = 1;
-			for (CloneQuestionInExam q: currQuestions) {
+			for (CloneQuestionInExam q : currQuestions) {
 				paragraph = document.createParagraph();
 				paragraph.setAlignment(ParagraphAlignment.LEFT);
 				run = paragraph.createRun();
 				run.setText("Question " + String.valueOf(i) + ": " + q.getQuestion().getQuestionText());
 				run.addBreak();
 				run = paragraph.createRun();
-				run.setText("a. " +  q.getQuestion().getAnswer_1());
+				run.setText("a. " + q.getQuestion().getAnswer_1());
 				run.addBreak();
 				run = paragraph.createRun();
-				run.setText("b. " +  q.getQuestion().getAnswer_2());
+				run.setText("b. " + q.getQuestion().getAnswer_2());
 				run.addBreak();
 				run = paragraph.createRun();
-				run.setText("c. " +  q.getQuestion().getAnswer_3());
+				run.setText("c. " + q.getQuestion().getAnswer_3());
 				run.addBreak();
 				run = paragraph.createRun();
-				run.setText("d. " +  q.getQuestion().getAnswer_4());
+				run.setText("d. " + q.getQuestion().getAnswer_4());
 				run.addBreak();
 				run = paragraph.createRun();
 				run.setText("Answer: _____________________");
