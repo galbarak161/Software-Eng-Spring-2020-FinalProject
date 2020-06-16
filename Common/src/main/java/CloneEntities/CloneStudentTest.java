@@ -1,5 +1,6 @@
 package CloneEntities;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,6 +32,8 @@ public class CloneStudentTest implements Serializable {
 	private int actualTestDurationInMinutes;
 
 	private String copyOfManualTest;
+	
+	private File uploadedFile;
 	
 	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int grade, int actualTestDurationInMinutes, String examCheckNotes, StudentTestStatus status, String copyOfManualTest) {
 		this.id = id;
@@ -166,5 +169,13 @@ public class CloneStudentTest implements Serializable {
 		if(grade == -1)
 			return "Not Done";
 		return "Done";
+	}
+
+	public File getUploadedFile() {
+		return uploadedFile;
+	}
+
+	public void setUploadedFile(File uploadedFile) {
+		this.uploadedFile = uploadedFile;
 	}
 }
