@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.sql.Blob;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +168,8 @@ public class DoTestController {
 			
 			// Keep copy of manual test
 			else {
-				st.setCopyOfManualTest(studentTest.getMaunalTest());
+				Blob blob = HibernateMain.convertFileToBlob(studentTest.getUploadedFile());
+				st.setCopyOfManualTest(blob);
 			}
 
 			

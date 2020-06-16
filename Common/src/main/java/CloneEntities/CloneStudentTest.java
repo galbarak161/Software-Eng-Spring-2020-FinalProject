@@ -35,7 +35,9 @@ public class CloneStudentTest implements Serializable {
 	
 	private File uploadedFile;
 	
-	public CloneStudentTest(int id, CloneUser student, CloneTest test, LocalTime startTime, int grade, int actualTestDurationInMinutes, String examCheckNotes, StudentTestStatus status, String copyOfManualTest) {
+	public CloneStudentTest(int id, CloneUser student, CloneTest test, 
+			LocalTime startTime, int grade, int actualTestDurationInMinutes, 
+			String examCheckNotes, StudentTestStatus status) {
 		this.id = id;
 		this.student = student;
 		this.test = test;
@@ -44,7 +46,6 @@ public class CloneStudentTest implements Serializable {
 		this.actualTestDurationInMinutes = actualTestDurationInMinutes;
 		this.examCheckNotes = examCheckNotes;
 		this.status = status;
-		this.copyOfManualTest = copyOfManualTest;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
 	}
 	
