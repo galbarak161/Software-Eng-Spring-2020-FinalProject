@@ -5,11 +5,14 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class SendEmail {
+public class SendEmail implements Runnable {
 
 	public enum MessageType {
 		NewTest, NewTimeExtensionRequest, TimeExtensionRequestResult, TestFinished
 	}
+
+	private String to;
+	private MessageType type;
 
 	private Properties props;
 	private Session session;
@@ -30,7 +33,10 @@ public class SendEmail {
 
 	private final String Signature = "\n\nThis message was sent to you automatically. All rights reserved. HTST 2020  \u00a9";
 
-	public SendEmail() {
+	public SendEmail(String to, MessageType type) {
+		this.to = to;
+		this.type = type;
+
 		// Get properties object
 		props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -52,10 +58,16 @@ public class SendEmail {
 		// System.out.println("Mail API: initialized\n");
 	}
 
-	public void sendMessage(String to, MessageType type) {
+	public void run() {
+		sendMessage(to, type);
+	}
+
+	private void sendMessage(String to, MessageType type) {
 		String sub, msg;
 
 		try {
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			
 			switch (type) {
 			case NewTest:
 				sub = NewTest_subject;
@@ -82,9 +94,8 @@ public class SendEmail {
 			message.setText(msg + Signature);
 
 			// send message
-			//message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			//Transport.send(message);
-			
+			Transport.send(message);
+
 			// System.out.println("message sent successfully");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

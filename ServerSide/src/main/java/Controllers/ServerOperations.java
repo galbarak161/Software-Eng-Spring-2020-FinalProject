@@ -6,7 +6,6 @@ import java.util.List;
 import CloneEntities.*;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
-import Server.SendEmail;
 import UtilClasses.ExamGenerator;
 import UtilClasses.*;
 
@@ -15,15 +14,7 @@ public class ServerOperations {
 	// static variable single_instance of type Singleton
 	private static ServerOperations single_instance = null;
 
-	private SendEmail mailer;
-
-	private ServerOperations() {
-		mailer = new SendEmail();
-	}
-
-	public SendEmail getMailer() {
-		return mailer;
-	}
+	private ServerOperations() {}
 
 	// static method to create instance of Singleton class
 	public static ServerOperations getInstance() {

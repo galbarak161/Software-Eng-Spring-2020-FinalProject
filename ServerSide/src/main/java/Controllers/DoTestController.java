@@ -9,6 +9,7 @@ import CloneEntities.CloneTest.*;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
+import Server.SendEmail;
 import Server.SendEmail.MessageType;
 import UtilClasses.StudentStartTest;
 
@@ -63,7 +64,10 @@ public class DoTestController {
 		List<Student> students = course.getStudents();
 		for (Student student : students) {
 			HibernateMain.insertDataToDB(new StudentTest(student, newTest));
-			serverHandler.getMailer().sendMessage(student.getEmailAddress(), MessageType.NewTest);
+
+			SendEmail mailer = new SendEmail(student.getEmailAddress(), MessageType.NewTest);
+			Thread mailThread = new Thread(mailer);
+			mailThread.start();
 		}
 
 		return newTest.createClone();
@@ -78,12 +82,15 @@ public class DoTestController {
 	 * @return 1 If succeeded (Others -1)
 	 * @throws Exception
 	 */
-	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) {
+	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) throws Exception {
 		try {
 			Test t = serverHandler.getTestByExamCode(studentStartTest.getEexecutionCode());
 			StudentTest st = serverHandler.getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
 			TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
 
+			if(t == null || st == null || statistics == null)
+				throw new Exception("Error. Invalid perrmitions to start test");
+			
 			st.setStartTime(LocalTime.now());
 			statistics.increaseNumberOfStudentsInTest();
 
@@ -99,7 +106,7 @@ public class DoTestController {
 			toSend.add(qToSend);
 			return toSend;
 		} catch (Exception e) {
-			return null;
+			throw e;
 		}
 	}
 
@@ -210,9 +217,10 @@ public class DoTestController {
 
 					HibernateMain.UpdateDataInDB(studentTest);
 
-					serverHandler.getMailer().sendMessage(studentTest.getStudent().getEmailAddress(),
+					SendEmail mailer = new SendEmail(studentTest.getStudent().getEmailAddress(),
 							MessageType.TestFinished);
-
+					Thread mailThread = new Thread(mailer);
+					mailThread.start();
 					break;
 				}
 			}
@@ -249,7 +257,10 @@ public class DoTestController {
 		HibernateMain.UpdateDataInDB(test);
 
 		Principal p = serverHandler.getPrincipalUser();
-		serverHandler.getMailer().sendMessage(p.getEmailAddress(), MessageType.NewTimeExtensionRequest);
+		
+		SendEmail mailer = new SendEmail(p.getEmailAddress(), MessageType.NewTimeExtensionRequest);
+		Thread mailThread = new Thread(mailer);
+		mailThread.start();
 
 		return timeExtensionRequest.createClone();
 
