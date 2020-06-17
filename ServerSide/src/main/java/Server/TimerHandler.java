@@ -18,7 +18,7 @@ public class TimerHandler extends TimerTask {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY");
 		List<Test> testsFromDB = null;
 		List<StudentTest> studentTestsFromDB = null;
-		
+
 		LocalTime currentTime = LocalTime.now();
 		String currentDate = formatter.format(LocalDate.now());
 

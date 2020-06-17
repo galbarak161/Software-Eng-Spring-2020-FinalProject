@@ -1,14 +1,11 @@
 package Controllers;
 
-import java.sql.Blob;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
-import CloneEntities.CloneTest.ExamType;
-import CloneEntities.CloneTest.TestStatus;
+import CloneEntities.CloneTest.*;
 import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
@@ -129,7 +126,7 @@ public class DoTestController {
 				statistics.increaseNumberOfStudentsThatFinishedInTime();
 
 			int grade = 0;
-			
+
 			// Calculate grade for automatic test
 			if (st.getTest().getType() == ExamType.Automated) {
 				CloneAnswerToQuestion[] cloneAnswersArr = studentTest.getAnswers();
@@ -138,14 +135,13 @@ public class DoTestController {
 							cloneAnswersArr[i].getQuestion().getQuestionCode(), i);
 					HibernateMain.insertDataToDB(answer);
 				}
-			
+
 				List<QuestionInExam> questions = st.getTest().getExamToExecute().getQuestionInExam();
 				List<AnswerToQuestion> answers = st.getAnswers();
 
 				if (questions.size() != answers.size())
 					throw new Exception("QuestionInExam and AnswerToQuestion are not in the same size");
 
-				
 				for (int i = 0; i < questions.size(); i++) {
 					QuestionInExam DBQestion = null;
 					List<QuestionInExam> DBquestions = serverHandler
@@ -165,15 +161,14 @@ public class DoTestController {
 						grade += questions.get(i).getPointsForQuestion();
 				}
 			}
-			
+
 			// Keep copy of manual test
 			else {
 				st.setCopyOfManualTest(studentTest.getUploadedFile());
 			}
 
-			
 			// Update student grade - for manual test the grade will be 0
-			st.setGrade(grade);	
+			st.setGrade(grade);
 
 			HibernateMain.UpdateDataInDB(st);
 

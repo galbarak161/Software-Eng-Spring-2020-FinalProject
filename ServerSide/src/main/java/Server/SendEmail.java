@@ -49,48 +49,45 @@ public class SendEmail {
 		// Initialize Message object
 		message = new MimeMessage(session);
 
-		//System.out.println("Mail API: initialized\n");
+		// System.out.println("Mail API: initialized\n");
 	}
 
 	public void sendMessage(String to, MessageType type) {
 		String sub, msg;
 
-		// Debug mode
-		return;
+		try {
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-//		try {
-//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-//			
-//			switch (type) {
-//			case NewTest:
-//				sub = NewTest_subject;
-//				msg = NewTest_body;
-//			case NewTimeExtensionRequest:
-//				sub = NewTimeExtensionRequest_subject;
-//				msg = NewTimeExtensionRequest_body;
-//				break;
-//			case TestFinished:
-//				sub = TestFinished_subject;
-//				msg = TestFinished_body;
-//				break;
-//			case TimeExtensionRequestResult:
-//				sub = TimeExtensionRequestResult_subject;
-//				msg = TimeExtensionRequestResult_body;
-//				break;
-//			default:
-//				return;
-//			}
-//
-//			// build message
-//			message.setSubject(sub);
-//			message.setText(msg + Signature);
-//
-//			// send message
-//			Transport.send(message);
-//
-//			// System.out.println("message sent successfully");
-//		} catch (MessagingException e) {
-//			throw new RuntimeException(e);
-//		}
+			switch (type) {
+			case NewTest:
+				sub = NewTest_subject;
+				msg = NewTest_body;
+			case NewTimeExtensionRequest:
+				sub = NewTimeExtensionRequest_subject;
+				msg = NewTimeExtensionRequest_body;
+				break;
+			case TestFinished:
+				sub = TestFinished_subject;
+				msg = TestFinished_body;
+				break;
+			case TimeExtensionRequestResult:
+				sub = TimeExtensionRequestResult_subject;
+				msg = TimeExtensionRequestResult_body;
+				break;
+			default:
+				return;
+			}
+
+			// build message
+			message.setSubject(sub);
+			message.setText(msg + Signature);
+
+			// send message
+			Transport.send(message);
+
+			// System.out.println("message sent successfully");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

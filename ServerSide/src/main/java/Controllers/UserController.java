@@ -10,10 +10,11 @@ import UtilClasses.Login;
 public class UserController {
 
 	private ServerOperations serverHandler;
+
 	public UserController() {
 		serverHandler = ServerOperations.getInstance();
 	}
-	
+
 	/**
 	 * handleLogInRequest(Login data)
 	 * 

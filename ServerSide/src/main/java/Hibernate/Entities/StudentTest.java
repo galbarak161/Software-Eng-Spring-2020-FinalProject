@@ -76,8 +76,6 @@ public class StudentTest {
 		return clone;
 	}
 	
-	
-
 	public int getId() {
 		return id;
 	}

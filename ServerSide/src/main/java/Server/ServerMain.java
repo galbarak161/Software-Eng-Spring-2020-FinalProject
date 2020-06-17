@@ -41,14 +41,20 @@ public class ServerMain extends AbstractServer {
 		System.out.println("Number of connected client(s): " + numberOfConnectedClients + "\n");
 
 		if (numberOfConnectedClients == 0) {
-			/*
-			 * System.out.print("Do you want to close the server? (Yes \\ No): ");
-			 * 
-			 * try (Scanner input = new Scanner(System.in)) { String stringInput =
-			 * input.nextLine().toLowerCase(); if (stringInput.equals("yes")) { try {
-			 * this.close(); } catch (IOException e) { e.printStackTrace(); } } else
-			 * System.out.println("Server ready!"); }
-			 */
+
+			System.out.print("Do you want to close the server? (Yes \\ No): ");
+
+			try (Scanner input = new Scanner(System.in)) {
+				String stringInput = input.nextLine().toLowerCase();
+				if (stringInput.equals("yes")) {
+					try {
+						this.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else
+					System.out.println("Server ready!");
+			}
 
 			try {
 				this.close();

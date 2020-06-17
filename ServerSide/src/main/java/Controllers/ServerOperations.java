@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CloneEntities.*;
-import CloneEntities.CloneTest.TestStatus;
-import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import Hibernate.HibernateMain;
 import Hibernate.Entities.*;
 import Server.SendEmail;
-import Server.SendEmail.MessageType;
 import UtilClasses.ExamGenerator;
 import UtilClasses.*;
 
@@ -395,7 +392,7 @@ public class ServerOperations {
 
 		return tests;
 	}
-	
+
 	/**
 	 * handleSendAllTestsOfTeacherInCourse (TeacherCourse)
 	 * 
@@ -428,7 +425,6 @@ public class ServerOperations {
 		return tests;
 	}
 
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////// Question
