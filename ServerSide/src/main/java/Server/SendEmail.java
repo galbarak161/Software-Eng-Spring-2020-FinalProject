@@ -24,7 +24,7 @@ public class SendEmail {
 	private final String TimeExtensionRequestResult_subject = "Time extension request answered";
 
 	private final String NewTest_body = "You Have test, study hard and don't give up. remember to check the time to see when is your exam";
-	private final String TestFinished_body = "You finished the test, Hope it turn out hiw you wanted";
+	private final String TestFinished_body = "You finished the test, Hope it turn out how you wanted";
 	private final String NewTimeExtensionRequest_body = " An extension request has been sent";
 	private final String TimeExtensionRequestResult_body = "The result for the time extention has arrived";
 
