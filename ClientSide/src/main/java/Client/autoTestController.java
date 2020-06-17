@@ -7,8 +7,6 @@ import java.util.Optional;
 import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneQuestion;
 import CloneEntities.CloneQuestionInExam;
-import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTimeExtensionRequest;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

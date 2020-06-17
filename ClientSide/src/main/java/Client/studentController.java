@@ -3,10 +3,8 @@ package Client;
 import java.io.IOException;
 
 import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

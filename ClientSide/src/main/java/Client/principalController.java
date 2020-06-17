@@ -1,27 +1,16 @@
 package Client;
 
-import java.io.IOException;
 
-import CloneEntities.CloneAnswerToQuestion;
-import CloneEntities.CloneTest;
 import CloneEntities.CloneTimeExtensionRequest;
-import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
-import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class principalController extends AbstractController{
@@ -46,7 +35,8 @@ public class principalController extends AbstractController{
     @FXML
     private TableColumn<CloneTimeExtensionRequest, String> statusCol;
     
-    public void initialize() {
+    @SuppressWarnings("unchecked")
+	public void initialize() {
     	
     	testName.setCellValueFactory(new PropertyValueFactory<CloneTimeExtensionRequest, String>("TestName"));
 

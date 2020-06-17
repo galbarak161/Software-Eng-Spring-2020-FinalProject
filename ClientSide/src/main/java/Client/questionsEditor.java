@@ -3,7 +3,6 @@ package Client;
 import CloneEntities.*;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

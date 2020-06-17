@@ -33,6 +33,16 @@ public abstract class AbstractController extends AbstractShow{
 		msgRecived = true;
 	}
 	
+	/**
+	 * Generic function, creates a new window and initialize it by "setFields"
+	 * @param <T> Type of ListView we're currently select an item from
+	 * @param <E> Type of controller we need to show on the stage
+	 * @param list Get an item of a generic list- used to provide argument to "setFields"
+	 * @param con Instance of the controller to show in the new created window
+	 * @param name Controller name
+	 * @param title Title of the window
+	 * @throws Exception
+	 */
 	public <T, E> void newWindow(ListView<T> list, E con, String name, String title) throws Exception {
 		Platform.runLater(() -> {
 			Parent root = null;
@@ -52,7 +62,17 @@ public abstract class AbstractController extends AbstractShow{
 		});
 	}
 	
-	public <T, E> void newWindow(TableView<T> list, E con, String name, String title) throws Exception {
+	/**
+	 * Generic function, creates a new window and initialize it by "setFields"
+	 * @param <T> Type of TableView we're currently select an item from
+	 * @param <E> Type of controller we need to show on the stage
+	 * @param table Get an item of a generic table- used to provide argument to "setFields"
+	 * @param con Instance of the controller to show in the new created window
+	 * @param name Controller name
+	 * @param title Title of the window
+	 * @throws Exception
+	 */
+	public <T, E> void newWindow(TableView<T> table, E con, String name, String title) throws Exception {
 		Platform.runLater(() -> {
 			Parent root = null;
 			try {
@@ -60,7 +80,7 @@ public abstract class AbstractController extends AbstractShow{
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name));
 				root = (Parent) fxmlLoader.load();
 				curr = fxmlLoader.getController();
-				((AbstractShow) curr).setFields(list.getSelectionModel().getSelectedItem());
+				((AbstractShow) curr).setFields(table.getSelectionModel().getSelectedItem());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -71,6 +91,16 @@ public abstract class AbstractController extends AbstractShow{
 		});
 	}
 	
+	/**
+	 * Generic function, creates a new window and initialize it by "setFields"
+	 * @param <T> Type of item we need to initialize the controller with
+	 * @param <E> Type of controller we need to show on the stage
+	 * @param item Used as an argument to "setFields"
+	 * @param con Instance of the controller to show in the new created window
+	 * @param name Controller name
+	 * @param title Title of the window
+	 * @throws Exception
+	 */
 	public <T, E> void newWindow(T item, E con, String name, String title) throws Exception {
 		Platform.runLater(() -> {
 			Parent root = null;
@@ -90,6 +120,11 @@ public abstract class AbstractController extends AbstractShow{
 		});
 	}
 	
+	/**
+	 * Initiate a TimerTask for polling requests from server every 10 seconds
+	 * @param op Opcode for server- "title" of the request
+	 * @param data Contains data we should provide the server for answering the request
+	 */
 	protected void sendRequest(ClientToServerOpcodes op, Object data) {
 		TimerTask timerTask = new TimerTask() {
 
@@ -153,7 +188,11 @@ public abstract class AbstractController extends AbstractShow{
 		}
 		msgRecived = false;
 	}
-
+	
+	/**
+	 * Switch the main pane (AnchorPane) in the main controller of the tool
+	 * @param Sfxml FXML name we switch to
+	 */
 	void switchMainPanel(String Sfxml) {
 		Platform.runLater(() -> {
 			((mainController) ClientService.getController("mainController")).setMainPanel(Sfxml);
@@ -162,9 +201,7 @@ public abstract class AbstractController extends AbstractShow{
 
 	public void initialize() {
 
-	}
-	
-	
+	}	
 
 	/**
 	 * Invokes an info alert message Mostly for a success create of objects on
@@ -196,6 +233,9 @@ public abstract class AbstractController extends AbstractShow{
 		});
 	}
 	
+	/**
+	 * Stops the timer- cancel the timed requests from server
+	 */
 	public static void stopTimer() {
 		timer.cancel();
 	}

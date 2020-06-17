@@ -1,7 +1,6 @@
 package Client;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +9,8 @@ import org.apache.poi.POITextExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import CloneEntities.CloneQuestion;
-import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
-import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
@@ -22,9 +18,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -35,9 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class showStudentTests extends AbstractController {
 
