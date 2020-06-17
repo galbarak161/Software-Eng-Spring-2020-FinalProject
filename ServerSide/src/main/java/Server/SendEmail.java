@@ -56,12 +56,11 @@ public class SendEmail {
 		String sub, msg;
 
 		try {
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
 			switch (type) {
 			case NewTest:
 				sub = NewTest_subject;
 				msg = NewTest_body;
+				break;
 			case NewTimeExtensionRequest:
 				sub = NewTimeExtensionRequest_subject;
 				msg = NewTimeExtensionRequest_body;
@@ -83,8 +82,9 @@ public class SendEmail {
 			message.setText(msg + Signature);
 
 			// send message
-			Transport.send(message);
-
+			//message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			//Transport.send(message);
+			
 			// System.out.println("message sent successfully");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
