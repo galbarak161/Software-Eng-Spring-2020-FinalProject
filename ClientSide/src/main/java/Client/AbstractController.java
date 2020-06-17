@@ -17,9 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-public abstract class AbstractController extends AbstractShow{
-
-	protected Alert alert = new Alert(Alert.AlertType.ERROR);
+public abstract class AbstractController extends AbstractShow {
 
 	protected final String ERROR_TITLE_SERVER = "An error occurred while retrieving data from server";
 
@@ -227,6 +225,7 @@ public abstract class AbstractController extends AbstractShow{
 	 */
 	public void popError(String title, String errorMessage) {
 		Platform.runLater(() -> {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(title);
 			alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(errorMessage)));
 			alert.showAndWait();

@@ -22,6 +22,7 @@ import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.StudentStartTest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,6 +36,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class testEntracnce extends AbstractTest {
 
@@ -102,6 +104,17 @@ public class testEntracnce extends AbstractTest {
 	void checkTestType(List<Object> test) {
 		finishedTest = (CloneStudentTest) test.get(0);
 		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
+		studentController.testStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+				try {
+					GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+		        //event.consume();
+		    }
+		});
 		if (finishedTest.getStatus() != StudentTestStatus.Ongoing) {
 			popError("Error", "Test is over");
 			return;
