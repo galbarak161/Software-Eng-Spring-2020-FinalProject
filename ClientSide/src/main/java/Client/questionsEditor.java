@@ -183,8 +183,6 @@ public class questionsEditor extends AbstractController {
 		radio_3.setToggleGroup(radioGroup);
 		radio_4.setToggleGroup(radioGroup);
 
-		///////////////////// Ask Liel about all questions show
-		///////////////////// ///////////////////////////////
 	}
 
 	/***********************

@@ -107,7 +107,7 @@ public class ClientService extends AbstractClient {
 							.setQuestions(FXCollections.observableArrayList((List<CloneQuestion>) de.getData()));
 					break;
 				case CreateNewQuestionResult:
-					((questionsEditor) o).showMsg("Success", "The question has been successfully created!");
+					((questionsEditor) o).showMsg("Success", "The question has been successfully created!\nQuestion Code: " + ((CloneQuestion)de.getData()).getQuestionCode());
 					break;
 				}
 				break;
