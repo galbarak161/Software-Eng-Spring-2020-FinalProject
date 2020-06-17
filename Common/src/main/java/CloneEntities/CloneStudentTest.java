@@ -150,7 +150,7 @@ public class CloneStudentTest implements Serializable {
 	}
 	
 	public String getStudentID() {
-		return String.valueOf(student.getId());
+		return String.valueOf(student.getIdentifyNumber());
 	}
 	
 	public String getStudentEmail() {
