@@ -59,7 +59,15 @@ public class ClientMain {
 
 	public static void main(String[] args) throws IOException {
 		// TODO: change to args[] later (ref in ClientMain of Prototype)
-		ClientService client = new ClientService("localhost", 3000);
+		ClientService client;
+		if (args.length != 2) {
+			System.out.println("Required arguments: <host> <port>");
+			return;
+		} else {
+			String host = args[0];
+			int port = Integer.parseInt(args[1]);
+			client = new ClientService(host, port);
+		}
 		try {
 			client.openConnection();
 			App.main(args);

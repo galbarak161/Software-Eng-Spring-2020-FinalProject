@@ -100,7 +100,7 @@ public class autoTestController extends  AbstractTest {
 	public void setFields() {
 		nameLabel.setText(finishedTest.getTestName());
 		backButton.setVisible(false);
-		if (finishedTest.getAnswers().length == 1)
+		if (currQuestions.size() == 1)
 			nextButton.setVisible(false);
 		changeCurrQuestion(currQuestions.get(currQuestionNum));
 
