@@ -59,7 +59,7 @@ public class SendEmail implements Runnable {
 	}
 
 	public void run() {
-		sendMessage(to, type);
+		//sendMessage(to, type);
 	}
 
 	private void sendMessage(String to, MessageType type) {
