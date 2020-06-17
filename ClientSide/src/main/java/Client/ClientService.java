@@ -9,10 +9,8 @@ import java.util.logging.Logger;
 import CloneEntities.*;
 import OCSF.AbstractClient;
 import UtilClasses.*;
-import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.DataElements.ServerToClientOpcodes;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Alert;
 
 public class ClientService extends AbstractClient {
 	private static final Logger LOGGER = Logger.getLogger(ClientService.class.getName());

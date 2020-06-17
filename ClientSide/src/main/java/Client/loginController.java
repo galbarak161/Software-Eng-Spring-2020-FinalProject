@@ -1,7 +1,5 @@
 package Client;
 
-
-
 import UtilClasses.DataElements;
 import UtilClasses.Login;
 import UtilClasses.DataElements.*;

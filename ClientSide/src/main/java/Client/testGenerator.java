@@ -8,7 +8,6 @@ import CloneEntities.CloneCourse;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneTest;
 import CloneEntities.CloneTest.ExamType;
-import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.TeacherCourse;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;

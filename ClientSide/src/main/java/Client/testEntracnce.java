@@ -1,23 +1,14 @@
 package Client;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import org.apache.poi.POITextExtractor;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -27,14 +18,10 @@ import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.ExamType;
-import CloneEntities.CloneTest.TestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.StudentStartTest;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -45,11 +32,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Duration;
 import javafx.stage.Stage;
 
 public class testEntracnce extends AbstractTest {

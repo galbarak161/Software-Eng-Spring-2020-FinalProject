@@ -1,25 +1,16 @@
 package Client;
 
-import java.io.IOException;
 import java.util.List;
 
 import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
-import CloneEntities.CloneTest;
-import CloneEntities.CloneTimeExtensionRequest;
-import CloneEntities.CloneTest.TestStatus;
-import CloneEntities.CloneTimeExtensionRequest.RequestStatus;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -27,7 +18,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class showStudentTest extends AbstractController {

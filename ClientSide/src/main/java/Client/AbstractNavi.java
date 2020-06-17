@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import UtilClasses.DataElements;
 import UtilClasses.DataElements.ClientToServerOpcodes;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
