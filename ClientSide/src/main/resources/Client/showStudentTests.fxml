@@ -28,7 +28,7 @@
          </columnResizePolicy>
       </TableView>
       <Button fx:id="approveButton" layoutX="371.0" layoutY="510.0" mnemonicParsing="false" onAction="#onClickedApprove" text="Approve Grade" />
-      <Label fx:id="nameLabel" layoutX="75.0" layoutY="14.0" prefHeight="30.0" prefWidth="41.0" textFill="#cd1313">
+      <Label fx:id="nameLabel" layoutX="75.0" layoutY="14.0" prefHeight="30.0" prefWidth="241.0" textFill="#cd1313">
          <font>
             <Font size="20.0" />
          </font>

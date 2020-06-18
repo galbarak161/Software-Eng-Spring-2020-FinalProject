@@ -76,7 +76,6 @@ public class AbstractTest extends AbstractController {
 					startTimeSec = 0;
 					startTimeHour = 0;
 					setStudentAnswer();
-					showMsg("Test's Time is up", "Test is over and will be send to review");
 					finishTest();
 					return;
 
