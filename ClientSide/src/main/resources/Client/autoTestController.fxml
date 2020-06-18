@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.autoTestController">
    <children>
-      <Label fx:id="nameLabel" layoutX="296.0" layoutY="31.0" text="Test Name">
+      <Label fx:id="nameLabel" contentDisplay="CENTER" layoutX="218.0" layoutY="30.0" prefHeight="31.0" prefWidth="309.0">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>

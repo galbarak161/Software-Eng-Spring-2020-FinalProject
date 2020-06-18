@@ -199,12 +199,12 @@ public class testEntracnce extends AbstractTest {
 			uploadedAnswer = "No uploaded file";
 		finishedTest.setMaunalTest(uploadedAnswer);
 		finishedTest.setUploadedFile(uploadedFile);
-		showMsg("Test Finished", "Test is over and will be send to review");
 		try {
 			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+		showMsg("Test's Time is up", "Test is over and will be send to review (if you didn't upload a file please notify the teacher)");
 		Stage stage;
 		stage = (Stage) timerText.getScene().getWindow();
 		stage.close();

@@ -73,11 +73,16 @@ public class showStudentTests extends AbstractController {
 		
 		if (testsList.getSelectionModel().getSelectedItem() != null) {
 			if (testsList.getSelectionModel().getSelectedItem().getTest().getType() == ExamType.Manual) {
-				InputStream fis = new FileInputStream(testsList.getSelectionModel().getSelectedItem().getUploadedFile());
-				POITextExtractor extractor;
-				XWPFDocument doc = new XWPFDocument(fis);
-				extractor = new XWPFWordExtractor(doc);
-				String extractedText = extractor.getText();
+				String extractedText;
+				if(testsList.getSelectionModel().getSelectedItem().getUploadedFile() == null)
+					extractedText = "No test has been uploaded";
+				else {
+					InputStream fis = new FileInputStream(testsList.getSelectionModel().getSelectedItem().getUploadedFile());
+					POITextExtractor extractor;
+					XWPFDocument doc = new XWPFDocument(fis);
+					extractor = new XWPFWordExtractor(doc);
+					extractedText = extractor.getText();
+				}
 		        TextArea textArea = new TextArea();
 		        textArea.autosize();
 		        textArea.setText(extractedText);

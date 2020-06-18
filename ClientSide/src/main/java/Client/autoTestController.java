@@ -226,7 +226,7 @@ public class autoTestController extends  AbstractTest {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		showMsg("Test Finished", "Test is over and will be send to review");
+		showMsg("Test's Time is up", "Test is over and will be send to review");
 		Stage stage;
 		stage = (Stage) timerText.getScene().getWindow();
 		stage.close();
