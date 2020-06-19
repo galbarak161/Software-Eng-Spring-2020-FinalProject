@@ -85,11 +85,21 @@ public class DoTestController {
 	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) throws Exception {
 		try {
 			Test t = serverHandler.getTestByExamCode(studentStartTest.getEexecutionCode());
+			if(t == null)
+				throw new Exception("Error. Invalid execution code");
+			
+			Exam e = serverHandler.getExmaByCloneId(t.getExamToExecute().getId());
+			if(e == null)
+				throw new Exception("Error. Please try again");
+			
 			StudentTest st = serverHandler.getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
+			if(st == null)
+				throw new Exception("You're not registered to " + e.getCourse().getCourseName() + " therefore you cannot enter the test.");
+			
 			TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
 
-			if(t == null || st == null || statistics == null)
-				throw new Exception("Error. Invalid perrmitions to start test");
+			if(statistics == null)
+				throw new Exception("Error. Please try again");
 			
 			st.setStartTime(LocalTime.now());
 			statistics.increaseNumberOfStudentsInTest();
@@ -101,7 +111,8 @@ public class DoTestController {
 			List<Object> toSend = new ArrayList<>();
 			toSend.add(st.createClone());
 			List<CloneQuestionInExam> qToSend = new ArrayList<>();
-			for (QuestionInExam q : st.getTest().getExamToExecute().getQuestionInExam())
+			
+			for (QuestionInExam q : e.getQuestionInExam())
 				qToSend.add(q.createClone());
 			toSend.add(qToSend);
 			return toSend;
