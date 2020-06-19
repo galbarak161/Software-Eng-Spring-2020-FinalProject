@@ -64,7 +64,7 @@ public class studentController extends AbstractController {
 		if (!(testStage.getModality() == Modality.APPLICATION_MODAL))
 			testStage.initModality(Modality.APPLICATION_MODAL);
 		
-
+		
 		sendRequest(ClientToServerOpcodes.GetAllStudentTests, ClientMain.getUser());
 
 	}

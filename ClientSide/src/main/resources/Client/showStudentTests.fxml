@@ -20,8 +20,8 @@
             <TableColumn fx:id="nameCol" prefWidth="217.0" text="Student Name" />
           <TableColumn fx:id="idCol" prefWidth="194.0" text="Student ID" />
           <TableColumn fx:id="emailCol" prefWidth="189.0" text="Email" />
-            <TableColumn fx:id="statusCol" prefWidth="75.0" text="Status" />
-            <TableColumn fx:id="gradeCol" minWidth="0.0" prefWidth="107.0" text="Grade" />
+            <TableColumn fx:id="statusCol" prefWidth="102.0" text="Status" />
+            <TableColumn fx:id="gradeCol" minWidth="0.0" prefWidth="0.0" text="Grade" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

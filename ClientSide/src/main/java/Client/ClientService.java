@@ -245,6 +245,7 @@ public class ClientService extends AbstractClient {
 						((testEntracnce) o).checkTestType((List<Object>) de.getData());
 					else
 						((testEntracnce) o).popError("Error", "Your code is invalid or your test didn't start yet");
+					break;
 				case SendTimeExtensionResult:
 					if((int)de.getData() != -1)
 						((testEntracnce) o).updateTimer((int)de.getData());
@@ -254,8 +255,8 @@ public class ClientService extends AbstractClient {
 			case "autoTestController":
 				switch (de.getOpCodeFromServer()) {
 				case StudentFinishedTestResult:
-					((autoTestController) o).showMsg("Test Successful Submission",
-							"Test has been successfully submitted!");
+//					((autoTestController) o).showMsg("Test Successful Submission",
+//							"Test has been successfully submitted!");
 					break;
 				case SendTimeExtensionResult:
 					if((int)de.getData() != -1)
