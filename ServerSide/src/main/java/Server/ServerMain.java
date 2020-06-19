@@ -55,12 +55,6 @@ public class ServerMain extends AbstractServer {
 				} else
 					System.out.println("Server ready!");
 			}
-
-			try {
-				this.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
