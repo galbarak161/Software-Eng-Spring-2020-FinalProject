@@ -215,6 +215,10 @@ public class DoTestController {
 			return -1;
 		}
 
+		for (CloneStudentTest cloneSt : cloneStudentTests) {
+			System.out.println("new Grade: " + cloneSt.getGrade() + " new Check notes: " + cloneSt.getExamCheckNotes());
+		}
+		
 		Test test = serverHandler.getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
 		test.setStatus(TestStatus.Done);
 
