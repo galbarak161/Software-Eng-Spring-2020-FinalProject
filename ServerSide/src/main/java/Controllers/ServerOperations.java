@@ -16,7 +16,12 @@ public class ServerOperations {
 
 	private ServerOperations() {}
 
-	// static method to create instance of Singleton class
+	/**
+	 * 
+	 *  static method to create instance of Singleton class
+	 *  
+	 * @return instance of Singleton class
+	 */
 	public static ServerOperations getInstance() {
 		if (single_instance == null)
 			single_instance = new ServerOperations();

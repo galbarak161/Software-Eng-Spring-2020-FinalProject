@@ -99,6 +99,15 @@ public class HibernateMain {
 		System.err.println("Hibernate: An error occured, changes have been rolled back.");
 	}
 
+	/**
+	 * insertDataToDB(T newEntitiy)
+	 * 
+	 * given an entity , function add said entity to Data Base
+	 * 
+	 * @param <T>
+	 * @param newEntitiy
+	 * @return
+	 */
 	public static <T> int insertDataToDB(T newEntitiy) {
 		int status = 1;
 		try {
@@ -114,6 +123,15 @@ public class HibernateMain {
 		return status;
 	}
 
+	/**
+	 *  UpdateDataInDB(T entitiy)
+	 *  
+	 *  given an entities updates said entity in Data Base
+	 *  
+	 * @param <T>
+	 * @param entitiy to be updates
+	 * @return 1, if all went well -1 otherwise
+	 */
 	public static <T> int UpdateDataInDB(T entitiy) {
 		int status = 1;
 		try {

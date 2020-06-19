@@ -16,7 +16,12 @@ import UtilClasses.StudentStartTest;
 public class DoTestController {
 
 	private ServerOperations serverHandler = null;
-
+	
+	
+	
+	/**
+	 *  create instance of Singleton class
+	 */
 	public DoTestController() {
 		serverHandler = ServerOperations.getInstance();
 	}
@@ -338,6 +343,17 @@ public class DoTestController {
 		return cloneRequests;
 	}
 
+	/**
+	 * 
+	 * handleSendTimeExtensionRequestsRelatedToTest(int testId)
+	 * 
+	 * function receives test id and return most recent time request added minutes confirmed by principle
+	 * that is  related to the  test
+	 * 
+	 * @param testId
+	 * @return time added by latest confirmed  time request , if no request was found return -1;
+	 * @throws Exception
+	 */
 	public int handleSendTimeExtensionRequestsRelatedToTest(int testId) throws Exception {
 		List<TimeExtensionRequest> listFromDB = HibernateMain.getDataFromDB(TimeExtensionRequest.class);
 		try {

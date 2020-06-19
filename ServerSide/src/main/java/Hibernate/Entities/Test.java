@@ -210,6 +210,13 @@ public class Test {
 		return numberOfQuestionInExam;
 	}
 
+	/**
+	 * TestCodeGenerator()
+	 * 
+	 * generated code of four characters and comprised of numbers and letters.
+	 * 
+	 * @return four number code
+	 */
 	public String TestCodeGenerator() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'

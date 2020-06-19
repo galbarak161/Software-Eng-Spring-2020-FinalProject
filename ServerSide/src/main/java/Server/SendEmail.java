@@ -62,6 +62,15 @@ public class SendEmail implements Runnable {
 		//sendMessage(to, type);
 	}
 
+	
+	/**
+	 * sendMessage(String to, MessageType type)
+	 * 
+	 * function receives email address and a type of message  to be send and sends that  email.
+	 * 
+	 * @param to email
+	 * @param type
+	 */
 	private void sendMessage(String to, MessageType type) {
 		String sub, msg;
 
