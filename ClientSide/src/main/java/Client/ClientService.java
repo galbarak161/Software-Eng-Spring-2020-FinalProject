@@ -78,7 +78,10 @@ public class ClientService extends AbstractClient {
 			if (currControlName.equals("loginController"))
 				((loginController) o).showErrorLabel();
 			else
-				((AbstractController) o).popError("Error", "Couldn't get info from server");
+				if (de.getData() instanceof String)
+					((AbstractController) o).popError("Error", (String)de.getData());
+				else
+					((AbstractController) o).popError("Error", "Couldn't get info from server");	
 			return;
 		}
 
