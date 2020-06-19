@@ -1,9 +1,6 @@
 package Hibernate.Entities;
 
 import java.io.File;
-import java.nio.charset.Charset;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +55,7 @@ public class StudentTest {
 
 	public StudentTest(Student student, Test test) {
 		this.grade = -1;
-		this.examCheckNotes = "";
+		this.examCheckNotes = "N\\A";
 		this.status = StudentTestStatus.Scheduled;
 		this.startTime = null;
 		this.actualTestDurationInMinutes = -1;
@@ -71,6 +68,7 @@ public class StudentTest {
 	public CloneStudentTest createClone() {
 		CloneStudentTest clone = new CloneStudentTest(id, student.createClone(), test.createClone(), startTime, grade,
 				actualTestDurationInMinutes, examCheckNotes, status);
+		
 		if(this.getTest().getType()== ExamType.Manual)
 			clone.setUploadedFile(copyOfManualTest);
 		return clone;
@@ -108,6 +106,10 @@ public class StudentTest {
 	
 	public String getExamCheckNotes() {
 		return examCheckNotes;
+	}
+	
+	public void setExamCheckNotes(String examCheckNotes) {
+		this.examCheckNotes = examCheckNotes;
 	}
 	
 	public StudentTestStatus getStatus() {
@@ -148,5 +150,5 @@ public class StudentTest {
 
 	public void setCopyOfManualTest(File copyOfManualTest) {
 		this.copyOfManualTest = copyOfManualTest;
-	}
+	}	
 }

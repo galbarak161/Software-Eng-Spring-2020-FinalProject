@@ -30,8 +30,6 @@ public class CloneStudentTest implements Serializable {
 	private LocalTime startTime;
 
 	private int actualTestDurationInMinutes;
-
-	private String copyOfManualTest;
 	
 	private File uploadedFile;
 	
@@ -47,14 +45,6 @@ public class CloneStudentTest implements Serializable {
 		this.examCheckNotes = examCheckNotes;
 		this.status = status;
 		this.answers = new CloneAnswerToQuestion[test.getNumberOfQuestions()];
-	}
-	
-	public String getMaunalTest() {
-		return copyOfManualTest;
-	}
-
-	public void setMaunalTest(String maunalTest) {
-		this.copyOfManualTest = maunalTest;
 	}
 
 	public int getId() {

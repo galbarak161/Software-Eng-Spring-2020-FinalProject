@@ -83,42 +83,39 @@ public class DoTestController {
 	 * @throws Exception
 	 */
 	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) throws Exception {
-		try {
-			Test t = serverHandler.getTestByExamCode(studentStartTest.getEexecutionCode());
-			if(t == null)
-				throw new Exception("Error. Invalid execution code");
-			
-			Exam e = serverHandler.getExmaByCloneId(t.getExamToExecute().getId());
-			if(e == null)
-				throw new Exception("Error. Please try again");
-			
-			StudentTest st = serverHandler.getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
-			if(st == null)
-				throw new Exception("You're not registered to " + e.getCourse().getCourseName() + " therefore you cannot enter the test.");
-			
-			TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
+		Test t = serverHandler.getTestByExamCode(studentStartTest.getEexecutionCode());
+		if (t == null)
+			throw new Exception("Error. Invalid execution code");
 
-			if(statistics == null)
-				throw new Exception("Error. Please try again");
-			
-			st.setStartTime(LocalTime.now());
-			statistics.increaseNumberOfStudentsInTest();
+		Exam e = serverHandler.getExmaByCloneId(t.getExamToExecute().getId());
+		if (e == null)
+			throw new Exception("Error. Please try again");
 
-			HibernateMain.UpdateDataInDB(st);
-			Thread.sleep(100);
-			HibernateMain.UpdateDataInDB(statistics);
+		StudentTest st = serverHandler.getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
+		if (st == null)
+			throw new Exception("You're not registered to " + e.getCourse().getCourseName()
+					+ " therefore you cannot enter the test.");
 
-			List<Object> toSend = new ArrayList<>();
-			toSend.add(st.createClone());
-			List<CloneQuestionInExam> qToSend = new ArrayList<>();
-			
-			for (QuestionInExam q : e.getQuestionInExam())
-				qToSend.add(q.createClone());
-			toSend.add(qToSend);
-			return toSend;
-		} catch (Exception e) {
-			throw e;
-		}
+		TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
+
+		if (statistics == null)
+			throw new Exception("Error. Please try again");
+
+		st.setStartTime(LocalTime.now());
+		statistics.increaseNumberOfStudentsInTest();
+
+		HibernateMain.UpdateDataInDB(st);
+		Thread.sleep(100);
+		HibernateMain.UpdateDataInDB(statistics);
+
+		List<Object> toSend = new ArrayList<>();
+		toSend.add(st.createClone());
+		List<CloneQuestionInExam> qToSend = new ArrayList<>();
+
+		for (QuestionInExam q : e.getQuestionInExam())
+			qToSend.add(q.createClone());
+		toSend.add(qToSend);
+		return toSend;
 	}
 
 	/**
@@ -224,6 +221,7 @@ public class DoTestController {
 			for (CloneStudentTest cStudentTest : cloneStudentTests) {
 				if (cStudentTest.getStudent().getId() == studentTest.getStudent().getId()) {
 					studentTest.setGrade(cStudentTest.getGrade());
+					studentTest.setExamCheckNotes(cStudentTest.getExamCheckNotes());
 					studentTest.setStatus(StudentTestStatus.Done);
 
 					HibernateMain.UpdateDataInDB(studentTest);
@@ -236,7 +234,6 @@ public class DoTestController {
 				}
 			}
 		}
-
 		return 1;
 	}
 
@@ -268,7 +265,7 @@ public class DoTestController {
 		HibernateMain.UpdateDataInDB(test);
 
 		Principal p = serverHandler.getPrincipalUser();
-		
+
 		SendEmail mailer = new SendEmail(p.getEmailAddress(), MessageType.NewTimeExtensionRequest);
 		Thread mailThread = new Thread(mailer);
 		mailThread.start();

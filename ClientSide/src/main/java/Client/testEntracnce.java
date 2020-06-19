@@ -197,7 +197,6 @@ public class testEntracnce extends AbstractTest {
 		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
 		if (uploadedAnswer == null || uploadedFile == null)
 			uploadedAnswer = "No uploaded file";
-		finishedTest.setMaunalTest(uploadedAnswer);
 		finishedTest.setUploadedFile(uploadedFile);
 		try {
 			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
