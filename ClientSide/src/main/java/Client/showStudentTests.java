@@ -8,6 +8,9 @@ import java.util.List;
 import org.apache.poi.POITextExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
@@ -97,8 +100,14 @@ public class showStudentTests extends AbstractController {
 		} else
 			popError("Error", "Please choose a test");
 	}
+	
+	public void shutdown() {
+		EventBus.getDefault().unregister(this);
+	}
 
+	@SuppressWarnings("unchecked")
 	public void initialize() {
+		EventBus.getDefault().register(this);
 		nameCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StudentName"));
 
 		idCol.setCellValueFactory(new PropertyValueFactory<CloneStudentTest, String>("StudentID"));
@@ -120,9 +129,9 @@ public class showStudentTests extends AbstractController {
 				}
 			}
 		});
-		
 		testsList.getColumns().setAll(nameCol, idCol, emailCol,statusCol, gradeCol);
 		testsList.setEditable(true);
+		
 	}
 	
 	@Override
@@ -153,6 +162,11 @@ public class showStudentTests extends AbstractController {
 		List<CloneStudentTest> toSend = new ArrayList<>();
 		for (CloneStudentTest st : testsList.getItems())
 			toSend.add(st);
+		for (CloneStudentTest st : toSend) {
+			System.out.println(st.getExamCheckNotes());
+			System.out.println(st.getGrade());
+		}
+			
 		try {
 			GetDataFromDB(ClientToServerOpcodes.TeacherUpdateGrade, toSend);
 		} catch (InterruptedException e) {
@@ -171,6 +185,13 @@ public class showStudentTests extends AbstractController {
 	        stage=(Stage) showTest.getScene().getWindow();
 	        stage.close();
 		});
+	}
+	
+	@Subscribe
+	public void onEvent(updateNotes notes)
+	{
+		testsList.getItems().
+		get(testsList.getItems().indexOf(notes.getStudentTest())).setExamCheckNotes(notes.getNotesToUpdate());
 	}
 
 }

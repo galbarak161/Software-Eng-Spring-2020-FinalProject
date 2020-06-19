@@ -30,7 +30,8 @@
          </font>
       </Label>
       <Label layoutX="52.0" layoutY="472.0" prefHeight="18.0" prefWidth="127.0" text="Comments by teacher:" />
-      <TextArea fx:id="TeacherCommentField" editable="false" layoutX="179.0" layoutY="471.0" prefHeight="75.0" prefWidth="432.0" />
+      <TextArea fx:id="TeacherCommentField" editable="false" layoutX="179.0" layoutY="471.0" prefHeight="75.0" prefWidth="406.0" />
       <Button fx:id="ShowQuestionButton" layoutX="611.0" layoutY="244.0" mnemonicParsing="false" onAction="#onClickedQuestion" text="Show Question" />
+      <Button fx:id="saveButton" layoutX="619.0" layoutY="496.0" mnemonicParsing="false" onAction="#onClickedSave" text="Save Comments" visible="false" />
    </children>
 </AnchorPane>

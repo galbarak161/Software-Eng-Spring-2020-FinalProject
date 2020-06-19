@@ -2,10 +2,15 @@ package Client;
 
 import java.util.List;
 
+import org.greenrobot.eventbus.EventBus;
+
 import CloneEntities.CloneAnswerToQuestion;
 import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
+import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.TestStatus;
+import CloneEntities.CloneUser.UserType;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -18,6 +23,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class showStudentTest extends AbstractController {
@@ -49,7 +55,10 @@ public class showStudentTest extends AbstractController {
 	@FXML
 	private Button ShowQuestionButton;
 
-	private CloneExam thisExam;
+	@FXML
+	private Button saveButton;
+
+	private CloneStudentTest thisTest;
 
 	public void initialize() {
 		questionName.setCellValueFactory(new PropertyValueFactory<CloneAnswerToQuestion, String>("Name"));
@@ -62,22 +71,27 @@ public class showStudentTest extends AbstractController {
 
 		questionsTable.getColumns().setAll(questionName, answerCol, gradeCol, pointsCol);
 	}
-	
+
 	@Override
 	protected <T> void setFields(T selectedItem) {
 		try {
-			setFields((CloneStudentTest)selectedItem);
+			setFields((CloneStudentTest) selectedItem);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void setFields(CloneStudentTest st) throws InterruptedException {
 		TeacherCommentField.setText(st.getExamCheckNotes());
+		if (ClientMain.getUser().getUserType() == UserType.Teacher
+				&& st.getTest().getStatusEnum() == TestStatus.PendingApproval) {
+			TeacherCommentField.setEditable(true);
+			saveButton.setVisible(true);
+		}
+
 		GradeLabel.setText(String.valueOf(st.getGrade()));
 		TestNameLabel.setText(st.getTest().getExamToExecute().getExamName());
-		TeacherCommentField.setText(st.getTest().getExamToExecute().getTeacherComments());
 
 		questionsTable.setRowFactory(
 				(Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>) new Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>() {
@@ -100,7 +114,7 @@ public class showStudentTest extends AbstractController {
 					}
 				});
 
-		thisExam = st.getTest().getExamToExecute();
+		thisTest = st;
 
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAnswersToExamOfStudentTest, st);
@@ -115,7 +129,8 @@ public class showStudentTest extends AbstractController {
 		Platform.runLater(() -> {
 			questionsTable.setItems(questions);
 			try {
-				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInExamRelatedToExam, thisExam);
+				GetDataFromDB(ClientToServerOpcodes.GetAllQuestionInExamRelatedToExam,
+						thisTest.getTest().getExamToExecute());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -135,5 +150,13 @@ public class showStudentTest extends AbstractController {
 			newWindow(questionsTable, new showQuestion(), "showQuestion.fxml",
 					"Question " + questionsTable.getSelectionModel().getSelectedItem().getQuestion().getSubject());
 		}
+	}
+
+	@FXML
+	void onClickedSave(ActionEvent event) {
+		EventBus.getDefault().post(new updateNotes(TeacherCommentField.getText(), thisTest));
+		Stage stage;
+		stage = (Stage) GradeLabel.getScene().getWindow();
+		stage.close();
 	}
 }

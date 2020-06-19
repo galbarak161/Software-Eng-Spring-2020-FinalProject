@@ -221,12 +221,13 @@ public class autoTestController extends  AbstractTest {
 	protected void finishTest() {
 		finishedTest.setactualTestDurationInMinutes((newHour * 60) + newMinute);
 		finishedTest.setAnswers(questionsAns);
+		showMsg("Test Successful Submission",
+				"Test has been successfully submitted!");
 		try {
 			GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		showMsg("Test's Time is up", "Test is over and will be send to review");
 		Stage stage;
 		stage = (Stage) timerText.getScene().getWindow();
 		stage.close();
