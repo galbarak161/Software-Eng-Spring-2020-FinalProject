@@ -36,6 +36,7 @@ import UtilClasses.Login;
 public class HibernateMain {
 	static Session session;
 	static boolean hibernateSessionStatus = false;
+	static boolean writeLock = false;
 
 	/**
 	 * The function create the session between the server and DB
@@ -79,7 +80,10 @@ public class HibernateMain {
 	 * @return List of entities from type <T>
 	 * @throws Exception
 	 */
-	public static <T> List<T> getDataFromDB(Class<T> entity) throws Exception {
+	public static synchronized <T> List<T> getDataFromDB(Class<T> entity) throws Exception {
+		while(HibernateMain.writeLock) {
+			Thread.onSpinWait();
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(entity);
 		Root<T> rootEntry = criteriaQuery.from(entity);
@@ -92,7 +96,7 @@ public class HibernateMain {
 	 * Function to handle Errors in Hibernate Every Bibernate exception will be
 	 * handle by this function
 	 */
-	public static void hibernateRollBake() {
+	public static void hibernateRollBack() {
 		if (session != null) {
 			session.getTransaction().rollback();
 		}
@@ -108,18 +112,22 @@ public class HibernateMain {
 	 * @param newEntitiy
 	 * @return
 	 */
-	public static <T> int insertDataToDB(T newEntitiy) {
+	public static synchronized <T> int insertDataToDB(T newEntitiy) {
 		int status = 1;
 		try {
+			HibernateMain.writeLock = true;
 			session.beginTransaction();
 			session.save(newEntitiy);
 			session.flush();
 			session.clear();
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			hibernateRollBake();
+			hibernateRollBack();
 			status = -1;
 		}
+		finally {
+			HibernateMain.writeLock = false;		
+		}		
 		return status;
 	}
 
@@ -132,16 +140,20 @@ public class HibernateMain {
 	 * @param entitiy to be updates
 	 * @return 1, if all went well -1 otherwise
 	 */
-	public static <T> int UpdateDataInDB(T entitiy) {
+	public static synchronized <T> int UpdateDataInDB(T entitiy) {
 		int status = 1;
 		try {
+			HibernateMain.writeLock = true;
 			session.beginTransaction();
 			session.evict(entitiy);
 			session.update(entitiy);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			hibernateRollBake();
+			hibernateRollBack();
 			status = -1;
+		}
+		finally {
+			HibernateMain.writeLock = false;	
 		}
 		return status;
 	}
@@ -418,7 +430,7 @@ public class HibernateMain {
 			status = true;
 
 		} catch (Exception exception) {
-			hibernateRollBake();
+			hibernateRollBack();
 			status = false;
 			exception.printStackTrace();
 		}
