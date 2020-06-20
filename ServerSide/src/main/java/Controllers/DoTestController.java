@@ -90,17 +90,17 @@ public class DoTestController {
 	public List<Object> handleStudentStartsTest(StudentStartTest studentStartTest) throws Exception {
 		Test t = serverHandler.getTestByExamCode(studentStartTest.getEexecutionCode());
 		if (t == null)
-			throw new Exception("Error. Invalid execution code");
+			throw new Exception("Invalid execution code");
 
 		if (t.getStatus() == TestStatus.Scheduled)
-			throw new Exception("Error. Test has not started yet");
+			throw new Exception("Test has not started yet");
 
 		if (t.getStatus() == TestStatus.Done || t.getStatus() == TestStatus.PendingApproval)
-			throw new Exception("Error. Test is over");
+			throw new Exception("Test is over");
 
 		Exam e = serverHandler.getExmaByCloneId(t.getExamToExecute().getId());
 		if (e == null)
-			throw new Exception("Error. Please try again");
+			throw new Exception("Please try again");
 
 		StudentTest st = serverHandler.getStudntTestInTestIdByUserId(t, studentStartTest.getUserId());
 		if (st == null)
@@ -108,10 +108,10 @@ public class DoTestController {
 					+ " therefore you cannot enter the test.");
 
 		if (st.getStatus() == StudentTestStatus.Done || st.getStatus() == StudentTestStatus.WaitingForResult)
-			throw new Exception("Error. Test is over");
+			throw new Exception("Test is over");
 
 		if (st.getStatus() == StudentTestStatus.Scheduled)
-			throw new Exception("Error. Test has not started yet");
+			throw new Exception("Test has not started yet");
 
 		TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
 
