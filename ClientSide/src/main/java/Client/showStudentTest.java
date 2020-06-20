@@ -106,7 +106,8 @@ public class showStudentTest extends AbstractController {
 			TeacherCommentField.setEditable(true);
 			saveButton.setVisible(true);
 		}
-
+		
+		thisTest = st;
 		GradeLabel.setText(String.valueOf(st.getGrade()));
 		TestNameLabel.setText(st.getTest().getExamToExecute().getExamName());
 
@@ -150,14 +151,12 @@ public class showStudentTest extends AbstractController {
 					}
 				});
 
-		thisTest = st;
-
 		try {
 			GetDataFromDB(ClientToServerOpcodes.GetAnswersToExamOfStudentTest, st);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Thread.sleep(1500);
+		Thread.sleep(800);
 
 	}
 
