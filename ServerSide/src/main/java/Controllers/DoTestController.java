@@ -18,11 +18,9 @@ import UtilClasses.updateNotes;
 public class DoTestController {
 
 	private ServerOperations serverHandler = null;
-	
-	
-	
+
 	/**
-	 *  create instance of Singleton class
+	 * create instance of Singleton class
 	 */
 	public DoTestController() {
 		serverHandler = ServerOperations.getInstance();
@@ -94,6 +92,12 @@ public class DoTestController {
 		if (t == null)
 			throw new Exception("Error. Invalid execution code");
 
+		if (t.getStatus() == TestStatus.Scheduled)
+			throw new Exception("Error. Test has not started yet");
+
+		if (t.getStatus() == TestStatus.Done || t.getStatus() == TestStatus.PendingApproval)
+			throw new Exception("Error. Test is over");
+
 		Exam e = serverHandler.getExmaByCloneId(t.getExamToExecute().getId());
 		if (e == null)
 			throw new Exception("Error. Please try again");
@@ -102,6 +106,12 @@ public class DoTestController {
 		if (st == null)
 			throw new Exception("You're not registered to " + e.getCourse().getCourseName()
 					+ " therefore you cannot enter the test.");
+
+		if (st.getStatus() == StudentTestStatus.Done || st.getStatus() == StudentTestStatus.WaitingForResult)
+			throw new Exception("Error. Test is over");
+
+		if (st.getStatus() == StudentTestStatus.Scheduled)
+			throw new Exception("Error. Test has not started yet");
 
 		TestStatistics statistics = serverHandler.getTestStatisticsByTestId(st.getTest().getId());
 
@@ -218,13 +228,12 @@ public class DoTestController {
 		}
 		List<CloneStudentTest> cloneStudentTests = new ArrayList<>();
 		for (updateNotes cloneSt : updateArr) {
-			System.out.println("new Grade: " + cloneSt.getGrade() + " new Check notes: " + cloneSt.getNotesToUpdate());
 			CloneStudentTest toAdd = cloneSt.getStudentTest();
 			toAdd.setGrade(cloneSt.getGrade());
 			toAdd.setExamCheckNotes(cloneSt.getNotesToUpdate());
 			cloneStudentTests.add(toAdd);
 		}
-		
+
 		Test test = serverHandler.getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
 		test.setStatus(TestStatus.Done);
 
@@ -357,11 +366,12 @@ public class DoTestController {
 	 * 
 	 * handleSendTimeExtensionRequestsRelatedToTest(int testId)
 	 * 
-	 * function receives test id and return most recent time request added minutes confirmed by principle
-	 * that is  related to the  test
+	 * function receives test id and return most recent time request added minutes
+	 * confirmed by principle that is related to the test
 	 * 
 	 * @param testId
-	 * @return time added by latest confirmed  time request , if no request was found return -1;
+	 * @return time added by latest confirmed time request , if no request was found
+	 *         return -1;
 	 * @throws Exception
 	 */
 	public int handleSendTimeExtensionRequestsRelatedToTest(int testId) throws Exception {
