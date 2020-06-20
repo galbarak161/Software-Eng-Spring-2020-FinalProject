@@ -115,10 +115,15 @@ public class testEntracnce extends AbstractTest {
 		        //event.consume();
 		    }
 		});
-		if (finishedTest.getStatus() != StudentTestStatus.Ongoing) {
+		if (finishedTest.getStatus() == StudentTestStatus.Scheduled) {
+			popError("Error", "Test didn't start yet");
+			return;
+		} else if (finishedTest.getStatus() == StudentTestStatus.Done ||
+				finishedTest.getStatus() == StudentTestStatus.WaitingForResult) {
 			popError("Error", "Test is over");
 			return;
 		}
+			
 		codeLabel.setVisible(false);
 		codeText.setVisible(false);
 		startButton.setVisible(false);

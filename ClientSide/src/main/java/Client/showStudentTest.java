@@ -1,7 +1,14 @@
 package Client;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.poi.POITextExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.greenrobot.eventbus.EventBus;
 
 import CloneEntities.CloneAnswerToQuestion;
@@ -9,20 +16,27 @@ import CloneEntities.CloneExam;
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
 import CloneEntities.CloneTest;
+import CloneEntities.CloneTest.ExamType;
 import CloneEntities.CloneTest.TestStatus;
 import CloneEntities.CloneUser.UserType;
+import UtilClasses.updateNotes;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -58,6 +72,9 @@ public class showStudentTest extends AbstractController {
 	@FXML
 	private Button saveButton;
 
+	@FXML
+	private TextArea manualText;
+
 	private CloneStudentTest thisTest;
 
 	public void initialize() {
@@ -76,13 +93,13 @@ public class showStudentTest extends AbstractController {
 	protected <T> void setFields(T selectedItem) {
 		try {
 			setFields((CloneStudentTest) selectedItem);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void setFields(CloneStudentTest st) throws InterruptedException {
+	public void setFields(CloneStudentTest st) throws InterruptedException, IOException {
 		TeacherCommentField.setText(st.getExamCheckNotes());
 		if (ClientMain.getUser().getUserType() == UserType.Teacher
 				&& st.getTest().getStatusEnum() == TestStatus.PendingApproval) {
@@ -92,6 +109,25 @@ public class showStudentTest extends AbstractController {
 
 		GradeLabel.setText(String.valueOf(st.getGrade()));
 		TestNameLabel.setText(st.getTest().getExamToExecute().getExamName());
+
+		if (st.getTest().getType() == ExamType.Manual) {
+			questionsTable.setVisible(false);
+			ShowQuestionButton.setVisible(false);
+			manualText.setVisible(true);
+			String extractedText;
+			if (st.getUploadedFile() == null)
+				extractedText = "No test has been uploaded";
+			else {
+				InputStream fis = new FileInputStream(
+						st.getUploadedFile());
+				POITextExtractor extractor;
+				XWPFDocument doc = new XWPFDocument(fis);
+				extractor = new XWPFWordExtractor(doc);
+				extractedText = extractor.getText();
+			}
+			manualText.setText(extractedText);
+			return;
+		}
 
 		questionsTable.setRowFactory(
 				(Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>) new Callback<TableView<CloneAnswerToQuestion>, TableRow<CloneAnswerToQuestion>>() {
@@ -121,7 +157,7 @@ public class showStudentTest extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Thread.sleep(150);
+		Thread.sleep(1500);
 
 	}
 

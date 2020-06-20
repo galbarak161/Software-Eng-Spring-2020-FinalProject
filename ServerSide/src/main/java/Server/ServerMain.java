@@ -223,7 +223,7 @@ public class ServerMain extends AbstractServer {
 				break;
 
 			case TeacherUpdateGrade:
-				dataToClient = doTestController.handleTeacherUpdateGrade((List<CloneStudentTest>) de.getData());
+				dataToClient = doTestController.handleTeacherUpdateGrade((List<updateNotes>) de.getData());
 				de.setOpCodeFromServer(DataElements.ServerToClientOpcodes.TeacherUpdateGradeResult);
 				de.setData(dataToClient);
 				break;
