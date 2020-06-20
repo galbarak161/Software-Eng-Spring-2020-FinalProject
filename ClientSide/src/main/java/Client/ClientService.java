@@ -85,9 +85,6 @@ public class ClientService extends AbstractClient {
 			return;
 		}
 
-		/*
-		 * 
-		 */
 		try {
 
 			switch (currControlName) {
@@ -254,10 +251,6 @@ public class ClientService extends AbstractClient {
 				break;
 			case "autoTestController":
 				switch (de.getOpCodeFromServer()) {
-				case StudentFinishedTestResult:
-//					((autoTestController) o).showMsg("Test Successful Submission",
-//							"Test has been successfully submitted!");
-					break;
 				case SendTimeExtensionResult:
 					if((int)de.getData() != -1)
 						((autoTestController) o).updateTimer((int)de.getData());

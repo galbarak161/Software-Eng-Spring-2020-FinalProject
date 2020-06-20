@@ -2,6 +2,7 @@ package Controllers;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import CloneEntities.*;
 import CloneEntities.CloneStudentTest.StudentTestStatus;
@@ -12,6 +13,7 @@ import Hibernate.Entities.*;
 import Server.SendEmail;
 import Server.SendEmail.MessageType;
 import UtilClasses.StudentStartTest;
+import UtilClasses.updateNotes;
 
 public class DoTestController {
 
@@ -210,13 +212,17 @@ public class DoTestController {
 	 * @return 1 if all correct -1 if an error happened
 	 * @throws Exception
 	 */
-	public int handleTeacherUpdateGrade(List<CloneStudentTest> cloneStudentTests) throws Exception {
-		if (cloneStudentTests.isEmpty()) {
+	public int handleTeacherUpdateGrade(List<updateNotes> updateArr) throws Exception {
+		if (updateArr.isEmpty()) {
 			return -1;
 		}
-
-		for (CloneStudentTest cloneSt : cloneStudentTests) {
-			System.out.println("new Grade: " + cloneSt.getGrade() + " new Check notes: " + cloneSt.getExamCheckNotes());
+		List<CloneStudentTest> cloneStudentTests = new ArrayList<>();
+		for (updateNotes cloneSt : updateArr) {
+			System.out.println("new Grade: " + cloneSt.getGrade() + " new Check notes: " + cloneSt.getNotesToUpdate());
+			CloneStudentTest toAdd = cloneSt.getStudentTest();
+			toAdd.setGrade(cloneSt.getGrade());
+			toAdd.setExamCheckNotes(cloneSt.getNotesToUpdate());
+			cloneStudentTests.add(toAdd);
 		}
 		
 		Test test = serverHandler.getTestByCloneId(cloneStudentTests.get(0).getTest().getId());
