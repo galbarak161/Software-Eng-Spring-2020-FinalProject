@@ -59,7 +59,7 @@ public class SendEmail implements Runnable {
 	}
 
 	public void run() {
-		//sendMessage(to, type);
+		sendMessage(to, type);
 	}
 
 	

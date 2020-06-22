@@ -168,19 +168,19 @@ public class HibernateMain {
 		final int NUMBER_OF_QUESTIONS = 13;
 
 		// Generate users
-		Student s1 = new Student("123456", "galb", "123", "Gal", "Barak", "galbarak161@gmail.com");
+		Student s1 = new Student("123456", "galb", "123", "Gal", "Barak", "check@gmail.com");
 		session.save(s1);
-		Student s2 = new Student("159753", "abedi", "123", "Abed", "Idres", "id.abed@gmail.com");
+		Student s2 = new Student("159753", "abedi", "123", "Abed", "Idres", "check@gmail.com");
 		session.save(s2);
-		Student s3 = new Student("147963", "ora", "123", "Or", "Ashkenazi", "orash94@gmail.com");
+		Student s3 = new Student("147963", "ora", "123", "Or", "Ashkenazi", "check@gmail.com");
 		session.save(s3);
-		Student s4 = new Student("789321", "sagig", "123", "Sagi", "Gvili", "sagigvili1993@gmail.com");
+		Student s4 = new Student("789321", "sagig", "123", "Sagi", "Gvili", "check@gmail.com");
 		session.save(s4);
-		Teacher t1 = new Teacher("753159", "malkig", "123", "Malki", "Grossman", "id.abed@gmail.com");
+		Teacher t1 = new Teacher("753159", "malkig", "123", "Malki", "Grossman", "check@gmail.com");
 		session.save(t1);
-		Teacher t2 = new Teacher("764129", "lielf", "123", "Liel", "Fridman", "orash94@gmail.com");
+		Teacher t2 = new Teacher("764129", "lielf", "123", "Liel", "Fridman", "check@gmail.com");
 		session.save(t2);
-		Principal d1 = new Principal("456852", "danik", "123", "Dani", "Keren", "sagigvili1993@gmail.com");
+		Principal d1 = new Principal("456852", "danik", "123", "Dani", "Keren", "check@gmail.com");
 		session.save(d1);
 
 		session.flush();

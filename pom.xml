@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>FinalProject</groupId>
 	<artifactId>Parent</artifactId>
-	<version>0.0.2-FinalProject</version>
+	<version>1.0-FinalProject</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>ServerSide</module>

@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>FinalProject</groupId>
 		<artifactId>Parent</artifactId>
-		<version>0.0.2-FinalProject</version>
+		<version>1.0-FinalProject</version>
 	</parent>
 	<artifactId>ClientSide</artifactId>
-	<version>0.0.2</version>
+	<version>1.0</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>FinalProject</groupId>
 			<artifactId>Common</artifactId>
-			<version>0.0.2</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>

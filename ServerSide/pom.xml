@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>FinalProject</groupId>
 		<artifactId>Parent</artifactId>
-		<version>0.0.2-FinalProject</version>
+		<version>1.0-FinalProject</version>
 	</parent>
 	<artifactId>ServerSide</artifactId>
-	<version>0.0.2</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -43,17 +43,7 @@
 		<dependency>
 			<groupId>FinalProject</groupId>
 			<artifactId>Common</artifactId>
-			<version>0.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.10-FINAL</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.10-FINAL</version>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 

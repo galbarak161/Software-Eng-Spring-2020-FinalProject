@@ -5,9 +5,16 @@
 	<parent>
 		<groupId>FinalProject</groupId>
 		<artifactId>Parent</artifactId>
-		<version>0.0.2-FinalProject</version>
+		<version>1.0-FinalProject</version>
 	</parent>
 	<artifactId>Common</artifactId>
-	<version>0.0.2</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+			</resource>
+		</resources>
+	</build>
 </project>
