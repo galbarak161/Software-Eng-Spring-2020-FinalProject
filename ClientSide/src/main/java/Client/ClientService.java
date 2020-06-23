@@ -58,6 +58,7 @@ public class ClientService extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		DataElements de = (DataElements) msg;
+		//System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		Object o = null;
 		
 		String currControlName = (String) controllers.get("curr");

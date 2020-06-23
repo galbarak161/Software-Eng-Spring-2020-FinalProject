@@ -100,8 +100,8 @@ public class AbstractTest extends AbstractController {
 	 * @param addedTime- Amount of time added to test
 	 */
 	public void updateTimer(int addedTime) {
-		synchronized(this) {
-			if (hasBeenExtened)
+		synchronized (this) {
+			if (hasBeenExtened || finishedTest.getTest().getTestDuration() + addedTime < startTimeMin + addedTime)
 				return;
 			hasBeenExtened = true;
 		}
@@ -111,6 +111,10 @@ public class AbstractTest extends AbstractController {
 			startTimeHour++;
 		} else
 			startTimeMin += addedTime % 60;
+//		System.out.println(finishedTest.getTest().getTestDuration());
+//		System.out.println(startTimeMin + (startTimeHour * 60));
+		if ((finishedTest.getTest().getTestDuration()) < (startTimeMin + (startTimeHour * 60)))
+			startTimeMin -= addedTime % 60;
 		showMsg("Time extension approved", addedTime + " minutes has been added to the test");
 	}
 

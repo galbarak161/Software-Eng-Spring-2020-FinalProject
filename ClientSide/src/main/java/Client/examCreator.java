@@ -26,6 +26,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+
 public class examCreator extends AbstractController {
 
 	@FXML
@@ -224,8 +225,9 @@ public class examCreator extends AbstractController {
 			if (nameText.getText().isEmpty())
 				errorsList.append("Exam name is empty\n");
 
-			if (durText.getText().isEmpty() || !durText.getText().matches("[0-9]+"))
-				errorsList.append("Duration is empty\n");
+			if (durText.getText().isEmpty() || !durText.getText().matches("[0-9]+")
+					|| Integer.valueOf(durText.getText()) <= 0)
+				errorsList.append("Duration is empty or invalid\n");
 
 			if (insertedQuestions.getItems().isEmpty())
 				errorsList.append("Please choose at least one question\n");
