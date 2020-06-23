@@ -58,7 +58,6 @@ public class ClientService extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		DataElements de = (DataElements) msg;
-		System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		Object o = null;
 		
 		String currControlName = (String) controllers.get("curr");
@@ -89,11 +88,14 @@ public class ClientService extends AbstractClient {
 
 			switch (currControlName) {
 			case "loginController":
-				ClientMain.setUser((CloneUser) de.getData());
-				try {
-					App.changeStage("mainController", "High School Test System");
-				} catch (IOException e) {
-					e.printStackTrace();
+				if(de.getOpCodeFromServer() == ServerToClientOpcodes.UserLoggedIn && de.getData() instanceof CloneUser)
+				{
+					ClientMain.setUser((CloneUser) de.getData());
+					try {
+						App.changeStage("mainController", "High School Test System");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 				break;
 			case "questionsEditor":

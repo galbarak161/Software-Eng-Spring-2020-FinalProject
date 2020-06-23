@@ -21,16 +21,16 @@ public class AbstractTest extends AbstractController {
 	static List<CloneQuestionInExam> currQuestions;
 
 	/**
-	 * Initiate a timer placed in "timerText" label
-	 * When time is up, call "setStudentAnswer" and "finishTest"
+	 * Initiate a timer placed in "timerText" label When time is up, call
+	 * "setStudentAnswer" and "finishTest"
+	 * 
 	 * @param timerText- Label widget where the timer should be placed in
 	 */
 	public void startTimer(Label timerText) {
-		timerText.setStyle("-fx-font-size: 15px;\r\n" + 
-				"   -fx-font-family: \"Arial Black\";\r\n" + 
-				"   -fx-fill: #818181;\r\n" + 
-				"   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 )");
-		
+		timerText.setStyle(
+				"-fx-font-size: 15px;\r\n" + "   -fx-font-family: \"Arial Black\";\r\n" + "   -fx-fill: #818181;\r\n"
+						+ "   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 )");
+
 		int originalHour = finishedTest.getTest().getTestTime().getHour();
 
 		int originalMinute = finishedTest.getTest().getTestTime().getMinute();
@@ -81,8 +81,8 @@ public class AbstractTest extends AbstractController {
 
 				}
 
-				timerText.setText(
-						String.format("Remaining time: \n%d hours, %d min, %02d sec", startTimeHour, startTimeMin, startTimeSec));
+				timerText.setText(String.format("Remaining time: \n%d hours, %d min, %02d sec", startTimeHour,
+						startTimeMin, startTimeSec));
 			}
 		});
 		startTimeSec = 60;
@@ -94,13 +94,17 @@ public class AbstractTest extends AbstractController {
 	}
 
 	/**
-	 * Called when principal decided to approve a time extension
-	 * We use "hasBeenExtended" to limit the number of time extensions to 1
+	 * Called when principal decided to approve a time extension We use
+	 * "hasBeenExtended" to limit the number of time extensions to 1
+	 * 
 	 * @param addedTime- Amount of time added to test
 	 */
 	public void updateTimer(int addedTime) {
-		if (hasBeenExtened)
-			return;
+		synchronized(this) {
+			if (hasBeenExtened)
+				return;
+			hasBeenExtened = true;
+		}
 		startTimeHour += addedTime / 60;
 		if ((startTimeMin + addedTime % 60) >= 60) {
 			startTimeMin = (startTimeMin + addedTime) % 60;
@@ -108,7 +112,6 @@ public class AbstractTest extends AbstractController {
 		} else
 			startTimeMin += addedTime % 60;
 		showMsg("Time extension approved", addedTime + " minutes has been added to the test");
-		hasBeenExtened = true;
 	}
 
 	/**
@@ -119,8 +122,8 @@ public class AbstractTest extends AbstractController {
 	}
 
 	/**
-	 * Inherit this function and change it according to what should be done
-	 * at the end of a test
+	 * Inherit this function and change it according to what should be done at the
+	 * end of a test
 	 */
 	protected void finishTest() {
 
