@@ -152,10 +152,6 @@ public class showStudentTests extends AbstractController {
 			toAdd.setGrade(st.getGrade());
 			toSend.add(toAdd);
 		}
-		for (updateNotes st : toSend) {
-			System.out.println(st.getNotesToUpdate());
-			System.out.println(st.getGrade());
-		}
 		
 
 		try {

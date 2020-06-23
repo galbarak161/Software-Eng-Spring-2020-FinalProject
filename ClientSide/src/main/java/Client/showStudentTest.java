@@ -148,7 +148,6 @@ public class showStudentTest extends AbstractController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Thread.sleep(800);
 
 	}
 
