@@ -2,6 +2,7 @@ package Client;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import CloneEntities.CloneQuestionInExam;
 import CloneEntities.CloneStudentTest;
@@ -16,7 +17,7 @@ public class AbstractTest extends AbstractController {
 
 	protected Timeline timeline = new Timeline();
 	protected int startTimeSec, startTimeMin, startTimeHour, newHour, newMinute;
-	protected boolean hasBeenExtened = false;
+	protected AtomicBoolean hasBeenExtened = new AtomicBoolean(false);
 	static CloneStudentTest finishedTest;
 	static List<CloneQuestionInExam> currQuestions;
 
@@ -88,6 +89,8 @@ public class AbstractTest extends AbstractController {
 		startTimeSec = 60;
 		startTimeMin = newMinute - 1;
 		startTimeHour = newHour;
+		if(finishedTest.getTest().getExtraMinute() != 0)
+			startTimeMin -= finishedTest.getTest().getExtraMinute();
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(keyframe);
 		timeline.play();
@@ -100,21 +103,17 @@ public class AbstractTest extends AbstractController {
 	 * @param addedTime- Amount of time added to test
 	 */
 	public void updateTimer(int addedTime) {
-		synchronized (this) {
-			if (hasBeenExtened || finishedTest.getTest().getTestDuration() + addedTime < startTimeMin + addedTime)
-				return;
-			hasBeenExtened = true;
-		}
+		timer.cancel();
+		System.out.println("Fucky Fucky");
+		if (hasBeenExtened.get())
+			return;
+		hasBeenExtened.set(true);
 		startTimeHour += addedTime / 60;
 		if ((startTimeMin + addedTime % 60) >= 60) {
 			startTimeMin = (startTimeMin + addedTime) % 60;
 			startTimeHour++;
 		} else
 			startTimeMin += addedTime % 60;
-//		System.out.println(finishedTest.getTest().getTestDuration());
-//		System.out.println(startTimeMin + (startTimeHour * 60));
-		if ((finishedTest.getTest().getTestDuration()) < (startTimeMin + (startTimeHour * 60)))
-			startTimeMin -= addedTime % 60;
 		showMsg("Time extension approved", addedTime + " minutes has been added to the test");
 	}
 

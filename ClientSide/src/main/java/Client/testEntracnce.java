@@ -20,6 +20,7 @@ import CloneEntities.CloneStudentTest.StudentTestStatus;
 import CloneEntities.CloneTest.ExamType;
 import UtilClasses.DataElements.ClientToServerOpcodes;
 import UtilClasses.StudentStartTest;
+import javafx.animation.Animation.Status;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -105,25 +106,24 @@ public class testEntracnce extends AbstractTest {
 		finishedTest = (CloneStudentTest) test.get(0);
 		currQuestions = ((List<CloneQuestionInExam>) test.get(1));
 		studentController.testStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		    @Override
-		    public void handle(WindowEvent event) {
+			@Override
+			public void handle(WindowEvent event) {
 				try {
 					GetDataFromDB(ClientToServerOpcodes.StudentFinishedTest, finishedTest);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-		        //event.consume();
-		    }
+			}
 		});
 		if (finishedTest.getStatus() == StudentTestStatus.Scheduled) {
 			popError("Error", "Test didn't start yet");
 			return;
-		} else if (finishedTest.getStatus() == StudentTestStatus.Done ||
-				finishedTest.getStatus() == StudentTestStatus.WaitingForResult) {
+		} else if (finishedTest.getStatus() == StudentTestStatus.Done
+				|| finishedTest.getStatus() == StudentTestStatus.WaitingForResult) {
 			popError("Error", "Test is over");
 			return;
 		}
-			
+
 		codeLabel.setVisible(false);
 		codeText.setVisible(false);
 		startButton.setVisible(false);
@@ -160,7 +160,8 @@ public class testEntracnce extends AbstractTest {
 	@FXML
 	void onClickedDownload(ActionEvent event) throws IOException, InterruptedException {
 		createWord();
-		startTimer(timerText);
+		if (timeline.getStatus() != Status.RUNNING)
+			startTimer(timerText);
 		sendRequest(ClientToServerOpcodes.GetAnswerToTimeExtensionRequest, finishedTest.getTest().getId());
 	}
 
@@ -208,7 +209,8 @@ public class testEntracnce extends AbstractTest {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		showMsg("Test's Time is up", "Test is over and will be send to review (if you didn't upload a file please notify the teacher)");
+		showMsg("Test's Time is up",
+				"Test is over and will be send to review (if you didn't upload a file please notify the teacher)");
 		Stage stage;
 		stage = (Stage) timerText.getScene().getWindow();
 		stage.close();

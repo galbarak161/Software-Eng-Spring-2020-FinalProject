@@ -148,7 +148,7 @@ public abstract class AbstractController extends AbstractShow {
 	 * @param DataElements with opcode and data
 	 * @return -1 for fail
 	 */
-	protected synchronized int sendRequestForDataFromServer(DataElements de) {
+	protected int sendRequestForDataFromServer(DataElements de) {
 		int status;
 		try {
 			status = ClientMain.sendMessageToServer(de);
