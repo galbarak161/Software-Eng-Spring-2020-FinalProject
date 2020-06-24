@@ -323,13 +323,12 @@ public class DoTestController {
 
 		if (cloneTimeExtensionRequest.isRequestConfirmed() == false) {
 			request.setStatus(RequestStatus.Denied);
-			return request.createClone();
+			request.getTest().setStatus(TestStatus.OngoingRequestedDenied);
 		} else {
 			request.setStatus(RequestStatus.Confirmed);
 			request.setRequestConfirmed(true);
+			request.getTest().setStatus(TestStatus.OngoingRequestedApproved);
 		}
-
-		request.getTest().setStatus(TestStatus.OngoingAnswered);
 
 		HibernateMain.UpdateDataInDB(request);
 		HibernateMain.UpdateDataInDB(request.getTest());

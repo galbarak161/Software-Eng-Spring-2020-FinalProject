@@ -14,7 +14,7 @@ public class CloneTest implements Serializable {
 	}
 
 	public enum TestStatus {
-		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingAnswered;
+		Done, Scheduled, Ongoing, PendingApproval, OngoingRequested, OngoingRequestedDenied, OngoingRequestedApproved;
 	}
 
 	private int id;
