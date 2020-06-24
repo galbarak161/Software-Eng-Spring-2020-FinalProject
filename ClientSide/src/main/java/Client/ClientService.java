@@ -56,7 +56,7 @@ public class ClientService extends AbstractClient {
 	 */
 	@SuppressWarnings({ "unchecked", "incomplete-switch" })
 	@Override
-	protected void handleMessageFromServer(Object msg) {
+	protected synchronized void handleMessageFromServer(Object msg) {
 		DataElements de = (DataElements) msg;
 		//System.out.println("Received message from server: opcode = " + de.getOpcodeFromClient());
 		Object o = null;
